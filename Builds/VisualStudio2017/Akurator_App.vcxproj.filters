@@ -2,6 +2,12 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Akurator\Source\Domain">
+      <UniqueIdentifier>{8530A727-0C80-8A3B-B939-FAF2F8218D8B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Akurator\Source\GUI">
+      <UniqueIdentifier>{FF84D673-0674-64B1-4277-907821AC8C9A}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source">
       <UniqueIdentifier>{80A6515A-04EA-AE7B-5F38-9428888FB22A}</UniqueIdentifier>
     </Filter>
@@ -407,7 +413,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
-      <Filter>Akurator\Source</Filter>
+      <Filter>Akurator\Source\GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>Akurator\Source</Filter>
@@ -2247,8 +2253,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspObject.h">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspPrimitives.h">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
-      <Filter>Akurator\Source</Filter>
+      <Filter>Akurator\Source\GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>

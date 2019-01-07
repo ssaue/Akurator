@@ -9,3 +9,31 @@
 */
 
 #pragma once
+
+#include "sspPrimitives.h"
+
+class sspBasicValue : public sspValue
+{
+	float val_;
+
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspValue);
+		ar & BOOST_SERIALIZATION_NVP(val_);
+	}
+
+public:
+	sspBasicValue() : val_{ 0.0f } {}
+	sspBasicValue(const sspBasicValue& val) = delete;
+	sspBasicValue& operator= (const sspBasicValue& val) = delete;
+	virtual ~sspBasicValue() {}
+
+	// Virtual methods
+	virtual float getValue() const override { return val_; }
+	virtual bool verify(int& nErrors, int& nWarnings) const override { return true; }
+
+	// Accessors
+	void setValue(float value) { val_ = value; }
+};
+

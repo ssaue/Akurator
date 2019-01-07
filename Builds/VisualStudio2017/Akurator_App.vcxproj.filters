@@ -418,9 +418,6 @@
     <ClCompile Include="..\..\Source\sspAddValue.cpp">
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspBasicValue.cpp">
-      <Filter>Akurator\Source\Domain\Values</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\sspConditionalValue.cpp">
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClCompile>

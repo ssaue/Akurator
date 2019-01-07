@@ -13,10 +13,6 @@
 #include "sspPrimitives.h"
 #include "sspObjectVector.h"
 
-#include <vector>
-#include <boost/serialization/vector.hpp>
-#include <boost/serialization/shared_ptr.hpp>
-
 class SSpAddValue : public sspValue
 {
 	sspObjectVector<sspValue> addends_;

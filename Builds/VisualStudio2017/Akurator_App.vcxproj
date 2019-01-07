@@ -147,7 +147,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\sspAddValue.cpp"/>
-    <ClCompile Include="..\..\Source\sspBasicValue.cpp"/>
     <ClCompile Include="..\..\Source\sspConditionalValue.cpp"/>
     <ClCompile Include="..\..\Source\sspDateMap.cpp"/>
     <ClCompile Include="..\..\Source\sspLinearMap.cpp"/>

@@ -8,8 +8,6 @@
         <GROUP id="{31536F5D-E6C8-3BAE-4A77-48BDF5C767BF}" name="Values">
           <FILE id="N00Aej" name="sspAddValue.cpp" compile="1" resource="0" file="Source/sspAddValue.cpp"/>
           <FILE id="S1BWfW" name="sspAddValue.h" compile="0" resource="0" file="Source/sspAddValue.h"/>
-          <FILE id="SEAD6J" name="sspBasicValue.cpp" compile="1" resource="0"
-                file="Source/sspBasicValue.cpp"/>
           <FILE id="PtqHQd" name="sspBasicValue.h" compile="0" resource="0" file="Source/sspBasicValue.h"/>
           <FILE id="hOkuRC" name="sspConditionalValue.cpp" compile="1" resource="0"
                 file="Source/sspConditionalValue.cpp"/>

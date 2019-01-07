@@ -10,40 +10,16 @@
 
 #include "sspPool.h"
 #include "sspPrimitives.h"
-#include <boost/log/trivial.hpp>
+#include "sspLogging.h"
 
-template <typename T>
-sspPool<T>::~sspPool()
-{
-	elements_.clear();
-}
-
-template <typename T>
-void sspPool<T>::add(std::shared_ptr<T> element)
-{
-	elements_.push_back(element);
-}
-
-template <typename T>
-std::shared_ptr<T> sspPool<T>::getAt(size_t const index) const
-{
-	assert(index < size());
-	return elements_[index];
-}
-
-template <typename T>
-void sspPool<T>::clear()
-{
-	elements_.clear();
-}
+#include <sstream>
 
 template <typename T>
 bool sspPool<T>::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
 	if (elements_.empty()) {
-		nWarnings++;
-		BOOST_LOG_TRIVIAL(warning) << getName() << " is empty";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " is empty";
 	}
 	for (auto&& element : elements_) {
 		if (!element->verify(nErrors, nWarnings)) {

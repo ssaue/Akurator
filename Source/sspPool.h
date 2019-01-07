@@ -11,36 +11,29 @@
 #pragma once
 
 #include "sspObject.h"
+#include "sspObjectVector.h"
 
 #include <vector>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
 template <typename T>
-class sspPool : public sspObject 
+class sspPool : public sspObject, public sspObjectVector<T>
 {
-	std::vector<std::shared_ptr<T>> elements_;
-
-public:
-	sspPool() = default;
-	virtual ~sspPool();
-
-	void add(std::shared_ptr<T> element);
-	std::shared_ptr<T> getAt(size_t const index) const;
-	void clear();
-
-	size_t size() const { return elements_.size(); }
-	bool empty() const { return elements_.empty(); }
-	
-	virtual bool verify(int& nErrors, int& nWarnings) const override;
-
-private:
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
-		ar & BOOST_SERIALIZATION_NVP(elements_);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObjectVector);
 	}
+
+public:
+	sspPool() = default;
+	sspPool(const sspPool& obj) = delete;
+	sspPool& operator= (const sspPool& obj) = delete;
+	virtual ~sspPool() {}
+
+	virtual bool verify(int& nErrors, int& nWarnings) const override;
 };
 
 // sspPool iterators
@@ -48,6 +41,9 @@ private:
 template <typename T, typename C>
 class sspPool_iterator_type
 {
+	size_t   index;
+	C&       collection;
+
 public:
 	sspPool_iterator_type(C& collection, size_t const index) :
 		index(index), collection(collection)
@@ -69,10 +65,6 @@ public:
 		++index;
 		return *this;
 	}
-
-private:
-	size_t   index;
-	C&       collection;
 };
 
 template <typename T>

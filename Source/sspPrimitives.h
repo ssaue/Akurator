@@ -15,6 +15,12 @@
 
 class sspValue : public sspObject
 {
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+	}
+
 public:
 	sspValue() = default;
 	sspValue(const sspValue& obj) = delete;
@@ -24,16 +30,18 @@ public:
 	virtual float getValue() const = 0;
 	explicit operator float() const { return getValue(); }
 
-private:
+};
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspValue)
+
+class sspConditional : public sspObject
+{
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
 	}
-};
 
-class sspConditional : public sspObject
-{
 public:
 	sspConditional() = default;
 	sspConditional(const sspConditional& obj) = delete;
@@ -42,17 +50,18 @@ public:
 
 	virtual bool isTrue() const = 0;
 	explicit operator bool() const { return isTrue(); }
+};
 
-private:
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspConditional)
+
+class sspString : public sspObject
+{
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
 	}
-};
 
-class sspString : public sspObject
-{
 public:
 	sspString() = default;
 	sspString(const sspString& obj) = delete;
@@ -61,14 +70,9 @@ public:
 
 	virtual std::string_view getString() const = 0;
 	explicit operator std::string_view() const { return getString(); }
-
-private:
-	friend class boost::serialization::access;
-	template <typename Archive>
-	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
-	}
 };
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspString)
 
 class sspDummy : public sspValue
 {

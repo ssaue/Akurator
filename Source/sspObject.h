@@ -18,8 +18,14 @@
 
 class sspObject
 {
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_NVP(name_);
+	}
+
 protected:
-	std::string name_ { "" };
+	std::string name_{ "" };
 
 public:
 	sspObject() = default;
@@ -33,13 +39,6 @@ public:
 	// Verify correctness (returns false if there are errors or warnings)
 	// Details on errors and warnings should be logged to file (Boost.Log)
 	virtual bool verify(int& nErrors, int& nWarnings) const = 0;
-
-private:
-	friend class boost::serialization::access;
-	template <typename Archive>
-	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_NVP(name_);
-	}
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspObject)

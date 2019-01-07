@@ -5,10 +5,44 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <GROUP id="{31536F5D-E6C8-3BAE-4A77-48BDF5C767BF}" name="Values">
+          <FILE id="N00Aej" name="sspAddValue.cpp" compile="1" resource="0" file="Source/sspAddValue.cpp"/>
+          <FILE id="S1BWfW" name="sspAddValue.h" compile="0" resource="0" file="Source/sspAddValue.h"/>
+          <FILE id="SEAD6J" name="sspBasicValue.cpp" compile="1" resource="0"
+                file="Source/sspBasicValue.cpp"/>
+          <FILE id="PtqHQd" name="sspBasicValue.h" compile="0" resource="0" file="Source/sspBasicValue.h"/>
+          <FILE id="hOkuRC" name="sspConditionalValue.cpp" compile="1" resource="0"
+                file="Source/sspConditionalValue.cpp"/>
+          <FILE id="G3kvDF" name="sspConditionalValue.h" compile="0" resource="0"
+                file="Source/sspConditionalValue.h"/>
+          <FILE id="PSmTDR" name="sspDateMap.cpp" compile="1" resource="0" file="Source/sspDateMap.cpp"/>
+          <FILE id="iDyUAV" name="sspDateMap.h" compile="0" resource="0" file="Source/sspDateMap.h"/>
+          <FILE id="dy3h7R" name="sspLinearMap.cpp" compile="1" resource="0"
+                file="Source/sspLinearMap.cpp"/>
+          <FILE id="uQrtj2" name="sspLinearMap.h" compile="0" resource="0" file="Source/sspLinearMap.h"/>
+          <FILE id="PKAUQT" name="sspProductValue.cpp" compile="1" resource="0"
+                file="Source/sspProductValue.cpp"/>
+          <FILE id="ohgCsN" name="sspProductValue.h" compile="0" resource="0"
+                file="Source/sspProductValue.h"/>
+          <FILE id="tb8v0m" name="sspRandomValue.cpp" compile="1" resource="0"
+                file="Source/sspRandomValue.cpp"/>
+          <FILE id="uEzHWj" name="sspRandomValue.h" compile="0" resource="0"
+                file="Source/sspRandomValue.h"/>
+          <FILE id="SxRBi3" name="sspSecondsRun.cpp" compile="1" resource="0"
+                file="Source/sspSecondsRun.cpp"/>
+          <FILE id="w9hTDU" name="sspSecondsRun.h" compile="0" resource="0" file="Source/sspSecondsRun.h"/>
+          <FILE id="XDMWPx" name="sspTimeMap.cpp" compile="1" resource="0" file="Source/sspTimeMap.cpp"/>
+          <FILE id="mw5S6G" name="sspTimeMap.h" compile="0" resource="0" file="Source/sspTimeMap.h"/>
+          <FILE id="oKsiuw" name="sspValueRange.cpp" compile="1" resource="0"
+                file="Source/sspValueRange.cpp"/>
+          <FILE id="a77ZqT" name="sspValueRange.h" compile="0" resource="0" file="Source/sspValueRange.h"/>
+        </GROUP>
         <FILE id="qZ2HOT" name="sspDomainData.cpp" compile="1" resource="0"
               file="Source/sspDomainData.cpp"/>
         <FILE id="BuvLiN" name="sspDomainData.h" compile="0" resource="0" file="Source/sspDomainData.h"/>
         <FILE id="Jyhyo0" name="sspObject.h" compile="0" resource="0" file="Source/sspObject.h"/>
+        <FILE id="FS2jkz" name="sspObjectVector.h" compile="0" resource="0"
+              file="Source/sspObjectVector.h"/>
         <FILE id="fg22AH" name="sspPool.cpp" compile="1" resource="0" file="Source/sspPool.cpp"/>
         <FILE id="HYOEsC" name="sspPool.h" compile="0" resource="0" file="Source/sspPool.h"/>
         <FILE id="P5c0JS" name="sspPrimitives.cpp" compile="1" resource="0"
@@ -21,6 +55,7 @@
               file="Source/MainComponent.cpp"/>
       </GROUP>
       <FILE id="uLiFXx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="SqSkc2" name="sspLogging.h" compile="0" resource="0" file="Source/sspLogging.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>

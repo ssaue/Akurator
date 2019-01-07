@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Akurator\Source\Domain\Values">
+      <UniqueIdentifier>{CE170EE0-C98C-DB78-3B1E-122D6EFDE731}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain">
       <UniqueIdentifier>{8530A727-0C80-8A3B-B939-FAF2F8218D8B}</UniqueIdentifier>
     </Filter>
@@ -412,6 +415,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspAddValue.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspBasicValue.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspConditionalValue.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspDateMap.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspLinearMap.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspProductValue.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspRandomValue.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspSecondsRun.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspTimeMap.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspValueRange.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspDomainData.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
@@ -2262,10 +2295,43 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspAddValue.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspBasicValue.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspConditionalValue.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspDateMap.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspLinearMap.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspProductValue.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspRandomValue.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSecondsRun.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspTimeMap.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspValueRange.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspDomainData.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspObject.h">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspObjectVector.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspPool.h">
@@ -2276,6 +2342,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>Akurator\Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspLogging.h">
+      <Filter>Akurator\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>

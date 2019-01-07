@@ -146,6 +146,16 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspAddValue.cpp"/>
+    <ClCompile Include="..\..\Source\sspBasicValue.cpp"/>
+    <ClCompile Include="..\..\Source\sspConditionalValue.cpp"/>
+    <ClCompile Include="..\..\Source\sspDateMap.cpp"/>
+    <ClCompile Include="..\..\Source\sspLinearMap.cpp"/>
+    <ClCompile Include="..\..\Source\sspProductValue.cpp"/>
+    <ClCompile Include="..\..\Source\sspRandomValue.cpp"/>
+    <ClCompile Include="..\..\Source\sspSecondsRun.cpp"/>
+    <ClCompile Include="..\..\Source\sspTimeMap.cpp"/>
+    <ClCompile Include="..\..\Source\sspValueRange.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainData.cpp"/>
     <ClCompile Include="..\..\Source\sspPool.cpp"/>
     <ClCompile Include="..\..\Source\sspPrimitives.cpp"/>
@@ -1855,11 +1865,23 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspAddValue.h"/>
+    <ClInclude Include="..\..\Source\sspBasicValue.h"/>
+    <ClInclude Include="..\..\Source\sspConditionalValue.h"/>
+    <ClInclude Include="..\..\Source\sspDateMap.h"/>
+    <ClInclude Include="..\..\Source\sspLinearMap.h"/>
+    <ClInclude Include="..\..\Source\sspProductValue.h"/>
+    <ClInclude Include="..\..\Source\sspRandomValue.h"/>
+    <ClInclude Include="..\..\Source\sspSecondsRun.h"/>
+    <ClInclude Include="..\..\Source\sspTimeMap.h"/>
+    <ClInclude Include="..\..\Source\sspValueRange.h"/>
     <ClInclude Include="..\..\Source\sspDomainData.h"/>
     <ClInclude Include="..\..\Source\sspObject.h"/>
+    <ClInclude Include="..\..\Source\sspObjectVector.h"/>
     <ClInclude Include="..\..\Source\sspPool.h"/>
     <ClInclude Include="..\..\Source\sspPrimitives.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\Source\sspLogging.h"/>
     <ClInclude Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>
     <ClInclude Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>

@@ -412,6 +412,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspDomainData.cpp">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspPool.cpp">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspPrimitives.cpp">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>Akurator\Source\GUI</Filter>
     </ClCompile>
@@ -2253,7 +2262,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspDomainData.h">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspObject.h">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspPool.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspPrimitives.h">

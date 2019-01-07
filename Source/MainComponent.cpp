@@ -8,6 +8,12 @@
 
 #include "MainComponent.h"
 
+#include "sspDomainData.h"
+
+#include <fstream>
+#include <boost/archive/xml_oarchive.hpp> 
+#include <boost/archive/xml_iarchive.hpp> 
+
 //==============================================================================
 MainComponent::MainComponent()
 {
@@ -93,7 +99,7 @@ void MainComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& 
 	switch (commandID)
 	{
 	case CommandIDs::fileNew:
-		result.setInfo("Open...", "Create a new Akurator project", "Menu", 0);
+		result.setInfo("New...", "Create a new Akurator project", "Menu", 0);
 		result.addDefaultKeypress('n', ModifierKeys::commandModifier);
 		break;
 	case CommandIDs::fileOpen:
@@ -105,7 +111,7 @@ void MainComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& 
 		result.addDefaultKeypress('s', ModifierKeys::commandModifier);
 		break;
 	case CommandIDs::fileSaveAs:
-		result.setInfo("Save...", "Save Akurator project to a different file", "Menu", 0);
+		result.setInfo("Save as...", "Save Akurator project to a different file", "Menu", 0);
 		result.addDefaultKeypress('a', ModifierKeys::commandModifier);
 		break;
 	default:
@@ -120,8 +126,20 @@ bool MainComponent::perform(const InvocationInfo& info)
 	case CommandIDs::fileNew:
 		break;
 	case CommandIDs::fileOpen:
+	{
+		sspDomainData test;
+		std::ifstream is("polymorphism_test.xml");
+		boost::archive::xml_iarchive ia(is);
+		ia >> BOOST_SERIALIZATION_NVP(test);
+	}
 		break;
 	case CommandIDs::fileSave:
+	{
+		sspDomainData test;
+		std::ofstream os("polymorphism_test.xml");
+		boost::archive::xml_oarchive oa(os);			   		 
+		oa << BOOST_SERIALIZATION_NVP(test);
+	}
 		break;
 	case CommandIDs::fileSaveAs:
 		break;

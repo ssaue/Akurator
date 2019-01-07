@@ -10,8 +10,11 @@
 
 #pragma once
 
-#include <string>
-#include <cereal\access.hpp>
+#include <string_view>
+
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/assume_abstract.hpp>
 
 class sspObject
 {
@@ -24,18 +27,19 @@ public:
 	sspObject& operator= (const sspObject& obj) = delete;
 	virtual ~sspObject() {}
 
-	const std::string& getName() const { return name_; }
-	void setName(const std::string& name) { name_ = name; }
+	std::string_view getName() const { return name_; }
+	void setName(std::string_view name) { name_ = name; }
 
 	// Verify correctness (returns false if there are errors or warnings)
-	// Details on errors and warnings should be logged to file
-	virtual bool verify(int& nErrors, int& nWarnings) = 0;
+	// Details on errors and warnings should be logged to file (Boost.Log)
+	virtual bool verify(int& nErrors, int& nWarnings) const = 0;
 
 private:
-	friend class cereal::access;
-	template <class Archive>
-	void save(Archive & ar) const {
-		ar(CEREAL_NVP(name_));
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_NVP(name_);
 	}
-
 };
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspObject)

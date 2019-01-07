@@ -11,6 +11,7 @@
 #pragma once
 
 #include "sspObject.h"
+#include <boost/serialization/base_object.hpp>
 
 class sspValue : public sspObject
 {
@@ -22,6 +23,13 @@ public:
 
 	virtual float getValue() const = 0;
 	explicit operator float() const { return getValue(); }
+
+private:
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+	}
 };
 
 class sspConditional : public sspObject
@@ -34,6 +42,13 @@ public:
 
 	virtual bool isTrue() const = 0;
 	explicit operator bool() const { return isTrue(); }
+
+private:
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+	}
 };
 
 class sspString : public sspObject
@@ -45,4 +60,31 @@ public:
 	virtual ~sspString() {}
 
 	virtual std::string_view getString() const = 0;
+	explicit operator std::string_view() const { return getString(); }
+
+private:
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+	}
+};
+
+class sspDummy : public sspValue
+{
+public:
+	sspDummy() = default;
+	sspDummy(const sspDummy& obj) = delete;
+	sspDummy& operator= (const sspDummy& obj) = delete;
+	virtual ~sspDummy() {}
+
+	virtual float getValue() const override { return 1.0f; }
+	virtual bool verify(int& , int& ) const override { return true; }
+
+private:
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspValue);
+	}
 };

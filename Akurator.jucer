@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="MH7tvf" name="Akurator" projectType="guiapp" jucerVersion="5.4.1">
+<JUCERPROJECT id="MH7tvf" name="Akurator" projectType="guiapp" jucerVersion="5.4.1"
+              cppLanguageStandard="latest">
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <FILE id="qZ2HOT" name="sspDomainData.cpp" compile="1" resource="0"
+              file="Source/sspDomainData.cpp"/>
+        <FILE id="BuvLiN" name="sspDomainData.h" compile="0" resource="0" file="Source/sspDomainData.h"/>
         <FILE id="Jyhyo0" name="sspObject.h" compile="0" resource="0" file="Source/sspObject.h"/>
+        <FILE id="fg22AH" name="sspPool.cpp" compile="1" resource="0" file="Source/sspPool.cpp"/>
+        <FILE id="HYOEsC" name="sspPool.h" compile="0" resource="0" file="Source/sspPool.h"/>
+        <FILE id="P5c0JS" name="sspPrimitives.cpp" compile="1" resource="0"
+              file="Source/sspPrimitives.cpp"/>
         <FILE id="erkO5k" name="sspPrimitives.h" compile="0" resource="0" file="Source/sspPrimitives.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="GUI">
@@ -18,8 +26,10 @@
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="E:\Develop\cereal-1.2.2\include"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="E:\Develop\cereal-1.2.2\include"/>
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="E:\Develop\boost_1_69_0"
+                       libraryPath="E:\Develop\boost_1_69_0\stage\lib"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="E:\Develop\boost_1_69_0"
+                       libraryPath="E:\Develop\boost_1_69_0\stage\lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../Develop/Juce/modules"/>

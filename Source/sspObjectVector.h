@@ -78,14 +78,6 @@ public:
 	bool empty() const { return elements_.empty(); }
 };
 
-
-
-
-
-
-
-
-
 // sspObjectVector iterators
 
 template <typename T, typename C>

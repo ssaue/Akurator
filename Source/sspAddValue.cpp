@@ -30,8 +30,11 @@ bool SSpAddValue::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one addend";
 	}
 	for (auto&& add : addends_) {
-		if (add == nullptr) {
+		if (!add) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid addends";
+		}
+		if (add.get() == this) {
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
 

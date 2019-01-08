@@ -33,7 +33,7 @@ bool SSpAddValue::verify(int & nErrors, int & nWarnings) const
 		if (!add) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid addends";
 		}
-		if (add.get() == this) {
+		else if (add.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

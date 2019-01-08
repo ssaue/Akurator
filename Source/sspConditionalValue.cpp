@@ -45,17 +45,16 @@ bool sspConditionalValue::verify(int & nErrors, int & nWarnings) const
 		if (!val) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid values";
 		}
-		if (val.get() == this) {
+		else if (val.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
 	if (!defaultValue_) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid default value";
 	}
-	if (defaultValue_.get() == this) {
+	else if (defaultValue_.get() == this) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 	}
-
 
 	return bReturn;
 }

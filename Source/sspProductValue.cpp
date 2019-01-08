@@ -33,7 +33,7 @@ bool sspProductValue::verify(int & nErrors, int & nWarnings) const
 		if (!fac) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid factors";
 		}
-		if (fac.get() == this) {
+		else if (fac.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

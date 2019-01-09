@@ -67,7 +67,7 @@ bool sspLinearMap::verify(int & nErrors, int & nWarnings) const
 	else if ((inp_max_ - inp_min_) < std::numeric_limits<float>::epsilon()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": input has zero range";
 	}
-	if (std::abs(inp_max_ - inp_min_) < std::numeric_limits<float>::epsilon()) {
+	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<float>::epsilon()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": output has zero range";
 	}
 

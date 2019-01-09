@@ -14,9 +14,9 @@
 #include <limits>
 
 sspValueRange::sspValueRange() 
-	: min_(0.0f), max_(1.0f)
+	: min_(0.0), max_(1.0)
 {
-	val_ = (min_ + max_) * 0.5f;
+	val_ = (min_ + max_) * 0.5;
 }
 
 bool sspValueRange::verify(int& nErrors, int& nWarnings) const
@@ -27,7 +27,7 @@ bool sspValueRange::verify(int& nErrors, int& nWarnings) const
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": min is larger than max";
 	}
 	else {
-		if ((max_ - min_) < std::numeric_limits<float>::epsilon() ) {
+		if ((max_ - min_) < std::numeric_limits<double>::epsilon() ) {
 			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": min and max are equal";
 		}
 		if (val_ < min_ || val_ > max_) {
@@ -38,7 +38,7 @@ bool sspValueRange::verify(int& nErrors, int& nWarnings) const
 	return bReturn;
 }
 
-void sspValueRange::setValue(float value) {
+void sspValueRange::setValue(double value) {
 	if (value < min_) 
 		val_ = min_;
 	else if (value > max_)
@@ -47,7 +47,7 @@ void sspValueRange::setValue(float value) {
 		val_ = value;
 }
 
-void sspValueRange::setValueRange(float fMin, float fMax)
+void sspValueRange::setValueRange(double fMin, double fMax)
 {
 	if (min_ < max_) {
 		min_ = fMin;
@@ -60,18 +60,18 @@ void sspValueRange::setValueRange(float fMin, float fMax)
 	setValue(val_); // Ensure value in range
 }
 
-void sspValueRange::setNormalized(float fVal)
+void sspValueRange::setNormalized(double fVal)
 {
-	if (fVal <= 0.0f)
+	if (fVal <= 0.0)
 		val_ = min_;
-	else if (fVal >= 1.0f)
+	else if (fVal >= 1.0)
 		val_ = max_;
 	else
 		val_ = min_ + (max_ - min_) * fVal;
 }
 
-float sspValueRange::getNormalized() const
+double sspValueRange::getNormalized() const
 {
-	assert((max_ - min_) > std::numeric_limits<float>::epsilon());
+	assert((max_ - min_) > std::numeric_limits<double>::epsilon());
 	return (val_ - min_) / (max_ - min_);
 }

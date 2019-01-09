@@ -29,13 +29,13 @@ class sspConditionalValue : public sspValue
 	}
 
 public:
-	sspConditionalValue();
+	sspConditionalValue() = default;
 	sspConditionalValue(const sspConditionalValue& val) = delete;
 	sspConditionalValue& operator= (const sspConditionalValue& val) = delete;
 	virtual ~sspConditionalValue() {}
 
 	// Virtual methods
-	virtual float getValue() const override;
+	virtual double getValue() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors

@@ -12,7 +12,7 @@
 #include "sspLogging.h"
 
 sspLinearMap::sspLinearMap()
-	: inp_min_(0.0f), inp_max_(1.0f), outp_min_(0.0f), outp_max_(1.0f)
+	: inp_min_(0.0), inp_max_(1.0), outp_min_(0.0), outp_max_(1.0)
 {
 	computeLinearFactors();
 }
@@ -20,12 +20,12 @@ sspLinearMap::sspLinearMap()
 void sspLinearMap::computeLinearFactors()
 {
 	// Avoid division by zero
-	lin_a_ = std::abs(inp_max_ - inp_min_) > std::numeric_limits<float>::epsilon() 
+	lin_a_ = std::abs(inp_max_ - inp_min_) > std::numeric_limits<double>::epsilon()
 		? (outp_max_ - outp_min_) / (inp_max_ - inp_min_) : 1.0f;
 	lin_b_ = outp_min_ - lin_a_ * inp_min_;
 }
 
-void sspLinearMap::setInputRange(float fMin, float fMax) 
+void sspLinearMap::setInputRange(double fMin, double fMax)
 { 
 	// Should not be inverted
 	if (fMin > fMax) {
@@ -38,7 +38,7 @@ void sspLinearMap::setInputRange(float fMin, float fMax)
 	}
 	computeLinearFactors();
 }
-void sspLinearMap::setOutputRange(float fMin, float fMax)
+void sspLinearMap::setOutputRange(double fMin, double fMax)
 { 
 	// May be inverted
 	outp_min_ = fMin; 
@@ -46,7 +46,7 @@ void sspLinearMap::setOutputRange(float fMin, float fMax)
 	computeLinearFactors();
 }
 
-float sspLinearMap::getValue() const
+double sspLinearMap::getValue() const
 {
 	return lin_a_ * val_->getValue() + lin_b_;
 }
@@ -64,10 +64,10 @@ bool sspLinearMap::verify(int & nErrors, int & nWarnings) const
 	if (inp_min_ > inp_max_) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": input range is inverted";
 	}
-	else if ((inp_max_ - inp_min_) < std::numeric_limits<float>::epsilon()) {
+	else if ((inp_max_ - inp_min_) < std::numeric_limits<double>::epsilon()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": input has zero range";
 	}
-	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<float>::epsilon()) {
+	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<double>::epsilon()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": output has zero range";
 	}
 

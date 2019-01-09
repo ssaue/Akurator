@@ -17,11 +17,11 @@ class sspLinearMap : public sspValue
 {
 	std::shared_ptr<sspValue> val_;
 
-	float inp_min_, inp_max_;
-	float outp_min_, outp_max_;
+	double inp_min_, inp_max_;
+	double outp_min_, outp_max_;
 
 	// Utility variables to save computation time
-	float lin_a_, lin_b_;
+	double lin_a_, lin_b_;
 	void computeLinearFactors();
 
 	friend class boost::serialization::access;
@@ -43,20 +43,20 @@ public:
 	virtual ~sspLinearMap() {}
 
 	// Virtual methods
-	virtual float getValue() const override;
+	virtual double getValue() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
 	void setValue(std::shared_ptr<sspValue> value) { val_ = std::move(value); }
 	
-	void setInputRange(float fMin, float fMax);		// This range may NOT be inverted
-	void setOutputRange(float fMin, float fMax);	// This range may be inverted
+	void setInputRange(double fMin, double fMax);		// This range may NOT be inverted
+	void setOutputRange(double fMin, double fMax);	// This range may be inverted
 
 	std::shared_ptr<sspValue> getInputValue() const { return val_; }
 
-	float getInputMin() const { return inp_min_; }
-	float getInputMax() const { return inp_max_; }
-	float getOutputMin() const { return outp_min_; }
-	float getOutputMax() const { return outp_max_; }
+	double getInputMin() const { return inp_min_; }
+	double getInputMax() const { return inp_max_; }
+	double getOutputMin() const { return outp_min_; }
+	double getOutputMax() const { return outp_max_; }
 };
 

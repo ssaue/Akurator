@@ -14,7 +14,7 @@
 using namespace boost::gregorian;
 
 sspDateMap::sspDateMap()
-	: date_min_(1, 1), date_max_(31, 12), outp_min_(0.0f), outp_max_(1.0f)
+	: date_min_(1, 1), date_max_(31, 12), outp_min_(0.0), outp_max_(1.0)
 {
 	computeLinearFactors();
 }
@@ -22,7 +22,7 @@ sspDateMap::sspDateMap()
 void sspDateMap::computeLinearFactors()
 {
 	auto duration = date_max_(0) - date_min_(0);
-	lin_a_ = (duration.days() > 0) ? (outp_max_ - outp_min_) / static_cast<float>(duration.days()) : 1.0f;
+	lin_a_ = (duration.days() > 0) ? (outp_max_ - outp_min_) / static_cast<double>(duration.days()) : 1.0f;
 }
 
 
@@ -39,7 +39,7 @@ void sspDateMap::setInputRange(const boost::gregorian::partial_date& min, const 
 	computeLinearFactors();
 }
 
-void sspDateMap::setOutputRange(float fMin, float fMax)
+void sspDateMap::setOutputRange(double fMin, double fMax)
 {
 	// May be inverted
 	outp_min_ = fMin;
@@ -47,11 +47,11 @@ void sspDateMap::setOutputRange(float fMin, float fMax)
 	computeLinearFactors();
 }
 
-float sspDateMap::getValue() const
+double sspDateMap::getValue() const
 {
 	auto now = day_clock::local_day();
 	auto diff = now - date_min_(now.year());
-	auto val = outp_min_ + lin_a_ * static_cast<float>(diff.days());
+	auto val = outp_min_ + lin_a_ * static_cast<double>(diff.days());
 
 	if (outp_max_ > outp_min_) {
 		return val > outp_max_ ? outp_max_ : (val < outp_min_ ? outp_min_ : val);
@@ -71,7 +71,7 @@ bool sspDateMap::verify(int & nErrors, int & nWarnings) const
 	if (date_min_(0) == date_max_(0)) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": date range has zero days";
 	}
-	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<float>::epsilon()) {
+	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<double>::epsilon()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": output has zero range";
 	}
 

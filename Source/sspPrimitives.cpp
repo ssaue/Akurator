@@ -17,6 +17,5 @@
 BOOST_CLASS_EXPORT(sspValue);
 BOOST_CLASS_EXPORT(sspConditional);
 BOOST_CLASS_EXPORT(sspString);
-BOOST_CLASS_EXPORT(sspDummy);
 
 

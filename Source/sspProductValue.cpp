@@ -11,9 +11,9 @@
 #include "sspProductValue.h"
 #include "sspLogging.h"
 
-float sspProductValue::getValue() const
+double sspProductValue::getValue() const
 {
-	float fVal = 1.0f;
+	double fVal = 1.0;
 	for (auto fac : factors_)
 		fVal *= fac->getValue();
 	return fVal;

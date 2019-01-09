@@ -14,7 +14,7 @@
 
 class sspBasicValue : public sspValue
 {
-	float val_;
+	double val_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -30,10 +30,10 @@ public:
 	virtual ~sspBasicValue() {}
 
 	// Virtual methods
-	virtual float getValue() const override { return val_; }
+	virtual double getValue() const override { return val_; }
 	virtual bool verify(int& nErrors, int& nWarnings) const override { return true; }
 
 	// Accessors
-	void setValue(float value) { val_ = value; }
+	void setValue(double value) { val_ = value; }
 };
 

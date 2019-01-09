@@ -27,7 +27,7 @@ public:
 	virtual ~sspSecondsRun() {}
 
 	// Virtual methods
-	virtual float getValue() const override;
+	virtual double getValue() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override { return true; }
 };
 

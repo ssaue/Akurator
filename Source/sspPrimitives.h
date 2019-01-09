@@ -27,8 +27,8 @@ public:
 	sspValue& operator= (const sspValue& obj) = delete;
 	virtual ~sspValue() {}
 
-	virtual float getValue() const = 0;
-	explicit operator float() const { return getValue(); }
+	virtual double getValue() const = 0;
+	explicit operator double() const { return getValue(); }
 
 };
 
@@ -73,22 +73,3 @@ public:
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspString)
-
-class sspDummy : public sspValue
-{
-public:
-	sspDummy() = default;
-	sspDummy(const sspDummy& obj) = delete;
-	sspDummy& operator= (const sspDummy& obj) = delete;
-	virtual ~sspDummy() {}
-
-	virtual float getValue() const override { return 1.0f; }
-	virtual bool verify(int& , int& ) const override { return true; }
-
-private:
-	friend class boost::serialization::access;
-	template <typename Archive>
-	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspValue);
-	}
-};

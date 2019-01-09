@@ -14,8 +14,8 @@
 
 class sspValueRange : public sspValue
 {
-	float val_;
-	float min_, max_;
+	double val_;
+	double min_, max_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -33,17 +33,17 @@ public:
 	virtual ~sspValueRange() {}
 
 	// Virtual methods
-	virtual float getValue() const override { return val_; }
+	virtual double getValue() const override { return val_; }
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setValue(float value);
-	void setValueRange(float fmin, float fMax);
-	void setNormalized(float fVal);
-	float getNormalized() const;
+	void setValue(double value);
+	void setValueRange(double fmin, double fMax);
+	void setNormalized(double fVal);
 
-	float getMin() const { return min_; }
-	float getMax() const { return max_; }
+	double getNormalized() const;
+	double getMin() const { return min_; }
+	double getMax() const { return max_; }
 
 };
 

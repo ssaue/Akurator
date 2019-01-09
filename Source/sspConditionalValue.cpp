@@ -11,7 +11,7 @@
 #include "sspConditionalValue.h"
 #include "sspLogging.h"
 
-float sspConditionalValue::getValue() const
+double sspConditionalValue::getValue() const
 {
 	auto ci = begin(conditionals_);
 	auto vi = begin(values_);

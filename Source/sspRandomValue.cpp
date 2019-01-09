@@ -19,12 +19,12 @@ namespace {
 	std::mt19937 random_generator(rd());
 }
 
-float sspRandomValue::getValue() const
+double sspRandomValue::getValue() const
 {
 	auto low = low_->getValue();
 	auto high = high_->getValue();
 
-	std::uniform_real_distribution<float> dist(low, high);
+	std::uniform_real_distribution<double> dist(low, high);
 	return dist(random_generator);
 }
 
@@ -45,7 +45,7 @@ bool sspRandomValue::verify(int & nErrors, int & nWarnings) const
 		if (low > high) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": low is larger than high";
 		}
-		else if ((high - low) < std::numeric_limits<float>::epsilon()) {
+		else if ((high - low) < std::numeric_limits<double>::epsilon()) {
 			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": high and low are equal";
 		}
 	}

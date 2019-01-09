@@ -16,12 +16,12 @@
 
 class sspTimeMap : public sspValue
 {
-	float outp_min_, outp_max_;
+	double outp_min_, outp_max_;
 	boost::posix_time::time_duration clock_min_;
 	boost::posix_time::time_duration clock_max_;
 
 	// Utility variables to save computation time
-	float lin_a_, lin_b_;
+	double lin_a_, lin_b_;
 	void computeLinearFactors();
 
 	friend class boost::serialization::access;
@@ -42,17 +42,17 @@ public:
 	virtual ~sspTimeMap() {}
 
 	// Virtual methods
-	virtual float getValue() const override;
+	virtual double getValue() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
 	void setInputRange(const boost::posix_time::time_duration& min, 
 		const boost::posix_time::time_duration& max);	// This range may NOT be inverted
-	void setOutputRange(float fMin, float fMax);		// This range may be inverted
+	void setOutputRange(double fMin, double fMax);		// This range may be inverted
 
 	const boost::posix_time::time_duration& getClockMin() const { return clock_min_; }
 	const boost::posix_time::time_duration& getClockMax() const { return clock_max_; }
-	float getOutputMin() const { return outp_min_; }
-	float getOutputMax() const { return outp_max_; }
+	double getOutputMin() const { return outp_min_; }
+	double getOutputMax() const { return outp_max_; }
 };
 

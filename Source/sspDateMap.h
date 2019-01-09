@@ -16,12 +16,12 @@
 
 class sspDateMap : public sspValue
 {
-	float outp_min_, outp_max_;
+	double outp_min_, outp_max_;
 	boost::gregorian::partial_date date_min_;
 	boost::gregorian::partial_date date_max_;
 
 	// Utility variables to save computation time
-	float lin_a_;
+	double lin_a_;
 	void computeLinearFactors();
 
 	friend class boost::serialization::access;
@@ -42,17 +42,17 @@ public:
 	virtual ~sspDateMap() {}
 
 	// Virtual methods
-	virtual float getValue() const override;
+	virtual double getValue() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
 	void setInputRange(const boost::gregorian::partial_date& min,
 		const boost::gregorian::partial_date& max);	// This range may NOT be inverted
-	void setOutputRange(float fMin, float fMax);			// This range may be inverted
+	void setOutputRange(double fMin, double fMax);	// This range may be inverted
 
 	const boost::gregorian::partial_date& getDateMin() const { return date_min_; }
 	const boost::gregorian::partial_date& getDateMax() const { return date_max_; }
-	float getOutputMin() const { return outp_min_; }
-	float getOutputMax() const { return outp_max_; }
+	double getOutputMin() const { return outp_min_; }
+	double getOutputMax() const { return outp_max_; }
 };
 

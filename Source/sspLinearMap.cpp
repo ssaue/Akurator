@@ -22,7 +22,7 @@ void sspLinearMap::computeLinearFactors()
 	// Avoid division by zero
 	lin_a_ = std::abs(inp_max_ - inp_min_) > std::numeric_limits<float>::epsilon() 
 		? (outp_max_ - outp_min_) / (inp_max_ - inp_min_) : 1.0f;
-	lin_b_ = outp_max_ - lin_a_ * inp_max_;
+	lin_b_ = outp_min_ - lin_a_ * inp_min_;
 }
 
 void sspLinearMap::setInputRange(float fMin, float fMax) 

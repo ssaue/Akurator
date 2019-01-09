@@ -24,7 +24,7 @@ void sspTimeMap::computeLinearFactors()
 	auto inp_min = clock_min_.total_seconds();
 	auto inp_max = clock_max_.total_seconds();
 	lin_a_ = (inp_min < inp_max) ? (outp_max_ - outp_min_) / static_cast<float>(inp_max - inp_min) : 1.0f;
-	lin_b_ = outp_max_ - lin_a_ * static_cast<float>(clock_max_.total_seconds());
+	lin_b_ = outp_min_ - lin_a_ * static_cast<float>(clock_min_.total_seconds());
 }
 
 
@@ -63,7 +63,7 @@ bool sspTimeMap::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": time range is inverted";
 	}
 	if (clock_min_ == clock_max_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": time range has zero range";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": time range has zero seconds";
 	}
 	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<float>::epsilon()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": output has zero range";

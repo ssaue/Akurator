@@ -23,9 +23,14 @@ double sspRandomValue::getValue() const
 {
 	auto low = low_->getValue();
 	auto high = high_->getValue();
-
-	std::uniform_real_distribution<double> dist(low, high);
-	return dist(random_generator);
+	if (low < high) {
+		std::uniform_real_distribution<double> dist(low, high);
+		return dist(random_generator);
+	}
+	else {
+		std::uniform_real_distribution<double> dist(high, low);
+		return dist(random_generator);
+	}
 }
 
 bool sspRandomValue::verify(int & nErrors, int & nWarnings) const
@@ -39,11 +44,14 @@ bool sspRandomValue::verify(int & nErrors, int & nWarnings) const
 		if (low_.get() == this || high_.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
+		if (low_.get() == high_.get()) {
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": low and high are equal values";
+		}
 
 		auto low = low_->getValue();
 		auto high = low_->getValue();
 		if (low > high) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": low is larger than high";
+			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": low is larger than high";
 		}
 		else if ((high - low) < std::numeric_limits<double>::epsilon()) {
 			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": high and low are equal";

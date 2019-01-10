@@ -9,3 +9,38 @@
 */
 
 #include "sspTimeInterval.h"
+#include "sspLogging.h"
+
+using namespace boost::posix_time;
+
+void sspTimeInterval::setInputRange(const time_duration& min, const time_duration& max)
+{
+	if (min > max) {
+		clock_min_ = max;
+		clock_max_ = min;
+	}
+	else {
+		clock_min_ = min;
+		clock_max_ = max;
+	}
+}
+
+bool sspTimeInterval::isTrue() const
+{
+	auto now = second_clock::local_time().time_of_day();
+	return ((clock_min_ < now && clock_max_ > now) || (clock_max_ < now && clock_min_ > now));
+}
+
+bool sspTimeInterval::verify(int & nErrors, int & nWarnings) const
+{
+	bool bReturn = true;
+
+	if (clock_min_ > clock_max_) {
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": date range is inverted";
+	}
+	if (clock_min_ == clock_max_) {
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": date range has zero days";
+	}
+
+	return bReturn;
+}

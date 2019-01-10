@@ -26,7 +26,7 @@ void sspDateMap::computeLinearFactors()
 }
 
 
-void sspDateMap::setInputRange(const boost::gregorian::partial_date& min, const boost::gregorian::partial_date& max)
+void sspDateMap::setInputRange(const partial_date& min, const partial_date& max)
 {
 	if (min(0) > max(0)) {
 		date_min_ = max;

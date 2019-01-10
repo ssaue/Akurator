@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Akurator\Source\Domain\Conditionals">
+      <UniqueIdentifier>{43784D84-DB08-7FF0-AE85-0A1738AF15D7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain\Values">
       <UniqueIdentifier>{CE170EE0-C98C-DB78-3B1E-122D6EFDE731}</UniqueIdentifier>
     </Filter>
@@ -415,6 +418,45 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspAnd.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspBoolean.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspDateInterval.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspDayOfWeek.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspIsPlaying.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspMinuteCompare.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspNot.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspOr.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspTimeCompare.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspTimeInterval.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspTrigger.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspValueCompare.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspValueInRange.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspAddValue.cpp">
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClCompile>
@@ -455,6 +497,9 @@
       <Filter>Akurator\Source\GUI</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
+      <Filter>Akurator\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspExecutionState.cpp">
       <Filter>Akurator\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
@@ -2292,6 +2337,45 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspAnd.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspBoolean.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspDateInterval.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspDayOfWeek.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspIsPlaying.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspMinuteCompare.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspNot.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspOr.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspTimeCompare.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspTimeInterval.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspTrigger.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspValueCompare.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspValueInRange.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspAddValue.h">
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClInclude>
@@ -2339,6 +2423,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>Akurator\Source\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspExecutionState.h">
+      <Filter>Akurator\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspLogging.h">
       <Filter>Akurator\Source</Filter>

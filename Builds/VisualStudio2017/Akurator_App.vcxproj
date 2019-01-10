@@ -146,6 +146,19 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspAnd.cpp"/>
+    <ClCompile Include="..\..\Source\sspBoolean.cpp"/>
+    <ClCompile Include="..\..\Source\sspDateInterval.cpp"/>
+    <ClCompile Include="..\..\Source\sspDayOfWeek.cpp"/>
+    <ClCompile Include="..\..\Source\sspIsPlaying.cpp"/>
+    <ClCompile Include="..\..\Source\sspMinuteCompare.cpp"/>
+    <ClCompile Include="..\..\Source\sspNot.cpp"/>
+    <ClCompile Include="..\..\Source\sspOr.cpp"/>
+    <ClCompile Include="..\..\Source\sspTimeCompare.cpp"/>
+    <ClCompile Include="..\..\Source\sspTimeInterval.cpp"/>
+    <ClCompile Include="..\..\Source\sspTrigger.cpp"/>
+    <ClCompile Include="..\..\Source\sspValueCompare.cpp"/>
+    <ClCompile Include="..\..\Source\sspValueInRange.cpp"/>
     <ClCompile Include="..\..\Source\sspAddValue.cpp"/>
     <ClCompile Include="..\..\Source\sspConditionalValue.cpp"/>
     <ClCompile Include="..\..\Source\sspDateMap.cpp"/>
@@ -160,6 +173,7 @@
     <ClCompile Include="..\..\Source\sspPrimitives.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
+    <ClCompile Include="..\..\Source\sspExecutionState.cpp"/>
     <ClCompile Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1864,6 +1878,19 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspAnd.h"/>
+    <ClInclude Include="..\..\Source\sspBoolean.h"/>
+    <ClInclude Include="..\..\Source\sspDateInterval.h"/>
+    <ClInclude Include="..\..\Source\sspDayOfWeek.h"/>
+    <ClInclude Include="..\..\Source\sspIsPlaying.h"/>
+    <ClInclude Include="..\..\Source\sspMinuteCompare.h"/>
+    <ClInclude Include="..\..\Source\sspNot.h"/>
+    <ClInclude Include="..\..\Source\sspOr.h"/>
+    <ClInclude Include="..\..\Source\sspTimeCompare.h"/>
+    <ClInclude Include="..\..\Source\sspTimeInterval.h"/>
+    <ClInclude Include="..\..\Source\sspTrigger.h"/>
+    <ClInclude Include="..\..\Source\sspValueCompare.h"/>
+    <ClInclude Include="..\..\Source\sspValueInRange.h"/>
     <ClInclude Include="..\..\Source\sspAddValue.h"/>
     <ClInclude Include="..\..\Source\sspBasicValue.h"/>
     <ClInclude Include="..\..\Source\sspConditionalValue.h"/>
@@ -1880,6 +1907,7 @@
     <ClInclude Include="..\..\Source\sspPool.h"/>
     <ClInclude Include="..\..\Source\sspPrimitives.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\Source\sspExecutionState.h"/>
     <ClInclude Include="..\..\Source\sspLogging.h"/>
     <ClInclude Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="..\..\..\..\Develop\Juce\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>

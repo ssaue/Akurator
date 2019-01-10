@@ -5,6 +5,48 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <GROUP id="{0549B22E-C6BC-D0BC-A1E0-D54EA5D0435E}" name="Conditionals">
+          <FILE id="FPEHvA" name="sspAnd.cpp" compile="1" resource="0" file="Source/sspAnd.cpp"/>
+          <FILE id="LE9fIp" name="sspAnd.h" compile="0" resource="0" file="Source/sspAnd.h"/>
+          <FILE id="QZCif7" name="sspBoolean.cpp" compile="1" resource="0" file="Source/sspBoolean.cpp"/>
+          <FILE id="fEKdIb" name="sspBoolean.h" compile="0" resource="0" file="Source/sspBoolean.h"/>
+          <FILE id="Emuuu9" name="sspDateInterval.cpp" compile="1" resource="0"
+                file="Source/sspDateInterval.cpp"/>
+          <FILE id="DpbJmB" name="sspDateInterval.h" compile="0" resource="0"
+                file="Source/sspDateInterval.h"/>
+          <FILE id="kDH1X6" name="sspDayOfWeek.cpp" compile="1" resource="0"
+                file="Source/sspDayOfWeek.cpp"/>
+          <FILE id="UqD7zT" name="sspDayOfWeek.h" compile="0" resource="0" file="Source/sspDayOfWeek.h"/>
+          <FILE id="f3ecav" name="sspIsPlaying.cpp" compile="1" resource="0"
+                file="Source/sspIsPlaying.cpp"/>
+          <FILE id="Qy9X2J" name="sspIsPlaying.h" compile="0" resource="0" file="Source/sspIsPlaying.h"/>
+          <FILE id="rGCKbU" name="sspMinuteCompare.cpp" compile="1" resource="0"
+                file="Source/sspMinuteCompare.cpp"/>
+          <FILE id="m8Xhhb" name="sspMinuteCompare.h" compile="0" resource="0"
+                file="Source/sspMinuteCompare.h"/>
+          <FILE id="WyuBXp" name="sspNot.cpp" compile="1" resource="0" file="Source/sspNot.cpp"/>
+          <FILE id="qhtbrH" name="sspNot.h" compile="0" resource="0" file="Source/sspNot.h"/>
+          <FILE id="qNPhD0" name="sspOr.cpp" compile="1" resource="0" file="Source/sspOr.cpp"/>
+          <FILE id="mNnnks" name="sspOr.h" compile="0" resource="0" file="Source/sspOr.h"/>
+          <FILE id="aaparU" name="sspTimeCompare.cpp" compile="1" resource="0"
+                file="Source/sspTimeCompare.cpp"/>
+          <FILE id="LRrOs1" name="sspTimeCompare.h" compile="0" resource="0"
+                file="Source/sspTimeCompare.h"/>
+          <FILE id="J8ky7M" name="sspTimeInterval.cpp" compile="1" resource="0"
+                file="Source/sspTimeInterval.cpp"/>
+          <FILE id="CzC2gH" name="sspTimeInterval.h" compile="0" resource="0"
+                file="Source/sspTimeInterval.h"/>
+          <FILE id="eDwQwo" name="sspTrigger.cpp" compile="1" resource="0" file="Source/sspTrigger.cpp"/>
+          <FILE id="NM5I9M" name="sspTrigger.h" compile="0" resource="0" file="Source/sspTrigger.h"/>
+          <FILE id="QR6Io3" name="sspValueCompare.cpp" compile="1" resource="0"
+                file="Source/sspValueCompare.cpp"/>
+          <FILE id="a7hEQv" name="sspValueCompare.h" compile="0" resource="0"
+                file="Source/sspValueCompare.h"/>
+          <FILE id="YlhVxj" name="sspValueInRange.cpp" compile="1" resource="0"
+                file="Source/sspValueInRange.cpp"/>
+          <FILE id="FBuXMN" name="sspValueInRange.h" compile="0" resource="0"
+                file="Source/sspValueInRange.h"/>
+        </GROUP>
         <GROUP id="{31536F5D-E6C8-3BAE-4A77-48BDF5C767BF}" name="Values">
           <FILE id="N00Aej" name="sspAddValue.cpp" compile="1" resource="0" file="Source/sspAddValue.cpp"/>
           <FILE id="S1BWfW" name="sspAddValue.h" compile="0" resource="0" file="Source/sspAddValue.h"/>
@@ -53,6 +95,10 @@
               file="Source/MainComponent.cpp"/>
       </GROUP>
       <FILE id="uLiFXx" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="a7d0xN" name="sspExecutionState.cpp" compile="1" resource="0"
+            file="Source/sspExecutionState.cpp"/>
+      <FILE id="REecLS" name="sspExecutionState.h" compile="0" resource="0"
+            file="Source/sspExecutionState.h"/>
       <FILE id="SqSkc2" name="sspLogging.h" compile="0" resource="0" file="Source/sspLogging.h"/>
     </GROUP>
   </MAINGROUP>

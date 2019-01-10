@@ -28,6 +28,6 @@ public:
 
 	// Virtual methods
 	virtual double getValue() const override;
-	virtual bool verify(int& nErrors, int& nWarnings) const override { return true; }
+	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override { return true; }
 };
 

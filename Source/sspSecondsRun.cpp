@@ -9,3 +9,9 @@
 */
 
 #include "sspSecondsRun.h"
+#include "sspExecutionState.h"
+
+double sspSecondsRun::getValue() const
+{
+	return sspExecutionState::Instance().secondsRunning();
+}

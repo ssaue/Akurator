@@ -421,9 +421,6 @@
     <ClCompile Include="..\..\Source\sspAnd.cpp">
       <Filter>Akurator\Source\Domain\Conditionals</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspBoolean.cpp">
-      <Filter>Akurator\Source\Domain\Conditionals</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\sspDateInterval.cpp">
       <Filter>Akurator\Source\Domain\Conditionals</Filter>
     </ClCompile>

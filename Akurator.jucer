@@ -8,7 +8,6 @@
         <GROUP id="{0549B22E-C6BC-D0BC-A1E0-D54EA5D0435E}" name="Conditionals">
           <FILE id="FPEHvA" name="sspAnd.cpp" compile="1" resource="0" file="Source/sspAnd.cpp"/>
           <FILE id="LE9fIp" name="sspAnd.h" compile="0" resource="0" file="Source/sspAnd.h"/>
-          <FILE id="QZCif7" name="sspBoolean.cpp" compile="1" resource="0" file="Source/sspBoolean.cpp"/>
           <FILE id="fEKdIb" name="sspBoolean.h" compile="0" resource="0" file="Source/sspBoolean.h"/>
           <FILE id="Emuuu9" name="sspDateInterval.cpp" compile="1" resource="0"
                 file="Source/sspDateInterval.cpp"/>

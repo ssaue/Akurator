@@ -73,3 +73,22 @@ public:
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspString)
+
+class sspPlayObject : public sspObject
+{
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+	}
+
+public:
+	sspPlayObject() = default;
+	sspPlayObject(const sspPlayObject& obj) = delete;
+	sspPlayObject& operator= (const sspPlayObject& obj) = delete;
+	virtual ~sspPlayObject() {}
+
+	virtual bool isPlaying() const = 0;
+};
+
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspPlayObject)

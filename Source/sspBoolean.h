@@ -12,7 +12,7 @@
 
 #include "sspPrimitives.h"
 
-class SSpBoolean : public sspConditional
+class sspBoolean : public sspConditional
 {
 private:
 	bool value_;
@@ -25,10 +25,10 @@ private:
 	}
 
 public:
-	SSpBoolean() = default;
-	SSpBoolean(const SSpBoolean& cond) = delete;
-	SSpBoolean& operator= (const SSpBoolean& cond) = delete;
-	virtual ~SSpBoolean() {}
+	sspBoolean() = default;
+	sspBoolean(const sspBoolean& cond) = delete;
+	sspBoolean& operator= (const sspBoolean& cond) = delete;
+	virtual ~sspBoolean() {}
 
 	// Virtual methods
 	virtual bool isTrue() const override { return value_; }

@@ -31,7 +31,7 @@ public:
 
 	// Virtual methods
 	virtual double getValue() const override { return val_; }
-	virtual bool verify(int& nErrors, int& nWarnings) const override { return true; }
+	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override { return true; }
 
 	// Accessors
 	void setValue(double value) { val_ = value; }

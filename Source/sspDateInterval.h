@@ -28,7 +28,7 @@ class sspDateInterval : public sspConditional
 	}
 
 public:
-	sspDateInterval() = default;
+	sspDateInterval();
 	sspDateInterval(const sspDateInterval& cond) = delete;
 	sspDateInterval& operator= (const sspDateInterval& cond) = delete;
 	virtual ~sspDateInterval() {}

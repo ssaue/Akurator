@@ -45,3 +45,8 @@ bool sspTrigger::verify(int & nErrors, int & /*nWarnings*/) const
 
 	return bReturn;
 }
+
+void sspTrigger::reset()
+{
+	old_state_ = conditional_->isTrue();
+}

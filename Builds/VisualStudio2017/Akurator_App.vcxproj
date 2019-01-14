@@ -146,7 +146,12 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspConcatString.cpp"/>
+    <ClCompile Include="..\..\Source\sspFolderFileString.cpp"/>
+    <ClCompile Include="..\..\Source\sspSelectString.cpp"/>
+    <ClCompile Include="..\..\Source\sspStrings.cpp"/>
     <ClCompile Include="..\..\Source\sspAnd.cpp"/>
+    <ClCompile Include="..\..\Source\sspConditionals.cpp"/>
     <ClCompile Include="..\..\Source\sspDateInterval.cpp"/>
     <ClCompile Include="..\..\Source\sspDayOfWeek.cpp"/>
     <ClCompile Include="..\..\Source\sspIsPlaying.cpp"/>
@@ -167,6 +172,7 @@
     <ClCompile Include="..\..\Source\sspSecondsRun.cpp"/>
     <ClCompile Include="..\..\Source\sspTimeMap.cpp"/>
     <ClCompile Include="..\..\Source\sspValueRange.cpp"/>
+    <ClCompile Include="..\..\Source\sspValues.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainData.cpp"/>
     <ClCompile Include="..\..\Source\sspPool.cpp"/>
     <ClCompile Include="..\..\Source\sspPrimitives.cpp"/>
@@ -1877,8 +1883,14 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspConcatString.h"/>
+    <ClInclude Include="..\..\Source\sspFolderFileString.h"/>
+    <ClInclude Include="..\..\Source\sspSelectString.h"/>
+    <ClInclude Include="..\..\Source\sspSimpleString.h"/>
+    <ClInclude Include="..\..\Source\sspStrings.h"/>
     <ClInclude Include="..\..\Source\sspAnd.h"/>
     <ClInclude Include="..\..\Source\sspBoolean.h"/>
+    <ClInclude Include="..\..\Source\sspConditionals.h"/>
     <ClInclude Include="..\..\Source\sspDateInterval.h"/>
     <ClInclude Include="..\..\Source\sspDayOfWeek.h"/>
     <ClInclude Include="..\..\Source\sspIsPlaying.h"/>
@@ -1900,6 +1912,7 @@
     <ClInclude Include="..\..\Source\sspSecondsRun.h"/>
     <ClInclude Include="..\..\Source\sspTimeMap.h"/>
     <ClInclude Include="..\..\Source\sspValueRange.h"/>
+    <ClInclude Include="..\..\Source\sspValues.h"/>
     <ClInclude Include="..\..\Source\sspDomainData.h"/>
     <ClInclude Include="..\..\Source\sspObject.h"/>
     <ClInclude Include="..\..\Source\sspObjectVector.h"/>

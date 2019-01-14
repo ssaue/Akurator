@@ -11,7 +11,7 @@
 #include "sspAddValue.h"
 #include "sspLogging.h"
 
-double SSpAddValue::getValue() const
+double sspAddValue::getValue() const
 {
 	double fVal = 0.0;
 	for (auto add : addends_)
@@ -19,7 +19,7 @@ double SSpAddValue::getValue() const
 	return fVal;
 }
 
-bool SSpAddValue::verify(int & nErrors, int & nWarnings) const
+bool sspAddValue::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 

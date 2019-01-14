@@ -13,7 +13,7 @@
 #include "sspPrimitives.h"
 #include "sspObjectVector.h"
 
-class SSpAddValue : public sspValue
+class sspAddValue : public sspValue
 {
 	sspObjectVector<sspValue> addends_;
 
@@ -25,10 +25,10 @@ class SSpAddValue : public sspValue
 	}
 
 public:
-	SSpAddValue() = default;
-	SSpAddValue(const SSpAddValue& val) = delete;
-	SSpAddValue& operator= (const SSpAddValue& val) = delete;
-	virtual ~SSpAddValue() {}
+	sspAddValue() = default;
+	sspAddValue(const sspAddValue& val) = delete;
+	sspAddValue& operator= (const sspAddValue& val) = delete;
+	virtual ~sspAddValue() {}
 
 	// Virtual methods
 	virtual double getValue() const override;

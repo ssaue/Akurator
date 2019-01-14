@@ -25,6 +25,11 @@ void sspDateInterval::setInputRange(const partial_date& min, const partial_date&
 	}
 }
 
+sspDateInterval::sspDateInterval()
+	: date_min_(1, Jan), date_max_(31, Dec)
+{
+}
+
 bool sspDateInterval::isTrue() const
 {
 	auto now = day_clock::local_day();

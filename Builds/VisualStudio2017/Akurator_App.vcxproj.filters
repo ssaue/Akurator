@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Akurator\Source\Domain\Strings">
+      <UniqueIdentifier>{F57F443D-3C71-E632-81D4-EF938FD2C7F9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain\Conditionals">
       <UniqueIdentifier>{43784D84-DB08-7FF0-AE85-0A1738AF15D7}</UniqueIdentifier>
     </Filter>
@@ -418,7 +421,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspConcatString.cpp">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspFolderFileString.cpp">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspSelectString.cpp">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspStrings.cpp">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspAnd.cpp">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspConditionals.cpp">
       <Filter>Akurator\Source\Domain\Conditionals</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspDateInterval.cpp">
@@ -479,6 +497,9 @@
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspValueRange.cpp">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspValues.cpp">
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspDomainData.cpp">
@@ -2334,10 +2355,28 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspConcatString.h">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspFolderFileString.h">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSelectString.h">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSimpleString.h">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspStrings.h">
+      <Filter>Akurator\Source\Domain\Strings</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspAnd.h">
       <Filter>Akurator\Source\Domain\Conditionals</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspBoolean.h">
+      <Filter>Akurator\Source\Domain\Conditionals</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspConditionals.h">
       <Filter>Akurator\Source\Domain\Conditionals</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDateInterval.h">
@@ -2401,6 +2440,9 @@
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspValueRange.h">
+      <Filter>Akurator\Source\Domain\Values</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspValues.h">
       <Filter>Akurator\Source\Domain\Values</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDomainData.h">

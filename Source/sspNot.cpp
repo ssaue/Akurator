@@ -16,7 +16,7 @@ bool sspNot::isTrue() const
 	return !operand_->isTrue();
 }
 
-bool sspNot::verify(int & nErrors, int & nWarnings) const
+bool sspNot::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 

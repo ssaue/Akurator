@@ -5,6 +5,47 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <GROUP id="{4C41B598-ED08-09DC-8B9E-BE51C1BCB39F}" name="PlayObjects">
+          <FILE id="MxQ1kE" name="sspDistributionPlayer.cpp" compile="1" resource="0"
+                file="Source/sspDistributionPlayer.cpp"/>
+          <FILE id="PYQNKp" name="sspDistributionPlayer.h" compile="0" resource="0"
+                file="Source/sspDistributionPlayer.h"/>
+          <FILE id="dibf42" name="sspConditionalPlayer.cpp" compile="1" resource="0"
+                file="Source/sspConditionalPlayer.cpp"/>
+          <FILE id="f3QbFh" name="sspConditionalPlayer.h" compile="0" resource="0"
+                file="Source/sspConditionalPlayer.h"/>
+          <FILE id="pzR5AH" name="sspChainPlayer.cpp" compile="1" resource="0"
+                file="Source/sspChainPlayer.cpp"/>
+          <FILE id="GDNO2J" name="sspChainPlayer.h" compile="0" resource="0"
+                file="Source/sspChainPlayer.h"/>
+          <FILE id="bbi8XJ" name="sspRandomPlayer.cpp" compile="1" resource="0"
+                file="Source/sspRandomPlayer.cpp"/>
+          <FILE id="dfzbYu" name="sspRandomPlayer.h" compile="0" resource="0"
+                file="Source/sspRandomPlayer.h"/>
+          <FILE id="O2UvXF" name="sspIndexPlayer.cpp" compile="1" resource="0"
+                file="Source/sspIndexPlayer.cpp"/>
+          <FILE id="SqVcKB" name="sspIndexPlayer.h" compile="0" resource="0"
+                file="Source/sspIndexPlayer.h"/>
+          <FILE id="VpDcxx" name="sspSequentialPlayer.cpp" compile="1" resource="0"
+                file="Source/sspSequentialPlayer.cpp"/>
+          <FILE id="O8ZkVn" name="sspSequentialPlayer.h" compile="0" resource="0"
+                file="Source/sspSequentialPlayer.h"/>
+          <FILE id="Q1dO4j" name="sspSimultaneousPlayer.cpp" compile="1" resource="0"
+                file="Source/sspSimultaneousPlayer.cpp"/>
+          <FILE id="Co7QrJ" name="sspSimultaneousPlayer.h" compile="0" resource="0"
+                file="Source/sspSimultaneousPlayer.h"/>
+          <FILE id="nMwHlj" name="sspSilencePlayer.cpp" compile="1" resource="0"
+                file="Source/sspSilencePlayer.cpp"/>
+          <FILE id="IrJ441" name="sspSilencePlayer.h" compile="0" resource="0"
+                file="Source/sspSilencePlayer.h"/>
+          <FILE id="Vf4hgi" name="sspOSCPlayer.cpp" compile="1" resource="0"
+                file="Source/sspOSCPlayer.cpp"/>
+          <FILE id="pxpZOc" name="sspOSCPlayer.h" compile="0" resource="0" file="Source/sspOSCPlayer.h"/>
+          <FILE id="vk6iJZ" name="sspFinishedResponder.h" compile="0" resource="0"
+                file="Source/sspFinishedResponder.h"/>
+          <FILE id="zemuiF" name="sspPlayer.cpp" compile="1" resource="0" file="Source/sspPlayer.cpp"/>
+          <FILE id="O884uo" name="sspPlayer.h" compile="0" resource="0" file="Source/sspPlayer.h"/>
+        </GROUP>
         <GROUP id="{AAC283E1-190E-C437-2A37-A949C101F502}" name="Strings">
           <FILE id="H1WzlO" name="sspConcatString.cpp" compile="1" resource="0"
                 file="Source/sspConcatString.cpp"/>

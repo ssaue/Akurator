@@ -67,10 +67,14 @@ public:
 	virtual ~sspObjectVector() {}
 
 	void add(std::shared_ptr<T> element) { elements_.push_back(element); }
-	std::shared_ptr<const T> getAt(size_t const index) const
+	const std::shared_ptr<T> getAt(size_t const index) const
 	{
 		assert(index < size());
 		return elements_[index];
+	}
+	const std::shared_ptr<T> getLast() const
+	{
+		return elements_[size() - 1];
 	}
 	void clear() { elements_.clear(); }
 
@@ -92,12 +96,26 @@ public:
 	{
 	}
 
+	sspObjectVector_iterator_type(const sspObjectVector_iterator_type& other) :
+		index(other.index), collection(other.collection)
+	{
+	}
+
+	sspObjectVector_iterator_type& operator=(const sspObjectVector_iterator_type& other)
+	{
+		if (this == &other)
+			return *this;
+		index = other.index;
+		collection = other.collection;
+		return *this;
+	}
+
 	bool operator!= (sspObjectVector_iterator_type const & other) const
 	{
 		return index != other.index;
 	}
 
-	std::shared_ptr<const T> operator* () const
+	const std::shared_ptr<T> operator* () const
 	{
 		return collection.getAt(index);
 	}

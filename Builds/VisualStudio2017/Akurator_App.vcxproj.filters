@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Akurator\Source\Domain\PlayObjects">
+      <UniqueIdentifier>{FB74E3FD-4E2D-74A4-505D-11E5846ECDCD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain\Strings">
       <UniqueIdentifier>{F57F443D-3C71-E632-81D4-EF938FD2C7F9}</UniqueIdentifier>
     </Filter>
@@ -421,6 +424,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspConditionalPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspChainPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspRandomPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspIndexPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspSequentialPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspSimultaneousPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspSilencePlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspOSCPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspPlayer.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspConcatString.cpp">
       <Filter>Akurator\Source\Domain\Strings</Filter>
     </ClCompile>
@@ -2355,6 +2388,39 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspDistributionPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspConditionalPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspChainPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspRandomPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspIndexPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSequentialPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSimultaneousPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSilencePlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspOSCPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspFinishedResponder.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspPlayer.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspConcatString.h">
       <Filter>Akurator\Source\Domain\Strings</Filter>
     </ClInclude>

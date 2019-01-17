@@ -146,6 +146,16 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspConditionalPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspChainPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspRandomPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspIndexPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspSequentialPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspSimultaneousPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspSilencePlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspOSCPlayer.cpp"/>
+    <ClCompile Include="..\..\Source\sspPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspConcatString.cpp"/>
     <ClCompile Include="..\..\Source\sspFolderFileString.cpp"/>
     <ClCompile Include="..\..\Source\sspSelectString.cpp"/>
@@ -1883,6 +1893,17 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspDistributionPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspConditionalPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspChainPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspRandomPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspIndexPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspSequentialPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspSimultaneousPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspSilencePlayer.h"/>
+    <ClInclude Include="..\..\Source\sspOSCPlayer.h"/>
+    <ClInclude Include="..\..\Source\sspFinishedResponder.h"/>
+    <ClInclude Include="..\..\Source\sspPlayer.h"/>
     <ClInclude Include="..\..\Source\sspConcatString.h"/>
     <ClInclude Include="..\..\Source\sspFolderFileString.h"/>
     <ClInclude Include="..\..\Source\sspSelectString.h"/>

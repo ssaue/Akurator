@@ -10,18 +10,6 @@
 
 #pragma once
 
-/*
-  ==============================================================================
-
-	sspObjectVector.h
-	Created: 4 Jan 2019 11:08:42am
-	Author:  sigurds
-
-  ==============================================================================
-*/
-
-#pragma once
-
 #include <vector>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/shared_ptr.hpp>

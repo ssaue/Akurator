@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <memory>
+
 class sspFinishedResponder : public std::enable_shared_from_this<sspFinishedResponder>
 {
 public:

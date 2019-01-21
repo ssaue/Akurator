@@ -4,6 +4,21 @@
               cppLanguageStandard="latest">
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
+      <GROUP id="{0019B1A5-1F71-B137-AD0B-36F51D4DD35A}" name="Scheduling">
+        <FILE id="DMFj6W" name="sspScheduleObject.h" compile="0" resource="0"
+              file="Source/sspScheduleObject.h"/>
+        <FILE id="o2uibc" name="sspScheduler.cpp" compile="1" resource="0"
+              file="Source/sspScheduler.cpp"/>
+        <FILE id="DAYHIl" name="sspScheduler.h" compile="0" resource="0" file="Source/sspScheduler.h"/>
+        <FILE id="cPquAJ" name="sspSchedulerHead.cpp" compile="1" resource="0"
+              file="Source/sspSchedulerHead.cpp"/>
+        <FILE id="kwObBz" name="sspSchedulerHead.h" compile="0" resource="0"
+              file="Source/sspSchedulerHead.h"/>
+        <FILE id="Eq8EhS" name="sspSilenceObject.cpp" compile="1" resource="0"
+              file="Source/sspSilenceObject.cpp"/>
+        <FILE id="eHwf0d" name="sspSilenceObject.h" compile="0" resource="0"
+              file="Source/sspSilenceObject.h"/>
+      </GROUP>
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
         <GROUP id="{4C41B598-ED08-09DC-8B9E-BE51C1BCB39F}" name="PlayObjects">
           <FILE id="MxQ1kE" name="sspDistributionPlayer.cpp" compile="1" resource="0"

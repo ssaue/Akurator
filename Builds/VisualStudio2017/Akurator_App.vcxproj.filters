@@ -2,6 +2,9 @@
 
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Akurator\Source\Scheduling">
+      <UniqueIdentifier>{4EE3A76D-35D9-3C89-0EE9-89AC1ABC5D64}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain\PlayObjects">
       <UniqueIdentifier>{FB74E3FD-4E2D-74A4-505D-11E5846ECDCD}</UniqueIdentifier>
     </Filter>
@@ -424,6 +427,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspScheduler.cpp">
+      <Filter>Akurator\Source\Scheduling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspSchedulerHead.cpp">
+      <Filter>Akurator\Source\Scheduling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspSilenceObject.cpp">
+      <Filter>Akurator\Source\Scheduling</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp">
       <Filter>Akurator\Source\Domain\PlayObjects</Filter>
     </ClCompile>
@@ -2388,6 +2400,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspScheduleObject.h">
+      <Filter>Akurator\Source\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspScheduler.h">
+      <Filter>Akurator\Source\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSchedulerHead.h">
+      <Filter>Akurator\Source\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspSilenceObject.h">
+      <Filter>Akurator\Source\Scheduling</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspDistributionPlayer.h">
       <Filter>Akurator\Source\Domain\PlayObjects</Filter>
     </ClInclude>

@@ -146,6 +146,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspScheduler.cpp"/>
+    <ClCompile Include="..\..\Source\sspSchedulerHead.cpp"/>
+    <ClCompile Include="..\..\Source\sspSilenceObject.cpp"/>
     <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspConditionalPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspChainPlayer.cpp"/>
@@ -1893,6 +1896,10 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspScheduleObject.h"/>
+    <ClInclude Include="..\..\Source\sspScheduler.h"/>
+    <ClInclude Include="..\..\Source\sspSchedulerHead.h"/>
+    <ClInclude Include="..\..\Source\sspSilenceObject.h"/>
     <ClInclude Include="..\..\Source\sspDistributionPlayer.h"/>
     <ClInclude Include="..\..\Source\sspConditionalPlayer.h"/>
     <ClInclude Include="..\..\Source\sspChainPlayer.h"/>

@@ -13,8 +13,6 @@
 #include "sspPrimitives.h"
 #include "sspFinishedResponder.h"
 
-#include <memory>
-
 class sspPlayer : public sspPlayObject, public sspFinishedResponder
 {
 	friend class boost::serialization::access;

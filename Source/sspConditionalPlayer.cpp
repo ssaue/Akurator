@@ -12,32 +12,40 @@
 #include "sspLogging.h"
 
 
-bool sspConditionalPlayer::initialize()
-{
-	play_count_ = 0;
-	return true;
-}
-
 bool sspConditionalPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
-	selected_ = default_player_;
+	if (isPlaying())
+		return false;
+
+	auto ptr = default_player_;
 	assert(conditionals_.size() == players_.size());
 	for (size_t i = 0; i < conditionals_.size(); ++i) {
 		if (conditionals_.getAt(i)->isTrue())
 			selected_ = players_.getAt(i);
 	}
-	auto player = selected_.lock();
-	if (player && player->start(weak_from_this())) {
-		play_count_ = 1;
-		responder_ = responder;
+	if (ptr->start(weak_from_this())) {
+		setResponder(responder);
+		selected_ = ptr;
 	}
+
 	return isPlaying();
 }
 
 void sspConditionalPlayer::stop()
 {
 	if (auto ptr = selected_.lock()) ptr->stop();
-	play_count_ = 0;
+	selected_.reset();
+}
+
+bool sspConditionalPlayer::update()
+{
+	selected_.reset();
+	return false;
+}
+
+bool sspConditionalPlayer::isPlaying() const
+{
+	return !selected_.expired();
 }
 
 bool sspConditionalPlayer::verify(int & nErrors, int & nWarnings) const

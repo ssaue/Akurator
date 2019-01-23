@@ -18,12 +18,6 @@ sspSilencePlayer::sspSilencePlayer()
 	silence_->setResponder(weak_from_this());
 }
 
-bool sspSilencePlayer::initialize()
-{
-	play_count_ = 0;
-	return true;
-}
-
 bool sspSilencePlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
@@ -31,11 +25,27 @@ bool sspSilencePlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 
 	silence_->setDuration(duration_->getValue());
 	if (sspScheduler::Instance().add(silence_)) {
-		play_count_ = 1;
-		responder_ = responder;
+		is_playing_ = true;
+		setResponder(responder);
 	}
 
 	return isPlaying();
+}
+
+void sspSilencePlayer::stop()
+{
+	is_playing_ = false;
+}
+
+bool sspSilencePlayer::update()
+{
+	is_playing_ = false;
+	return false;
+}
+
+bool sspSilencePlayer::isPlaying() const
+{
+	return is_playing_;
 }
 
 bool sspSilencePlayer::verify(int & nErrors, int & /*nWarnings*/) const

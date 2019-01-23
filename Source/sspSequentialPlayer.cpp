@@ -11,12 +11,6 @@
 #include "sspSequentialPlayer.h"
 #include "sspLogging.h"
 
-bool sspSequentialPlayer::initialize()
-{
-	play_count_ = 0;
-	return true;
-}
-
 bool sspSequentialPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
@@ -24,28 +18,29 @@ bool sspSequentialPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 
 	iterator_ = begin(players_);
 	if ((*iterator_)->start(weak_from_this())) {
-		play_count_ = 1;
-		responder_ = responder;
+		is_playing_ = true;
+		setResponder(responder);
 	}
+
 	return (isPlaying());
 }
 
 bool sspSequentialPlayer::update()
 {
 	++iterator_;
-	if (iterator_ != end(players_) && (*iterator_)->start(weak_from_this())) {
-		return true;
-	}
-	else {
-		play_count_ = 0;
-		return false;
-	}
+	is_playing_ = (iterator_ != end(players_) && (*iterator_)->start(weak_from_this()));
+	return isPlaying();
+}
+
+bool sspSequentialPlayer::isPlaying() const
+{
+	return is_playing_;
 }
 
 void sspSequentialPlayer::stop()
 {
 	(*iterator_)->stop();
-	play_count_ = 0;
+	is_playing_ = false;
 }
 
 bool sspSequentialPlayer::verify(int & nErrors, int & nWarnings) const

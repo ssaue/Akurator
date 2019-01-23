@@ -16,7 +16,9 @@
 class sspSequentialPlayer : public sspPlayer
 {
 	sspObjectVector<sspPlayer> players_;
+	
 	sspObjectVector_iterator<sspPlayer> iterator_;
+	bool is_playing_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -31,10 +33,11 @@ public:
 	sspSequentialPlayer& operator= (const sspSequentialPlayer& obj) = delete;
 	virtual ~sspSequentialPlayer() {}
 
-	virtual bool initialize() override;
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
-	virtual bool update() override;
 	virtual void stop() override;
+
+	virtual bool update() override;
+	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors

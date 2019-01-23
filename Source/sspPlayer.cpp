@@ -10,24 +10,6 @@
 
 #include "sspPlayer.h"
 
-bool sspPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
-{
-	responder_ = responder;
-	play_count_++;
-	return true;
-}
-
-bool sspPlayer::update()
-{
-	play_count_--;
-	return (play_count_ > 0);
-}
-
-void sspPlayer::stop()
-{
-	play_count_ = 0;
-}
-
 void sspPlayer::onFinished()
 {
 	if (isPlaying() && !update()) {

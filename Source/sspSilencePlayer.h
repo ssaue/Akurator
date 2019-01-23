@@ -21,6 +21,8 @@ class sspSilencePlayer : public sspPlayer
 	std::shared_ptr<sspValue> duration_;
 	std::shared_ptr<sspSilenceTask> silence_;
 
+	bool is_playing_ = false;
+
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -35,8 +37,11 @@ public:
 	sspSilencePlayer& operator= (const sspSilencePlayer& obj) = delete;
 	virtual ~sspSilencePlayer() {}
 
-	virtual bool initialize() override;
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
+	virtual void stop() override;
+
+	virtual bool update() override;
+	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors

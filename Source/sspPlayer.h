@@ -15,6 +15,8 @@
 
 class sspPlayer : public sspPlayObject, public sspFinishedResponder
 {
+	std::weak_ptr<sspFinishedResponder> responder_;
+
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -27,19 +29,15 @@ public:
 	sspPlayer& operator= (const sspPlayer& obj) = delete;
 	virtual ~sspPlayer() {}
 
-	virtual bool initialize() = 0;
-	virtual void terminate() {}
+	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) = 0;
+	virtual void stop() = 0;
 
-	virtual bool start(std::weak_ptr<sspFinishedResponder> responder);
-	virtual bool update();
-	virtual void stop();
-
-	virtual bool isPlaying() const override { return (play_count_ > 0); }
-	virtual void onFinished() override;
+	virtual bool isPlaying() const override = 0;
+	virtual void onFinished() final;
 
 protected:
-	std::weak_ptr<sspFinishedResponder> responder_;
-	short play_count_;
+	virtual bool update() = 0;
+	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspPlayer)

@@ -19,20 +19,12 @@ namespace {
 	std::mt19937 random_generator(rd());
 }
 
-
-bool sspChainPlayer::initialize()
-{
-	play_count_ = 0;
-	chain_count_ = chain_length_;
-	return true;
-}
-
 bool sspChainPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;
 
-	if (chain_count_ == chain_length_) {
+	if (chain_count_ >= chain_length_) {
 		std::uniform_int_distribution<size_t> dist(0, players_.size()-1);
 		selected_ = dist(random_generator);
 		chain_count_ = 1;
@@ -44,18 +36,29 @@ bool sspChainPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 
 	auto player = players_.getAt(selected_);
 	if (player->start(weak_from_this())) {
-		play_count_ = 1;
-		responder_ = responder;
+		is_playing_ = true;
+		setResponder(responder);
 	}
 	return isPlaying();
 }
 
 void sspChainPlayer::stop()
 {
+	is_playing_ = false;
 	auto player = players_.getAt(selected_);
 	player->stop();
-	play_count_ = 0;
 	chain_count_ = chain_length_;
+}
+
+bool sspChainPlayer::update()
+{
+	is_playing_ = false;
+	return false;
+}
+
+bool sspChainPlayer::isPlaying() const
+{
+	return is_playing_;
 }
 
 bool sspChainPlayer::verify(int & nErrors, int & nWarnings) const

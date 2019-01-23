@@ -16,6 +16,7 @@
 class sspSimultaneousPlayer : public sspPlayer
 {
 	sspObjectVector<sspPlayer> players_;
+	int player_count_ = 0;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -30,9 +31,11 @@ public:
 	sspSimultaneousPlayer& operator= (const sspSimultaneousPlayer& obj) = delete;
 	virtual ~sspSimultaneousPlayer() {}
 
-	virtual bool initialize() override;
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
+
+	virtual bool update() override;
+	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors

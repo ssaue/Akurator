@@ -11,12 +11,6 @@
 #include "sspSimultaneousPlayer.h"
 #include "sspLogging.h"
 
-bool sspSimultaneousPlayer::initialize()
-{
-	play_count_ = 0;
-	return true;
-}
-
 bool sspSimultaneousPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
@@ -25,11 +19,11 @@ bool sspSimultaneousPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 	auto ptr = weak_from_this();
 	for (auto&& player : players_) {
 		if (player->start(ptr)) {
-			play_count_++;
+			player_count_++;
 		}
 	}
 	if (isPlaying()) {
-		responder_ = responder;
+		setResponder(responder);
 		return true;
 	}
 	else {
@@ -42,7 +36,18 @@ void sspSimultaneousPlayer::stop()
 	for (auto&& player : players_) {
 		player->stop();
 	}
-	play_count_ = 0;
+	player_count_ = 0;
+}
+
+bool sspSimultaneousPlayer::update()
+{
+	player_count_ = 0;
+	return false;
+}
+
+bool sspSimultaneousPlayer::isPlaying() const
+{
+	return (player_count_ > 0);
 }
 
 bool sspSimultaneousPlayer::verify(int & nErrors, int & nWarnings) const

@@ -19,8 +19,9 @@ class sspChainPlayer : public sspPlayer
 	size_t chain_length_;
 	size_t chain_hop_;
 
-	size_t chain_count_;
-	size_t selected_;
+	size_t  chain_count_ = chain_length_;
+	size_t  selected_ = std::numeric_limits<size_t>::max();
+	bool	is_playing_ = false;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -37,9 +38,11 @@ public:
 	sspChainPlayer& operator= (const sspChainPlayer& obj) = delete;
 	virtual ~sspChainPlayer() {}
 
-	virtual bool initialize() override;
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
+
+	virtual bool update() override;
+	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors

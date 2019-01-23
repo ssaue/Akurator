@@ -11,13 +11,6 @@
 #include "sspIndexPlayer.h"
 #include "sspLogging.h"
 
-
-bool sspIndexPlayer::initialize()
-{
-	play_count_ = 0;
-	return true;
-}
-
 bool sspIndexPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (players_.empty())
@@ -27,17 +20,28 @@ bool sspIndexPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 	size_t index = value < 0.0 ? 0 : static_cast<size_t>(value);
 	auto player = (index < players_.size()) ? players_.getAt(index) : players_.getLast();
 	if (player->start(weak_from_this())) {
-		play_count_ = 1;
-		responder_ = responder;
+		setResponder(responder);
 		selected_ = player;
 	}
+
 	return isPlaying();
 }
 
 void sspIndexPlayer::stop()
 {
 	if (auto ptr = selected_.lock()) ptr->stop();
-	play_count_ = 0;
+	selected_.reset();
+}
+
+bool sspIndexPlayer::update()
+{
+	selected_.reset();
+	return false;
+}
+
+bool sspIndexPlayer::isPlaying() const
+{
+	return !selected_.expired();
 }
 
 bool sspIndexPlayer::verify(int & nErrors, int & nWarnings) const

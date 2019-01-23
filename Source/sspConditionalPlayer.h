@@ -35,9 +35,11 @@ public:
 	sspConditionalPlayer& operator= (const sspConditionalPlayer& obj) = delete;
 	virtual ~sspConditionalPlayer() {}
 
-	virtual bool initialize() override;
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
+
+	virtual bool update() override;
+	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors

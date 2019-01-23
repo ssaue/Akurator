@@ -430,10 +430,7 @@
     <ClCompile Include="..\..\Source\sspScheduler.cpp">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspSchedulerHead.cpp">
-      <Filter>Akurator\Source\Scheduling</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\sspSilenceObject.cpp">
+    <ClCompile Include="..\..\Source\sspSilenceTask.cpp">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp">
@@ -2400,16 +2397,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\sspScheduleObject.h">
+    <ClInclude Include="..\..\Source\sspScheduleTask.h">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspScheduler.h">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspSchedulerHead.h">
-      <Filter>Akurator\Source\Scheduling</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\sspSilenceObject.h">
+    <ClInclude Include="..\..\Source\sspSilenceTask.h">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDistributionPlayer.h">

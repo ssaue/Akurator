@@ -4,46 +4,59 @@
     sspScheduler.h
     Created: 21 Jan 2019 4:26:05pm
     Author:  sigurds
-	Adapted from: seccpur
+	Adapted from: LWimsey
 
   ==============================================================================
 */
 
 #pragma once
 
-#include "sspScheduleObject.h"
+#include "sspScheduleTask.h"
 
 #include <memory>
-#include <map>
 #include <chrono>
+#include <vector>
+#include <queue>
 #include <condition_variable>
-
-class sspSchedulerHead;
 
 class sspScheduler
 {
-	using time_point = std::chrono::steady_clock::time_point;
+public:
+	static sspScheduler& Instance();
+	bool add(std::weak_ptr<sspScheduleTask> task);
 
+private:
+	using TimePoint = std::chrono::steady_clock::time_point;
+
+	struct Key {
+		TimePoint tp;
+		std::weak_ptr<sspScheduleTask> task;
+	};
+
+	const int threadpool_size_ = 10;
+	std::vector<std::thread> threadpool_;
+	std::vector<std::weak_ptr<sspScheduleTask>> ready_tasks_;
+
+	struct TimeComparator {
+		bool operator()(const Key &a, const Key &b) const {return a.tp > b.tp;}
+	};
+	std::priority_queue<Key, std::vector<Key>, TimeComparator> task_queue_;
+
+	std::thread timer_thread_;
+	std::mutex  timer_lock_, worker_lock_;
+	std::condition_variable timer_cv_, worker_cv_;
+
+	bool worker_is_running_ = true;
+	bool timer_is_running_ = true;
+
+	void timer_thread();
+	void worker_thread();
+
+private:
+	// Singleton stuff
 	static sspScheduler* s_instance_;
 	static bool s_destroyed_;
 
-	std::map<time_point, std::weak_ptr<sspScheduleObject>> timed_tasks;
-	std::condition_variable signal_;
-	std::mutex lock_;
-	std::unique_ptr<sspSchedulerHead> head_;
-	std::unique_ptr<std::thread> thread_;
-	bool running_;
-	bool update_head_;
-
-public:
-	static sspScheduler& Instance();
-
-	void insert(std::pair<time_point, std::weak_ptr<sspScheduleObject>> node);
-	void remove(time_point tp);
-	void close();
-	void executed(time_point tp);
-
-private:
 	sspScheduler();
 	sspScheduler(const sspScheduler&) = delete;
 	sspScheduler& operator=(const sspScheduler&) = delete;
@@ -51,6 +64,4 @@ private:
 
 	static void create();
 	static void onDeadReference();
-
-	void run();
 };

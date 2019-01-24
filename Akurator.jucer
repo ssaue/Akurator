@@ -16,6 +16,24 @@
               file="Source/sspSilenceTask.h"/>
       </GROUP>
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <GROUP id="{1092AB9E-FA01-8CB7-2EA6-DC533A8BCF0B}" name="Messages">
+          <FILE id="Vk693d" name="sspChannelMessage.cpp" compile="1" resource="0"
+                file="Source/sspChannelMessage.cpp"/>
+          <FILE id="ZY5qSi" name="sspChannelMessage.h" compile="0" resource="0"
+                file="Source/sspChannelMessage.h"/>
+          <FILE id="Sujf30" name="sspConditionalMsgList.cpp" compile="1" resource="0"
+                file="Source/sspConditionalMsgList.cpp"/>
+          <FILE id="n2J7zs" name="sspConditionalMsgList.h" compile="0" resource="0"
+                file="Source/sspConditionalMsgList.h"/>
+          <FILE id="lMp8vV" name="sspMessage.cpp" compile="1" resource="0" file="Source/sspMessage.cpp"/>
+          <FILE id="ASLeVF" name="sspMessage.h" compile="0" resource="0" file="Source/sspMessage.h"/>
+          <FILE id="jaBxhG" name="sspMessageHandler.h" compile="0" resource="0"
+                file="Source/sspMessageHandler.h"/>
+          <FILE id="govjAK" name="sspMessageList.cpp" compile="1" resource="0"
+                file="Source/sspMessageList.cpp"/>
+          <FILE id="KsqF7J" name="sspMessageList.h" compile="0" resource="0"
+                file="Source/sspMessageList.h"/>
+        </GROUP>
         <GROUP id="{4C41B598-ED08-09DC-8B9E-BE51C1BCB39F}" name="PlayObjects">
           <FILE id="MxQ1kE" name="sspDistributionPlayer.cpp" compile="1" resource="0"
                 file="Source/sspDistributionPlayer.cpp"/>
@@ -62,10 +80,9 @@
                 file="Source/sspConcatString.cpp"/>
           <FILE id="rx5E1e" name="sspConcatString.h" compile="0" resource="0"
                 file="Source/sspConcatString.h"/>
-          <FILE id="xY69Qa" name="sspFolderFileString.cpp" compile="1" resource="0"
-                file="Source/sspFolderFileString.cpp"/>
-          <FILE id="J6QgNE" name="sspFolderFileString.h" compile="0" resource="0"
-                file="Source/sspFolderFileString.h"/>
+          <FILE id="xY69Qa" name="sspFileString.cpp" compile="1" resource="0"
+                file="Source/sspFileString.cpp"/>
+          <FILE id="J6QgNE" name="sspFileString.h" compile="0" resource="0" file="Source/sspFileString.h"/>
           <FILE id="cLoDaG" name="sspSelectString.cpp" compile="1" resource="0"
                 file="Source/sspSelectString.cpp"/>
           <FILE id="dbAjql" name="sspSelectString.h" compile="0" resource="0"

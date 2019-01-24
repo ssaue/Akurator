@@ -5,6 +5,9 @@
     <Filter Include="Akurator\Source\Scheduling">
       <UniqueIdentifier>{4EE3A76D-35D9-3C89-0EE9-89AC1ABC5D64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Akurator\Source\Domain\Messages">
+      <UniqueIdentifier>{891D82DD-612F-8F3E-E5DE-DFAAC162EE35}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain\PlayObjects">
       <UniqueIdentifier>{FB74E3FD-4E2D-74A4-505D-11E5846ECDCD}</UniqueIdentifier>
     </Filter>
@@ -433,6 +436,18 @@
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\sspChannelMessage.cpp">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspConditionalMsgList.cpp">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspMessage.cpp">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspMessageList.cpp">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp">
       <Filter>Akurator\Source\Domain\PlayObjects</Filter>
     </ClCompile>
@@ -466,7 +481,7 @@
     <ClCompile Include="..\..\Source\sspConcatString.cpp">
       <Filter>Akurator\Source\Domain\Strings</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspFolderFileString.cpp">
+    <ClCompile Include="..\..\Source\sspFileString.cpp">
       <Filter>Akurator\Source\Domain\Strings</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspSelectString.cpp">
@@ -2406,6 +2421,21 @@
     <ClInclude Include="..\..\Source\sspSilenceTask.h">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\sspChannelMessage.h">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspConditionalMsgList.h">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspMessage.h">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspMessageHandler.h">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspMessageList.h">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspDistributionPlayer.h">
       <Filter>Akurator\Source\Domain\PlayObjects</Filter>
     </ClInclude>
@@ -2442,7 +2472,7 @@
     <ClInclude Include="..\..\Source\sspConcatString.h">
       <Filter>Akurator\Source\Domain\Strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspFolderFileString.h">
+    <ClInclude Include="..\..\Source\sspFileString.h">
       <Filter>Akurator\Source\Domain\Strings</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspSelectString.h">

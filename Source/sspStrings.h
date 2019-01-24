@@ -11,6 +11,6 @@
 #pragma once
 
 #include "sspConcatString.h"
-#include "sspFolderFileString.h"
+#include "sspFileString.h"
 #include "sspSelectString.h"
-#include "sspSImpleString.h"
+#include "sspSimpleString.h"

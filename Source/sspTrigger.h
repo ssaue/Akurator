@@ -21,7 +21,8 @@ public:
 private:
 	std::shared_ptr<sspConditional> conditional_;
 	Trigger change_;
-	mutable bool old_state_;
+
+	mutable bool old_state_ = false;
 
 	friend class boost::serialization::access;
 	template <typename Archive>

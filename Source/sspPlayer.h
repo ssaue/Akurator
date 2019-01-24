@@ -32,7 +32,6 @@ public:
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) = 0;
 	virtual void stop() = 0;
 
-	virtual bool isPlaying() const override = 0;
 	virtual void onFinished() final;
 
 protected:

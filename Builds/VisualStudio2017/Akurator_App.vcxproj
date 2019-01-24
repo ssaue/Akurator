@@ -148,6 +148,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\sspScheduler.cpp"/>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp"/>
+    <ClCompile Include="..\..\Source\sspChannelMessage.cpp"/>
+    <ClCompile Include="..\..\Source\sspConditionalMsgList.cpp"/>
+    <ClCompile Include="..\..\Source\sspMessage.cpp"/>
+    <ClCompile Include="..\..\Source\sspMessageList.cpp"/>
     <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspConditionalPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspChainPlayer.cpp"/>
@@ -159,7 +163,7 @@
     <ClCompile Include="..\..\Source\sspOSCPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspConcatString.cpp"/>
-    <ClCompile Include="..\..\Source\sspFolderFileString.cpp"/>
+    <ClCompile Include="..\..\Source\sspFileString.cpp"/>
     <ClCompile Include="..\..\Source\sspSelectString.cpp"/>
     <ClCompile Include="..\..\Source\sspStrings.cpp"/>
     <ClCompile Include="..\..\Source\sspAnd.cpp"/>
@@ -1898,6 +1902,11 @@
     <ClInclude Include="..\..\Source\sspScheduleTask.h"/>
     <ClInclude Include="..\..\Source\sspScheduler.h"/>
     <ClInclude Include="..\..\Source\sspSilenceTask.h"/>
+    <ClInclude Include="..\..\Source\sspChannelMessage.h"/>
+    <ClInclude Include="..\..\Source\sspConditionalMsgList.h"/>
+    <ClInclude Include="..\..\Source\sspMessage.h"/>
+    <ClInclude Include="..\..\Source\sspMessageHandler.h"/>
+    <ClInclude Include="..\..\Source\sspMessageList.h"/>
     <ClInclude Include="..\..\Source\sspDistributionPlayer.h"/>
     <ClInclude Include="..\..\Source\sspConditionalPlayer.h"/>
     <ClInclude Include="..\..\Source\sspChainPlayer.h"/>
@@ -1910,7 +1919,7 @@
     <ClInclude Include="..\..\Source\sspFinishedResponder.h"/>
     <ClInclude Include="..\..\Source\sspPlayer.h"/>
     <ClInclude Include="..\..\Source\sspConcatString.h"/>
-    <ClInclude Include="..\..\Source\sspFolderFileString.h"/>
+    <ClInclude Include="..\..\Source\sspFileString.h"/>
     <ClInclude Include="..\..\Source\sspSelectString.h"/>
     <ClInclude Include="..\..\Source\sspSimpleString.h"/>
     <ClInclude Include="..\..\Source\sspStrings.h"/>

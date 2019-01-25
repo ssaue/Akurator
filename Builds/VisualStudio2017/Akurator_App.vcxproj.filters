@@ -448,6 +448,12 @@
     <ClCompile Include="..\..\Source\sspMessageList.cpp">
       <Filter>Akurator\Source\Domain\Messages</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\sspTimeTriggerMsgList.cpp">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspTriggerMsgList.cpp">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp">
       <Filter>Akurator\Source\Domain\PlayObjects</Filter>
     </ClCompile>
@@ -2434,6 +2440,12 @@
       <Filter>Akurator\Source\Domain\Messages</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspMessageList.h">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspTimeTriggerMsgList.h">
+      <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspTriggerMsgList.h">
       <Filter>Akurator\Source\Domain\Messages</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDistributionPlayer.h">

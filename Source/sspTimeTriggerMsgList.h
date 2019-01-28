@@ -22,7 +22,6 @@ class sspTimeTriggerMsgList
 	using TimeMap = std::map<boost::posix_time::time_duration, std::shared_ptr<sspConditionalMsgList>>;
 
 	TimeMap messages_;
-	mutable TimeMap::const_iterator pos_ = messages_.cend();
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -31,7 +30,7 @@ class sspTimeTriggerMsgList
 	}
 
 public:
-	sspTimeTriggerMsgList() = default;
+	sspTimeTriggerMsgList();
 	sspTimeTriggerMsgList(const sspTimeTriggerMsgList& obj) = delete;
 	sspTimeTriggerMsgList& operator= (const sspTimeTriggerMsgList& obj) = delete;
 	virtual ~sspTimeTriggerMsgList() {}
@@ -44,5 +43,8 @@ public:
 
 	void reset();
 	void testAndSend() const;
+
+private:
+	mutable TimeMap::const_iterator pos_ = messages_.cend();
 };
 

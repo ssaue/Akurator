@@ -26,7 +26,7 @@ private:
 	}
 
 public:
-	sspSimpleString() = default;
+	sspSimpleString() : sspString(), str_("") {}
 	sspSimpleString(const sspSimpleString& cond) = delete;
 	sspSimpleString& operator= (const sspSimpleString& cond) = delete;
 	virtual ~sspSimpleString() {}

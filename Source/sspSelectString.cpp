@@ -11,6 +11,11 @@
 #include "sspSelectString.h"
 #include "sspLogging.h"
 
+sspSelectString::sspSelectString()
+	: sspString(), strings_(), value_()
+{
+}
+
 std::string_view sspSelectString::getString() const
 {
 	auto val = value_->getValue();

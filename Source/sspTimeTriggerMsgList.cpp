@@ -11,7 +11,12 @@
 #include "sspTimeTriggerMsgList.h"
 #include "sspLogging.h"
 
-bool sspTimeTriggerMsgList::verify(int & nErrors, int & nWarnings) const
+sspTimeTriggerMsgList::sspTimeTriggerMsgList()
+	: messages_()
+{
+}
+
+  bool sspTimeTriggerMsgList::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 

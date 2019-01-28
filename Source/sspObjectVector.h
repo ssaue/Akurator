@@ -27,7 +27,7 @@ protected:
 	std::vector<std::shared_ptr<T>> elements_;
 
 public:
-	sspObjectVector() = default;
+	sspObjectVector() : elements_() {}
 	sspObjectVector(const sspObjectVector& other) 
 	{ 
 		elements_ = other.elements_; 

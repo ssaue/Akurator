@@ -21,7 +21,7 @@ public:
 
 private:
 	boost::posix_time::time_duration clock_;
-	Relation relation_;
+	Relation relation_ = Relation::After;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -32,7 +32,7 @@ private:
 	}
 
 public:
-	sspTimeCompare() = default;
+	sspTimeCompare();
 	sspTimeCompare(const sspTimeCompare& cond) = delete;
 	sspTimeCompare& operator= (const sspTimeCompare& cond) = delete;
 	virtual ~sspTimeCompare() {}

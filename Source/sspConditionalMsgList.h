@@ -25,7 +25,7 @@ class sspConditionalMsgList
 	}
 
 public:
-	sspConditionalMsgList() = default;
+	sspConditionalMsgList();
 	sspConditionalMsgList(const sspConditionalMsgList& obj) = delete;
 	sspConditionalMsgList& operator= (const sspConditionalMsgList& obj) = delete;
 	virtual ~sspConditionalMsgList() {}

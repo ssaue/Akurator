@@ -29,7 +29,8 @@ private:
 	std::shared_ptr<sspValue> start_time_;
 	std::shared_ptr<sspValue> end_time_;
 	std::shared_ptr<sspValue> duration_;	// Either time or count (ref. mode)
-	LoopMode loop_mode_;
+
+	LoopMode loop_mode_ = LoopMode::Count;
 
 	friend class boost::serialization::access;
 	template <typename Archive>

@@ -11,6 +11,11 @@
 #include "sspPlayTask.h"
 #include "sspLogging.h"
 
+sspPlayTask::sspPlayTask()
+	: sspPlayer(), player_(), condition_(), volume_factor_(), messages_()
+{
+}
+
 bool sspPlayTask::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	setResponder(responder);

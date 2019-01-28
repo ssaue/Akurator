@@ -28,7 +28,7 @@ class sspPool : public sspObject, public sspObjectVector<T>
 	}
 
 public:
-	sspPool() = default;
+	sspPool();
 	sspPool(const sspPool& obj) = delete;
 	sspPool& operator= (const sspPool& obj) = delete;
 	virtual ~sspPool() {}

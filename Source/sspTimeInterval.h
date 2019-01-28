@@ -28,7 +28,7 @@ class sspTimeInterval : public sspConditional
 	}
 
 public:
-	sspTimeInterval() = default;
+	sspTimeInterval();
 	sspTimeInterval(const sspTimeInterval& cond) = delete;
 	sspTimeInterval& operator= (const sspTimeInterval& cond) = delete;
 	virtual ~sspTimeInterval() {}

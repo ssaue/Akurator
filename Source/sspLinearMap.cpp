@@ -12,7 +12,7 @@
 #include "sspLogging.h"
 
 sspLinearMap::sspLinearMap()
-	: inp_min_(0.0), inp_max_(1.0), outp_min_(0.0), outp_max_(1.0)
+	: sspValue(), inp_min_(0.0), inp_max_(1.0), outp_min_(0.0), outp_max_(1.0)
 {
 	computeLinearFactors();
 }

@@ -25,7 +25,7 @@ class sspMessageList
 	}
 
 public:
-	sspMessageList() = default;
+	sspMessageList();
 	sspMessageList(const sspMessageList& obj) = delete;
 	sspMessageList& operator= (const sspMessageList& obj) = delete;
 	virtual ~sspMessageList() {}

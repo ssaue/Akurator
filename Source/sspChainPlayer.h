@@ -16,8 +16,8 @@
 class sspChainPlayer : public sspPlayer
 {
 	sspObjectVector<sspPlayer> players_;
-	size_t chain_length_;
-	size_t chain_hop_;
+	size_t chain_length_ = 1;
+	size_t chain_hop_ = 1;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -29,7 +29,7 @@ class sspChainPlayer : public sspPlayer
 	}
 
 public:
-	sspChainPlayer() = default;
+	sspChainPlayer();
 	sspChainPlayer(const sspChainPlayer& obj) = delete;
 	sspChainPlayer& operator= (const sspChainPlayer& obj) = delete;
 	virtual ~sspChainPlayer() {}

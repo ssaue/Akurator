@@ -21,10 +21,10 @@ class sspPlayTask;
 class sspMessage
 {
 public:
-	enum class Type {Load, Solo, Mute, Unsolo, Unmute, SetVolume, AdjustVolume, Start, Stop};
+	enum class Type {Load, Solo, Mute, Unsolo, Unmute, SetVolume, AdjustVolume, Start, Stop, None};
 
 private:
-	Type type_;
+	Type type_ = Type::None;
 	std::shared_ptr<sspValue> time_;
 	std::weak_ptr<sspPlayTask> task_;
 	std::shared_ptr<sspValue> value_;
@@ -39,7 +39,7 @@ private:
 	}
 
 public:
-	sspMessage() = default;
+	sspMessage();
 	sspMessage(const sspMessage& obj) = delete;
 	sspMessage& operator= (const sspMessage& obj) = delete;
 	virtual ~sspMessage() {}

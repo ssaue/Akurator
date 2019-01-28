@@ -12,6 +12,11 @@
 #include "sspTrigger.h"
 #include "sspLogging.h"
 
+sspTriggerMsgList::sspTriggerMsgList()
+	: messages_()
+{
+}
+
 bool sspTriggerMsgList::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;

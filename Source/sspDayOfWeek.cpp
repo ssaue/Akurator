@@ -13,7 +13,12 @@
 
 using namespace boost::gregorian;
 
-bool sspDayOfWeek::isTrue() const
+  sspDayOfWeek::sspDayOfWeek()
+	  : sspConditional(), days_()
+{
+}
+
+  bool sspDayOfWeek::isTrue() const
 {
 	auto now = day_clock::local_day().day_of_week();
 	for (auto&& day : days_) {

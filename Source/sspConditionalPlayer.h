@@ -28,7 +28,7 @@ class sspConditionalPlayer : public sspPlayer
 	}
 
 public:
-	sspConditionalPlayer() = default;
+	sspConditionalPlayer();
 	sspConditionalPlayer(const sspConditionalPlayer& obj) = delete;
 	sspConditionalPlayer& operator= (const sspConditionalPlayer& obj) = delete;
 	virtual ~sspConditionalPlayer() {}

@@ -19,7 +19,7 @@ class sspSilenceTask : public sspScheduleTask
 	std::weak_ptr<sspFinishedResponder> responder_;
 
 public:
-	sspSilenceTask() = default;
+	sspSilenceTask();
 	sspSilenceTask(const sspSilenceTask& obj) = delete;
 	sspSilenceTask& operator= (const sspSilenceTask& obj) = delete;
 	virtual ~sspSilenceTask() {}

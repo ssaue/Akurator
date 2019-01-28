@@ -25,7 +25,7 @@ class sspProductValue : public sspValue
 	}
 
 public:
-	sspProductValue() = default;
+	sspProductValue();
 	sspProductValue(const sspProductValue& val) = delete;
 	sspProductValue& operator= (const sspProductValue& val) = delete;
 	virtual ~sspProductValue() {}

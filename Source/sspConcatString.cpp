@@ -11,6 +11,11 @@
 #include "sspConcatString.h"
 #include "sspLogging.h"
 
+sspConcatString::sspConcatString()
+	: sspString(), strings_()
+{
+}
+
 std::string_view sspConcatString::getString() const
 {
 	std::string cat;

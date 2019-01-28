@@ -21,7 +21,7 @@ class sspSecondsRun : public sspValue
 	}
 
 public:
-	sspSecondsRun() = default;
+	sspSecondsRun() : sspValue() {}
 	sspSecondsRun(const sspSecondsRun& val) = delete;
 	sspSecondsRun& operator= (const sspSecondsRun& val) = delete;
 	virtual ~sspSecondsRun() {}

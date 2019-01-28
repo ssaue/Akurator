@@ -10,6 +10,11 @@
 
 #include "sspPlayer.h"
 
+sspPlayer::sspPlayer()
+	: sspPlayObject(), sspFinishedResponder(), responder_()
+{
+}
+
 void sspPlayer::onFinished()
 {
 	if (isPlaying() && !update()) {

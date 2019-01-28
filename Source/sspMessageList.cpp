@@ -10,7 +10,12 @@
 
 #include "sspMessageList.h"
 
-bool sspMessageList::verify(int & nErrors, int & nWarnings) const
+sspMessageList::sspMessageList()
+	: messages_()
+{
+}
+
+  bool sspMessageList::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 

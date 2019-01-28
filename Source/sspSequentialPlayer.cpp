@@ -11,6 +11,11 @@
 #include "sspSequentialPlayer.h"
 #include "sspLogging.h"
 
+sspSequentialPlayer::sspSequentialPlayer()
+	: sspPlayer(), players_()
+{
+}
+
 bool sspSequentialPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())

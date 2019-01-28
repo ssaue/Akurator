@@ -17,7 +17,7 @@ class sspConditionalValue : public sspValue
 {
 	sspObjectVector<sspConditional> conditionals_;
 	sspObjectVector<sspValue> values_;
-	std::shared_ptr<sspValue> defaultValue_;
+	std::shared_ptr<sspValue> default_value_;
 	
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -25,11 +25,11 @@ class sspConditionalValue : public sspValue
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspValue);
 		ar & BOOST_SERIALIZATION_NVP(conditionals_);
 		ar & BOOST_SERIALIZATION_NVP(values_);
-		ar & BOOST_SERIALIZATION_NVP(defaultValue_);
+		ar & BOOST_SERIALIZATION_NVP(default_value_);
 	}
 
 public:
-	sspConditionalValue() = default;
+	sspConditionalValue();
 	sspConditionalValue(const sspConditionalValue& val) = delete;
 	sspConditionalValue& operator= (const sspConditionalValue& val) = delete;
 	virtual ~sspConditionalValue() {}
@@ -41,10 +41,10 @@ public:
 	// Accessors
 	void setConditionals(const sspObjectVector<sspConditional>& conds) { conditionals_ = conds; }
 	void setValues(const sspObjectVector<sspValue>& values) { values_ = values; }
-	void setDefaultValue(std::shared_ptr<sspValue> value) { defaultValue_ = std::move(value); }
+	void setDefaultValue(std::shared_ptr<sspValue> value) { default_value_ = std::move(value); }
 
 	const sspObjectVector<sspValue>& getValues() const { return values_; }
 	const sspObjectVector<sspConditional>& getConditionals() const { return conditionals_; }
-	std::shared_ptr<sspValue> getDefaultValue() const { return defaultValue_; }
+	std::shared_ptr<sspValue> getDefaultValue() const { return default_value_; }
 };
 

@@ -19,6 +19,11 @@ namespace {
 	std::mt19937 random_generator(rd());
 }
 
+sspChainPlayer::sspChainPlayer()
+	: sspPlayer(), players_()
+{
+}
+
 bool sspChainPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())

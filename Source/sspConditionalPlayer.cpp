@@ -12,6 +12,11 @@
 #include "sspLogging.h"
 
 
+sspConditionalPlayer::sspConditionalPlayer()
+	: sspPlayer(), players_(), conditionals_(), default_player_()
+{
+}
+
 bool sspConditionalPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())

@@ -13,7 +13,7 @@
 class sspScheduleTask
 {
 protected:
-	long	next_time_;		// Duration in milliseconds
+	long	next_time_ = 0;		// Duration in milliseconds
 
 public:
 	sspScheduleTask() = default;

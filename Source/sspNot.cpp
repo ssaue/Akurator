@@ -11,7 +11,12 @@
 #include "sspNot.h"
 #include "sspLogging.h"
 
-bool sspNot::isTrue() const
+sspNot::sspNot()
+	: sspConditional(), operand_()
+{
+}
+
+  bool sspNot::isTrue() const
 {
 	return !operand_->isTrue();
 }

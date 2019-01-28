@@ -27,7 +27,7 @@ class sspIndexPlayer : public sspPlayer
 	}
 
 public:
-	sspIndexPlayer() = default;
+	sspIndexPlayer();
 	sspIndexPlayer(const sspIndexPlayer& obj) = delete;
 	sspIndexPlayer& operator= (const sspIndexPlayer& obj) = delete;
 	virtual ~sspIndexPlayer() {}

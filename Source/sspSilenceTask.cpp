@@ -10,6 +10,11 @@
 
 #include "sspSilenceTask.h"
 
+sspSilenceTask::sspSilenceTask()
+	: sspScheduleTask(), responder_()
+{
+}
+
 bool sspSilenceTask::run(void)
 {
 	// This object does nothing except pass time

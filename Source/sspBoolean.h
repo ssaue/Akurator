@@ -25,7 +25,7 @@ private:
 	}
 
 public:
-	sspBoolean() = default;
+	sspBoolean() : sspConditional(), value_(true) {}
 	sspBoolean(const sspBoolean& cond) = delete;
 	sspBoolean& operator= (const sspBoolean& cond) = delete;
 	virtual ~sspBoolean() {}

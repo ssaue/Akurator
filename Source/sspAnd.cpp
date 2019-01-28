@@ -11,7 +11,12 @@
 #include "sspAnd.h"
 #include "sspLogging.h"
 
-bool sspAnd::isTrue() const
+sspAnd::sspAnd()
+	: sspConditional(), operands_()
+{
+}
+
+  bool sspAnd::isTrue() const
 {
 	for (auto op : operands_)
 		if (!op->isTrue()) return false;

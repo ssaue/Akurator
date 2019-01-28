@@ -20,10 +20,6 @@ class sspTimeMap : public sspValue
 	boost::posix_time::time_duration clock_min_;
 	boost::posix_time::time_duration clock_max_;
 
-	// Utility variables to save computation time
-	double lin_a_, lin_b_;
-	void computeLinearFactors();
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -54,5 +50,11 @@ public:
 	const boost::posix_time::time_duration& getClockMax() const { return clock_max_; }
 	double getOutputMin() const { return outp_min_; }
 	double getOutputMax() const { return outp_max_; }
+
+private:
+	// Utility variables to save computation time
+	double lin_a_ = 1.0;
+	double lin_b_ = 0.0;
+	void computeLinearFactors();
 };
 

@@ -28,7 +28,7 @@ protected:
 	std::string name_{ "" };
 
 public:
-	sspObject() = default;
+	sspObject() : name_("") {}
 	sspObject(const sspObject& obj) = delete;
 	sspObject& operator= (const sspObject& obj) = delete;
 	virtual ~sspObject() {}

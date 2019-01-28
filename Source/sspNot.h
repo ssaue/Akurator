@@ -26,7 +26,7 @@ private:
 	}
 
 public:
-	sspNot() = default;
+	sspNot();
 	sspNot(const sspNot& cond) = delete;
 	sspNot& operator= (const sspNot& cond) = delete;
 	virtual ~sspNot() {}

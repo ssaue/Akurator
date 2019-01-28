@@ -11,7 +11,12 @@
 #include "sspChannelMessage.h"
 #include "sspLogging.h"
 
-bool sspChannelMessage::verify(int & nErrors, int & nWarnings) const
+sspChannelMessage::sspChannelMessage()
+	: receiver_(), message_()
+{
+}
+
+  bool sspChannelMessage::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 

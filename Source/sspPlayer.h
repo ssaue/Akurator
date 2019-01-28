@@ -24,7 +24,7 @@ class sspPlayer : public sspPlayObject, public sspFinishedResponder
 	}
 
 public:
-	sspPlayer() = default;
+	sspPlayer();
 	sspPlayer(const sspPlayer& obj) = delete;
 	sspPlayer& operator= (const sspPlayer& obj) = delete;
 	virtual ~sspPlayer() {}

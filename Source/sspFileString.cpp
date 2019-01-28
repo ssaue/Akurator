@@ -61,6 +61,11 @@ namespace {
 	}
 }
 
+sspFileString::sspFileString()
+	: sspString(), path_(), recursive_(false), audio_only_(true)
+{
+}
+
 std::string_view sspFileString::getString() const
 {
 	auto path = fs::path(path_->getString());

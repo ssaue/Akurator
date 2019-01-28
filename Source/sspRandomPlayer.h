@@ -29,7 +29,7 @@ class sspRandomPlayer : public sspPlayer
 	}
 
 public:
-	sspRandomPlayer() = default;
+	sspRandomPlayer();
 	sspRandomPlayer(const sspRandomPlayer& obj) = delete;
 	sspRandomPlayer& operator= (const sspRandomPlayer& obj) = delete;
 	virtual ~sspRandomPlayer() {}

@@ -25,7 +25,7 @@ class sspSimultaneousPlayer : public sspPlayer
 	}
 
 public:
-	sspSimultaneousPlayer() = default;
+	sspSimultaneousPlayer();
 	sspSimultaneousPlayer(const sspSimultaneousPlayer& obj) = delete;
 	sspSimultaneousPlayer& operator= (const sspSimultaneousPlayer& obj) = delete;
 	virtual ~sspSimultaneousPlayer() {}

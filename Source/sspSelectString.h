@@ -27,7 +27,7 @@ class sspSelectString : public sspString
 	}
 
 public:
-	sspSelectString() = default;
+	sspSelectString();
 	sspSelectString(const sspSelectString& cond) = delete;
 	sspSelectString& operator= (const sspSelectString& cond) = delete;
 	virtual ~sspSelectString() {}

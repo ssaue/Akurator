@@ -14,7 +14,7 @@
 using namespace boost::posix_time;
 
 sspTimeMap::sspTimeMap()
-	: clock_min_(0, 0, 0), clock_max_(0, 15, 0), outp_min_(0.0f), outp_max_(1.0f)
+	: sspValue(), clock_min_(0, 0, 0), clock_max_(0, 15, 0), outp_min_(0.0f), outp_max_(1.0f)
 {
 	computeLinearFactors();
 }

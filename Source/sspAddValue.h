@@ -25,7 +25,7 @@ class sspAddValue : public sspValue
 	}
 
 public:
-	sspAddValue() = default;
+	sspAddValue();
 	sspAddValue(const sspAddValue& val) = delete;
 	sspAddValue& operator= (const sspAddValue& val) = delete;
 	virtual ~sspAddValue() {}

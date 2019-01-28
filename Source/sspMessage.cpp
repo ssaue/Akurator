@@ -11,7 +11,12 @@
 #include "sspMessage.h"
 #include "sspLogging.h"
 
-bool sspMessage::verify(int & nErrors, int & /*nWarnings*/) const
+sspMessage::sspMessage()
+	: time_(), task_(), value_()
+{
+}
+
+  bool sspMessage::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 

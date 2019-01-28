@@ -13,7 +13,12 @@
 
 using namespace boost::posix_time;
 
-bool sspTimeCompare::isTrue() const
+  sspTimeCompare::sspTimeCompare()
+	  : sspConditional(), clock_()
+  {
+  }
+
+  bool sspTimeCompare::isTrue() const
 {
 	auto now = second_clock::local_time().time_of_day();
 	switch (relation_) {

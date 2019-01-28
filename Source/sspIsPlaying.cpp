@@ -11,6 +11,11 @@
 #include "sspIsPlaying.h"
 #include "sspLogging.h"
 
+sspIsPlaying::sspIsPlaying()
+	: sspConditional(), players_()
+{
+}
+
 bool sspIsPlaying::isTrue() const
 {
 	for (auto play : players_)

@@ -25,6 +25,11 @@ void sspTimeInterval::setInputRange(const time_duration& min, const time_duratio
 	}
 }
 
+sspTimeInterval::sspTimeInterval()
+	: sspConditional(), clock_min_(), clock_max_()
+{
+}
+
 bool sspTimeInterval::isTrue() const
 {
 	auto now = second_clock::local_time().time_of_day();

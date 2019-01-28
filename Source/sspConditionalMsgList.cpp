@@ -11,7 +11,12 @@
 #include "sspConditionalMsgList.h"
 #include "sspLogging.h"
 
-bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
+sspConditionalMsgList::sspConditionalMsgList()
+	: messages_()
+{
+}
+
+  bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 

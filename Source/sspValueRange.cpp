@@ -14,7 +14,7 @@
 #include <limits>
 
 sspValueRange::sspValueRange() 
-	: min_(0.0), max_(1.0)
+	: sspValue(), min_(0.0), max_(1.0)
 {
 	val_ = (min_ + max_) * 0.5;
 }

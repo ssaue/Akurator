@@ -25,7 +25,7 @@ class sspConcatString : public sspString
 	}
 
 public:
-	sspConcatString() = default;
+	sspConcatString();
 	sspConcatString(const sspConcatString& cond) = delete;
 	sspConcatString& operator= (const sspConcatString& cond) = delete;
 	virtual ~sspConcatString() {}

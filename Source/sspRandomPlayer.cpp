@@ -19,6 +19,11 @@ namespace {
 	std::mt19937 random_generator(rd());
 }
 
+sspRandomPlayer::sspRandomPlayer()
+	: sspPlayer(), players_(), weights_(), const_weights_(), selected_()
+{
+}
+
 bool sspRandomPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())

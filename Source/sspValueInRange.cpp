@@ -13,7 +13,12 @@
 
 #include <limits>
 
-bool sspValueInRange::isTrue() const
+sspValueInRange::sspValueInRange()
+	: sspConditional(), min_(), max_(), test_()
+{
+}
+
+  bool sspValueInRange::isTrue() const
 {
 	auto test = test_->getValue();
 	auto min = min_->getValue();

@@ -11,6 +11,11 @@
 #include "sspConditionalValue.h"
 #include "sspLogging.h"
 
+sspConditionalValue::sspConditionalValue()
+	: sspValue(), conditionals_(), values_(), default_value_()
+{
+}
+
 double sspConditionalValue::getValue() const
 {
 	auto ci = begin(conditionals_);
@@ -19,7 +24,7 @@ double sspConditionalValue::getValue() const
 		if ((*ci)->isTrue()) return (*vi)->getValue();
 		++vi; ++ci;
 	}
-	return defaultValue_->getValue();
+	return default_value_->getValue();
 }
 
 bool sspConditionalValue::verify(int & nErrors, int & nWarnings) const
@@ -49,10 +54,10 @@ bool sspConditionalValue::verify(int & nErrors, int & nWarnings) const
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
-	if (!defaultValue_) {
+	if (!default_value_) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid default value";
 	}
-	else if (defaultValue_.get() == this) {
+	else if (default_value_.get() == this) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 	}
 

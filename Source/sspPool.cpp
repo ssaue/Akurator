@@ -10,9 +10,17 @@
 
 #include "sspPool.h"
 #include "sspPrimitives.h"
+#include "sspPlayer.h"
+#include "sspPlayTask.h"
 #include "sspLogging.h"
 
 #include <sstream>
+
+template<typename T>
+sspPool<T>::sspPool()
+: sspObject(), sspObjectVector<T>()
+{
+}
 
 template <typename T>
 bool sspPool<T>::verify(int& nErrors, int& nWarnings) const
@@ -34,3 +42,5 @@ bool sspPool<T>::verify(int& nErrors, int& nWarnings) const
 template class sspPool<sspValue>;
 template class sspPool<sspConditional>;
 template class sspPool<sspString>;
+template class sspPool<sspPlayer>;
+template class sspPool<sspPlayTask>;

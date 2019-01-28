@@ -11,7 +11,12 @@
 #include "sspTrigger.h"
 #include "sspLogging.h"
 
-bool sspTrigger::isTrue() const
+sspTrigger::sspTrigger()
+	: sspConditional(), conditional_()
+{
+}
+
+  bool sspTrigger::isTrue() const
 {
 	bool ret = false;
 	bool now = conditional_->isTrue();

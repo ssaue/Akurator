@@ -25,7 +25,7 @@ class sspSequentialPlayer : public sspPlayer
 	}
 
 public:
-	sspSequentialPlayer() = default;
+	sspSequentialPlayer();
 	sspSequentialPlayer(const sspSequentialPlayer& obj) = delete;
 	sspSequentialPlayer& operator= (const sspSequentialPlayer& obj) = delete;
 	virtual ~sspSequentialPlayer() {}
@@ -41,8 +41,8 @@ public:
 	const sspObjectVector<sspPlayer>& getPlayers() const { return players_; }
 
 private:
-	sspObjectVector_iterator<sspPlayer> iterator_;
-	bool is_playing_;
+	sspObjectVector_iterator<sspPlayer> iterator_ = end(players_);
+	bool is_playing_ = false;
 
 	virtual bool update() override;
 };

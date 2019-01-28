@@ -19,6 +19,11 @@ namespace {
 	std::mt19937 random_generator(rd());
 }
 
+sspRandomValue::sspRandomValue()
+	: sspValue(), low_(), high_()
+{
+}
+
 double sspRandomValue::getValue() const
 {
 	auto low = low_->getValue();

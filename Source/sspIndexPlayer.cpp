@@ -11,6 +11,11 @@
 #include "sspIndexPlayer.h"
 #include "sspLogging.h"
 
+sspIndexPlayer::sspIndexPlayer()
+	: sspPlayer(), players_(), index_(), selected_()
+{
+}
+
 bool sspIndexPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (players_.empty())

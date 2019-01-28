@@ -26,7 +26,7 @@ private:
 	}
 
 public:
-	sspIsPlaying() = default;
+	sspIsPlaying();
 	sspIsPlaying(const sspIsPlaying& cond) = delete;
 	sspIsPlaying& operator= (const sspIsPlaying& cond) = delete;
 	virtual ~sspIsPlaying() {}

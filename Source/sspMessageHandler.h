@@ -22,7 +22,7 @@ class sspMessageHandler : public sspObject
 	}
 
 public:
-	sspMessageHandler() = default;
+	sspMessageHandler() : sspObject() {}
 	sspMessageHandler(const sspMessageHandler& obj) = delete;
 	sspMessageHandler& operator= (const sspMessageHandler& obj) = delete;
 	virtual ~sspMessageHandler() {}

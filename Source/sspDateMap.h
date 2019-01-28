@@ -20,10 +20,6 @@ class sspDateMap : public sspValue
 	boost::gregorian::partial_date date_min_;
 	boost::gregorian::partial_date date_max_;
 
-	// Utility variables to save computation time
-	double lin_a_;
-	void computeLinearFactors();
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -54,5 +50,10 @@ public:
 	const boost::gregorian::partial_date& getDateMax() const { return date_max_; }
 	double getOutputMin() const { return outp_min_; }
 	double getOutputMax() const { return outp_max_; }
+
+private:
+	// Utility variables to save computation time
+	double lin_a_ = 0.0;
+	void computeLinearFactors();
 };
 

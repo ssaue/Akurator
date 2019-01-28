@@ -11,6 +11,11 @@
 #include "sspSimultaneousPlayer.h"
 #include "sspLogging.h"
 
+sspSimultaneousPlayer::sspSimultaneousPlayer()
+	: sspPlayer(), players_()
+{
+}
+
 bool sspSimultaneousPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())

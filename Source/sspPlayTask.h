@@ -29,7 +29,7 @@ private:
 	std::shared_ptr<sspConditional> condition_;
 	std::shared_ptr<sspValue> volume_factor_;
 	std::array<std::shared_ptr<sspConditionalMsgList>, Messages::Num> messages_;
-	Priority priority_;
+	Priority priority_ = Priority::Cancel;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -43,7 +43,7 @@ private:
 	}
 
 public:
-	sspPlayTask() = default;
+	sspPlayTask();
 	sspPlayTask(const sspPlayTask& obj) = delete;
 	sspPlayTask& operator= (const sspPlayTask& obj) = delete;
 	virtual ~sspPlayTask() {}

@@ -26,7 +26,7 @@ private:
 	}
 
 public:
-	sspOr() = default;
+	sspOr();
 	sspOr(const sspOr& cond) = delete;
 	sspOr& operator= (const sspOr& cond) = delete;
 	virtual ~sspOr() {}

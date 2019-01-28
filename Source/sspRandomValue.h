@@ -27,7 +27,7 @@ class sspRandomValue : public sspValue
 	}
 
 public:
-	sspRandomValue() = default;
+	sspRandomValue();
 	sspRandomValue(const sspRandomValue& val) = delete;
 	sspRandomValue& operator= (const sspRandomValue& val) = delete;
 	virtual ~sspRandomValue() {}

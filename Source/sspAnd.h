@@ -26,7 +26,7 @@ private:
 	}
 
 public:
-	sspAnd() = default;
+	sspAnd();
 	sspAnd(const sspAnd& cond) = delete;
 	sspAnd& operator= (const sspAnd& cond) = delete;
 	virtual ~sspAnd() {}

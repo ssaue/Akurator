@@ -29,7 +29,7 @@ class sspValueInRange : public sspConditional
 	}
 
 public:
-	sspValueInRange() = default;
+	sspValueInRange();
 	sspValueInRange(const sspValueInRange& cond) = delete;
 	sspValueInRange& operator= (const sspValueInRange& cond) = delete;
 	virtual ~sspValueInRange() {}

@@ -13,7 +13,12 @@
 
 #include <limits>
 
-bool sspValueCompare::isTrue() const
+sspValueCompare::sspValueCompare()
+	: sspConditional(), test_(), threshold_()
+{
+}
+
+  bool sspValueCompare::isTrue() const
 {
 	auto test = test_->getValue();
 	auto threshold = threshold_->getValue();

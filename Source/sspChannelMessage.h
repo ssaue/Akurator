@@ -25,7 +25,7 @@ class sspChannelMessage
 	}
 
 public:
-	sspChannelMessage() = default;
+	sspChannelMessage();
 	sspChannelMessage(const sspChannelMessage& obj) = delete;
 	sspChannelMessage& operator= (const sspChannelMessage& obj) = delete;
 	virtual ~sspChannelMessage() {}

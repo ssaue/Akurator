@@ -44,6 +44,5 @@ public:
 	double getNormalized() const;
 	double getMin() const { return min_; }
 	double getMax() const { return max_; }
-
 };
 

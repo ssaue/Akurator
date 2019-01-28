@@ -11,7 +11,12 @@
 #include "sspProductValue.h"
 #include "sspLogging.h"
 
-double sspProductValue::getValue() const
+sspProductValue::sspProductValue()
+	: sspValue(), factors_()
+{
+}
+
+  double sspProductValue::getValue() const
 {
 	double fVal = 1.0;
 	for (auto fac : factors_)

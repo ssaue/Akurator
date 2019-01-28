@@ -17,6 +17,8 @@ sspScheduler* sspScheduler::s_instance_ = nullptr;
 bool sspScheduler::s_destroyed_ = false;
 
 sspScheduler::sspScheduler(void)
+	: threadpool_(), ready_tasks_(), task_queue_(), timer_lock_(), worker_lock_()
+	, timer_cv_(), worker_cv_()
 {
 	for (int i = 0; i < threadpool_size_; ++i) {
 		threadpool_.push_back(std::thread(&sspScheduler::worker_thread, this));

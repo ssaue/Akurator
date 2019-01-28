@@ -18,8 +18,8 @@ public:
 	enum class Relation : unsigned int { Before, After, Equal };
 
 private:
-	int minutes_;
-	Relation relation_;
+	int minutes_ = 0;
+	Relation relation_ = Relation::After;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -30,7 +30,7 @@ private:
 	}
 
 public:
-	sspMinuteCompare() = default;
+	sspMinuteCompare() : sspConditional() {}
 	sspMinuteCompare(const sspMinuteCompare& cond) = delete;
 	sspMinuteCompare& operator= (const sspMinuteCompare& cond) = delete;
 	virtual ~sspMinuteCompare() {}

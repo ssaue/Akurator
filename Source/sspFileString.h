@@ -19,8 +19,6 @@ class sspFileString : public sspString
 	bool recursive_;
 	bool audio_only_;
 
-	mutable std::string previous_path_;
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -31,7 +29,7 @@ class sspFileString : public sspString
 	}
 
 public:
-	sspFileString() = default;
+	sspFileString();
 	sspFileString(const sspFileString& cond) = delete;
 	sspFileString& operator= (const sspFileString& cond) = delete;
 	virtual ~sspFileString() {}
@@ -48,5 +46,8 @@ public:
 	std::shared_ptr<sspString> getFolder() const { return path_; }
 	bool isRecursiveSearch() const { return recursive_; }
 	bool isAudioOnly() const { return audio_only_; }
+
+private:
+	mutable std::string previous_path_ = { "" };
 };
 

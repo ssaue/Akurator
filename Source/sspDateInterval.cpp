@@ -13,20 +13,8 @@
 
 using namespace boost::gregorian;
 
-void sspDateInterval::setInputRange(const partial_date& min, const partial_date& max)
-{
-	if (min(0) > max(0)) {
-		date_min_ = max;
-		date_max_ = min;
-	}
-	else {
-		date_min_ = min;
-		date_max_ = max;
-	}
-}
-
 sspDateInterval::sspDateInterval()
-	: date_min_(1, Jan), date_max_(31, Dec)
+	: sspConditional(), date_min_(1, Jan), date_max_(31, Dec)
 {
 }
 
@@ -50,3 +38,16 @@ bool sspDateInterval::verify(int & nErrors, int & nWarnings) const
 
 	return bReturn;
 }
+
+void sspDateInterval::setInputRange(const partial_date& min, const partial_date& max)
+{
+	if (min(0) > max(0)) {
+		date_min_ = max;
+		date_max_ = min;
+	}
+	else {
+		date_min_ = min;
+		date_max_ = max;
+	}
+}
+

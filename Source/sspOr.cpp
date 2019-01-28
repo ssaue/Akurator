@@ -11,7 +11,12 @@
 #include "sspOr.h"
 #include "sspLogging.h"
 
-bool sspOr::isTrue() const
+sspOr::sspOr()
+	: sspConditional(), operands_()
+{
+}
+
+  bool sspOr::isTrue() const
 {
 	for (auto op : operands_)
 		if (op->isTrue()) return true;

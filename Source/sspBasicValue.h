@@ -14,7 +14,7 @@
 
 class sspBasicValue : public sspValue
 {
-	double val_;
+	double val_ = 0.0;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -24,7 +24,7 @@ class sspBasicValue : public sspValue
 	}
 
 public:
-	sspBasicValue() : val_{ 0.0f } {}
+	sspBasicValue() : sspValue() {}
 	sspBasicValue(const sspBasicValue& val) = delete;
 	sspBasicValue& operator= (const sspBasicValue& val) = delete;
 	virtual ~sspBasicValue() {}

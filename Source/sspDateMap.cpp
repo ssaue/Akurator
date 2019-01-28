@@ -14,7 +14,7 @@
 using namespace boost::gregorian;
 
 sspDateMap::sspDateMap()
-	: date_min_(1, 1), date_max_(31, 12), outp_min_(0.0), outp_max_(1.0)
+	: sspValue(), date_min_(1, 1), date_max_(31, 12), outp_min_(0.0), outp_max_(1.0)
 {
 	computeLinearFactors();
 }

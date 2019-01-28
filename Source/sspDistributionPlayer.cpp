@@ -13,7 +13,8 @@
 #include "sspLogging.h"
 
 sspDistributionPlayer::sspDistributionPlayer()
-	: silence_(std::make_shared<sspSilenceTask>())
+	: sspPlayer(), player_(), condition_(), start_time_(), end_time_(),
+	duration_(), init_time_(), silence_(std::make_shared<sspSilenceTask>())
 {
 	silence_->setResponder(weak_from_this());
 }

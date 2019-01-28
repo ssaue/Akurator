@@ -10,7 +10,12 @@
 
 #include "sspDomainData.h"
 
-bool sspDomainData::verify(int& nErrors, int& nWarnings) const
+sspDomainData::sspDomainData()
+	: sspObject(), values_(), conditionals_(), strings_(), players_(), tasks_()
+{
+}
+
+  bool sspDomainData::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
 

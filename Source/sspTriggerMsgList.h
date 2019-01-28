@@ -26,7 +26,7 @@ class sspTriggerMsgList
 	}
 
 public:
-	sspTriggerMsgList() = default;
+	sspTriggerMsgList();
 	sspTriggerMsgList(const sspTriggerMsgList& obj) = delete;
 	sspTriggerMsgList& operator= (const sspTriggerMsgList& obj) = delete;
 	virtual ~sspTriggerMsgList() {}

@@ -11,7 +11,12 @@
 #include "sspAddValue.h"
 #include "sspLogging.h"
 
-double sspAddValue::getValue() const
+sspAddValue::sspAddValue()
+	: sspValue(), addends_()
+{
+}
+
+  double sspAddValue::getValue() const
 {
 	double fVal = 0.0;
 	for (auto add : addends_)

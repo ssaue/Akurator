@@ -20,9 +20,7 @@ public:
 
 private:
 	std::shared_ptr<sspConditional> conditional_;
-	Trigger change_;
-
-	mutable bool old_state_ = false;
+	Trigger change_ = Trigger::True;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -33,7 +31,7 @@ private:
 	}
 
 public:
-	sspTrigger() = default;
+	sspTrigger();
 	sspTrigger(const sspTrigger& cond) = delete;
 	sspTrigger& operator= (const sspTrigger& cond) = delete;
 	virtual ~sspTrigger() {}
@@ -50,4 +48,7 @@ public:
 	Trigger getChange() const { return change_; }
 
 	void reset();
+
+private:
+	mutable bool old_state_ = false;
 };

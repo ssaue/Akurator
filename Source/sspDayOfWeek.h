@@ -28,7 +28,7 @@ private:
 	}
 
 public:
-	sspDayOfWeek() = default;
+	sspDayOfWeek();
 	sspDayOfWeek(const sspDayOfWeek& cond) = delete;
 	sspDayOfWeek& operator= (const sspDayOfWeek& cond) = delete;
 	virtual ~sspDayOfWeek() {}

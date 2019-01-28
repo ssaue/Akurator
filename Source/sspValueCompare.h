@@ -21,7 +21,7 @@ public:
 private:
 	std::shared_ptr<sspValue> test_;
 	std::shared_ptr<sspValue> threshold_;
-	Relation relation_;
+	Relation relation_ = Relation::Equal;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -33,7 +33,7 @@ private:
 	}
 
 public:
-	sspValueCompare() = default;
+	sspValueCompare();
 	sspValueCompare(const sspValueCompare& cond) = delete;
 	sspValueCompare& operator= (const sspValueCompare& cond) = delete;
 	virtual ~sspValueCompare() {}

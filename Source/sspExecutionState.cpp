@@ -18,7 +18,7 @@ sspExecutionState* sspExecutionState::s_instance_ = nullptr;
 bool sspExecutionState::s_destroyed_ = false;
 
 sspExecutionState::sspExecutionState(void)
-	: running_(false)
+	: running_(false), start_time_()
 {
 }
 

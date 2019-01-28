@@ -18,8 +18,6 @@ class sspIndexPlayer : public sspPlayer
 	sspObjectVector<sspPlayer> players_;
 	std::shared_ptr<sspValue> index_;
 
-	std::weak_ptr<sspPlayer> selected_;
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -37,7 +35,6 @@ public:
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
 
-	virtual bool update() override;
 	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
@@ -47,4 +44,9 @@ public:
 
 	void setIndex(std::shared_ptr<sspValue> value) { index_ = std::move(value); }
 	std::shared_ptr<sspValue> getIndex() const { return index_; }
+
+private:
+	virtual bool update() override;
+
+	std::weak_ptr<sspPlayer> selected_;
 };

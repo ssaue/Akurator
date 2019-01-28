@@ -19,8 +19,6 @@ class sspRandomPlayer : public sspPlayer
 	sspObjectVector<sspValue> weights_;
 	std::vector<double> const_weights_;
 
-	std::weak_ptr<sspPlayer> selected_;
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -39,7 +37,6 @@ public:
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
 
-	virtual bool update() override;
 	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
@@ -51,4 +48,9 @@ public:
 	const sspObjectVector<sspPlayer>& getPlayers() const { return players_; }
 	const sspObjectVector<sspValue>& getWeights() const { return weights_; }
 	const std::vector<double>& getConstantWeights() const { return const_weights_; }
+
+private:
+	std::weak_ptr<sspPlayer> selected_;
+
+	virtual bool update() override;
 };

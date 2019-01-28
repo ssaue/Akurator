@@ -22,7 +22,7 @@ bool sspMessage::verify(int & nErrors, int & /*nWarnings*/) const
 	case Type::Load:
 	case Type::Solo:
 	case Type::Unsolo:
-		if (!task_) {
+		if (task_.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Message has an invalid task";
 		}
 		break;

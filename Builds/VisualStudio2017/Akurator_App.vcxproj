@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\Source\sspMessageList.cpp"/>
     <ClCompile Include="..\..\Source\sspTimeTriggerMsgList.cpp"/>
     <ClCompile Include="..\..\Source\sspTriggerMsgList.cpp"/>
+    <ClCompile Include="..\..\Source\sspPlayTask.cpp"/>
     <ClCompile Include="..\..\Source\sspDistributionPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspConditionalPlayer.cpp"/>
     <ClCompile Include="..\..\Source\sspChainPlayer.cpp"/>
@@ -1911,6 +1912,7 @@
     <ClInclude Include="..\..\Source\sspMessageList.h"/>
     <ClInclude Include="..\..\Source\sspTimeTriggerMsgList.h"/>
     <ClInclude Include="..\..\Source\sspTriggerMsgList.h"/>
+    <ClInclude Include="..\..\Source\sspPlayTask.h"/>
     <ClInclude Include="..\..\Source\sspDistributionPlayer.h"/>
     <ClInclude Include="..\..\Source\sspConditionalPlayer.h"/>
     <ClInclude Include="..\..\Source\sspChainPlayer.h"/>

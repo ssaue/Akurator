@@ -31,21 +31,14 @@ private:
 	std::shared_ptr<sspValue> duration_;	// Either time or count (ref. mode)
 	LoopMode loop_mode_;
 
-	using TimePoint = std::chrono::steady_clock::time_point;
-	TimePoint init_time_;
-	std::shared_ptr<sspSilenceTask> silence_;
-	int loop_counter_ = 0;
-	bool is_silence_ = false;
-	bool is_playing_ = false;
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspPlayer);
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(player_);
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(condition_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(start_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(end_);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(start_time_);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(end_time_);
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(duration_);
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(loop_mode_);
 	}
@@ -59,7 +52,6 @@ public:
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
 
-	virtual bool update() override;
 	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
@@ -77,4 +69,14 @@ public:
 	std::shared_ptr<sspValue> getDuration() const { return duration_; }
 	std::shared_ptr<sspConditional> getCondition() const { return condition_; }
 	LoopMode getLoopMode() const { return loop_mode_; }
+
+private:
+	using TimePoint = std::chrono::steady_clock::time_point;
+	TimePoint init_time_;
+	std::shared_ptr<sspSilenceTask> silence_;
+	int loop_counter_ = 0;
+	bool is_silence_ = false;
+	bool is_playing_ = false;
+
+	virtual bool update() override;
 };

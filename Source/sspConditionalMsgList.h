@@ -36,6 +36,9 @@ public:
 	void remove(std::shared_ptr<sspConditional> cond);
 	void removeAll();
 
+	size_t  size() { return messages_.size(); }
+	bool	empty() { return messages_.empty(); }
+
 	void send() const;
 };
 

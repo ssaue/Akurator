@@ -19,8 +19,6 @@ class sspConditionalPlayer : public sspPlayer
 	sspObjectVector<sspConditional> conditionals_;
 	std::shared_ptr<sspPlayer> default_player_;
 
-	std::weak_ptr<sspPlayer> selected_;
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -38,7 +36,6 @@ public:
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
 
-	virtual bool update() override;
 	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
@@ -50,4 +47,9 @@ public:
 	const sspObjectVector<sspPlayer>& getPlayers() const { return players_; }
 	const sspObjectVector<sspConditional>& getConditionals() const { return conditionals_; }
 	std::shared_ptr<sspPlayer> getDefaultPlayer() const { return default_player_; }
+
+private:
+	std::weak_ptr<sspPlayer> selected_;
+
+	virtual bool update() override;
 };

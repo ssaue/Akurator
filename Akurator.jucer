@@ -43,6 +43,8 @@
                 file="Source/sspTriggerMsgList.h"/>
         </GROUP>
         <GROUP id="{4C41B598-ED08-09DC-8B9E-BE51C1BCB39F}" name="PlayObjects">
+          <FILE id="Nx1Bwc" name="sspPlayTask.cpp" compile="1" resource="0" file="Source/sspPlayTask.cpp"/>
+          <FILE id="WOGnSy" name="sspPlayTask.h" compile="0" resource="0" file="Source/sspPlayTask.h"/>
           <FILE id="MxQ1kE" name="sspDistributionPlayer.cpp" compile="1" resource="0"
                 file="Source/sspDistributionPlayer.cpp"/>
           <FILE id="PYQNKp" name="sspDistributionPlayer.h" compile="0" resource="0"

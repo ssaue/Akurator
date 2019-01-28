@@ -32,7 +32,7 @@ public:
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) = 0;
 	virtual void stop() = 0;
 
-	virtual void onFinished() final;
+	virtual void onFinished() override;
 
 protected:
 	virtual bool update() = 0;

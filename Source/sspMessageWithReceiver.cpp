@@ -1,26 +1,26 @@
 /*
   ==============================================================================
 
-    sspChannelMessage.cpp
+    sspMessageWithReceiver.cpp
     Created: 24 Jan 2019 4:50:58pm
     Author:  sigurds
 
   ==============================================================================
 */
 
-#include "sspChannelMessage.h"
+#include "sspMessageWithReceiver.h"
 #include "sspLogging.h"
 
-sspChannelMessage::sspChannelMessage()
+sspMessageWithReceiver::sspMessageWithReceiver()
 	: receiver_(), message_()
 {
 }
 
-  bool sspChannelMessage::verify(int & nErrors, int & nWarnings) const
+  bool sspMessageWithReceiver::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 
-	if (!receiver_) {
+	if (receiver_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Channel message has an invalid receiver";
 	}
 	if (!message_.verify(nErrors, nWarnings)) {
@@ -30,9 +30,9 @@ sspChannelMessage::sspChannelMessage()
 	return bReturn;
 }
 
-void sspChannelMessage::send() const
+void sspMessageWithReceiver::send() const
 {
-	if (receiver_) {
-		receiver_->handleMessage(message_);
+	if (auto ptr = receiver_.lock()) {
+		ptr->handleMessage(message_);
 	}
 }

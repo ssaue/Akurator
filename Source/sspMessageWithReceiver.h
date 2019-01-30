@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    sspChannelMessage.h
+    sspMessageWithReceiver.h
     Created: 24 Jan 2019 4:50:58pm
     Author:  sigurds
 
@@ -12,9 +12,9 @@
 
 #include "sspMessageHandler.h"
 
-class sspChannelMessage
+class sspMessageWithReceiver
 {
-	std::shared_ptr<sspMessageHandler> receiver_;
+	std::weak_ptr<sspMessageHandler> receiver_;
 	sspMessage message_;
 
 	friend class boost::serialization::access;
@@ -25,17 +25,17 @@ class sspChannelMessage
 	}
 
 public:
-	sspChannelMessage();
-	sspChannelMessage(const sspChannelMessage& obj) = delete;
-	sspChannelMessage& operator= (const sspChannelMessage& obj) = delete;
-	virtual ~sspChannelMessage() {}
+	sspMessageWithReceiver();
+	sspMessageWithReceiver(const sspMessageWithReceiver& obj) = delete;
+	sspMessageWithReceiver& operator= (const sspMessageWithReceiver& obj) = delete;
+	virtual ~sspMessageWithReceiver() {}
 
 	bool verify(int& nErrors, int& nWarnings) const;
 	void send() const;
 
 	// Accessors
-	void setReceiver(std::shared_ptr<sspMessageHandler> handler) { receiver_ = handler; }
-	std::shared_ptr<sspMessageHandler> getReceiver() const { return receiver_; }
+	void setReceiver(std::weak_ptr<sspMessageHandler> handler) { receiver_ = handler; }
+	std::weak_ptr<sspMessageHandler> getReceiver() const { return receiver_; }
 
 	const sspMessage& getMessage() const { return message_; }
 	sspMessage& getMessage() { return message_; }

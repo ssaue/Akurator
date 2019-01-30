@@ -28,12 +28,12 @@ sspMessageList::sspMessageList()
 	return false;
 }
 
-void sspMessageList::add(std::shared_ptr<sspChannelMessage> message)
+void sspMessageList::add(std::shared_ptr<sspMessageWithReceiver> message)
 {
 	messages_.push_back(message);
 }
 
-void sspMessageList::remove(std::shared_ptr<sspChannelMessage> message)
+void sspMessageList::remove(std::shared_ptr<sspMessageWithReceiver> message)
 {
 	messages_.remove(message);
 }

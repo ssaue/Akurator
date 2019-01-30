@@ -10,13 +10,13 @@
 
 #pragma once
 
-#include "sspChannelMessage.h"
+#include "sspMessageWithReceiver.h"
 #include <list>
 #include <boost/serialization/list.hpp>
 
 class sspMessageList
 {
-	std::list<std::shared_ptr<sspChannelMessage>> messages_;
+	std::list<std::shared_ptr<sspMessageWithReceiver>> messages_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -32,8 +32,8 @@ public:
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
-	void add(std::shared_ptr<sspChannelMessage> message);
-	void remove(std::shared_ptr<sspChannelMessage> message);
+	void add(std::shared_ptr<sspMessageWithReceiver> message);
+	void remove(std::shared_ptr<sspMessageWithReceiver> message);
 	void removeAll();
 
 	void send() const;

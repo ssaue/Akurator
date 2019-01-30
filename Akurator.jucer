@@ -5,6 +5,9 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{0019B1A5-1F71-B137-AD0B-36F51D4DD35A}" name="Scheduling">
+        <FILE id="bl3HLT" name="sspTaskQueue.cpp" compile="1" resource="0"
+              file="Source/sspTaskQueue.cpp"/>
+        <FILE id="nSqE84" name="sspTaskQueue.h" compile="0" resource="0" file="Source/sspTaskQueue.h"/>
         <FILE id="DMFj6W" name="sspScheduleTask.h" compile="0" resource="0"
               file="Source/sspScheduleTask.h"/>
         <FILE id="o2uibc" name="sspScheduler.cpp" compile="1" resource="0"
@@ -17,10 +20,10 @@
       </GROUP>
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
         <GROUP id="{1092AB9E-FA01-8CB7-2EA6-DC533A8BCF0B}" name="Messages">
-          <FILE id="Vk693d" name="sspChannelMessage.cpp" compile="1" resource="0"
-                file="Source/sspChannelMessage.cpp"/>
-          <FILE id="ZY5qSi" name="sspChannelMessage.h" compile="0" resource="0"
-                file="Source/sspChannelMessage.h"/>
+          <FILE id="Vk693d" name="sspMessageWithReceiver.cpp" compile="1" resource="0"
+                file="Source/sspMessageWithReceiver.cpp"/>
+          <FILE id="ZY5qSi" name="sspMessageWithReceiver.h" compile="0" resource="0"
+                file="Source/sspMessageWithReceiver.h"/>
           <FILE id="Sujf30" name="sspConditionalMsgList.cpp" compile="1" resource="0"
                 file="Source/sspConditionalMsgList.cpp"/>
           <FILE id="n2J7zs" name="sspConditionalMsgList.h" compile="0" resource="0"
@@ -191,7 +194,7 @@
               file="Source/sspPrimitives.cpp"/>
         <FILE id="erkO5k" name="sspPrimitives.h" compile="0" resource="0" file="Source/sspPrimitives.h"/>
       </GROUP>
-      <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="GUI">
+      <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
         <FILE id="OWMZoQ" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
         <FILE id="hJUklS" name="MainComponent.cpp" compile="1" resource="0"
               file="Source/MainComponent.cpp"/>

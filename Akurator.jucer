@@ -5,6 +5,14 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{0019B1A5-1F71-B137-AD0B-36F51D4DD35A}" name="Scheduling">
+        <FILE id="g2DW7A" name="sspSchedulePlayTaskList.cpp" compile="1" resource="0"
+              file="Source/sspSchedulePlayTaskList.cpp"/>
+        <FILE id="WEcNsV" name="sspSchedulePlayTaskList.h" compile="0" resource="0"
+              file="Source/sspSchedulePlayTaskList.h"/>
+        <FILE id="O4QaM0" name="sspSchedulePlayTask.cpp" compile="1" resource="0"
+              file="Source/sspSchedulePlayTask.cpp"/>
+        <FILE id="wOU5Ey" name="sspSchedulePlayTask.h" compile="0" resource="0"
+              file="Source/sspSchedulePlayTask.h"/>
         <FILE id="bl3HLT" name="sspTaskQueue.cpp" compile="1" resource="0"
               file="Source/sspTaskQueue.cpp"/>
         <FILE id="nSqE84" name="sspTaskQueue.h" compile="0" resource="0" file="Source/sspTaskQueue.h"/>
@@ -19,6 +27,12 @@
               file="Source/sspSilenceTask.h"/>
       </GROUP>
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <FILE id="dEeptr" name="sspAudioStream.cpp" compile="1" resource="0"
+              file="Source/sspAudioStream.cpp"/>
+        <FILE id="QSc7V2" name="sspAudioStream.h" compile="0" resource="0"
+              file="Source/sspAudioStream.h"/>
+        <FILE id="i70FsT" name="sspStream.cpp" compile="1" resource="0" file="Source/sspStream.cpp"/>
+        <FILE id="tYvHzJ" name="sspStream.h" compile="0" resource="0" file="Source/sspStream.h"/>
         <GROUP id="{1092AB9E-FA01-8CB7-2EA6-DC533A8BCF0B}" name="Messages">
           <FILE id="Vk693d" name="sspMessageWithReceiver.cpp" compile="1" resource="0"
                 file="Source/sspMessageWithReceiver.cpp"/>
@@ -193,6 +207,8 @@
         <FILE id="P5c0JS" name="sspPrimitives.cpp" compile="1" resource="0"
               file="Source/sspPrimitives.cpp"/>
         <FILE id="erkO5k" name="sspPrimitives.h" compile="0" resource="0" file="Source/sspPrimitives.h"/>
+        <FILE id="USjG33" name="sspTimeline.cpp" compile="1" resource="0" file="Source/sspTimeline.cpp"/>
+        <FILE id="vswnD0" name="sspTimeline.h" compile="0" resource="0" file="Source/sspTimeline.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
         <FILE id="OWMZoQ" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>

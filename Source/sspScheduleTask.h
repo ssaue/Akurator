@@ -13,7 +13,7 @@
 class sspScheduleTask
 {
 protected:
-	long	next_time_ = 0;		// Duration in milliseconds
+	unsigned long next_time_ = 0UL;		// Duration in milliseconds
 
 public:
 	sspScheduleTask() = default;
@@ -24,5 +24,5 @@ public:
 	// Execute action, return true if the object should be added to the scheduler once more
 	virtual bool run() = 0;
 
-	long getNextTime() const { return next_time_; }
+	unsigned long getNextTime() const { return next_time_; }
 };

@@ -81,6 +81,18 @@ bool sspPlayTask::verify(int & nErrors, int & nWarnings) const
 	return bReturn;
 }
 
+void sspPlayTask::setScheduleTime(double seconds)
+{
+	next_time_ = (seconds <= 0.0) ? 0UL : static_cast<unsigned long>(1000UL * seconds);
+}
+
+bool sspPlayTask::run()
+{
+	start(getResponder());
+	next_time_ = 0;
+	return false;
+}
+
 void sspPlayTask::setMessageList(Messages type, std::shared_ptr<sspConditionalMsgList> list)
 {
 	messages_[type] = list;

@@ -33,10 +33,13 @@ public:
 	virtual void stop() = 0;
 
 	virtual void onFinished() override;
+	
+	// Accessors
+	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
 
 protected:
+	std::weak_ptr<sspFinishedResponder> getResponder() const { return responder_; }
 	virtual bool update() = 0;
-	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspPlayer)

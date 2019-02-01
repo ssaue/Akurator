@@ -12,6 +12,8 @@
 #include "sspPrimitives.h"
 #include "sspPlayer.h"
 #include "sspPlayTask.h"
+#include "sspTimeline.h"
+
 #include "sspLogging.h"
 
 #include <sstream>
@@ -44,3 +46,4 @@ template class sspPool<sspConditional>;
 template class sspPool<sspString>;
 template class sspPool<sspPlayer>;
 template class sspPool<sspPlayTask>;
+template class sspPool<sspTimeline>;

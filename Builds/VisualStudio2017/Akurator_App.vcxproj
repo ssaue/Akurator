@@ -146,9 +146,13 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspSchedulePlayTaskList.cpp"/>
+    <ClCompile Include="..\..\Source\sspSchedulePlayTask.cpp"/>
     <ClCompile Include="..\..\Source\sspTaskQueue.cpp"/>
     <ClCompile Include="..\..\Source\sspScheduler.cpp"/>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp"/>
+    <ClCompile Include="..\..\Source\sspAudioStream.cpp"/>
+    <ClCompile Include="..\..\Source\sspStream.cpp"/>
     <ClCompile Include="..\..\Source\sspMessageWithReceiver.cpp"/>
     <ClCompile Include="..\..\Source\sspConditionalMsgList.cpp"/>
     <ClCompile Include="..\..\Source\sspMessage.cpp"/>
@@ -196,6 +200,7 @@
     <ClCompile Include="..\..\Source\sspDomainData.cpp"/>
     <ClCompile Include="..\..\Source\sspPool.cpp"/>
     <ClCompile Include="..\..\Source\sspPrimitives.cpp"/>
+    <ClCompile Include="..\..\Source\sspTimeline.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\sspExecutionState.cpp"/>
@@ -1903,10 +1908,14 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspSchedulePlayTaskList.h"/>
+    <ClInclude Include="..\..\Source\sspSchedulePlayTask.h"/>
     <ClInclude Include="..\..\Source\sspTaskQueue.h"/>
     <ClInclude Include="..\..\Source\sspScheduleTask.h"/>
     <ClInclude Include="..\..\Source\sspScheduler.h"/>
     <ClInclude Include="..\..\Source\sspSilenceTask.h"/>
+    <ClInclude Include="..\..\Source\sspAudioStream.h"/>
+    <ClInclude Include="..\..\Source\sspStream.h"/>
     <ClInclude Include="..\..\Source\sspMessageWithReceiver.h"/>
     <ClInclude Include="..\..\Source\sspConditionalMsgList.h"/>
     <ClInclude Include="..\..\Source\sspMessage.h"/>
@@ -1961,6 +1970,7 @@
     <ClInclude Include="..\..\Source\sspObjectVector.h"/>
     <ClInclude Include="..\..\Source\sspPool.h"/>
     <ClInclude Include="..\..\Source\sspPrimitives.h"/>
+    <ClInclude Include="..\..\Source\sspTimeline.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\sspExecutionState.h"/>
     <ClInclude Include="..\..\Source\sspLogging.h"/>

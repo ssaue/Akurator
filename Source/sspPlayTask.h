@@ -11,6 +11,7 @@
 #pragma once
 
 #include "sspPlayer.h"
+#include "sspScheduleTask.h"
 #include "sspConditionalMsgList.h"
 
 #include <array>
@@ -18,7 +19,7 @@
 #include <boost/serialization/array.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
-class sspPlayTask : public sspPlayer
+class sspPlayTask : public sspPlayer, public sspScheduleTask
 {
 public:
 	enum class Priority : unsigned int { Cancel, Wait, Load, LoadAlways };
@@ -54,6 +55,10 @@ public:
 
 	virtual bool isPlaying() const override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
+
+	// Methods related to ScheduleTask
+	void setScheduleTime(double seconds);
+	virtual bool run() override;
 
 	// Accessors
 	void setPlayer(std::shared_ptr<sspPlayer> player) { player_ = player; }

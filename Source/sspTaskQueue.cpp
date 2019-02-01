@@ -20,23 +20,23 @@ sspTaskQueue::~sspTaskQueue()
 	clear();
 }
 
-std::pair<bool, std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::shared_ptr<sspPlayTask> task)
+std::pair<bool, std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr<sspPlayTask> task)
 {
 	std::lock_guard<std::mutex> lock{ lock_ };
 
-	if (active_.size() < max_active_) {
+	if (max_active_ == 0 || active_.size() < max_active_) {
 		active_.push_back(task);
 		return std::pair(true, std::weak_ptr<sspPlayTask>());
 	}
-	else {
-		auto pri = task->getPriority();
+	else if (auto load_task = task.lock()) {
+		auto pri = load_task->getPriority();
 		switch (pri)
 		{
 		case sspPlayTask::Priority::Cancel:
 			return std::pair(false, std::weak_ptr<sspPlayTask>());
 			break;
 		case sspPlayTask::Priority::Wait:
-			if (waiting_.size() < max_waiting_) {
+			if (max_waiting_ == 0 || waiting_.size() < max_waiting_) {
 				waiting_.push(task);
 			}
 			else {
@@ -57,7 +57,7 @@ std::pair<bool, std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::shared_p
 		case sspPlayTask::Priority::LoadAlways:
 			for (auto qe = active_.begin(); qe != active_.end(); ++qe) {
 				auto ptr = qe->lock();
-				if (ptr && ptr != task) {	// A task cannot remove itself
+				if (ptr && ptr != load_task) {	// A task cannot remove itself
 					active_.erase(qe);
 					active_.push_back(task);
 					return std::pair(true, ptr);
@@ -65,22 +65,22 @@ std::pair<bool, std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::shared_p
 			}
 			return std::pair(false, std::weak_ptr<sspPlayTask>());
 			break;
-			break;
 		default:
 			break;
 		}
 
 	}
 
-	return std::pair<bool, std::shared_ptr<sspPlayTask>>();
+	return std::pair<bool, std::weak_ptr<sspPlayTask>>();
 }
 
-void sspTaskQueue::removeTask(std::shared_ptr<sspPlayTask> task)
+void sspTaskQueue::remove(std::weak_ptr<sspPlayTask> task)
 {
 	std::lock_guard<std::mutex> lock{ lock_ };
 	active_.remove_if([task](std::weak_ptr< sspPlayTask> p) {
 		auto sp = p.lock();
-		return sp && (task == sp);
+		auto tsp = task.lock();
+		return sp && tsp && (tsp == sp);
 	});
 }
 

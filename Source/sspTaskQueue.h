@@ -27,8 +27,8 @@ public:
 	sspTaskQueue& operator= (const sspTaskQueue& obj) = delete;
 	virtual ~sspTaskQueue();
 
-	std::pair<bool, std::weak_ptr<sspPlayTask>> loadTask(std::shared_ptr<sspPlayTask> task);
-	void removeTask(std::shared_ptr<sspPlayTask> task);
+	std::pair<bool, std::weak_ptr<sspPlayTask>> loadTask(std::weak_ptr<sspPlayTask> task);
+	void remove(std::weak_ptr<sspPlayTask> task);
 	std::weak_ptr<sspPlayTask> getWaitingTask();
 	bool empty() const;
 	void clear();

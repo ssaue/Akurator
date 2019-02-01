@@ -27,7 +27,7 @@ public:
 	sspMessageHandler& operator= (const sspMessageHandler& obj) = delete;
 	virtual ~sspMessageHandler() {}
 
-	virtual void handleMessage(const sspMessage& msg) const = 0;
+	virtual void handleMessage(const sspMessage& msg) = 0;
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspMessageHandler)

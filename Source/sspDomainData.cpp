@@ -11,7 +11,7 @@
 #include "sspDomainData.h"
 
 sspDomainData::sspDomainData()
-	: sspObject(), values_(), conditionals_(), strings_(), players_(), tasks_()
+	: sspObject(), values_(), conditionals_(), strings_(), players_(), tasks_(), timelines_()
 {
 }
 
@@ -22,6 +22,9 @@ sspDomainData::sspDomainData()
 	if (!values_.verify(nErrors, nWarnings)) bReturn = false;
 	if (!conditionals_.verify(nErrors, nWarnings)) bReturn = false;
 	if (!strings_.verify(nErrors, nWarnings)) bReturn = false;
+	if (!players_.verify(nErrors, nWarnings)) bReturn = false;
+	if (!tasks_.verify(nErrors, nWarnings)) bReturn = false;
+	if (!timelines_.verify(nErrors, nWarnings)) bReturn = false;
 
 	return bReturn;
 }

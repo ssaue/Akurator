@@ -19,7 +19,8 @@
 #include <boost/serialization/array.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
-class sspPlayTask : public sspPlayer, public sspScheduleTask
+class sspPlayTask : public sspPlayer, 
+					public sspScheduleTask
 {
 public:
 	enum class Priority : unsigned int { Cancel, Wait, Load, LoadAlways };
@@ -49,6 +50,7 @@ public:
 	sspPlayTask& operator= (const sspPlayTask& obj) = delete;
 	virtual ~sspPlayTask() {}
 
+	// Methods related to sspPlayer
 	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
 	virtual void onFinished() override;
@@ -75,6 +77,5 @@ public:
 
 private:
 	bool is_playing_ = false;
-
 	virtual bool update() override;
 };

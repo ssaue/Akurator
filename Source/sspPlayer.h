@@ -13,10 +13,9 @@
 #include "sspPrimitives.h"
 #include "sspFinishedResponder.h"
 
-class sspPlayer : public sspPlayObject, public sspFinishedResponder
+class sspPlayer : public sspPlayObject, 
+				  public sspFinishedResponder
 {
-	std::weak_ptr<sspFinishedResponder> responder_;
-
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
@@ -35,11 +34,15 @@ public:
 	virtual void onFinished() override;
 	
 	// Accessors
-	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
 
 protected:
+	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
 	std::weak_ptr<sspFinishedResponder> getResponder() const { return responder_; }
+
 	virtual bool update() = 0;
+
+private:
+	std::weak_ptr<sspFinishedResponder> responder_;
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspPlayer)

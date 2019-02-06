@@ -19,16 +19,7 @@ sspPlayTask::sspPlayTask()
 bool sspPlayTask::start(std::weak_ptr<sspFinishedResponder> responder)
 {
 	setResponder(responder);
-	messages_[Messages::Enter]->send();
-	is_playing_ = condition_->isTrue() && player_->start(weak_from_this());
-	if (is_playing_) {
-		messages_[Messages::Start]->send();
-	}
-	else {
-		sspPlayer::onFinished();
-		messages_[Messages::Exit]->send();
-	}
-	return false;
+	return true;
 }
 
 void sspPlayTask::stop()
@@ -88,7 +79,15 @@ void sspPlayTask::setScheduleTime(double seconds)
 
 bool sspPlayTask::run()
 {
-	start(getResponder());
+	messages_[Messages::Enter]->send();
+	is_playing_ = condition_->isTrue() && player_->start(weak_from_this());
+	if (is_playing_) {
+		messages_[Messages::Start]->send();
+	}
+	else {
+		sspPlayer::onFinished();
+		messages_[Messages::Exit]->send();
+	}
 	next_time_ = 0;
 	return false;
 }

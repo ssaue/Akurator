@@ -12,7 +12,7 @@
 #include "sspScheduler.h"
 
 sspStream::sspStream()
-	: sspTimeline(), lock_(), task_list_()
+	: sspTimeline(), sspFinishedResponder(), lock_(), task_list_()
 {
 }
 
@@ -78,7 +78,7 @@ void sspStream::handleMessage(const sspMessage& msg)
 void sspStream::play(std::weak_ptr<sspPlayTask> task)
 {
 	if (auto ptr = task.lock()) {
-//		ptr->setResponder(weak_from_this());		TODO: Make this work
+		ptr->start(weak_from_this());
 		sspScheduler::Instance().add(ptr);
 	}
 }

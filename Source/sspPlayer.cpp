@@ -19,5 +19,6 @@ void sspPlayer::onFinished()
 {
 	if (isPlaying() && !update()) {
 		if (auto ptr = responder_.lock()) ptr->onFinished();
+		channel_.reset();
 	}
 }

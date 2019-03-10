@@ -16,7 +16,7 @@ sspIndexPlayer::sspIndexPlayer()
 {
 }
 
-bool sspIndexPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspIndexPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (players_.empty())
 		return false;
@@ -24,7 +24,7 @@ bool sspIndexPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 	auto value = index_->getValue() + 0.5; // Rounding
 	size_t index = value < 0.0 ? 0 : static_cast<size_t>(value);
 	auto player = (index < players_.size()) ? players_.getAt(index) : players_.getLast();
-	if (player->start(weak_from_this())) {
+	if (player->start(channel, weak_from_this())) {
 		setResponder(responder);
 		selected_ = player;
 	}

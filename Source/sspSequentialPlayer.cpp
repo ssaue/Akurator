@@ -16,15 +16,16 @@ sspSequentialPlayer::sspSequentialPlayer()
 {
 }
 
-bool sspSequentialPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspSequentialPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;
 
 	iterator_ = begin(players_);
-	if ((*iterator_)->start(weak_from_this())) {
+	if ((*iterator_)->start(channel, weak_from_this())) {
 		is_playing_ = true;
 		setResponder(responder);
+		setSendChannel(channel);
 	}
 
 	return (isPlaying());
@@ -33,7 +34,7 @@ bool sspSequentialPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 bool sspSequentialPlayer::update()
 {
 	++iterator_;
-	is_playing_ = (iterator_ != end(players_) && (*iterator_)->start(weak_from_this()));
+	is_playing_ = (iterator_ != end(players_) && (*iterator_)->start(getSendChannel(), weak_from_this()));
 	return isPlaying();
 }
 

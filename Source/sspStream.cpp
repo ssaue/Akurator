@@ -77,8 +77,9 @@ void sspStream::handleMessage(const sspMessage& msg)
 
 void sspStream::play(std::weak_ptr<sspPlayTask> task)
 {
+	// TODO: Create send channel pointer!
 	if (auto ptr = task.lock()) {
-		ptr->start(weak_from_this());
+//		ptr->start(weak_from_this());
 		sspScheduler::Instance().add(ptr);
 	}
 }

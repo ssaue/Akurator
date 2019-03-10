@@ -30,7 +30,7 @@ public:
 	sspSequentialPlayer& operator= (const sspSequentialPlayer& obj) = delete;
 	virtual ~sspSequentialPlayer() {}
 
-	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
+	virtual bool start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
 
 	virtual bool isPlaying() const override;

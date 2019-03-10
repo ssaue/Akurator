@@ -17,7 +17,7 @@ sspConditionalPlayer::sspConditionalPlayer()
 {
 }
 
-bool sspConditionalPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspConditionalPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;
@@ -28,7 +28,7 @@ bool sspConditionalPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 		if (conditionals_.getAt(i)->isTrue())
 			selected_ = players_.getAt(i);
 	}
-	if (ptr->start(weak_from_this())) {
+	if (ptr->start(channel, weak_from_this())) {
 		setResponder(responder);
 		selected_ = ptr;
 	}

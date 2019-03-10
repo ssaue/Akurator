@@ -24,7 +24,7 @@ sspRandomPlayer::sspRandomPlayer()
 {
 }
 
-bool sspRandomPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspRandomPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;
@@ -44,7 +44,7 @@ bool sspRandomPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 			player = players_.getAt(i);
 		}
 	}
-	if (player->start(weak_from_this())) {
+	if (player->start(channel, weak_from_this())) {
 		setResponder(responder);
 		selected_ = player;
 	}

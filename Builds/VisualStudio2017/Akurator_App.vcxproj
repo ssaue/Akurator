@@ -203,7 +203,7 @@
     <ClCompile Include="..\..\Source\sspPool.cpp"/>
     <ClCompile Include="..\..\Source\sspPrimitives.cpp"/>
     <ClCompile Include="..\..\Source\sspTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\OscChannelComponent.cpp"/>
+    <ClCompile Include="..\..\Source\sspOscSendChannel.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
@@ -1954,7 +1954,7 @@
     <ClInclude Include="..\..\Source\sspExecutionState.h"/>
     <ClInclude Include="..\..\Source\sspLogging.h"/>
     <ClInclude Include="..\..\Source\sspStreamMixer.h"/>
-    <ClInclude Include="..\..\Source\sspTaskChannel.h"/>
+    <ClInclude Include="..\..\Source\sspSendChannel.h"/>
     <ClInclude Include="..\..\Source\sspSchedulePlayTaskList.h"/>
     <ClInclude Include="..\..\Source\sspSchedulePlayTask.h"/>
     <ClInclude Include="..\..\Source\sspTaskQueue.h"/>
@@ -2017,7 +2017,7 @@
     <ClInclude Include="..\..\Source\sspPool.h"/>
     <ClInclude Include="..\..\Source\sspPrimitives.h"/>
     <ClInclude Include="..\..\Source\sspTimeline.h"/>
-    <ClInclude Include="..\..\Source\OscChannelComponent.h"/>
+    <ClInclude Include="..\..\Source\sspOscSendChannel.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>

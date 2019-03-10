@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    OscChannelComponent.cpp
+    sspOscSendChannel.cpp
     Created: 8 Mar 2019 5:19:12pm
     Author:  Sigurd Saue
 
   ==============================================================================
 */
 
-#include "OscChannelComponent.h"
+#include "sspOscSendChannel.h"
 
 namespace {
 	// Overload trick for visitors
@@ -16,14 +16,13 @@ namespace {
 	template<class... Ts> overloaded(Ts...)->overloaded<Ts...>;
 }
 
-void OscChannelComponent::initialize(std::weak_ptr<OSCSender> sender, int id)
+void sspOscSendChannel::initialize(std::weak_ptr<OSCSender> sender, int id)
 {
 	sender = sender;
 	setID(id);
 }
 
-
-void OscChannelComponent::sendMessage(std::string address, std::vector<ArgumentType> arguments)
+void sspOscSendChannel::sendMessage(std::string address, std::vector<ArgumentType> arguments)
 {
 	OSCAddressPattern pattern(address);
 	OSCMessage message(pattern);

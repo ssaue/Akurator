@@ -16,14 +16,13 @@ sspSimultaneousPlayer::sspSimultaneousPlayer()
 {
 }
 
-bool sspSimultaneousPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspSimultaneousPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;
 
-	auto ptr = weak_from_this();
 	for (auto&& player : players_) {
-		if (player->start(ptr)) {
+		if (player->start(channel, weak_from_this())) {
 			player_count_++;
 		}
 	}

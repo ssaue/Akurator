@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    sspTaskChannel.h
+    sspSendChannel.h
     Created: 25 Feb 2019 11:25:06pm
     Author:  sigurds
 
@@ -16,15 +16,15 @@
 #include <string>
 #include <vector>
 
-class sspTaskChannel
+class sspSendChannel
 {
 public:
 	using ArgumentType = std::variant<int, float, std::string>;
 
-	sspTaskChannel() = default;
-	sspTaskChannel(const sspTaskChannel& obj) = delete;
-	sspTaskChannel& operator= (const sspTaskChannel& obj) = delete;
-	virtual ~sspTaskChannel() {}
+	sspSendChannel() = default;
+	sspSendChannel(const sspSendChannel& obj) = delete;
+	sspSendChannel& operator= (const sspSendChannel& obj) = delete;
+	virtual ~sspSendChannel() {}
 
 	virtual void sendMessage(std::string address, std::vector<ArgumentType> arguments = std::vector<ArgumentType>()) = 0;
 	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }

@@ -16,8 +16,8 @@
               file="Source/sspStreamMixer.cpp"/>
         <FILE id="Au8non" name="sspStreamMixer.h" compile="0" resource="0"
               file="Source/sspStreamMixer.h"/>
-        <FILE id="g3kNKy" name="sspTaskChannel.h" compile="0" resource="0"
-              file="Source/sspTaskChannel.h"/>
+        <FILE id="g3kNKy" name="sspSendChannel.h" compile="0" resource="0"
+              file="Source/sspSendChannel.h"/>
       </GROUP>
       <GROUP id="{0019B1A5-1F71-B137-AD0B-36F51D4DD35A}" name="Scheduling">
         <FILE id="g2DW7A" name="sspSchedulePlayTaskList.cpp" compile="1" resource="0"
@@ -224,10 +224,10 @@
         <FILE id="vswnD0" name="sspTimeline.h" compile="0" resource="0" file="Source/sspTimeline.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
-        <FILE id="o9ikWW" name="OscChannelComponent.cpp" compile="1" resource="0"
-              file="Source/OscChannelComponent.cpp"/>
-        <FILE id="ptXkzd" name="OscChannelComponent.h" compile="0" resource="0"
-              file="Source/OscChannelComponent.h"/>
+        <FILE id="o9ikWW" name="sspOscSendChannel.cpp" compile="1" resource="0"
+              file="Source/sspOscSendChannel.cpp"/>
+        <FILE id="ptXkzd" name="sspOscSendChannel.h" compile="0" resource="0"
+              file="Source/sspOscSendChannel.h"/>
         <FILE id="OWMZoQ" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
         <FILE id="hJUklS" name="MainComponent.cpp" compile="1" resource="0"
               file="Source/MainComponent.cpp"/>

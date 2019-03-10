@@ -50,7 +50,7 @@ public:
 	sspDistributionPlayer& operator= (const sspDistributionPlayer& obj) = delete;
 	virtual ~sspDistributionPlayer() {}
 
-	virtual bool start(std::weak_ptr<sspFinishedResponder> responder) override;
+	virtual bool start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder) override;
 	virtual void stop() override;
 
 	virtual bool isPlaying() const override;

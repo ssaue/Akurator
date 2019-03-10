@@ -24,7 +24,7 @@ sspChainPlayer::sspChainPlayer()
 {
 }
 
-bool sspChainPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspChainPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;
@@ -40,7 +40,7 @@ bool sspChainPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
 	}
 
 	auto player = players_.getAt(selected_);
-	if (player->start(weak_from_this())) {
+	if (player->start(channel, weak_from_this())) {
 		is_playing_ = true;
 		setResponder(responder);
 	}

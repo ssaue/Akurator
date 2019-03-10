@@ -18,7 +18,7 @@ sspSilencePlayer::sspSilencePlayer()
 	silence_->setResponder(weak_from_this());
 }
 
-bool sspSilencePlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspSilencePlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;

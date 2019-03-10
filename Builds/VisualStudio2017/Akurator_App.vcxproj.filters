@@ -613,7 +613,7 @@
     <ClCompile Include="..\..\Source\sspTimeline.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\OscChannelComponent.cpp">
+    <ClCompile Include="..\..\Source\sspOscSendChannel.cpp">
       <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
@@ -2511,7 +2511,7 @@
     <ClInclude Include="..\..\Source\sspStreamMixer.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspTaskChannel.h">
+    <ClInclude Include="..\..\Source\sspSendChannel.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspSchedulePlayTaskList.h">
@@ -2700,7 +2700,7 @@
     <ClInclude Include="..\..\Source\sspTimeline.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\OscChannelComponent.h">
+    <ClInclude Include="..\..\Source\sspOscSendChannel.h">
       <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">

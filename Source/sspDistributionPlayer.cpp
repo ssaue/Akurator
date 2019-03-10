@@ -19,13 +19,14 @@ sspDistributionPlayer::sspDistributionPlayer()
 	silence_->setResponder(weak_from_this());
 }
 
-bool sspDistributionPlayer::start(std::weak_ptr<sspFinishedResponder> responder)
+bool sspDistributionPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
 	if (isPlaying())
 		return false;
 
-	if (player_->start(weak_from_this())) {
+	if (player_->start(channel, weak_from_this())) {
 		setResponder(responder);
+		setSendChannel(channel);
 		is_silence_ = false;
 		loop_counter_ = 0;
 		is_playing_ = true;
@@ -68,7 +69,7 @@ bool sspDistributionPlayer::update()
 
 	// If coming from silence, start player again
 	if (is_silence_) {
-		if (player_->start(weak_from_this())) {
+		if (player_->start(getSendChannel(), weak_from_this())) {
 			is_silence_ = false;
 			return true;
 		}

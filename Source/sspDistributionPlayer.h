@@ -36,12 +36,12 @@ private:
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspPlayer);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(player_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(condition_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(start_time_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(end_time_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(duration_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(loop_mode_);
+		ar & BOOST_SERIALIZATION_NVP(player_);
+		ar & BOOST_SERIALIZATION_NVP(condition_);
+		ar & BOOST_SERIALIZATION_NVP(start_time_);
+		ar & BOOST_SERIALIZATION_NVP(end_time_);
+		ar & BOOST_SERIALIZATION_NVP(duration_);
+		ar & BOOST_SERIALIZATION_NVP(loop_mode_);
 	}
 
 public:

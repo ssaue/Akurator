@@ -23,9 +23,9 @@ class sspRandomPlayer : public sspPlayer
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspPlayer);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(players_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(weights_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(const_weights_);
+		ar & BOOST_SERIALIZATION_NVP(players_);
+		ar & BOOST_SERIALIZATION_NVP(weights_);
+		ar & BOOST_SERIALIZATION_NVP(const_weights_);
 	}
 
 public:

@@ -24,19 +24,23 @@ sspStream::~sspStream()
 
 void sspStream::start()
 {
-	std::lock_guard<std::mutex> lck{ lock_ };
-	task_list_.reset();
+	{
+		std::lock_guard<std::mutex> lck{ lock_ };
+		task_list_.reset();
+	}
 	sspTimeline::start();
 }
 
 void sspStream::update(double seconds)
 {
-	std::lock_guard<std::mutex> lck{ lock_ };
-	if (running_) {
-		auto task = task_list_.getFirst(getTimeStep(seconds));
-		while (!task.expired()) {
-			play(task);
-			task = task_list_.getNext();
+	{
+		std::lock_guard<std::mutex> lck{ lock_ };
+		if (running_) {
+			auto task = task_list_.getFirst(getTimeStep(seconds));
+			while (!task.expired()) {
+				play(task);
+				task = task_list_.getNext();
+			}
 		}
 	}
 	sspTimeline::update(seconds);
@@ -44,9 +48,11 @@ void sspStream::update(double seconds)
 
 bool sspStream::empty() const
 {
-	std::lock_guard<std::mutex> lck{ lock_ };
-	if (!task_list_.empty()) {
-		return false;
+	{
+		std::lock_guard<std::mutex> lck{ lock_ };
+		if (!task_list_.empty()) {
+			return false;
+		}
 	}
 	return sspTimeline::empty();
 }
@@ -54,9 +60,8 @@ bool sspStream::empty() const
 void sspStream::handleMessage(const sspMessage& msg)
 {
 	sspTimeline::handleMessage(msg);
-	std::lock_guard<std::mutex> lck{ lock_ };
 
-	// TODO: A lot of handling missing - need OSC stuff first
+	std::lock_guard<std::mutex> lck{ lock_ };
 	switch (msg.getType())
 	{
 	case sspMessage::Type::Load:
@@ -77,9 +82,9 @@ void sspStream::handleMessage(const sspMessage& msg)
 
 void sspStream::play(std::weak_ptr<sspPlayTask> task)
 {
-	// TODO: Create send channel pointer!
+	// sspStream have no tasks that need a send channel (e.g. OSC)
 	if (auto ptr = task.lock()) {
-//		ptr->start(weak_from_this());
+		ptr->start(std::weak_ptr<sspSendChannel>(), weak_from_this());
 		sspScheduler::Instance().add(ptr);
 	}
 }

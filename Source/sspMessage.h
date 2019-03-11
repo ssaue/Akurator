@@ -32,10 +32,10 @@ private:
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(type_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(time_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(task_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(value_);
+		ar & BOOST_SERIALIZATION_NVP(type_);
+		ar & BOOST_SERIALIZATION_NVP(time_);
+		ar & BOOST_SERIALIZATION_NVP(task_);
+		ar & BOOST_SERIALIZATION_NVP(value_);
 	}
 
 public:

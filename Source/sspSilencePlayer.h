@@ -25,8 +25,8 @@ class sspSilencePlayer : public sspPlayer
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspPlayer);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(duration_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(silence_);
+		ar & BOOST_SERIALIZATION_NVP(duration_);
+		ar & BOOST_SERIALIZATION_NVP(silence_);
 	}
 
 public:

@@ -22,8 +22,8 @@ class sspIndexPlayer : public sspPlayer
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspPlayer);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(players_);
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(index_);
+		ar & BOOST_SERIALIZATION_NVP(players_);
+		ar & BOOST_SERIALIZATION_NVP(index_);
 	}
 
 public:

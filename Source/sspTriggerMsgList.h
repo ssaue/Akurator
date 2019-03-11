@@ -22,7 +22,7 @@ class sspTriggerMsgList
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(messages_);
+		ar & BOOST_SERIALIZATION_NVP(messages_);
 	}
 
 public:

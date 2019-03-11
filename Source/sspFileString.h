@@ -39,11 +39,11 @@ public:
 	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override;
 
 	// Accessors
-	void setFolder(std::shared_ptr<sspString> str) { path_ = std::move(str); }
+	void setPath(std::shared_ptr<sspString> str) { path_ = std::move(str); }
 	void setRecursiveSearch(bool rec) { recursive_ = rec; }
 	void setAudioOnly(bool audio) { audio_only_ = audio; }
 
-	std::shared_ptr<sspString> getFolder() const { return path_; }
+	std::shared_ptr<sspString> getPath() const { return path_; }
 	bool isRecursiveSearch() const { return recursive_; }
 	bool isAudioOnly() const { return audio_only_; }
 

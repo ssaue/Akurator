@@ -21,6 +21,8 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 	if (isPlaying() || channel.expired() || !address_)
 		return false;
 
+	std::string addr = address_->getString() + "/start";
+
 	std::vector<sspSendChannel::ArgumentType> arguments;
 	auto path = path_ ? path_->getString() : std::string();
  	arguments.push_back(path);
@@ -33,7 +35,7 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 		setSendChannel(channel);
 		setResponder(responder);
 		ptr->setResponder(weak_from_this());
-		ptr->sendMessage(address_->getString(), arguments);
+		ptr->sendMessage(addr, arguments);
 	}
 
 	return isPlaying();
@@ -41,6 +43,11 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 
 void sspOSCPlayer::stop()
 {
+	auto ptr = getSendChannel().lock();
+	if (ptr && address_) {
+		std::string addr = address_->getString() + "/stop";
+		ptr->sendMessage(addr, std::vector<sspSendChannel::ArgumentType>());
+	}
 	setSendChannel(std::weak_ptr<sspSendChannel>());
 }
 
@@ -54,16 +61,19 @@ bool sspOSCPlayer::isPlaying() const
 	return !getSendChannel().expired();
 }
 
-bool sspOSCPlayer::verify(int & nErrors, int & /*nWarnings*/) const
+bool sspOSCPlayer::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 
-//	if (!duration_) {
-//		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid duration";
-//	}
-//	if (!silence_) {
-//		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid silence object";
-//	}
+	if (!address_) {
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no address";
+	}
+	if (!path_) {
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no file path";
+	}
+	if (arguments_.empty()) {
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no arguments";
+	}
 
 	return bReturn;
 }

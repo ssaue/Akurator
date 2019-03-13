@@ -10,12 +10,12 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
-#include "sspObjectVector.h"
+#include "sspDomainPrimitives.h"
+#include "sspDomainVector.h"
 
 class sspSelectString : public sspString
 {
-	sspObjectVector<sspString> strings_;
+	sspDomainVector<sspString> strings_;
 	std::shared_ptr<sspValue> value_;
 
 	friend class boost::serialization::access;
@@ -33,14 +33,14 @@ public:
 	virtual ~sspSelectString() {}
 
 	// Virtual methods
-	virtual std::string_view getString() const override;
+	virtual std::string getString() const override;
 	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override;
 
 	// Accessors
-	void setStrings(const sspObjectVector<sspString>& strings) { strings_ = strings; }
+	void setStrings(const sspDomainVector<sspString>& strings) { strings_ = strings; }
 	void setValue(std::shared_ptr<sspValue> value) { value_ = std::move(value); }
 
-	const sspObjectVector<sspString>& getStrings() const { return strings_; }
+	const sspDomainVector<sspString>& getStrings() const { return strings_; }
 	std::shared_ptr<sspValue> getValue() const { return value_; }
 };
 

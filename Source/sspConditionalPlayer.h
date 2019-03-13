@@ -11,12 +11,12 @@
 #pragma once
 
 #include "sspPlayer.h"
-#include "sspObjectVector.h"
+#include "sspDomainVector.h"
 
 class sspConditionalPlayer : public sspPlayer
 {
-	sspObjectVector<sspPlayer> players_;
-	sspObjectVector<sspConditional> conditionals_;
+	sspDomainVector<sspPlayer> players_;
+	sspDomainVector<sspConditional> conditionals_;
 	std::shared_ptr<sspPlayer> default_player_;
 
 	friend class boost::serialization::access;
@@ -40,12 +40,12 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPlayers(const sspObjectVector<sspPlayer>& players) { players_ = players; }
-	void setConditionals(const sspObjectVector<sspConditional>& conds) { conditionals_ = conds; }
+	void setPlayers(const sspDomainVector<sspPlayer>& players) { players_ = players; }
+	void setConditionals(const sspDomainVector<sspConditional>& conds) { conditionals_ = conds; }
 	void setDefaultPlayer(std::shared_ptr<sspPlayer> player) { default_player_ = player; }
 
-	const sspObjectVector<sspPlayer>& getPlayers() const { return players_; }
-	const sspObjectVector<sspConditional>& getConditionals() const { return conditionals_; }
+	const sspDomainVector<sspPlayer>& getPlayers() const { return players_; }
+	const sspDomainVector<sspConditional>& getConditionals() const { return conditionals_; }
 	std::shared_ptr<sspPlayer> getDefaultPlayer() const { return default_player_; }
 
 private:

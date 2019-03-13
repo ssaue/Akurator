@@ -8,6 +8,9 @@
     <Filter Include="Akurator\Source\Scheduling">
       <UniqueIdentifier>{4EE3A76D-35D9-3C89-0EE9-89AC1ABC5D64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Akurator\Source\Domain\Streams">
+      <UniqueIdentifier>{4649A047-2CD5-7F28-C789-F57B778C92D3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain\Messages">
       <UniqueIdentifier>{891D82DD-612F-8F3E-E5DE-DFAAC162EE35}</UniqueIdentifier>
     </Filter>
@@ -464,10 +467,13 @@
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspAudioStream.cpp">
-      <Filter>Akurator\Source\Domain</Filter>
+      <Filter>Akurator\Source\Domain\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspTimeline.cpp">
+      <Filter>Akurator\Source\Domain\Streams</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspStream.cpp">
-      <Filter>Akurator\Source\Domain</Filter>
+      <Filter>Akurator\Source\Domain\Streams</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspMessageWithReceiver.cpp">
       <Filter>Akurator\Source\Domain\Messages</Filter>
@@ -604,13 +610,10 @@
     <ClCompile Include="..\..\Source\sspDomainData.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspPool.cpp">
+    <ClCompile Include="..\..\Source\sspDomainPool.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspPrimitives.cpp">
-      <Filter>Akurator\Source\Domain</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\sspTimeline.cpp">
+    <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspOscSendChannel.cpp">
@@ -2532,11 +2535,14 @@
     <ClInclude Include="..\..\Source\sspSilenceTask.h">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\sspTimeline.h">
+      <Filter>Akurator\Source\Domain\Streams</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspAudioStream.h">
-      <Filter>Akurator\Source\Domain</Filter>
+      <Filter>Akurator\Source\Domain\Streams</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspStream.h">
-      <Filter>Akurator\Source\Domain</Filter>
+      <Filter>Akurator\Source\Domain\Streams</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspMessageWithReceiver.h">
       <Filter>Akurator\Source\Domain\Messages</Filter>
@@ -2685,19 +2691,16 @@
     <ClInclude Include="..\..\Source\sspDomainData.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspObject.h">
+    <ClInclude Include="..\..\Source\sspDomainElement.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspObjectVector.h">
+    <ClInclude Include="..\..\Source\sspDomainVector.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspPool.h">
+    <ClInclude Include="..\..\Source\sspDomainPool.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspPrimitives.h">
-      <Filter>Akurator\Source\Domain</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\sspTimeline.h">
+    <ClInclude Include="..\..\Source\sspDomainPrimitives.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspOscSendChannel.h">

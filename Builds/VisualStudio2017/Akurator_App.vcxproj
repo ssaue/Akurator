@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\Source\sspScheduler.cpp"/>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp"/>
     <ClCompile Include="..\..\Source\sspAudioStream.cpp"/>
+    <ClCompile Include="..\..\Source\sspTimeline.cpp"/>
     <ClCompile Include="..\..\Source\sspStream.cpp"/>
     <ClCompile Include="..\..\Source\sspMessageWithReceiver.cpp"/>
     <ClCompile Include="..\..\Source\sspConditionalMsgList.cpp"/>
@@ -200,9 +201,8 @@
     <ClCompile Include="..\..\Source\sspValueRange.cpp"/>
     <ClCompile Include="..\..\Source\sspValues.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainData.cpp"/>
-    <ClCompile Include="..\..\Source\sspPool.cpp"/>
-    <ClCompile Include="..\..\Source\sspPrimitives.cpp"/>
-    <ClCompile Include="..\..\Source\sspTimeline.cpp"/>
+    <ClCompile Include="..\..\Source\sspDomainPool.cpp"/>
+    <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp"/>
     <ClCompile Include="..\..\Source\sspOscSendChannel.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
@@ -1961,6 +1961,7 @@
     <ClInclude Include="..\..\Source\sspScheduleTask.h"/>
     <ClInclude Include="..\..\Source\sspScheduler.h"/>
     <ClInclude Include="..\..\Source\sspSilenceTask.h"/>
+    <ClInclude Include="..\..\Source\sspTimeline.h"/>
     <ClInclude Include="..\..\Source\sspAudioStream.h"/>
     <ClInclude Include="..\..\Source\sspStream.h"/>
     <ClInclude Include="..\..\Source\sspMessageWithReceiver.h"/>
@@ -2012,11 +2013,10 @@
     <ClInclude Include="..\..\Source\sspValueRange.h"/>
     <ClInclude Include="..\..\Source\sspValues.h"/>
     <ClInclude Include="..\..\Source\sspDomainData.h"/>
-    <ClInclude Include="..\..\Source\sspObject.h"/>
-    <ClInclude Include="..\..\Source\sspObjectVector.h"/>
-    <ClInclude Include="..\..\Source\sspPool.h"/>
-    <ClInclude Include="..\..\Source\sspPrimitives.h"/>
-    <ClInclude Include="..\..\Source\sspTimeline.h"/>
+    <ClInclude Include="..\..\Source\sspDomainElement.h"/>
+    <ClInclude Include="..\..\Source\sspDomainVector.h"/>
+    <ClInclude Include="..\..\Source\sspDomainPool.h"/>
+    <ClInclude Include="..\..\Source\sspDomainPrimitives.h"/>
     <ClInclude Include="..\..\Source\sspOscSendChannel.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>

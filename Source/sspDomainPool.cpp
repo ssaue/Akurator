@@ -1,15 +1,15 @@
 /*
   ==============================================================================
 
-    sspPool.cpp
+    sspDomainPool.cpp
     Created: 4 Jan 2019 11:08:42am
     Author:  sigurds
 
   ==============================================================================
 */
 
-#include "sspPool.h"
-#include "sspPrimitives.h"
+#include "sspDomainPool.h"
+#include "sspDomainPrimitives.h"
 #include "sspPlayer.h"
 #include "sspPlayTask.h"
 #include "sspTimeline.h"
@@ -19,13 +19,13 @@
 #include <sstream>
 
 template<typename T>
-sspPool<T>::sspPool()
-: sspObject(), sspObjectVector<T>()
+sspDomainPool<T>::sspDomainPool()
+: sspDomainElement(), sspDomainVector<T>()
 {
 }
 
 template <typename T>
-bool sspPool<T>::verify(int& nErrors, int& nWarnings) const
+bool sspDomainPool<T>::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
 	if (elements_.empty()) {
@@ -40,10 +40,10 @@ bool sspPool<T>::verify(int& nErrors, int& nWarnings) const
 	return bReturn;
 }
 
-// Instantiate sspPool templates
-template class sspPool<sspValue>;
-template class sspPool<sspConditional>;
-template class sspPool<sspString>;
-template class sspPool<sspPlayer>;
-template class sspPool<sspPlayTask>;
-template class sspPool<sspTimeline>;
+// Instantiate sspDomainPool templates
+template class sspDomainPool<sspValue>;
+template class sspDomainPool<sspConditional>;
+template class sspDomainPool<sspString>;
+template class sspDomainPool<sspPlayer>;
+template class sspDomainPool<sspPlayTask>;
+template class sspDomainPool<sspTimeline>;

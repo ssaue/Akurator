@@ -16,7 +16,7 @@ sspConcatString::sspConcatString()
 {
 }
 
-std::string_view sspConcatString::getString() const
+std::string sspConcatString::getString() const
 {
 	std::string cat;
 	for (auto&& str : strings_) {

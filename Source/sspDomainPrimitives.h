@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    sspPrimitives.h
+    sspDomainPrimitives.h
     Created: 3 Jan 2019 11:00:02pm
     Author:  sigurds
 
@@ -10,15 +10,15 @@
 
 #pragma once
 
-#include "sspObject.h"
+#include "sspDomainElement.h"
 #include <boost/serialization/base_object.hpp>
 
-class sspValue : public sspObject
+class sspValue : public sspDomainElement
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 	}
 
 public:
@@ -34,12 +34,12 @@ public:
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspValue)
 
-class sspConditional : public sspObject
+class sspConditional : public sspDomainElement
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 	}
 
 public:
@@ -54,12 +54,12 @@ public:
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspConditional)
 
-class sspString : public sspObject
+class sspString : public sspDomainElement
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 	}
 
 public:
@@ -68,18 +68,18 @@ public:
 	sspString& operator= (const sspString& obj) = delete;
 	virtual ~sspString() {}
 
-	virtual std::string_view getString() const = 0;
-	explicit operator std::string_view() const { return getString(); }
+	virtual std::string getString() const = 0;
+	explicit operator std::string() const { return getString(); }
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspString)
 
-class sspPlayObject : public sspObject
+class sspPlayObject : public sspDomainElement
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 	}
 
 public:

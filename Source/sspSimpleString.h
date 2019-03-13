@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
+#include "sspDomainPrimitives.h"
 #include <boost/serialization/string.hpp>
 
 class sspSimpleString : public sspString
@@ -32,7 +32,7 @@ public:
 	virtual ~sspSimpleString() {}
 
 	// Virtual methods
-	virtual std::string_view getString() const override { return str_; }
+	virtual std::string getString() const override { return str_; }
 	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override { return true; }
 
 	// Accessors

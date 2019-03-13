@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    sspObjectVector.h
+    sspDomainVector.h
     Created: 7 Jan 2019 4:20:33pm
     Author:  sigurds
 
@@ -15,7 +15,7 @@
 #include <boost/serialization/shared_ptr.hpp>
 
 template <typename T>
-class sspObjectVector
+class sspDomainVector
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -27,12 +27,12 @@ protected:
 	std::vector<std::shared_ptr<T>> elements_;
 
 public:
-	sspObjectVector() : elements_() {}
-	sspObjectVector(const sspObjectVector& other) 
+	sspDomainVector() : elements_() {}
+	sspDomainVector(const sspDomainVector& other) 
 	{ 
 		elements_ = other.elements_; 
 	}
-	sspObjectVector& operator= (const sspObjectVector& other)
+	sspDomainVector& operator= (const sspDomainVector& other)
 	{
 		if (this != &other) {
 			elements_.clear();
@@ -40,11 +40,11 @@ public:
 		}
 		return *this;
 	}
-	sspObjectVector(sspObjectVector&& other)				// Move constructor
+	sspDomainVector(sspDomainVector&& other)				// Move constructor
 	{
 		elements_ = std::move(other.elements_);
 	}
-	sspObjectVector& operator= (sspObjectVector&& other)	// Move assignment
+	sspDomainVector& operator= (sspDomainVector&& other)	// Move assignment
 	{
 		if (this != &other) {
 			elements_.clear();
@@ -52,7 +52,7 @@ public:
 		}
 		return *this;
 	}
-	virtual ~sspObjectVector() {}
+	virtual ~sspDomainVector() {}
 
 	void add(std::shared_ptr<T> element) { elements_.push_back(element); }
 	const std::shared_ptr<T> getAt(size_t const index) const
@@ -70,26 +70,26 @@ public:
 	bool empty() const { return elements_.empty(); }
 };
 
-// sspObjectVector iterators
+// sspDomainVector iterators
 
 template <typename T, typename C>
-class sspObjectVector_iterator_type
+class sspDomainVector_iterator_type
 {
 	size_t   index;
 	C&       collection;
 
 public:
-	sspObjectVector_iterator_type(C& collection, size_t const index) :
+	sspDomainVector_iterator_type(C& collection, size_t const index) :
 		index(index), collection(collection)
 	{
 	}
 
-	sspObjectVector_iterator_type(const sspObjectVector_iterator_type& other) :
+	sspDomainVector_iterator_type(const sspDomainVector_iterator_type& other) :
 		index(other.index), collection(other.collection)
 	{
 	}
 
-	sspObjectVector_iterator_type& operator=(const sspObjectVector_iterator_type& other)
+	sspDomainVector_iterator_type& operator=(const sspDomainVector_iterator_type& other)
 	{
 		if (this == &other)
 			return *this;
@@ -98,7 +98,7 @@ public:
 		return *this;
 	}
 
-	bool operator!= (sspObjectVector_iterator_type const & other) const
+	bool operator!= (sspDomainVector_iterator_type const & other) const
 	{
 		return index != other.index;
 	}
@@ -108,7 +108,7 @@ public:
 		return collection.getAt(index);
 	}
 
-	sspObjectVector_iterator_type const & operator++ ()
+	sspDomainVector_iterator_type const & operator++ ()
 	{
 		++index;
 		return *this;
@@ -116,31 +116,31 @@ public:
 };
 
 template <typename T>
-using sspObjectVector_iterator = sspObjectVector_iterator_type<T, sspObjectVector<T>>;
+using sspDomainVector_iterator = sspDomainVector_iterator_type<T, sspDomainVector<T>>;
 
 template <typename T>
-using sspObjectVector_const_iterator = sspObjectVector_iterator_type<T, sspObjectVector<T> const>;
+using sspDomainVector_const_iterator = sspDomainVector_iterator_type<T, sspDomainVector<T> const>;
 
 template <typename T>
-inline sspObjectVector_iterator<T> begin(sspObjectVector<T>& collection)
+inline sspDomainVector_iterator<T> begin(sspDomainVector<T>& collection)
 {
-	return sspObjectVector_iterator<T>(collection, 0);
+	return sspDomainVector_iterator<T>(collection, 0);
 }
 
 template <typename T>
-inline sspObjectVector_iterator<T> end(sspObjectVector<T>& collection)
+inline sspDomainVector_iterator<T> end(sspDomainVector<T>& collection)
 {
-	return sspObjectVector_iterator<T>(collection, collection.size());
+	return sspDomainVector_iterator<T>(collection, collection.size());
 }
 
 template <typename T>
-inline sspObjectVector_const_iterator<T> begin(sspObjectVector<T> const & collection)
+inline sspDomainVector_const_iterator<T> begin(sspDomainVector<T> const & collection)
 {
-	return sspObjectVector_const_iterator<T>(collection, 0);
+	return sspDomainVector_const_iterator<T>(collection, 0);
 }
 
 template <typename T>
-inline sspObjectVector_const_iterator<T> end(sspObjectVector<T> const & collection)
+inline sspDomainVector_const_iterator<T> end(sspDomainVector<T> const & collection)
 {
-	return sspObjectVector_const_iterator<T>(collection, collection.size());
+	return sspDomainVector_const_iterator<T>(collection, collection.size());
 }

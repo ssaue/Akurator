@@ -10,12 +10,12 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
-#include "sspObjectVector.h"
+#include "sspDomainPrimitives.h"
+#include "sspDomainVector.h"
 
 class sspConcatString : public sspString
 {
-	sspObjectVector<sspString> strings_;
+	sspDomainVector<sspString> strings_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -31,11 +31,11 @@ public:
 	virtual ~sspConcatString() {}
 
 	// Virtual methods
-	virtual std::string_view getString() const override;
+	virtual std::string getString() const override;
 	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override;
 
 	// Accessors
-	void setStrings(const sspObjectVector<sspString>& strings) { strings_ = strings; }
-	const sspObjectVector<sspString>& getStrings() const { return strings_; }
+	void setStrings(const sspDomainVector<sspString>& strings) { strings_ = strings; }
+	const sspDomainVector<sspString>& getStrings() const { return strings_; }
 };
 

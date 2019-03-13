@@ -10,13 +10,13 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
-#include "sspObjectVector.h"
+#include "sspDomainPrimitives.h"
+#include "sspDomainVector.h"
 
 class sspConditionalValue : public sspValue
 {
-	sspObjectVector<sspConditional> conditionals_;
-	sspObjectVector<sspValue> values_;
+	sspDomainVector<sspConditional> conditionals_;
+	sspDomainVector<sspValue> values_;
 	std::shared_ptr<sspValue> default_value_;
 	
 	friend class boost::serialization::access;
@@ -39,12 +39,12 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setConditionals(const sspObjectVector<sspConditional>& conds) { conditionals_ = conds; }
-	void setValues(const sspObjectVector<sspValue>& values) { values_ = values; }
+	void setConditionals(const sspDomainVector<sspConditional>& conds) { conditionals_ = conds; }
+	void setValues(const sspDomainVector<sspValue>& values) { values_ = values; }
 	void setDefaultValue(std::shared_ptr<sspValue> value) { default_value_ = std::move(value); }
 
-	const sspObjectVector<sspValue>& getValues() const { return values_; }
-	const sspObjectVector<sspConditional>& getConditionals() const { return conditionals_; }
+	const sspDomainVector<sspValue>& getValues() const { return values_; }
+	const sspDomainVector<sspConditional>& getConditionals() const { return conditionals_; }
 	std::shared_ptr<sspValue> getDefaultValue() const { return default_value_; }
 };
 

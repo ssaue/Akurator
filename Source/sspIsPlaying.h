@@ -10,13 +10,13 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
-#include "sspObjectVector.h"
+#include "sspDomainPrimitives.h"
+#include "sspDomainVector.h"
 
 class sspIsPlaying : public sspConditional
 {
 private:
-	sspObjectVector<sspPlayObject> players_;
+	sspDomainVector<sspPlayObject> players_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -36,6 +36,6 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPLayers(const sspObjectVector<sspPlayObject>& ops) { players_ = ops; }
-	const sspObjectVector<sspPlayObject>& getPlayers() const { return players_; }
+	void setPLayers(const sspDomainVector<sspPlayObject>& ops) { players_ = ops; }
+	const sspDomainVector<sspPlayObject>& getPlayers() const { return players_; }
 };

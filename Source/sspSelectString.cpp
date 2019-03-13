@@ -16,7 +16,7 @@ sspSelectString::sspSelectString()
 {
 }
 
-std::string_view sspSelectString::getString() const
+std::string sspSelectString::getString() const
 {
 	auto val = value_->getValue();
 	auto index = val < 0.0 ? 0 : static_cast<size_t>(val + 0.5);	// rounding

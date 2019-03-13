@@ -10,12 +10,12 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
-#include "sspObjectVector.h"
+#include "sspDomainPrimitives.h"
+#include "sspDomainVector.h"
 
 class sspProductValue : public sspValue
 {
-	sspObjectVector<sspValue> factors_;
+	sspDomainVector<sspValue> factors_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -35,7 +35,7 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setFactors(const sspObjectVector<sspValue>& values) { factors_ = values; }
-	const sspObjectVector<sspValue>& getFactors() const { return factors_; }
+	void setFactors(const sspDomainVector<sspValue>& values) { factors_ = values; }
+	const sspDomainVector<sspValue>& getFactors() const { return factors_; }
 };
 

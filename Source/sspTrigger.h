@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
+#include "sspDomainPrimitives.h"
 #include <boost/serialization/shared_ptr.hpp>
 
 class sspTrigger : public sspConditional

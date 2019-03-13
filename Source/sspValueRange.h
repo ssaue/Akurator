@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
+#include "sspDomainPrimitives.h"
 
 class sspValueRange : public sspValue
 {

@@ -10,26 +10,26 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
+#include "sspDomainPrimitives.h"
 #include "sspPlayer.h"
 #include "sspPlayTask.h"
 #include "sspTimeline.h"
 
-#include "sspPool.h"
+#include "sspDomainPool.h"
 
-class sspDomainData : public sspObject
+class sspDomainData : public sspDomainElement
 {
-	sspPool<sspValue>		values_;
-	sspPool<sspConditional>	conditionals_;
-	sspPool<sspString>		strings_;
-	sspPool<sspPlayer>		players_;
-	sspPool<sspPlayTask>	tasks_;
-	sspPool<sspTimeline>	timelines_;
+	sspDomainPool<sspValue>		values_;
+	sspDomainPool<sspConditional>	conditionals_;
+	sspDomainPool<sspString>		strings_;
+	sspDomainPool<sspPlayer>		players_;
+	sspDomainPool<sspPlayTask>	tasks_;
+	sspDomainPool<sspTimeline>	timelines_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 		ar & BOOST_SERIALIZATION_NVP(values_);
 		ar & BOOST_SERIALIZATION_NVP(conditionals_);
 		ar & BOOST_SERIALIZATION_NVP(strings_);

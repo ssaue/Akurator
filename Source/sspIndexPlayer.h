@@ -11,11 +11,11 @@
 #pragma once
 
 #include "sspPlayer.h"
-#include "sspObjectVector.h"
+#include "sspDomainVector.h"
 
 class sspIndexPlayer : public sspPlayer
 {
-	sspObjectVector<sspPlayer> players_;
+	sspDomainVector<sspPlayer> players_;
 	std::shared_ptr<sspValue> index_;
 
 	friend class boost::serialization::access;
@@ -39,8 +39,8 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPlayers(const sspObjectVector<sspPlayer>& players) { players_ = players; }
-	const sspObjectVector<sspPlayer>& getPlayers() const { return players_; }
+	void setPlayers(const sspDomainVector<sspPlayer>& players) { players_ = players; }
+	const sspDomainVector<sspPlayer>& getPlayers() const { return players_; }
 
 	void setIndex(std::shared_ptr<sspValue> value) { index_ = std::move(value); }
 	std::shared_ptr<sspValue> getIndex() const { return index_; }

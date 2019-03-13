@@ -11,7 +11,7 @@
 #include "sspDomainData.h"
 
 sspDomainData::sspDomainData()
-	: sspObject(), values_(), conditionals_(), strings_(), players_(), tasks_(), timelines_()
+	: sspDomainElement(), values_(), conditionals_(), strings_(), players_(), tasks_(), timelines_()
 {
 }
 

@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    sspObject.h
+    sspDomainElement.h
     Created: 3 Jan 2019 12:28:24pm
     Author:  sigurds
 
@@ -16,7 +16,7 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/assume_abstract.hpp>
 
-class sspObject
+class sspDomainElement
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -28,10 +28,10 @@ protected:
 	std::string name_{ "" };
 
 public:
-	sspObject() : name_("") {}
-	sspObject(const sspObject& obj) = delete;
-	sspObject& operator= (const sspObject& obj) = delete;
-	virtual ~sspObject() {}
+	sspDomainElement() : name_("") {}
+	sspDomainElement(const sspDomainElement& obj) = delete;
+	sspDomainElement& operator= (const sspDomainElement& obj) = delete;
+	virtual ~sspDomainElement() {}
 
 	std::string_view getName() const { return name_; }
 	void setName(std::string_view name) { name_ = name; }
@@ -41,4 +41,4 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const = 0;
 };
 
-BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspObject)
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspDomainElement)

@@ -11,14 +11,14 @@
 #pragma once
 
 #include "sspMessageHandler.h"
-#include "sspObjectVector.h"
-#include "sspPrimitives.h"
+#include "sspDomainVector.h"
+#include "sspDomainPrimitives.h"
 
 #include <memory>
 
 class sspTimeline : public sspMessageHandler
 {
-	sspObjectVector<sspTimeline> children_;
+	sspDomainVector<sspTimeline> children_;
 	std::shared_ptr<sspValue> time_factor_;
 
 	friend class boost::serialization::access;
@@ -45,10 +45,10 @@ public:
 	virtual void handleMessage(const sspMessage&) override {}
 
 	// Accessors
-	void setChildren(const sspObjectVector<sspTimeline>& children) { children_ = children; }
+	void setChildren(const sspDomainVector<sspTimeline>& children) { children_ = children; }
 	void setTimeFactor(std::shared_ptr<sspValue> factor) { time_factor_ = factor; }
 
-	const sspObjectVector<sspTimeline>& getChildren() const { return children_; }
+	const sspDomainVector<sspTimeline>& getChildren() const { return children_; }
 	std::shared_ptr<sspValue> getTimeFactor() const { return time_factor_; }
 
 protected:

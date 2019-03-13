@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    sspPrimitives.cpp
+    sspDomainPrimitives.cpp
     Created: 7 Jan 2019 10:34:37am
     Author:  sigurds
 
   ==============================================================================
 */
 
-#include "sspPrimitives.h"
+#include "sspDomainPrimitives.h"
 
 #include <boost/archive/xml_oarchive.hpp>
 #include <boost/archive/xml_iarchive.hpp>

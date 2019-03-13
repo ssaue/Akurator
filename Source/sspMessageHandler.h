@@ -10,19 +10,19 @@
 
 #pragma once
 
-#include "sspObject.h"
+#include "sspDomainElement.h"
 #include "sspMessage.h"
 
-class sspMessageHandler : public sspObject
+class sspMessageHandler : public sspDomainElement
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspObject);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 	}
 
 public:
-	sspMessageHandler() : sspObject() {}
+	sspMessageHandler() : sspDomainElement() {}
 	sspMessageHandler(const sspMessageHandler& obj) = delete;
 	sspMessageHandler& operator= (const sspMessageHandler& obj) = delete;
 	virtual ~sspMessageHandler() {}

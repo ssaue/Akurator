@@ -66,7 +66,7 @@ sspFileString::sspFileString()
 {
 }
 
-std::string_view sspFileString::getString() const
+std::string sspFileString::getString() const
 {
 	auto path = fs::path(path_->getString());
 	auto err = std::error_code();

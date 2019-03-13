@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "sspPrimitives.h"
+#include "sspDomainPrimitives.h"
 #include <boost/serialization/shared_ptr.hpp>
 
 class sspFileString : public sspString
@@ -35,7 +35,7 @@ public:
 	virtual ~sspFileString() {}
 
 	// Virtual methods
-	virtual std::string_view getString() const override;
+	virtual std::string getString() const override;
 	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override;
 
 	// Accessors

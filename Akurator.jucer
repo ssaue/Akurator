@@ -42,12 +42,16 @@
               file="Source/sspSilenceTask.h"/>
       </GROUP>
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
-        <FILE id="dEeptr" name="sspAudioStream.cpp" compile="1" resource="0"
-              file="Source/sspAudioStream.cpp"/>
-        <FILE id="QSc7V2" name="sspAudioStream.h" compile="0" resource="0"
-              file="Source/sspAudioStream.h"/>
-        <FILE id="i70FsT" name="sspStream.cpp" compile="1" resource="0" file="Source/sspStream.cpp"/>
-        <FILE id="tYvHzJ" name="sspStream.h" compile="0" resource="0" file="Source/sspStream.h"/>
+        <GROUP id="{D7C96312-F9D0-DE98-372E-87EABFA629BA}" name="Streams">
+          <FILE id="dEeptr" name="sspAudioStream.cpp" compile="1" resource="0"
+                file="Source/sspAudioStream.cpp"/>
+          <FILE id="USjG33" name="sspTimeline.cpp" compile="1" resource="0" file="Source/sspTimeline.cpp"/>
+          <FILE id="vswnD0" name="sspTimeline.h" compile="0" resource="0" file="Source/sspTimeline.h"/>
+          <FILE id="QSc7V2" name="sspAudioStream.h" compile="0" resource="0"
+                file="Source/sspAudioStream.h"/>
+          <FILE id="i70FsT" name="sspStream.cpp" compile="1" resource="0" file="Source/sspStream.cpp"/>
+          <FILE id="tYvHzJ" name="sspStream.h" compile="0" resource="0" file="Source/sspStream.h"/>
+        </GROUP>
         <GROUP id="{1092AB9E-FA01-8CB7-2EA6-DC533A8BCF0B}" name="Messages">
           <FILE id="Vk693d" name="sspMessageWithReceiver.cpp" compile="1" resource="0"
                 file="Source/sspMessageWithReceiver.cpp"/>
@@ -212,16 +216,17 @@
         <FILE id="qZ2HOT" name="sspDomainData.cpp" compile="1" resource="0"
               file="Source/sspDomainData.cpp"/>
         <FILE id="BuvLiN" name="sspDomainData.h" compile="0" resource="0" file="Source/sspDomainData.h"/>
-        <FILE id="Jyhyo0" name="sspObject.h" compile="0" resource="0" file="Source/sspObject.h"/>
-        <FILE id="FS2jkz" name="sspObjectVector.h" compile="0" resource="0"
-              file="Source/sspObjectVector.h"/>
-        <FILE id="fg22AH" name="sspPool.cpp" compile="1" resource="0" file="Source/sspPool.cpp"/>
-        <FILE id="HYOEsC" name="sspPool.h" compile="0" resource="0" file="Source/sspPool.h"/>
-        <FILE id="P5c0JS" name="sspPrimitives.cpp" compile="1" resource="0"
-              file="Source/sspPrimitives.cpp"/>
-        <FILE id="erkO5k" name="sspPrimitives.h" compile="0" resource="0" file="Source/sspPrimitives.h"/>
-        <FILE id="USjG33" name="sspTimeline.cpp" compile="1" resource="0" file="Source/sspTimeline.cpp"/>
-        <FILE id="vswnD0" name="sspTimeline.h" compile="0" resource="0" file="Source/sspTimeline.h"/>
+        <FILE id="Jyhyo0" name="sspDomainElement.h" compile="0" resource="0"
+              file="Source/sspDomainElement.h"/>
+        <FILE id="FS2jkz" name="sspDomainVector.h" compile="0" resource="0"
+              file="Source/sspDomainVector.h"/>
+        <FILE id="fg22AH" name="sspDomainPool.cpp" compile="1" resource="0"
+              file="Source/sspDomainPool.cpp"/>
+        <FILE id="HYOEsC" name="sspDomainPool.h" compile="0" resource="0" file="Source/sspDomainPool.h"/>
+        <FILE id="P5c0JS" name="sspDomainPrimitives.cpp" compile="1" resource="0"
+              file="Source/sspDomainPrimitives.cpp"/>
+        <FILE id="erkO5k" name="sspDomainPrimitives.h" compile="0" resource="0"
+              file="Source/sspDomainPrimitives.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
         <FILE id="o9ikWW" name="sspOscSendChannel.cpp" compile="1" resource="0"

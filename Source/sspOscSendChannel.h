@@ -12,8 +12,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "sspSendChannel.h"
+#include "sspOSCSender.h"
 
-class sspOscSendChannel : public sspSendChannel
+class sspOscSendChannel : public sspSendChannel, private sspOscSender
 {
 public:
 	sspOscSendChannel() = default;
@@ -21,9 +22,5 @@ public:
 	sspOscSendChannel& operator= (const sspOscSendChannel& obj) = delete;
 	virtual ~sspOscSendChannel() {}
 
-	virtual void initialize(std::weak_ptr<OSCSender> sender, int id);
 	virtual void sendMessage(std::string address, std::vector<ArgumentType> arguments = std::vector<ArgumentType>()) override;
-
-private:
-	std::weak_ptr<OSCSender> sender_;
 };

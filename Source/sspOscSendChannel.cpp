@@ -16,12 +16,6 @@ namespace {
 	template<class... Ts> overloaded(Ts...)->overloaded<Ts...>;
 }
 
-void sspOscSendChannel::initialize(std::weak_ptr<OSCSender> sender, int id)
-{
-	sender = sender;
-	setID(id);
-}
-
 void sspOscSendChannel::sendMessage(std::string address, std::vector<ArgumentType> arguments)
 {
 	OSCAddressPattern pattern(address);
@@ -34,6 +28,6 @@ void sspOscSendChannel::sendMessage(std::string address, std::vector<ArgumentTyp
 			[&message](const std::string& str) { message.addString(String(str)); },
 		}, arg);
 	}
-	if (auto sender = sender_.lock())
-		sender->send(message);
+
+	sspOscSender::send(message);
 }

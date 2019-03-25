@@ -12,8 +12,8 @@
 #include "sspSendChannel.h"
 #include "sspPlayTask.h"
 
-sspStreamMixer::sspStreamMixer(std::weak_ptr<sspFinishedResponder> responder)
-	: channels_(), responder_(responder), lock_()
+sspStreamMixer::sspStreamMixer(const std::vector<std::shared_ptr<sspSendChannel>>& channels, std::weak_ptr<sspFinishedResponder> responder)
+	: channels_(channels), responder_(responder), lock_()
 {
 }
 
@@ -24,14 +24,14 @@ sspStreamMixer::~sspStreamMixer()
 bool sspStreamMixer::start(std::weak_ptr<sspPlayTask> task, float time)
 {
 	if (auto ptr = task.lock()) {
-		std::lock_guard<std::mutex> lck{ lock_ };
+		std::scoped_lock<std::mutex> lck{ lock_ };
 		for (auto& chan : channels_) {
 			if (!chan->busy()) {
 				double vol = ptr->getVolumeFactor()->getValue();
 				if (time > 0.0f) {		// Fade in
-					bufferVolume(chan->getID(), static_cast<float>(vol));
+					bufferVolume(chan->getID(), vol);
 				}
-				bufferVolume(chan->getID(), static_cast<float>(vol), time);
+				bufferVolume(chan->getID(), vol, time);
 				return (ptr->start(chan, responder_));
 			}
 		}
@@ -41,7 +41,7 @@ bool sspStreamMixer::start(std::weak_ptr<sspPlayTask> task, float time)
 
 void sspStreamMixer::stop()
 {
-	std::lock_guard<std::mutex> lck{ lock_ };
+	std::scoped_lock<std::mutex> lck{ lock_ };
 	for (auto& chan : channels_) {
 		if (chan->busy()) {
 			chan->sendMessage("buffer/stop", std::vector<sspSendChannel::ArgumentType>());
@@ -49,22 +49,22 @@ void sspStreamMixer::stop()
 	}
 }
 
-bool sspStreamMixer::masterVolume(float vol, float time, Reference ref)
+bool sspStreamMixer::masterVolume(double vol, double time, Reference ref)
 {
 	return bufferVolume(0, vol, time, ref);
 }
 
-bool sspStreamMixer::masterFadeIn(float time)
+bool sspStreamMixer::masterFadeIn(double time)
 {
 	return bufferFadeIn(0, time);
 }
 
-bool sspStreamMixer::masterFadeOut(float time)
+bool sspStreamMixer::masterFadeOut(double time)
 {
 	return bufferFadeOut(0, time);
 }
 
-bool sspStreamMixer::bufferVolume(int channel_id, float vol, float time, Reference ref)
+bool sspStreamMixer::bufferVolume(int channel_id, double vol, double time, Reference ref)
 {
 	channel_id %= 10;
 	if (channel_id > channels_.size() || !channels_[channel_id])
@@ -84,7 +84,7 @@ bool sspStreamMixer::bufferVolume(int channel_id, float vol, float time, Referen
 	return true;
 }
 
-bool sspStreamMixer::bufferFadeIn(int channel_id, float time)
+bool sspStreamMixer::bufferFadeIn(int channel_id, double time)
 {
 	channel_id %= 10;
 	if (channel_id > channels_.size() || !channels_[channel_id])
@@ -97,7 +97,7 @@ bool sspStreamMixer::bufferFadeIn(int channel_id, float time)
 	return true;
 }
 
-bool sspStreamMixer::bufferFadeOut(int channel_id, float time)
+bool sspStreamMixer::bufferFadeOut(int channel_id, double time)
 {
 	channel_id %= 10;
 	if (channel_id > channels_.size() || !channels_[channel_id])
@@ -110,7 +110,7 @@ bool sspStreamMixer::bufferFadeOut(int channel_id, float time)
 	return true;
 }
 
-void sspStreamMixer::bufferSolo(int channel_id, float time)
+void sspStreamMixer::bufferSolo(int channel_id, double time)
 {
 	channel_id %= 10;
 
@@ -125,7 +125,7 @@ void sspStreamMixer::bufferSolo(int channel_id, float time)
 	}
 }
 
-void sspStreamMixer::bufferUnSolo(int channel_id, float time)
+void sspStreamMixer::bufferUnSolo(int channel_id, double time)
 {
 	channel_id %= 10;
 

@@ -18,14 +18,14 @@ sspStream::sspStream()
 
 sspStream::~sspStream()
 {
-	std::lock_guard<std::mutex> lck{ lock_ };
+	std::scoped_lock<std::mutex> lck{ lock_ };
 	task_list_.reset();
 }
 
 void sspStream::start()
 {
 	{
-		std::lock_guard<std::mutex> lck{ lock_ };
+		std::scoped_lock<std::mutex> lck{ lock_ };
 		task_list_.reset();
 	}
 	sspTimeline::start();
@@ -34,7 +34,7 @@ void sspStream::start()
 void sspStream::update(double seconds)
 {
 	{
-		std::lock_guard<std::mutex> lck{ lock_ };
+		std::scoped_lock<std::mutex> lck{ lock_ };
 		if (running_) {
 			auto task = task_list_.getFirst(getTimeStep(seconds));
 			while (!task.expired()) {
@@ -49,7 +49,7 @@ void sspStream::update(double seconds)
 bool sspStream::empty() const
 {
 	{
-		std::lock_guard<std::mutex> lck{ lock_ };
+		std::scoped_lock<std::mutex> lck{ lock_ };
 		if (!task_list_.empty()) {
 			return false;
 		}
@@ -61,7 +61,7 @@ void sspStream::handleMessage(const sspMessage& msg)
 {
 	sspTimeline::handleMessage(msg);
 
-	std::lock_guard<std::mutex> lck{ lock_ };
+	std::scoped_lock<std::mutex> lck{ lock_ };
 	switch (msg.getType())
 	{
 	case sspMessage::Type::Load:

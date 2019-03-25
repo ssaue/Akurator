@@ -29,14 +29,14 @@ sspScheduler::sspScheduler(void)
 sspScheduler::~sspScheduler(void)
 {
 	{
-		std::lock_guard<std::mutex> lck{ timer_lock_ };
+		std::scoped_lock<std::mutex> lck{ timer_lock_ };
 		timer_is_running_ = false;
 		timer_cv_.notify_one();
 	}
 	timer_thread_.join();
 
 	{
-		std::lock_guard<std::mutex> lck{ worker_lock_ };
+		std::scoped_lock<std::mutex> lck{ worker_lock_ };
 		worker_is_running_ = false;
 		worker_cv_.notify_all();
 	}
@@ -56,12 +56,12 @@ bool sspScheduler::add(std::weak_ptr<sspScheduleTask> task)
 	TimePoint tp = now + std::chrono::milliseconds(ptr->getNextTime());
 
 	if (now >= tp) {
-		std::lock_guard<std::mutex> lck{ worker_lock_ };
+		std::scoped_lock<std::mutex> lck{ worker_lock_ };
 		ready_tasks_.push_back(task);
 		worker_cv_.notify_one();
 	}
 	else {
-		std::lock_guard<std::mutex> lck{ timer_lock_ };
+		std::scoped_lock<std::mutex> lck{ timer_lock_ };
 		task_queue_.push({ tp, task });
 		timer_cv_.notify_one();
 	}

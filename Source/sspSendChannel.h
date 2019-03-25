@@ -19,7 +19,7 @@
 class sspSendChannel
 {
 public:
-	using ArgumentType = std::variant<int, float, std::string>;
+	using ArgumentType = std::variant<int, double, std::string>;
 
 	sspSendChannel() = default;
 	sspSendChannel(const sspSendChannel& obj) = delete;

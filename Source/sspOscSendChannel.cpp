@@ -24,7 +24,7 @@ void sspOscSendChannel::sendMessage(std::string address, std::vector<ArgumentTyp
 	for (auto&& arg : arguments) {
 		std::visit(overloaded {
 			[&message](int i) { message.addInt32(i); },
-			[&message](float f) { message.addFloat32(f); },
+			[&message](double f) { message.addFloat32(static_cast<float>(f)); },
 			[&message](const std::string& str) { message.addString(String(str)); },
 		}, arg);
 	}

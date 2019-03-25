@@ -15,6 +15,7 @@
 #include <queue>
 #include <memory>
 #include <mutex>
+#include <optional>
 
 class sspTaskQueue
 {
@@ -27,7 +28,7 @@ public:
 	sspTaskQueue& operator= (const sspTaskQueue& obj) = delete;
 	virtual ~sspTaskQueue();
 
-	std::pair<bool, std::weak_ptr<sspPlayTask>> loadTask(std::weak_ptr<sspPlayTask> task);
+	std::optional<std::weak_ptr<sspPlayTask>> loadTask(std::weak_ptr<sspPlayTask> task);
 	void remove(std::weak_ptr<sspPlayTask> task);
 	std::weak_ptr<sspPlayTask> getWaitingTask();
 	bool empty() const;

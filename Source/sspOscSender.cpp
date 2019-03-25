@@ -15,7 +15,7 @@ std::mutex sspOscSender::send_lock_;
 
 void sspOscSender::connect(const String & address, const int port)
 {
-	std::lock_guard<std::mutex> lck{ send_lock_ };
+	std::scoped_lock<std::mutex> lck{ send_lock_ };
 	if (!sender_) {
 		sender_ = std::make_unique<OSCSender>();
 	}
@@ -24,6 +24,6 @@ void sspOscSender::connect(const String & address, const int port)
 
 void sspOscSender::send(const OSCMessage & msg)
 {
-	std::lock_guard<std::mutex> lck{ send_lock_ };
+	std::scoped_lock<std::mutex> lck{ send_lock_ };
 	sender_->send(msg);
 }

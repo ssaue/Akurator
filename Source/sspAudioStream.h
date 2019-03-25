@@ -15,6 +15,8 @@
 
 #include <mutex>
 
+class sspStreamMixer;
+
 class sspAudioStream : public sspStream
 {
 	std::shared_ptr<sspValue> volume_factor_;
@@ -48,11 +50,14 @@ public:
 
 	// Set max number of tasks in each list (0 implies no limit)
 	void   setMaxTasks(size_t active, size_t waiting);
+	void   setMixer(std::unique_ptr<sspStreamMixer> mixer);
+
 	size_t getMaxActive() const { return max_active_; }
 	size_t getMaxWaiting() const { return max_waiting_; }
 
 private:
 	virtual void play(std::weak_ptr<sspPlayTask> task) final;
 	sspTaskQueue task_queue_;
+	std::unique_ptr<sspStreamMixer> mixer_;
 };
 

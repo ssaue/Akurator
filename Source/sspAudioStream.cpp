@@ -9,10 +9,12 @@
 */
 
 #include "sspAudioStream.h"
+#include "sspStreamMixer.h"
+#include "sspScheduler.h"
 #include "sspLogging.h"
 
 sspAudioStream::sspAudioStream()
-	: sspStream(), volume_factor_(), task_queue_()
+	: sspStream(), volume_factor_(), task_queue_(), mixer_()
 {
 }
 
@@ -57,12 +59,33 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 {
 	sspStream::handleMessage(msg);
 
-	// TODO: A lot of handling missing - need OSC stuff first
 	switch (msg.getType())
 	{
+	case sspMessage::Type::Solo:
+		if (auto ptr = msg.getTask().lock()) {
+			if (ptr->getID() >= 0) {
+				mixer_->bufferSolo(ptr->getID(), msg.getTime()->getValue());
+			}
+		}
+		break;
+	case sspMessage::Type::Unsolo:
+		if (auto ptr = msg.getTask().lock()) {
+			if (ptr->getID() >= 0) {
+				mixer_->bufferUnSolo(ptr->getID(), msg.getTime()->getValue());
+			}
+		}
+		break;
 	case sspMessage::Type::Mute:
+		mixer_->masterFadeOut(msg.getTime()->getValue());
 		break;
 	case sspMessage::Type::Unmute:
+		mixer_->masterFadeIn(msg.getTime()->getValue());
+		break;
+	case sspMessage::Type::SetVolume:
+		mixer_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamMixer::Reference::Absolute);
+		break;
+	case sspMessage::Type::AdjustVolume:
+		mixer_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamMixer::Reference::Relative);
 		break;
 	default:
 		break;
@@ -76,7 +99,25 @@ void sspAudioStream::setMaxTasks(size_t active, size_t waiting)
 	task_queue_.setMaxTasks(active, waiting);
 }
 
+void sspAudioStream::setMixer(std::unique_ptr<sspStreamMixer> mixer)
+{
+	mixer_ = std::move(mixer);
+}
+
 void sspAudioStream::play(std::weak_ptr<sspPlayTask> task)
 {
-	// TODO: Everything
+	bool ready = false;
+	auto fade_task = task_queue_.loadTask(task);
+	if (fade_task.has_value()) {
+		if (auto fade_ptr = fade_task.value().lock()) {
+			if (fade_ptr->getID() >= 0) {
+				mixer_->bufferFadeOut(fade_ptr->getID(), 5.0);		// TODO: Establish settings for fade out time!!!!!!
+				ready = mixer_->start(task, 5.0);					// TODO: Settings for fade in time
+			}
+			else {
+				ready = mixer_->start(task);
+			}
+		}
+	}
+	if (ready) sspScheduler::Instance().add(task);
 }

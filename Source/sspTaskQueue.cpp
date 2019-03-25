@@ -20,27 +20,27 @@ sspTaskQueue::~sspTaskQueue()
 	clear();
 }
 
-std::pair<bool, std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr<sspPlayTask> task)
+std::optional<std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr<sspPlayTask> task)
 {
-	std::lock_guard<std::mutex> lock{ lock_ };
+	std::scoped_lock<std::mutex> lock{ lock_ };
 
 	if (max_active_ == 0 || active_.size() < max_active_) {
 		active_.push_back(task);
-		return std::pair(true, std::weak_ptr<sspPlayTask>());
+		return std::weak_ptr<sspPlayTask>();
 	}
 	else if (auto load_task = task.lock()) {
 		auto pri = load_task->getPriority();
 		switch (pri)
 		{
 		case sspPlayTask::Priority::Cancel:
-			return std::pair(false, std::weak_ptr<sspPlayTask>());
+			return {};
 			break;
 		case sspPlayTask::Priority::Wait:
 			if (max_waiting_ == 0 || waiting_.size() < max_waiting_) {
 				waiting_.push(task);
 			}
 			else {
-				return std::pair(false, std::weak_ptr<sspPlayTask>());
+				return {};
 			}
 			break;
 		case sspPlayTask::Priority::Load:
@@ -49,10 +49,10 @@ std::pair<bool, std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr
 				if (ptr && ptr->getPriority() < pri) {
 					active_.erase(qe);
 					active_.push_back(task);
-					return std::pair(true, ptr);
+					return ptr;
 				}
 			}
-			return std::pair(false, std::weak_ptr<sspPlayTask>());
+			return {};
 			break;
 		case sspPlayTask::Priority::LoadAlways:
 			for (auto qe = active_.begin(); qe != active_.end(); ++qe) {
@@ -60,23 +60,22 @@ std::pair<bool, std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr
 				if (ptr && ptr != load_task) {	// A task cannot remove itself
 					active_.erase(qe);
 					active_.push_back(task);
-					return std::pair(true, ptr);
+					return ptr;
 				}
 			}
-			return std::pair(false, std::weak_ptr<sspPlayTask>());
+			return {};
 			break;
 		default:
 			break;
 		}
 
 	}
-
-	return std::pair<bool, std::weak_ptr<sspPlayTask>>();
+	return {};
 }
 
 void sspTaskQueue::remove(std::weak_ptr<sspPlayTask> task)
 {
-	std::lock_guard<std::mutex> lock{ lock_ };
+	std::scoped_lock<std::mutex> lock{ lock_ };
 	active_.remove_if([task](std::weak_ptr< sspPlayTask> p) {
 		auto sp = p.lock();
 		auto tsp = task.lock();
@@ -86,7 +85,7 @@ void sspTaskQueue::remove(std::weak_ptr<sspPlayTask> task)
 
 std::weak_ptr<sspPlayTask> sspTaskQueue::getWaitingTask()
 {
-	std::lock_guard<std::mutex> lock{ lock_ };
+	std::scoped_lock<std::mutex> lock{ lock_ };
 	if (!waiting_.empty() && active_.size() < max_active_) {
 		auto task = waiting_.front();
 		waiting_.pop();
@@ -100,13 +99,13 @@ std::weak_ptr<sspPlayTask> sspTaskQueue::getWaitingTask()
 
 bool sspTaskQueue::empty() const
 {
-	std::lock_guard<std::mutex> lock{ lock_ };
+	std::scoped_lock<std::mutex> lock{ lock_ };
 	return active_.empty() && waiting_.empty();
 }
 
 void sspTaskQueue::clear()
 {
-	std::lock_guard<std::mutex> lock{ lock_ };
+	std::scoped_lock<std::mutex> lock{ lock_ };
 	for (auto& task : active_) {
 		if (auto ptr = task.lock()) {
 			ptr->stop();

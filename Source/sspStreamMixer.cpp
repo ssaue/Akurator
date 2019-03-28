@@ -21,7 +21,7 @@ sspStreamMixer::~sspStreamMixer()
 {
 }
 
-bool sspStreamMixer::start(std::weak_ptr<sspPlayTask> task, float time)
+bool sspStreamMixer::start(std::weak_ptr<sspPlayTask> task, double time)
 {
 	if (auto ptr = task.lock()) {
 		std::scoped_lock<std::mutex> lck{ lock_ };

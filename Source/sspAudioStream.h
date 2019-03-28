@@ -33,6 +33,8 @@ class sspAudioStream : public sspStream
 	}
 
 public:
+	static double fadein_time_s, fadeout_time_s;
+
 	sspAudioStream();
 	sspAudioStream(const sspAudioStream& obj) = delete;
 	sspAudioStream& operator= (const sspAudioStream& obj) = delete;

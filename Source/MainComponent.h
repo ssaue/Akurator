@@ -54,8 +54,11 @@ public:
 private:
     //==============================================================================
 	ApplicationCommandManager commandManager_;
+	ApplicationProperties app_properties_;
 	std::unique_ptr<MenuBarComponent> menuBar_;
 
+	void loadProperties();
+	void saveProperties();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

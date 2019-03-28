@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\Source\sspDomainData.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPool.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp"/>
+    <ClCompile Include="..\..\Source\sspOscConsole.cpp"/>
     <ClCompile Include="..\..\Source\sspOscSender.cpp"/>
     <ClCompile Include="..\..\Source\sspOscSendChannel.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
@@ -2018,6 +2019,7 @@
     <ClInclude Include="..\..\Source\sspDomainVector.h"/>
     <ClInclude Include="..\..\Source\sspDomainPool.h"/>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h"/>
+    <ClInclude Include="..\..\Source\sspOscConsole.h"/>
     <ClInclude Include="..\..\Source\sspOSCSender.h"/>
     <ClInclude Include="..\..\Source\sspOscSendChannel.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>

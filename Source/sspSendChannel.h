@@ -28,6 +28,8 @@ public:
 
 	virtual void sendMessage(std::string address, std::vector<ArgumentType> arguments = std::vector<ArgumentType>()) = 0;
 	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
+	void setFinished() { if (auto ptr = responder_.lock()) { ptr->onFinished(); } }
+
 	bool busy() { return !responder_.expired(); }
 
 	void setID(int value) { id_ = value; }

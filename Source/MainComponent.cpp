@@ -9,6 +9,8 @@
 #include "MainComponent.h"
 
 #include "sspDomainData.h"
+#include "sspAudioStream.h"
+#include "sspOscConsole.h"
 
 #include <fstream>
 #include <boost/archive/xml_oarchive.hpp> 
@@ -24,10 +26,21 @@ MainComponent::MainComponent()
 	addKeyListener(commandManager_.getKeyMappings());
 
     setSize (600, 400);
+
+	PropertiesFile::Options options;
+	options.applicationName = ProjectInfo::projectName;
+	options.folderName = File::getSpecialLocation(File::SpecialLocationType::userApplicationDataDirectory).getChildFile(ProjectInfo::projectName).getFullPathName();
+	options.filenameSuffix = ".settings";
+	options.osxLibrarySubFolder = "Application Support";
+	options.storageFormat = PropertiesFile::storeAsXML;
+	app_properties_.setStorageParameters(options);
+
+	loadProperties();
 }
 
 MainComponent::~MainComponent()
 {
+	saveProperties();
 }
 
 //==============================================================================
@@ -148,4 +161,28 @@ bool MainComponent::perform(const InvocationInfo& info)
 	}
 
 	return true;
+}
+
+void MainComponent::loadProperties()
+{
+	PropertiesFile* props = app_properties_.getUserSettings();
+
+	sspOscConsole::send_address_s = props->getValue("send_address", "127.0.0.1");
+	sspOscConsole::send_port_s = props->getIntValue("send_port", 8001);
+	sspOscConsole::receive_port_s = props->getIntValue("receive_port", 9001);
+
+	sspAudioStream::fadein_time_s = props->getDoubleValue("fadein", 2.0);
+	sspAudioStream::fadeout_time_s = props->getDoubleValue("fadeout", 5.0);
+}
+
+void MainComponent::saveProperties()
+{
+	PropertiesFile* props = app_properties_.getUserSettings();
+
+	props->setValue("send_address", sspOscConsole::send_address_s);
+	props->setValue("send_port", sspOscConsole::send_port_s);
+	props->setValue("receive_port", sspOscConsole::receive_port_s);
+
+	props->setValue("fadein", sspAudioStream::fadein_time_s);
+	props->setValue("fadeout", sspAudioStream::fadeout_time_s);
 }

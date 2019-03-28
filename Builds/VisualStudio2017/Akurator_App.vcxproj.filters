@@ -616,6 +616,9 @@
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\sspOscConsole.cpp">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspOscSender.cpp">
       <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
@@ -2705,6 +2708,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h">
       <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspOscConsole.h">
+      <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspOSCSender.h">
       <Filter>Akurator\Source\Components</Filter>

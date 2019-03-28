@@ -13,6 +13,9 @@
 #include "sspScheduler.h"
 #include "sspLogging.h"
 
+double sspAudioStream::fadein_time_s = 2.0;
+double sspAudioStream::fadeout_time_s = 5.0;
+
 sspAudioStream::sspAudioStream()
 	: sspStream(), volume_factor_(), task_queue_(), mixer_()
 {
@@ -111,8 +114,8 @@ void sspAudioStream::play(std::weak_ptr<sspPlayTask> task)
 	if (fade_task.has_value()) {
 		if (auto fade_ptr = fade_task.value().lock()) {
 			if (fade_ptr->getID() >= 0) {
-				mixer_->bufferFadeOut(fade_ptr->getID(), 5.0);		// TODO: Establish settings for fade out time!!!!!!
-				ready = mixer_->start(task, 5.0);					// TODO: Settings for fade in time
+				mixer_->bufferFadeOut(fade_ptr->getID(), fadeout_time_s);
+				ready = mixer_->start(task, fadein_time_s);
 			}
 			else {
 				ready = mixer_->start(task);

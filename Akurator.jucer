@@ -229,6 +229,9 @@
               file="Source/sspDomainPrimitives.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
+        <FILE id="sUy4eF" name="sspOscConsole.cpp" compile="1" resource="0"
+              file="Source/sspOscConsole.cpp"/>
+        <FILE id="Xtpg11" name="sspOscConsole.h" compile="0" resource="0" file="Source/sspOscConsole.h"/>
         <FILE id="KuGw65" name="sspOscSender.cpp" compile="1" resource="0"
               file="Source/sspOscSender.cpp"/>
         <FILE id="rBSGIU" name="sspOSCSender.h" compile="0" resource="0" file="Source/sspOSCSender.h"/>

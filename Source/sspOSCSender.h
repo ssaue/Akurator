@@ -16,7 +16,7 @@
 class sspOscSender
 {
 public:
-	static void connect(const String& address, const int port);
+	static bool connect(const String& address, const int port);
 
 protected:
 	sspOscSender() = default;

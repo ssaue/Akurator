@@ -26,7 +26,7 @@ protected:
 public:
 	virtual ~sspStreamMixer() = 0;	// Ensure abstract class
 
-	bool start(std::weak_ptr<sspPlayTask> task, float time = 0.0f);	// Allowing fade in
+	bool start(std::weak_ptr<sspPlayTask> task, double time = 0.0f);	// Allowing fade in
 	void stop();
 
 	enum class Reference : unsigned int { Relative, Absolute };

@@ -22,5 +22,5 @@ public:
 	sspOscSendChannel& operator= (const sspOscSendChannel& obj) = delete;
 	virtual ~sspOscSendChannel() {}
 
-	virtual void sendMessage(std::string address, std::vector<ArgumentType> arguments = std::vector<ArgumentType>()) override;
+	virtual void sendMessage(std::string address, std::vector<ArgumentType> arguments = std::vector<ArgumentType>()) final;
 };

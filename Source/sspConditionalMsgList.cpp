@@ -16,7 +16,7 @@ sspConditionalMsgList::sspConditionalMsgList()
 {
 }
 
-  bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
+bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 

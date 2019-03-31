@@ -146,8 +146,10 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspExecutionManager.cpp"/>
+    <ClCompile Include="..\..\Source\sspPlayManager.cpp"/>
     <ClCompile Include="..\..\Source\sspExecutionState.cpp"/>
-    <ClCompile Include="..\..\Source\sspStreamMixer.cpp"/>
+    <ClCompile Include="..\..\Source\sspStreamBus.cpp"/>
     <ClCompile Include="..\..\Source\sspSchedulePlayTaskList.cpp"/>
     <ClCompile Include="..\..\Source\sspSchedulePlayTask.cpp"/>
     <ClCompile Include="..\..\Source\sspTaskQueue.cpp"/>
@@ -1952,10 +1954,12 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspExecutionManager.h"/>
+    <ClInclude Include="..\..\Source\sspPlayManager.h"/>
     <ClInclude Include="..\..\Source\sspFinishedResponder.h"/>
     <ClInclude Include="..\..\Source\sspExecutionState.h"/>
     <ClInclude Include="..\..\Source\sspLogging.h"/>
-    <ClInclude Include="..\..\Source\sspStreamMixer.h"/>
+    <ClInclude Include="..\..\Source\sspStreamBus.h"/>
     <ClInclude Include="..\..\Source\sspSendChannel.h"/>
     <ClInclude Include="..\..\Source\sspSchedulePlayTaskList.h"/>
     <ClInclude Include="..\..\Source\sspSchedulePlayTask.h"/>

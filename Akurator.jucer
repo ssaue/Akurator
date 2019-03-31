@@ -5,6 +5,14 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{6B72F253-A45D-5E1A-E22B-9B0FEA970C4A}" name="Execution">
+        <FILE id="yubyZv" name="sspExecutionManager.cpp" compile="1" resource="0"
+              file="Source/sspExecutionManager.cpp"/>
+        <FILE id="Nc2yvE" name="sspExecutionManager.h" compile="0" resource="0"
+              file="Source/sspExecutionManager.h"/>
+        <FILE id="zUnr8R" name="sspPlayManager.cpp" compile="1" resource="0"
+              file="Source/sspPlayManager.cpp"/>
+        <FILE id="dbqQ25" name="sspPlayManager.h" compile="0" resource="0"
+              file="Source/sspPlayManager.h"/>
         <FILE id="vk6iJZ" name="sspFinishedResponder.h" compile="0" resource="0"
               file="Source/sspFinishedResponder.h"/>
         <FILE id="a7d0xN" name="sspExecutionState.cpp" compile="1" resource="0"
@@ -12,10 +20,9 @@
         <FILE id="REecLS" name="sspExecutionState.h" compile="0" resource="0"
               file="Source/sspExecutionState.h"/>
         <FILE id="SqSkc2" name="sspLogging.h" compile="0" resource="0" file="Source/sspLogging.h"/>
-        <FILE id="Oturm6" name="sspStreamMixer.cpp" compile="1" resource="0"
-              file="Source/sspStreamMixer.cpp"/>
-        <FILE id="Au8non" name="sspStreamMixer.h" compile="0" resource="0"
-              file="Source/sspStreamMixer.h"/>
+        <FILE id="Oturm6" name="sspStreamBus.cpp" compile="1" resource="0"
+              file="Source/sspStreamBus.cpp"/>
+        <FILE id="Au8non" name="sspStreamBus.h" compile="0" resource="0" file="Source/sspStreamBus.h"/>
         <FILE id="g3kNKy" name="sspSendChannel.h" compile="0" resource="0"
               file="Source/sspSendChannel.h"/>
       </GROUP>

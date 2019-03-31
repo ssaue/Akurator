@@ -10,6 +10,7 @@
 
 #include "sspOscConsole.h"
 #include "sspOSCSender.h"
+#include "sspOscSendChannel.h"
 
 String sspOscConsole::send_address_s = "127.0.0.1";
 int sspOscConsole::send_port_s = 8001;
@@ -22,12 +23,26 @@ sspOscConsole::sspOscConsole() : channels_()
 	addListener(this, "/finished");
 }
 
+std::map<unsigned int, std::shared_ptr<sspSendChannel>> sspOscConsole::getBusChannels(unsigned int num)
+{
+	std::map<unsigned int, std::shared_ptr<sspSendChannel>> bus_channels;
+
+	unsigned int id = static_cast<unsigned int>(channels_.size());
+	for (unsigned int i = 0; i < num; ++i) {
+		channels_.push_back(std::make_shared<sspOscSendChannel>());
+		channels_.back()->setID(id+i);
+		bus_channels[id + i] = channels_.back();
+	}
+	
+	return std::move(bus_channels);
+}
+
 void sspOscConsole::oscMessageReceived(const OSCMessage & message)
 {
 	if (message.size() == 1 && message[0].isInt32()) {
-		auto channel = channels_.find(message[0].getInt32());
-		if (channel != channels_.end()) {
-			channel->second->setFinished();
+		auto channel = message[0].getInt32();
+		if (channel < channels_.size()) {
+			channels_[channel]->setFinished();
 		}
 	}
 }

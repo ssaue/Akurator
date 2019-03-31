@@ -16,17 +16,26 @@
 
 class sspExecutionState
 {
-	bool running_;
-	std::chrono::steady_clock::time_point start_time_;
-
 	static sspExecutionState* s_instance_;
 	static bool s_destroyed_;
+
+	bool running_ = false;
+	bool playing_ = false;
+
+	std::chrono::steady_clock::time_point start_run_time_;
+	std::chrono::steady_clock::time_point start_play_time_;
 
 public:
 	static sspExecutionState& Instance();
 
 	void run();
+	void play();
+
+	bool isRunning() const { return running_; }
+	bool isPlaying() const { return playing_; }
+
 	double secondsRunning() const;
+	double secondsPlaying() const;
 
 private:
 	sspExecutionState();

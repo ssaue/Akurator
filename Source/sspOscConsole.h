@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "sspSendChannel.h"
 
+#include <vector>
 #include <map>
 
 class sspOscConsole : private OSCReceiver, private OSCReceiver::ListenerWithOSCAddress<OSCReceiver::MessageLoopCallback>
@@ -30,10 +31,12 @@ public:
 	bool isSendConnected() const { return send_ready_; }
 	bool isReceiveConnected() const { return receive_ready_; }
 
-private:
-	void oscMessageReceived(const OSCMessage& message) override;
+	std::map<unsigned int, std::shared_ptr<sspSendChannel>> getBusChannels(unsigned int num);
 
-	std::map<int, std::shared_ptr<sspSendChannel>> channels_;
-	bool send_ready_;
-	bool receive_ready_;
+private:
+	virtual void oscMessageReceived(const OSCMessage& message) override;
+
+	std::vector<std::shared_ptr<sspSendChannel>> channels_;
+	bool send_ready_ = false;
+	bool receive_ready_ = false;
 };

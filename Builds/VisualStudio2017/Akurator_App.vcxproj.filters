@@ -445,10 +445,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspExecutionManager.cpp">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspPlayManager.cpp">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspExecutionState.cpp">
       <Filter>Akurator\Source\Execution</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspStreamMixer.cpp">
+    <ClCompile Include="..\..\Source\sspStreamBus.cpp">
       <Filter>Akurator\Source\Execution</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspSchedulePlayTaskList.cpp">
@@ -2508,6 +2514,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspExecutionManager.h">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspPlayManager.h">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspFinishedResponder.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
@@ -2517,7 +2529,7 @@
     <ClInclude Include="..\..\Source\sspLogging.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspStreamMixer.h">
+    <ClInclude Include="..\..\Source\sspStreamBus.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspSendChannel.h">

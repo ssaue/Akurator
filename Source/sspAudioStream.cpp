@@ -9,15 +9,12 @@
 */
 
 #include "sspAudioStream.h"
-#include "sspStreamMixer.h"
+#include "sspStreamBus.h"
 #include "sspScheduler.h"
 #include "sspLogging.h"
 
-double sspAudioStream::fadein_time_s = 2.0;
-double sspAudioStream::fadeout_time_s = 5.0;
-
 sspAudioStream::sspAudioStream()
-	: sspStream(), volume_factor_(), task_queue_(), mixer_()
+	: sspStream(), volume_factor_(), task_queue_(), bus_()
 {
 }
 
@@ -67,60 +64,51 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 	case sspMessage::Type::Solo:
 		if (auto ptr = msg.getTask().lock()) {
 			if (ptr->getID() >= 0) {
-				mixer_->bufferSolo(ptr->getID(), msg.getTime()->getValue());
+				bus_->bufferSolo(ptr->getID(), msg.getTime()->getValue());
 			}
 		}
 		break;
 	case sspMessage::Type::Unsolo:
 		if (auto ptr = msg.getTask().lock()) {
 			if (ptr->getID() >= 0) {
-				mixer_->bufferUnSolo(ptr->getID(), msg.getTime()->getValue());
+				bus_->bufferUnSolo(ptr->getID(), msg.getTime()->getValue());
 			}
 		}
 		break;
 	case sspMessage::Type::Mute:
-		mixer_->masterFadeOut(msg.getTime()->getValue());
+		bus_->masterFadeOut(msg.getTime()->getValue());
 		break;
 	case sspMessage::Type::Unmute:
-		mixer_->masterFadeIn(msg.getTime()->getValue());
+		bus_->masterFadeIn(msg.getTime()->getValue());
 		break;
 	case sspMessage::Type::SetVolume:
-		mixer_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamMixer::Reference::Absolute);
+		bus_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamBus::Reference::Absolute);
 		break;
 	case sspMessage::Type::AdjustVolume:
-		mixer_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamMixer::Reference::Relative);
+		bus_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamBus::Reference::Relative);
 		break;
 	default:
 		break;
 	}
 }
 
-void sspAudioStream::setMaxTasks(size_t active, size_t waiting)
+void sspAudioStream::setMaxTasks(unsigned int active, unsigned int waiting)
 {
 	max_active_ = active;
 	max_waiting_ = waiting;
 	task_queue_.setMaxTasks(active, waiting);
 }
 
-void sspAudioStream::setMixer(std::unique_ptr<sspStreamMixer> mixer)
+void sspAudioStream::setBus(std::unique_ptr<sspStreamBus> mixer)
 {
-	mixer_ = std::move(mixer);
+	bus_ = std::move(mixer);
+	bus_->setResponder(weak_from_this());
 }
 
 void sspAudioStream::play(std::weak_ptr<sspPlayTask> task)
 {
-	bool ready = false;
-	auto fade_task = task_queue_.loadTask(task);
-	if (fade_task.has_value()) {
-		if (auto fade_ptr = fade_task.value().lock()) {
-			if (fade_ptr->getID() >= 0) {
-				mixer_->bufferFadeOut(fade_ptr->getID(), fadeout_time_s);
-				ready = mixer_->start(task, fadein_time_s);
-			}
-			else {
-				ready = mixer_->start(task);
-			}
-		}
+	auto ready = task_queue_.loadTask(task);
+	if (ready.has_value() && bus_->play(task, ready.value())) {
+		sspScheduler::Instance().add(task);
 	}
-	if (ready) sspScheduler::Instance().add(task);
 }

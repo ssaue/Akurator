@@ -9,7 +9,7 @@
 #include "MainComponent.h"
 
 #include "sspDomainData.h"
-#include "sspAudioStream.h"
+#include "sspStreamBus.h"
 #include "sspOscConsole.h"
 
 #include <fstream>
@@ -171,8 +171,8 @@ void MainComponent::loadProperties()
 	sspOscConsole::send_port_s = props->getIntValue("send_port", 8001);
 	sspOscConsole::receive_port_s = props->getIntValue("receive_port", 9001);
 
-	sspAudioStream::fadein_time_s = props->getDoubleValue("fadein", 2.0);
-	sspAudioStream::fadeout_time_s = props->getDoubleValue("fadeout", 5.0);
+	sspStreamBus::fadein_time_s = props->getDoubleValue("fadein", 2.0);
+	sspStreamBus::fadeout_time_s = props->getDoubleValue("fadeout", 5.0);
 }
 
 void MainComponent::saveProperties()
@@ -183,6 +183,6 @@ void MainComponent::saveProperties()
 	props->setValue("send_port", sspOscConsole::send_port_s);
 	props->setValue("receive_port", sspOscConsole::receive_port_s);
 
-	props->setValue("fadein", sspAudioStream::fadein_time_s);
-	props->setValue("fadeout", sspAudioStream::fadeout_time_s);
+	props->setValue("fadein", sspStreamBus::fadein_time_s);
+	props->setValue("fadeout", sspStreamBus::fadeout_time_s);
 }

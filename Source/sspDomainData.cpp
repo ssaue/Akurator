@@ -15,7 +15,15 @@ sspDomainData::sspDomainData()
 {
 }
 
-  bool sspDomainData::verify(int& nErrors, int& nWarnings) const
+void sspDomainData::createInitialContent()
+{
+	// Add root stream
+	auto root = std::make_shared<sspTimeline>();
+	root->setName("Root stream");
+	timelines_.add(std::move(root));
+}
+
+bool sspDomainData::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
 

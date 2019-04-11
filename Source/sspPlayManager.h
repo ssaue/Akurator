@@ -39,11 +39,12 @@ public:
 	sspPlayManager() = default;
 	sspPlayManager(const sspPlayManager&) = delete;
 	sspPlayManager& operator=(const sspPlayManager&) = delete;
-	~sspPlayManager() {}
+	~sspPlayManager();
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
 	bool initialize(sspDomainPool<sspTimeline>& timelines);
+
 	bool start();
 	bool update();
 	void stop();

@@ -445,7 +445,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\sspExecutionManager.cpp">
+    <ClCompile Include="..\..\Source\sspExecutiveManager.cpp">
       <Filter>Akurator\Source\Execution</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspPlayManager.cpp">
@@ -2514,7 +2514,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\sspExecutionManager.h">
+    <ClInclude Include="..\..\Source\sspTimeUpdater.h">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspExecutiveManager.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspPlayManager.h">

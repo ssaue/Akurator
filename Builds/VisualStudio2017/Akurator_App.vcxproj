@@ -146,7 +146,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\sspExecutionManager.cpp"/>
+    <ClCompile Include="..\..\Source\sspExecutiveManager.cpp"/>
     <ClCompile Include="..\..\Source\sspPlayManager.cpp"/>
     <ClCompile Include="..\..\Source\sspExecutionState.cpp"/>
     <ClCompile Include="..\..\Source\sspStreamBus.cpp"/>
@@ -1954,7 +1954,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\sspExecutionManager.h"/>
+    <ClInclude Include="..\..\Source\sspTimeUpdater.h"/>
+    <ClInclude Include="..\..\Source\sspExecutiveManager.h"/>
     <ClInclude Include="..\..\Source\sspPlayManager.h"/>
     <ClInclude Include="..\..\Source\sspFinishedResponder.h"/>
     <ClInclude Include="..\..\Source\sspExecutionState.h"/>

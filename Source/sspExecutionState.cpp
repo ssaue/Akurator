@@ -28,23 +28,23 @@ sspExecutionState::~sspExecutionState(void)
 	s_destroyed_ = true;
 }
 
-void sspExecutionState::run()
-{
-	start_run_time_ = steady_clock::now();
-	running_ = true;
+void sspExecutionState::run(bool yes)
+{	
+	running_ = yes;
+	if (running_) start_run_time_ = steady_clock::now();
 }
 
-void sspExecutionState::play()
+void sspExecutionState::play(bool yes)
 {
-	start_play_time_ = steady_clock::now();
-	playing_ = true;
+	playing_ = yes;
+	if (playing_) start_play_time_ = steady_clock::now();
 }
 
 double sspExecutionState::secondsRunning() const
 {
 	if (running_) {
-		auto diff = duration_cast<seconds>(steady_clock::now() - start_run_time_);
-		return static_cast<double>(diff.count());
+		std::chrono::duration<double> diff = steady_clock::now() - start_run_time_;
+		return diff.count();
 	}
 	else {
 		return 0.0;
@@ -54,7 +54,7 @@ double sspExecutionState::secondsRunning() const
 double sspExecutionState::secondsPlaying() const
 {
 	if (playing_) {
-		auto diff = duration_cast<seconds>(steady_clock::now() - start_play_time_);
+		std::chrono::duration<double> diff = steady_clock::now() - start_play_time_;
 		return static_cast<double>(diff.count());
 	}
 	else {

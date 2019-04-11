@@ -68,6 +68,12 @@ bool sspScheduler::add(std::weak_ptr<sspScheduleTask> task)
 	return true;
 }
 
+bool sspScheduler::empty() const
+{
+	// TODO: No mutex protection here. Could be risky!
+	return ready_tasks_.empty() && task_queue_.empty();
+}
+
 void sspScheduler::timer_thread()
 {
 	for (;;) {

@@ -28,8 +28,8 @@ class sspExecutionState
 public:
 	static sspExecutionState& Instance();
 
-	void run();
-	void play();
+	void run(bool yes = true);
+	void play(bool yes = true);
 
 	bool isRunning() const { return running_; }
 	bool isPlaying() const { return playing_; }

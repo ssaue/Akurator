@@ -24,6 +24,7 @@ class sspScheduler
 public:
 	static sspScheduler& Instance();
 	bool add(std::weak_ptr<sspScheduleTask> task);
+	bool empty() const;
 
 private:
 	using TimePoint = std::chrono::steady_clock::time_point;

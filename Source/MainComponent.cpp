@@ -11,6 +11,7 @@
 #include "sspDomainData.h"
 #include "sspStreamBus.h"
 #include "sspOscConsole.h"
+#include "sspExecutiveManager.h"
 
 #include <fstream>
 #include <boost/archive/xml_oarchive.hpp> 
@@ -173,6 +174,19 @@ void MainComponent::loadProperties()
 
 	sspStreamBus::fadein_time_s = props->getDoubleValue("fadein", 2.0);
 	sspStreamBus::fadeout_time_s = props->getDoubleValue("fadeout", 5.0);
+
+	sspExecutiveManager::startup_proc_s = sspExecutiveManager::Startup{ props->getIntValue("startup_proc", 0) };
+	sspExecutiveManager::shutdown_proc_s = sspExecutiveManager::Shutdown{ props->getIntValue("shutdown_proc", 0) };
+	sspExecutiveManager::use_play_interval_s = props->getBoolValue("use_interval", true);
+	sspExecutiveManager::update_interval_s = props->getDoubleValue("update_interval", 1.0);
+
+	int hour = props->getIntValue("start_hour", 8);
+	int minute = props->getIntValue("start_minute", 0);
+	sspExecutiveManager::start_time_s = boost::posix_time::time_duration{hour, minute, 0};
+
+	hour = props->getIntValue("end_hour", 20);
+	minute = props->getIntValue("end_minute", 0);
+	sspExecutiveManager::end_time_s = boost::posix_time::time_duration{ hour, minute, 0 };
 }
 
 void MainComponent::saveProperties()
@@ -185,4 +199,14 @@ void MainComponent::saveProperties()
 
 	props->setValue("fadein", sspStreamBus::fadein_time_s);
 	props->setValue("fadeout", sspStreamBus::fadeout_time_s);
+
+	props->setValue("startup_proc", static_cast<int>(sspExecutiveManager::startup_proc_s));
+	props->setValue("shutdown_proc", static_cast<int>(sspExecutiveManager::shutdown_proc_s));
+	props->setValue("use_interval", sspExecutiveManager::use_play_interval_s);
+	props->setValue("update_interval", sspExecutiveManager::update_interval_s);
+
+	props->setValue("start_hour", sspExecutiveManager::start_time_s.hours());
+	props->setValue("start_minute", sspExecutiveManager::start_time_s.minutes());
+	props->setValue("end_hour", sspExecutiveManager::end_time_s.hours());
+	props->setValue("end_minute", sspExecutiveManager::end_time_s.minutes());
 }

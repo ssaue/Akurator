@@ -19,9 +19,9 @@
 class sspOscConsole : private OSCReceiver, private OSCReceiver::ListenerWithOSCAddress<OSCReceiver::MessageLoopCallback>
 {
 public:
-	static String send_address_s;
-	static int send_port_s;
-	static int receive_port_s;
+	static String	send_address_s;
+	static int		send_port_s;
+	static int		receive_port_s;
 
 	sspOscConsole();
 	sspOscConsole(const sspOscConsole& obj) = delete;
@@ -32,6 +32,7 @@ public:
 	bool isReceiveConnected() const { return receive_ready_; }
 
 	std::map<unsigned int, std::shared_ptr<sspSendChannel>> getBusChannels(unsigned int num);
+	void clearChannels() { channels_.clear(); }
 
 private:
 	virtual void oscMessageReceived(const OSCMessage& message) override;

@@ -5,6 +5,11 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{6B72F253-A45D-5E1A-E22B-9B0FEA970C4A}" name="Execution">
+        <FILE id="YbRPU2" name="sspWatchDog.h" compile="0" resource="0" file="Source/sspWatchDog.h"/>
+        <FILE id="YcJINb" name="sspResetManager.cpp" compile="1" resource="0"
+              file="Source/sspResetManager.cpp"/>
+        <FILE id="I6Vk5X" name="sspResetManager.h" compile="0" resource="0"
+              file="Source/sspResetManager.h"/>
         <FILE id="Nrkcm8" name="sspTimeUpdater.h" compile="0" resource="0"
               file="Source/sspTimeUpdater.h"/>
         <FILE id="yubyZv" name="sspExecutiveManager.cpp" compile="1" resource="0"

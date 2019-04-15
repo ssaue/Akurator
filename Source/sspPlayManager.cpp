@@ -59,6 +59,7 @@ bool sspPlayManager::start()
 	if (!sspExecutionState::Instance().isPlaying()) {
 		// TODO: Input manager
 		sspExecutionState::Instance().play();
+		sspScheduler::Instance().enableTasks();
 		previous_time_ = steady_clock::now();
 		root_stream_->start();
 		trigger_messages_.reset();
@@ -74,8 +75,6 @@ bool sspPlayManager::update()
 		clock_messages_.testAndSend();
 		trigger_messages_.testAndSend();
 
-		// TODO: Handling the stream volumes
-
 		auto now = steady_clock::now();
 		std::chrono::duration<double> diff = steady_clock::now() - previous_time_;
 		root_stream_->update(diff.count());
@@ -90,7 +89,8 @@ void sspPlayManager::stop()
 {
 	if (sspExecutionState::Instance().isPlaying()) {
 		root_stream_->stop();
-		// TODO: Stop scheduler
+		sspScheduler::Instance().disableTasks();
+
 		// TODO: Input manager!
 		sspExecutionState::Instance().play(false);
 	}
@@ -99,8 +99,7 @@ void sspPlayManager::stop()
 void sspPlayManager::terminate()
 {
 	stop();
-	// TODO: Need to terminate streams and stop all running instruments (OSC handling)
-	// TODO: Terminate scheduler as well?
+	root_stream_->terminate();
 }
 
 void sspPlayManager::clearContents()
@@ -109,4 +108,11 @@ void sspPlayManager::clearContents()
 	start_messages_.removeAll();
 	trigger_messages_.removeAll();
 	clock_messages_.removeAll();
+}
+
+bool sspPlayManager::verifyRunning()
+{
+	// TODO: Is there a suitable definition of this one?
+	//   return (m_bPlaying && m_update.update()) ? m_scheduler.verifyRunning(1) : true;
+	return true;
 }

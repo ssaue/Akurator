@@ -146,6 +146,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspResetManager.cpp"/>
     <ClCompile Include="..\..\Source\sspExecutiveManager.cpp"/>
     <ClCompile Include="..\..\Source\sspPlayManager.cpp"/>
     <ClCompile Include="..\..\Source\sspExecutionState.cpp"/>
@@ -1954,6 +1955,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspWatchDog.h"/>
+    <ClInclude Include="..\..\Source\sspResetManager.h"/>
     <ClInclude Include="..\..\Source\sspTimeUpdater.h"/>
     <ClInclude Include="..\..\Source\sspExecutiveManager.h"/>
     <ClInclude Include="..\..\Source\sspPlayManager.h"/>

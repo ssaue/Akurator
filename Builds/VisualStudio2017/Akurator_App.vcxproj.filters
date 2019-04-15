@@ -445,6 +445,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspResetManager.cpp">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspExecutiveManager.cpp">
       <Filter>Akurator\Source\Execution</Filter>
     </ClCompile>
@@ -2514,6 +2517,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspWatchDog.h">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspResetManager.h">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspTimeUpdater.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>

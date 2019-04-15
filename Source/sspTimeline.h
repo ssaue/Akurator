@@ -15,6 +15,7 @@
 #include "sspDomainPrimitives.h"
 
 #include <memory>
+#include <atomic>
 
 class sspTimeline : public sspMessageHandler
 {
@@ -38,6 +39,7 @@ public:
 	virtual void start();
 	virtual void update(double seconds);
 	virtual void stop();
+	virtual void terminate();
 
 	virtual bool empty() const;
 	
@@ -53,5 +55,5 @@ public:
 
 protected:
 	double getTimeStep(double seconds);
-	bool running_ = true;
+	std::atomic_bool running_ = true;
 };

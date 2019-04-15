@@ -33,14 +33,12 @@ void sspStream::start()
 
 void sspStream::update(double seconds)
 {
-	{
+	if (running_.load()) {
 		std::scoped_lock<std::mutex> lck{ lock_ };
-		if (running_) {
-			auto task = task_list_.getFirst(getTimeStep(seconds));
-			while (!task.expired()) {
-				play(task);
-				task = task_list_.getNext();
-			}
+		auto task = task_list_.getFirst(getTimeStep(seconds));
+		while (!task.expired()) {
+			play(task);
+			task = task_list_.getNext();
 		}
 	}
 	sspTimeline::update(seconds);

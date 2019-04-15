@@ -30,10 +30,22 @@ void sspAudioStream::start()
 	sspStream::start();
 }
 
+void sspAudioStream::update(double seconds)
+{
+	bus_->masterVolume(volume_factor_->getValue(), sspStreamBus::volume_time_s);
+	sspStream::update(seconds);
+}
+
 void sspAudioStream::stop()
 {
 	task_queue_.clear();
 	sspStream::stop();
+}
+
+void sspAudioStream::terminate()
+{
+	bus_.reset();
+	sspStream::terminate();
 }
 
 bool sspAudioStream::empty() const

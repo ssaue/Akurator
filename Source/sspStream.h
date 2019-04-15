@@ -32,7 +32,7 @@ public:
 	virtual ~sspStream();
 
 	virtual void start() override;
-	virtual void update(double seconds) final;
+	virtual void update(double seconds) override;
 
 	virtual bool empty() const override;
 

@@ -39,6 +39,14 @@ void sspTimeline::stop()
 	}
 }
 
+void sspTimeline::terminate()
+{
+	stop();
+	for (auto child : children_) {
+		child->terminate();
+	}
+}
+
 bool sspTimeline::empty() const
 {
 	for (auto child : children_) {

@@ -24,6 +24,7 @@ sspScheduler::sspScheduler(void)
 		threadpool_.push_back(std::thread(&sspScheduler::worker_thread, this));
 	}
 	timer_thread_ = std::thread(&sspScheduler::timer_thread, this);
+	enableTasks();
 }
 
 sspScheduler::~sspScheduler(void)
@@ -49,6 +50,9 @@ sspScheduler::~sspScheduler(void)
 
 bool sspScheduler::add(std::weak_ptr<sspScheduleTask> task)
 {
+	if (!enable_tasks_.load())
+		return false;
+
 	auto ptr = task.lock();
 	if (!ptr) return false;
 
@@ -68,10 +72,36 @@ bool sspScheduler::add(std::weak_ptr<sspScheduleTask> task)
 	return true;
 }
 
-bool sspScheduler::empty() const
+void sspScheduler::enableTasks()
 {
-	// TODO: No mutex protection here. Could be risky!
-	return ready_tasks_.empty() && task_queue_.empty();
+	enable_tasks_ = true;
+}
+
+void sspScheduler::disableTasks()
+{
+	enable_tasks_ = false;
+	{
+		std::scoped_lock<std::mutex> lck{ worker_lock_ };
+		ready_tasks_.clear();
+	}
+	{
+		std::scoped_lock<std::mutex> lck{ timer_lock_ };
+		task_queue_ = std::priority_queue<Key, std::vector<Key>, TimeComparator>();	// clears the queue
+	}
+}
+
+bool sspScheduler::empty()
+{
+	bool empty = true;
+	{
+		std::scoped_lock<std::mutex> lck{ worker_lock_ };
+		empty &= ready_tasks_.empty();
+	}
+	{
+		std::scoped_lock<std::mutex> lck{ timer_lock_ };
+		empty &= task_queue_.empty();
+	}
+	return empty;
 }
 
 void sspScheduler::timer_thread()

@@ -44,7 +44,6 @@ public:
 	bool verify(int& nErrors, int& nWarnings) const;
 
 	bool initialize(sspDomainPool<sspTimeline>& timelines);
-
 	bool start();
 	bool update();
 	void stop();
@@ -52,7 +51,6 @@ public:
 	void clearContents();
 
 	bool verifyRunning();
-	void adjustVolume();
 
 	sspConditionalMsgList&	getStartList() { return start_messages_; }
 	sspTriggerMsgList&		getTriggerList() { return trigger_messages_; }
@@ -63,7 +61,5 @@ private:
 
 	std::shared_ptr<sspTimeline> root_stream_;
 	std::chrono::steady_clock::time_point previous_time_;
-
-	//sspTimeUpdate m_update;   // Update intervals for play thread verification
 };
 

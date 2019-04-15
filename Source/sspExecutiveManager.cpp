@@ -10,6 +10,7 @@
 
 #include "sspExecutiveManager.h"
 #include "sspPlayManager.h"
+#include "sspResetManager.h"
 #include "sspExecutionState.h"
 #include "sspLogging.h"
 
@@ -39,7 +40,6 @@ bool sspExecutiveManager::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 
-
 	if (use_play_interval_s && start_time_s.is_not_a_date_time()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "sspExecutiveManager: Invalid start time of interval";
 	}
@@ -49,7 +49,28 @@ bool sspExecutiveManager::verify(int & nErrors, int & nWarnings) const
 	if (!play_manager_->verify(nErrors, nWarnings))
 		bReturn = false;
 
+	if (!reset_manager_->verify(nErrors, nWarnings))
+		bReturn = false;
+
 	return bReturn;
+}
+
+
+void sspExecutiveManager::initialize(sspDomainData & domain_data)
+{
+	play_manager_->initialize(domain_data.getTimelines());
+	reset_manager_->initialize();
+}
+
+void sspExecutiveManager::terminate()
+{
+	play_manager_->terminate();
+	reset_manager_->terminate();
+}
+
+void sspExecutiveManager::clearContents()
+{
+	play_manager_->clearContents();
 }
 
 void sspExecutiveManager::start()
@@ -61,7 +82,7 @@ void sspExecutiveManager::start()
 		if (isPlayInterval()) {
 			play_manager_->start();
 		}
-		// TODO: Reset manager
+		reset_manager_->start();
 		sspExecutionState::Instance().run();
 	}
 }
@@ -70,13 +91,18 @@ void sspExecutiveManager::stop()
 {
 	stopTimer();
 	play_manager_->stop();
+	reset_manager_->stop();
 	sspExecutionState::Instance().run(false);
-	// TODO: reset manager??
 }
 
 void sspExecutiveManager::timerCallback()
 {
-	// TODO: Check if everything is OK with play manager and reset manager
+#ifdef NDEBUG
+	// Only do resets when running in release
+	if (!play_manager_->verifyRunning() || !reset_manager_->update()) {
+		stop();
+	}
+#endif
 
 	isPlayInterval() ? play_manager_->start() : play_manager_->stop();
 	if (!play_manager_->update() && shutdown_proc_s != Shutdown::KeepRunning) {

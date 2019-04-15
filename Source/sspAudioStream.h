@@ -39,7 +39,9 @@ public:
 	virtual ~sspAudioStream();
 
 	virtual void start() override;
+	virtual void update(double seconds) override;
 	virtual void stop() final;
+	virtual void terminate() final;
 	virtual bool empty() const final;
 
 	virtual bool verify(int& nErrors, int& nWarnings) const override;

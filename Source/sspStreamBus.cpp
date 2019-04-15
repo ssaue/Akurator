@@ -14,6 +14,7 @@
 
 double sspStreamBus::fadein_time_s = 2.0;
 double sspStreamBus::fadeout_time_s = 5.0;
+double sspStreamBus::volume_time_s = 1.0;
 
 sspStreamBus::sspStreamBus(const std::map<unsigned int, std::shared_ptr<sspSendChannel>>& channels)
 	: channels_(channels), responder_()

@@ -12,6 +12,7 @@
 #include "sspStreamBus.h"
 #include "sspOscConsole.h"
 #include "sspExecutiveManager.h"
+#include "sspResetManager.h"
 
 #include <fstream>
 #include <boost/archive/xml_oarchive.hpp> 
@@ -172,8 +173,9 @@ void MainComponent::loadProperties()
 	sspOscConsole::send_port_s = props->getIntValue("send_port", 8001);
 	sspOscConsole::receive_port_s = props->getIntValue("receive_port", 9001);
 
-	sspStreamBus::fadein_time_s = props->getDoubleValue("fadein", 2.0);
-	sspStreamBus::fadeout_time_s = props->getDoubleValue("fadeout", 5.0);
+	sspStreamBus::fadein_time_s = props->getDoubleValue("fadein_time", 2.0);
+	sspStreamBus::fadeout_time_s = props->getDoubleValue("fadeout_time", 5.0);
+	sspStreamBus::volume_time_s = props->getDoubleValue("volume_time", 1.0);
 
 	sspExecutiveManager::startup_proc_s = sspExecutiveManager::Startup{ props->getIntValue("startup_proc", 0) };
 	sspExecutiveManager::shutdown_proc_s = sspExecutiveManager::Shutdown{ props->getIntValue("shutdown_proc", 0) };
@@ -187,6 +189,17 @@ void MainComponent::loadProperties()
 	hour = props->getIntValue("end_hour", 20);
 	minute = props->getIntValue("end_minute", 0);
 	sspExecutiveManager::end_time_s = boost::posix_time::time_duration{ hour, minute, 0 };
+
+	hour = props->getIntValue("reset_hour", 20);
+	minute = props->getIntValue("reset_minute", 0);
+	sspResetManager::reset_time_s = boost::posix_time::time_duration{ hour, minute, 0 };
+
+	int days = props->getIntValue("reset_interval", 1);
+	sspResetManager::reset_interval_s = boost::gregorian::date_duration{ days };
+
+	sspResetManager::watchdog_enable_s = props->getBoolValue("watchdog_enable", false);
+	sspResetManager::watchdog_type_s = sspWatchdog::Type{ props->getIntValue("watchdog_type", 0) };
+	sspResetManager::watchdog_timeout_s = props->getDoubleValue("watchdog_timeout", 5);
 }
 
 void MainComponent::saveProperties()
@@ -197,8 +210,9 @@ void MainComponent::saveProperties()
 	props->setValue("send_port", sspOscConsole::send_port_s);
 	props->setValue("receive_port", sspOscConsole::receive_port_s);
 
-	props->setValue("fadein", sspStreamBus::fadein_time_s);
-	props->setValue("fadeout", sspStreamBus::fadeout_time_s);
+	props->setValue("fadein_time", sspStreamBus::fadein_time_s);
+	props->setValue("fadeout_time", sspStreamBus::fadeout_time_s);
+	props->setValue("volume_time", sspStreamBus::volume_time_s);
 
 	props->setValue("startup_proc", static_cast<int>(sspExecutiveManager::startup_proc_s));
 	props->setValue("shutdown_proc", static_cast<int>(sspExecutiveManager::shutdown_proc_s));
@@ -209,4 +223,12 @@ void MainComponent::saveProperties()
 	props->setValue("start_minute", sspExecutiveManager::start_time_s.minutes());
 	props->setValue("end_hour", sspExecutiveManager::end_time_s.hours());
 	props->setValue("end_minute", sspExecutiveManager::end_time_s.minutes());
+
+	props->setValue("reset_hour", sspResetManager::reset_time_s.hours());
+	props->setValue("reset_minute", sspResetManager::reset_time_s.minutes());
+	props->setValue("reset_interval", sspResetManager::reset_interval_s.days());
+
+	props->setValue("watchdog_enable", sspResetManager::watchdog_enable_s);
+	props->setValue("watchdog_type", static_cast<int>(sspResetManager::watchdog_type_s));
+	props->setValue("watchdog_timeout", sspResetManager::watchdog_timeout_s);
 }

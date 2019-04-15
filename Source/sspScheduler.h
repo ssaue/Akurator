@@ -18,13 +18,18 @@
 #include <vector>
 #include <queue>
 #include <condition_variable>
+#include <atomic>
 
 class sspScheduler
 {
 public:
 	static sspScheduler& Instance();
 	bool add(std::weak_ptr<sspScheduleTask> task);
-	bool empty() const;
+
+	void enableTasks();
+	void disableTasks();
+
+	bool empty();
 
 private:
 	using TimePoint = std::chrono::steady_clock::time_point;
@@ -49,6 +54,8 @@ private:
 
 	bool worker_is_running_ = true;
 	bool timer_is_running_ = true;
+
+	std::atomic_bool enable_tasks_ = true;
 
 	void timer_thread();
 	void worker_thread();

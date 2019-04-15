@@ -20,7 +20,9 @@ class sspSendChannel;
 class sspStreamBus
 {
 public:
-	static double fadein_time_s, fadeout_time_s;
+	static double fadein_time_s;
+	static double fadeout_time_s;
+	static double volume_time_s;
 
 	sspStreamBus(const std::map<unsigned int, std::shared_ptr<sspSendChannel>>& channels);
 	virtual ~sspStreamBus();	// Ensure abstract class
@@ -31,7 +33,7 @@ public:
 
 	enum class Reference : unsigned int { Relative, Absolute };
 
-	void masterVolume(double vol, double time = 0.0, Reference ref = Reference::Absolute);
+	void masterVolume(double vol, double time, Reference ref = Reference::Absolute);
 	void masterFadeIn(double time);
 	void masterFadeOut(double time);
 	

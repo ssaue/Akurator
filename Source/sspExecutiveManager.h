@@ -10,20 +10,22 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include "sspDomainData.h"
 
+#include "../JuceLibraryCode/JuceHeader.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
 
 class sspPlayManager;
+class sspResetManager;
 
 // Class sspExecutiveManager inherits a Juce::Timer and is the main message loop
 class sspExecutiveManager : public Timer
 {
 public:
-	enum Startup : int { DoNothing, Initialize, Play };
+	enum class Startup : int { DoNothing, Initialize, Play };
 	enum class Shutdown : int { KeepRunning, Stop, Exit };
 
-	// Static functions (program settings)
+	// Static program settings
 	static Startup startup_proc_s;
 	static Shutdown shutdown_proc_s;
 
@@ -40,6 +42,10 @@ public:
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
+	void initialize(sspDomainData& domain_data);
+	void terminate();
+	void clearContents();
+
 	void start();
 	void stop();
 
@@ -48,4 +54,5 @@ private:
 	bool isPlayInterval() const;
 
 	std::unique_ptr<sspPlayManager> play_manager_;
+	std::unique_ptr<sspResetManager> reset_manager_;
 };

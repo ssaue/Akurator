@@ -16,15 +16,18 @@ class sspTimeUpdater
 {
 private:
 	std::chrono::steady_clock::time_point next_time_;
-	std::chrono::seconds interval_;
+	std::chrono::milliseconds interval_;
 
 public:
 	sspTimeUpdater() 
 		: interval_(0) {}
-	sspTimeUpdater(std::chrono::seconds interval)
-		: interval_(interval) {}
+	sspTimeUpdater(double seconds)
+		: interval_(static_cast<int>(seconds * 1000)) {}
 
-	void setInterval(std::chrono::seconds interval) { interval_ = interval; }
+	void setInterval(double seconds)
+	{ 
+		interval_ = std::chrono::milliseconds(static_cast<int>(seconds * 1000));
+	}
 
 	void initialize(bool bIncrement = true)
 	{

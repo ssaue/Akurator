@@ -146,6 +146,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspInputManager.cpp"/>
     <ClCompile Include="..\..\Source\sspResetManager.cpp"/>
     <ClCompile Include="..\..\Source\sspExecutiveManager.cpp"/>
     <ClCompile Include="..\..\Source\sspPlayManager.cpp"/>
@@ -156,6 +157,7 @@
     <ClCompile Include="..\..\Source\sspTaskQueue.cpp"/>
     <ClCompile Include="..\..\Source\sspScheduler.cpp"/>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp"/>
+    <ClCompile Include="..\..\Source\sspInput.cpp"/>
     <ClCompile Include="..\..\Source\sspAudioStream.cpp"/>
     <ClCompile Include="..\..\Source\sspTimeline.cpp"/>
     <ClCompile Include="..\..\Source\sspStream.cpp"/>
@@ -1955,6 +1957,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspInputManager.h"/>
     <ClInclude Include="..\..\Source\sspWatchDog.h"/>
     <ClInclude Include="..\..\Source\sspResetManager.h"/>
     <ClInclude Include="..\..\Source\sspTimeUpdater.h"/>
@@ -1971,6 +1974,7 @@
     <ClInclude Include="..\..\Source\sspScheduleTask.h"/>
     <ClInclude Include="..\..\Source\sspScheduler.h"/>
     <ClInclude Include="..\..\Source\sspSilenceTask.h"/>
+    <ClInclude Include="..\..\Source\sspInput.h"/>
     <ClInclude Include="..\..\Source\sspTimeline.h"/>
     <ClInclude Include="..\..\Source\sspAudioStream.h"/>
     <ClInclude Include="..\..\Source\sspStream.h"/>

@@ -5,6 +5,10 @@
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{6B72F253-A45D-5E1A-E22B-9B0FEA970C4A}" name="Execution">
+        <FILE id="kVEmH1" name="sspInputManager.cpp" compile="1" resource="0"
+              file="Source/sspInputManager.cpp"/>
+        <FILE id="kFrBMT" name="sspInputManager.h" compile="0" resource="0"
+              file="Source/sspInputManager.h"/>
         <FILE id="YbRPU2" name="sspWatchDog.h" compile="0" resource="0" file="Source/sspWatchDog.h"/>
         <FILE id="YcJINb" name="sspResetManager.cpp" compile="1" resource="0"
               file="Source/sspResetManager.cpp"/>
@@ -56,6 +60,10 @@
               file="Source/sspSilenceTask.h"/>
       </GROUP>
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <GROUP id="{62E97640-8A56-9B87-C573-E4A8E575C63F}" name="Inputs">
+          <FILE id="l1S9MA" name="sspInput.cpp" compile="1" resource="0" file="Source/sspInput.cpp"/>
+          <FILE id="kYIlZ3" name="sspInput.h" compile="0" resource="0" file="Source/sspInput.h"/>
+        </GROUP>
         <GROUP id="{D7C96312-F9D0-DE98-372E-87EABFA629BA}" name="Streams">
           <FILE id="dEeptr" name="sspAudioStream.cpp" compile="1" resource="0"
                 file="Source/sspAudioStream.cpp"/>

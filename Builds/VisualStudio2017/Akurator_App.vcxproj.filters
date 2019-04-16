@@ -8,6 +8,9 @@
     <Filter Include="Akurator\Source\Scheduling">
       <UniqueIdentifier>{4EE3A76D-35D9-3C89-0EE9-89AC1ABC5D64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Akurator\Source\Domain\Inputs">
+      <UniqueIdentifier>{B0577C81-DB11-92CD-2930-4F80A59A6CF5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Domain\Streams">
       <UniqueIdentifier>{4649A047-2CD5-7F28-C789-F57B778C92D3}</UniqueIdentifier>
     </Filter>
@@ -445,6 +448,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspInputManager.cpp">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspResetManager.cpp">
       <Filter>Akurator\Source\Execution</Filter>
     </ClCompile>
@@ -474,6 +480,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp">
       <Filter>Akurator\Source\Scheduling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspInput.cpp">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspAudioStream.cpp">
       <Filter>Akurator\Source\Domain\Streams</Filter>
@@ -2517,6 +2526,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspInputManager.h">
+      <Filter>Akurator\Source\Execution</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspWatchDog.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
@@ -2564,6 +2576,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\sspSilenceTask.h">
       <Filter>Akurator\Source\Scheduling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspInput.h">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspTimeline.h">
       <Filter>Akurator\Source\Domain\Streams</Filter>

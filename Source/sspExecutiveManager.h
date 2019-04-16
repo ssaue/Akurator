@@ -11,6 +11,7 @@
 #pragma once
 
 #include "sspDomainData.h"
+#include "sspInputManager.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -24,6 +25,7 @@ class sspExecutiveManager : public Timer
 public:
 	enum class Startup : int { DoNothing, Initialize, Play };
 	enum class Shutdown : int { KeepRunning, Stop, Exit };
+	enum class Error : unsigned int { None, Inputs, Reset, Play };
 
 	// Static program settings
 	static Startup startup_proc_s;
@@ -42,17 +44,24 @@ public:
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
-	void initialize(sspDomainData& domain_data);
+	bool initialize(sspDomainData& domain_data);
 	void terminate();
 	void clearContents();
 
 	void start();
 	void stop();
 
+	Error getLastError() const { return last_error_; }
+	sspPlayManager* getPlayManager() { return play_manager_.get(); }
+	sspResetManager* getResetManager() { return reset_manager_.get(); }
+	sspInputManager* getInputManager() { return input_manager_.get(); }
+
 private:
 	virtual void timerCallback() override;
 	bool isPlayInterval() const;
-
+	
+	Error last_error_ = Error::None;
 	std::unique_ptr<sspPlayManager> play_manager_;
 	std::unique_ptr<sspResetManager> reset_manager_;
+	std::unique_ptr<sspInputManager> input_manager_;
 };

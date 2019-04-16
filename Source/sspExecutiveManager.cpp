@@ -56,21 +56,35 @@ bool sspExecutiveManager::verify(int & nErrors, int & nWarnings) const
 }
 
 
-void sspExecutiveManager::initialize(sspDomainData & domain_data)
+bool sspExecutiveManager::initialize(sspDomainData & domain_data)
 {
-	play_manager_->initialize(domain_data.getTimelines());
-	reset_manager_->initialize();
+	last_error_ = Error::None;
+	if (!input_manager_->initialize()) {
+		last_error_ = Error::Inputs;
+		return false;
+	}
+	if (!reset_manager_->initialize()) {
+		last_error_ = Error::Reset;
+		return false;
+	}
+	if (!play_manager_->initialize(domain_data.getTimelines())) {
+		last_error_ = Error::Play;
+		return false;
+	}
+	return true;
 }
 
 void sspExecutiveManager::terminate()
 {
-	play_manager_->terminate();
 	reset_manager_->terminate();
+	input_manager_->terminate();
+	play_manager_->terminate();
 }
 
 void sspExecutiveManager::clearContents()
 {
 	play_manager_->clearContents();
+	input_manager_->clearContents();
 }
 
 void sspExecutiveManager::start()
@@ -97,6 +111,8 @@ void sspExecutiveManager::stop()
 
 void sspExecutiveManager::timerCallback()
 {
+	input_manager_->update();
+
 #ifdef NDEBUG
 	// Only do resets when running in release
 	if (!play_manager_->verifyRunning() || !reset_manager_->update()) {

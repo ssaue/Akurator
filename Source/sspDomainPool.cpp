@@ -13,14 +13,15 @@
 #include "sspPlayer.h"
 #include "sspPlayTask.h"
 #include "sspTimeline.h"
+#include "sspInput.h"
 
 #include "sspLogging.h"
 
 #include <sstream>
+#include <typeinfo>
 
 template<typename T>
-sspDomainPool<T>::sspDomainPool()
-: sspDomainElement(), sspDomainVector<T>()
+sspDomainPool<T>::sspDomainPool() : sspDomainVector<T>()
 {
 }
 
@@ -29,7 +30,7 @@ bool sspDomainPool<T>::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
 	if (elements_.empty()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " is empty";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << "Pool of " << typeid(T).name() << " is empty";
 	}
 	for (auto&& element : elements_) {
 		if (!element->verify(nErrors, nWarnings)) {
@@ -47,3 +48,4 @@ template class sspDomainPool<sspString>;
 template class sspDomainPool<sspPlayer>;
 template class sspDomainPool<sspPlayTask>;
 template class sspDomainPool<sspTimeline>;
+template class sspDomainPool<sspInput>;

@@ -15,9 +15,12 @@
 #include "sspPlayTask.h"
 #include "sspTimeline.h"
 
+#include "sspValueRange.h"
+#include "sspBoolean.h"
+
 #include "sspDomainPool.h"
 
-class sspDomainData : public sspDomainElement
+class sspDomainData
 {
 	sspDomainPool<sspValue>			values_;
 	sspDomainPool<sspConditional>	conditionals_;
@@ -26,16 +29,20 @@ class sspDomainData : public sspDomainElement
 	sspDomainPool<sspPlayTask>		tasks_;
 	sspDomainPool<sspTimeline>		timelines_;
 
+	sspDomainVector<sspValueRange>	input_values_;
+	sspDomainVector<sspBoolean>		input_conditionals_;
+
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 		ar & BOOST_SERIALIZATION_NVP(values_);
 		ar & BOOST_SERIALIZATION_NVP(conditionals_);
 		ar & BOOST_SERIALIZATION_NVP(strings_);
 		ar & BOOST_SERIALIZATION_NVP(players_);
 		ar & BOOST_SERIALIZATION_NVP(tasks_);
 		ar & BOOST_SERIALIZATION_NVP(timelines_);
+		ar & BOOST_SERIALIZATION_NVP(input_values_);
+		ar & BOOST_SERIALIZATION_NVP(input_conditionals_);
 	}
 
 public:
@@ -51,7 +58,15 @@ public:
 	sspDomainPool<sspPlayTask>&		getPlaytasks() { return tasks_; }
 	sspDomainPool<sspTimeline>&		getTimelines() { return timelines_; }
 
+	// These values and conditionals are available for input (e.g. from external inputs or from GUI)
+	sspDomainVector<sspValueRange>&	getInputValues() { return input_values_; }
+	sspDomainVector<sspBoolean>&	getInputConditionals() { return input_conditionals_; }
+
+	sspDomainVector<sspValueRange>	getAllPossibleInputValues();
+	sspDomainVector<sspBoolean>		getAllPossibleInputConditionals();
+
 	void createInitialContent();
+	void clearContents();
 	
-	virtual bool verify(int& nErrors, int& nWarnings) const override;
+	bool verify(int& nErrors, int& nWarnings) const;
 };

@@ -10,20 +10,17 @@
 
 #pragma once
 
-#include "sspDomainElement.h"
 #include "sspDomainVector.h"
 
-#include <vector>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
 template <typename T>
-class sspDomainPool : public sspDomainElement, public sspDomainVector<T>
+class sspDomainPool : public sspDomainVector<T>
 {
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainVector);
 	}
 
@@ -33,5 +30,5 @@ public:
 	sspDomainPool& operator= (const sspDomainPool& obj) = delete;
 	virtual ~sspDomainPool() {}
 
-	virtual bool verify(int& nErrors, int& nWarnings) const override;
+	bool verify(int& nErrors, int& nWarnings) const;
 };

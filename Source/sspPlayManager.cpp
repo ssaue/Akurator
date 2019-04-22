@@ -99,7 +99,7 @@ void sspPlayManager::stop()
 void sspPlayManager::terminate()
 {
 	stop();
-	root_stream_->terminate();
+	if (root_stream_) root_stream_->terminate();
 }
 
 void sspPlayManager::clearContents()

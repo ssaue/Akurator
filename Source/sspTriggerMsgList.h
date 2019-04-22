@@ -11,8 +11,7 @@
 #pragma once
 
 #include "sspConditionalMsgList.h"
-
-class sspTrigger;
+#include "sspTrigger.h"
 
 class sspTriggerMsgList
 {

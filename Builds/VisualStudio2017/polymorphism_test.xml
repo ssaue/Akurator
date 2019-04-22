@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE boost_serialization>
+<boost_serialization signature="serialization::archive" version="17">
+<sspDomainData class_id="0" tracking_level="0" version="0">
+	<values_ class_id="1" tracking_level="0" version="0">
+		<sspDomainVector class_id="2" tracking_level="0" version="0">
+			<elements_ class_id="3" tracking_level="0" version="0">
+				<count>0</count>
+				<item_version>1</item_version>
+			</elements_>
+		</sspDomainVector>
+	</values_>
+	<conditionals_ class_id="4" tracking_level="0" version="0">
+		<sspDomainVector class_id="5" tracking_level="0" version="0">
+			<elements_ class_id="6" tracking_level="0" version="0">
+				<count>0</count>
+				<item_version>1</item_version>
+			</elements_>
+		</sspDomainVector>
+	</conditionals_>
+	<strings_ class_id="7" tracking_level="0" version="0">
+		<sspDomainVector class_id="8" tracking_level="0" version="0">
+			<elements_ class_id="9" tracking_level="0" version="0">
+				<count>0</count>
+				<item_version>1</item_version>
+			</elements_>
+		</sspDomainVector>
+	</strings_>
+	<players_ class_id="10" tracking_level="0" version="0">
+		<sspDomainVector class_id="11" tracking_level="0" version="0">
+			<elements_ class_id="12" tracking_level="0" version="0">
+				<count>0</count>
+				<item_version>1</item_version>
+			</elements_>
+		</sspDomainVector>
+	</players_>
+	<tasks_ class_id="13" tracking_level="0" version="0">
+		<sspDomainVector class_id="14" tracking_level="0" version="0">
+			<elements_ class_id="15" tracking_level="0" version="0">
+				<count>0</count>
+				<item_version>1</item_version>
+			</elements_>
+		</sspDomainVector>
+	</tasks_>
+	<timelines_ class_id="16" tracking_level="0" version="0">
+		<sspDomainVector class_id="17" tracking_level="0" version="0">
+			<elements_ class_id="18" tracking_level="0" version="0">
+				<count>1</count>
+				<item_version>1</item_version>
+				<item class_id="19" tracking_level="0" version="1">
+					<px class_id="20" tracking_level="1" version="0" object_id="_0">
+						<sspMessageHandler class_id="21" tracking_level="0" version="0">
+							<sspDomainElement class_id="22" tracking_level="0" version="0">
+								<name_>Root stream</name_>
+							</sspDomainElement>
+						</sspMessageHandler>
+						<children_>
+							<elements_>
+								<count>0</count>
+								<item_version>1</item_version>
+							</elements_>
+						</children_>
+						<time_factor_ class_id="23" tracking_level="0" version="1">
+							<px class_id="-1"></px>
+						</time_factor_>
+					</px>
+				</item>
+			</elements_>
+		</sspDomainVector>
+	</timelines_>
+	<input_values_ class_id="24" tracking_level="0" version="0">
+		<elements_ class_id="25" tracking_level="0" version="0">
+			<count>0</count>
+			<item_version>1</item_version>
+		</elements_>
+	</input_values_>
+	<input_conditionals_ class_id="26" tracking_level="0" version="0">
+		<elements_ class_id="27" tracking_level="0" version="0">
+			<count>0</count>
+			<item_version>1</item_version>
+		</elements_>
+	</input_conditionals_>
+</sspDomainData>
+<sspExecutiveManager class_id="28" tracking_level="0" version="0">
+	<play_manager_ class_id="29" tracking_level="0" version="0">
+		<tx class_id="30" tracking_level="1" version="0" object_id="_1">
+			<start_messages_ class_id="31" tracking_level="1" version="0" object_id="_2">
+				<messages_ class_id="32" tracking_level="0" version="0">
+					<count>0</count>
+					<item_version>0</item_version>
+				</messages_>
+			</start_messages_>
+			<trigger_messages_ class_id="33" tracking_level="0" version="0">
+				<messages_ class_id="34" tracking_level="0" version="0">
+					<count>0</count>
+					<item_version>0</item_version>
+				</messages_>
+			</trigger_messages_>
+			<clock_messages_ class_id="35" tracking_level="0" version="0">
+				<messages_ class_id="36" tracking_level="0" version="0">
+					<count>0</count>
+					<item_version>0</item_version>
+				</messages_>
+			</clock_messages_>
+		</tx>
+	</play_manager_>
+	<input_manager_ class_id="37" tracking_level="0" version="0">
+		<tx class_id="38" tracking_level="1" version="0" object_id="_3">
+			<inputs_ class_id="39" tracking_level="0" version="0">
+				<sspDomainVector class_id="40" tracking_level="0" version="0">
+					<elements_ class_id="41" tracking_level="0" version="0">
+						<count>0</count>
+						<item_version>1</item_version>
+					</elements_>
+				</sspDomainVector>
+			</inputs_>
+		</tx>
+	</input_manager_>
+</sspExecutiveManager>
+</boost_serialization>
+

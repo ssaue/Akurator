@@ -3,6 +3,21 @@
 <JUCERPROJECT id="MH7tvf" name="Akurator" projectType="guiapp" jucerVersion="5.4.3"
               cppLanguageStandard="latest">
   <MAINGROUP id="ZF2la9" name="Akurator">
+    <GROUP id="{E7DFC1A8-168F-F1D1-EE53-86D966ADD403}" name="Resources">
+      <FILE id="Sfe2y3" name="document-new.svg" compile="0" resource="1"
+            file="Assets/document-new.svg"/>
+      <FILE id="rfyxeZ" name="document-save.svg" compile="0" resource="1"
+            file="Assets/document-save.svg"/>
+      <FILE id="j9AAI2" name="run-verify.svg" compile="0" resource="1" file="Assets/run-verify.svg"/>
+      <FILE id="orQwop" name="document-save-as.svg" compile="0" resource="1"
+            file="Assets/document-save-as.svg"/>
+      <FILE id="jqvUpx" name="run-stop.svg" compile="0" resource="1" file="Assets/run-stop.svg"/>
+      <FILE id="M4WlaG" name="run-initialize.svg" compile="0" resource="1"
+            file="Assets/run-initialize.svg"/>
+      <FILE id="q3dos0" name="run-start.svg" compile="0" resource="1" file="Assets/run-start.svg"/>
+      <FILE id="zGjQKG" name="edit-settings.svg" compile="0" resource="1"
+            file="Assets/edit-settings.svg"/>
+    </GROUP>
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{6B72F253-A45D-5E1A-E22B-9B0FEA970C4A}" name="Execution">
         <FILE id="kVEmH1" name="sspInputManager.cpp" compile="1" resource="0"
@@ -251,6 +266,15 @@
               file="Source/sspDomainPrimitives.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
+        <FILE id="nry08C" name="MainWindow.cpp" compile="1" resource="0" file="Source/MainWindow.cpp"/>
+        <FILE id="UeMKZe" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
+        <FILE id="RVltgs" name="sspAkuratorApplication.cpp" compile="1" resource="0"
+              file="Source/sspAkuratorApplication.cpp"/>
+        <FILE id="PEMCPk" name="sspAkuratorApplication.h" compile="0" resource="0"
+              file="Source/sspAkuratorApplication.h"/>
+        <FILE id="D4Nqrc" name="sspCommandIDs.h" compile="0" resource="0" file="Source/sspCommandIDs.h"/>
+        <FILE id="LlqFzI" name="sspToolbar.cpp" compile="1" resource="0" file="Source/sspToolbar.cpp"/>
+        <FILE id="AjHu1S" name="sspToolbar.h" compile="0" resource="0" file="Source/sspToolbar.h"/>
         <FILE id="sUy4eF" name="sspOscConsole.cpp" compile="1" resource="0"
               file="Source/sspOscConsole.cpp"/>
         <FILE id="Xtpg11" name="sspOscConsole.h" compile="0" resource="0" file="Source/sspOscConsole.h"/>

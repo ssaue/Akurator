@@ -58,7 +58,6 @@ public:
 
 private:
 	sspOscConsole osc_console_;
-
 	std::shared_ptr<sspTimeline> root_stream_;
 	std::chrono::steady_clock::time_point previous_time_;
 };

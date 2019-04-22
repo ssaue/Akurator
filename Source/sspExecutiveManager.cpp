@@ -27,7 +27,10 @@ double sspExecutiveManager::update_interval_s = 1.0;
 /*****************************************************/
 
 sspExecutiveManager::sspExecutiveManager()
-	: Timer(), play_manager_(std::make_unique<sspPlayManager>())
+	: Timer()
+	, play_manager_(std::make_unique<sspPlayManager>())
+	, input_manager_(std::make_unique<sspInputManager>())
+	, reset_manager_(std::make_unique<sspResetManager>())
 {
 }
 
@@ -46,6 +49,10 @@ bool sspExecutiveManager::verify(int & nErrors, int & nWarnings) const
 	if (use_play_interval_s && end_time_s.is_not_a_date_time()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "sspExecutiveManager: Invalid end time of interval";
 	}
+
+	if (!input_manager_->verify(nErrors, nWarnings))
+		bReturn = false;
+
 	if (!play_manager_->verify(nErrors, nWarnings))
 		bReturn = false;
 

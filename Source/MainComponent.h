@@ -9,6 +9,10 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "sspToolbar.h"
+
+class sspDomainData;
+class sspExecutiveManager;
 
 //==============================================================================
 /*
@@ -17,21 +21,17 @@
 */
 class MainComponent : public Component, 
 				 	  public ApplicationCommandTarget,
-					  public MenuBarModel
+					  public FilenameComponentListener
 {
 public:
     //==============================================================================
-    MainComponent();
+    MainComponent(String file_path);
     ~MainComponent();
 
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
 
-	//==============================================================================
-	StringArray getMenuBarNames() override;
-	PopupMenu getMenuForIndex(int topLevelMenuIndex, const String& menuName) override;
-	void menuItemSelected(int menuItemID, int topLevelMenuIndex) override;
 
 	//==============================================================================
 	ApplicationCommandTarget* getNextCommandTarget() override;
@@ -42,23 +42,21 @@ public:
 
 	bool perform(const InvocationInfo& info) override;
 
+	virtual void filenameComponentChanged(FilenameComponent* fileComponentThatHasChanged) override;
+
 	//==============================================================================
-	enum CommandIDs
-	{
-		fileNew = 1000,
-		fileOpen,
-		fileSave,
-		fileSaveAs
-	};
 
 private:
     //==============================================================================
-	ApplicationCommandManager commandManager_;
 	ApplicationProperties app_properties_;
-	std::unique_ptr<MenuBarComponent> menuBar_;
+	Toolbar toolbar_;
+	sspToolbarFactory toolbar_factory_;
 
 	void loadProperties();
 	void saveProperties();
+
+	std::unique_ptr<sspDomainData> domain_;
+	std::unique_ptr<sspExecutiveManager> manager_;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

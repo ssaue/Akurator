@@ -23,6 +23,13 @@ sspOscConsole::sspOscConsole() : channels_()
 	addListener(this, "/finished");
 }
 
+sspOscConsole::~sspOscConsole()
+{
+	removeListener(this);
+	sspOscSender::disconnect();
+	disconnect();
+}
+
 std::map<unsigned int, std::shared_ptr<sspSendChannel>> sspOscConsole::getBusChannels(unsigned int num)
 {
 	std::map<unsigned int, std::shared_ptr<sspSendChannel>> bus_channels;

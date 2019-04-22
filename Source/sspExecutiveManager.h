@@ -11,17 +11,28 @@
 #pragma once
 
 #include "sspDomainData.h"
+#include "sspPlayManager.h"
 #include "sspInputManager.h"
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/serialization/unique_ptr.hpp>
 
-class sspPlayManager;
 class sspResetManager;
 
 // Class sspExecutiveManager inherits a Juce::Timer and is the main message loop
 class sspExecutiveManager : public Timer
 {
+	std::unique_ptr<sspPlayManager> play_manager_;
+	std::unique_ptr<sspInputManager> input_manager_;
+
+	friend class boost::serialization::access;
+	template <typename Archive>
+	void serialize(Archive & ar, const unsigned int /*version*/) {
+		ar & BOOST_SERIALIZATION_NVP(play_manager_);
+		ar & BOOST_SERIALIZATION_NVP(input_manager_);
+	}
+
 public:
 	enum class Startup : int { DoNothing, Initialize, Play };
 	enum class Shutdown : int { KeepRunning, Stop, Exit };
@@ -61,7 +72,5 @@ private:
 	bool isPlayInterval() const;
 	
 	Error last_error_ = Error::None;
-	std::unique_ptr<sspPlayManager> play_manager_;
 	std::unique_ptr<sspResetManager> reset_manager_;
-	std::unique_ptr<sspInputManager> input_manager_;
 };

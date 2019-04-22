@@ -24,7 +24,8 @@ class sspInputManager
 	}
 
 public:
-	sspInputManager() = default;
+	sspInputManager() 
+		: inputs_() {}
 	sspInputManager(const sspInputManager&) = delete;
 	sspInputManager& operator=(const sspInputManager&) = delete;
 	virtual ~sspInputManager() {}

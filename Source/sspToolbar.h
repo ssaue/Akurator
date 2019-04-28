@@ -26,57 +26,30 @@
 class sspToolbarFactory : public ToolbarItemFactory
 {
 public:
-	sspToolbarFactory() = default;
+	sspToolbarFactory(FilenameComponentListener* listener);
 
 	void getAllToolbarItemIds(Array<int>& ids) override;
 	void getDefaultItemSet(Array<int>& ids) override;
+	void setFilepath(const File& path);
 
 	ToolbarItemComponent* createItem(int itemId);
 
 private:
+	FilenameComponentListener* filename_listener_;
+	File filepath_;
 
 	class CustomFilenameComponent : public ToolbarItemComponent
 	{
 	public:
-		CustomFilenameComponent(const int toolbarItemId)
-			: ToolbarItemComponent(toolbarItemId, "Custom Toolbar Item", false)
-		{
-			file_component_.reset(new FilenameComponent("fileComp",
-				{},			              // current file
-				false,                    // can edit file name,
-				false,                    // is directory,
-				false,                    // is for saving,
-				"*.sspx",				  // browser wildcard suffix,
-				{},                       // enforced suffix,
-				"Select file to open"));  // text when nothing selected
-
-			addAndMakeVisible(file_component_.get());
-		}
+		CustomFilenameComponent(const int toolbarItemId, const File& init_file_path);
 
 		bool getToolbarItemSizes(int /*toolbarDepth*/, bool isVertical,
-			int& preferredSize, int& minSize, int& maxSize) override
-		{
-			if (isVertical)
-				return false;
-
-			preferredSize = 400;
-			minSize = 200;
-			maxSize = 600;
-			return true;
-		}
-
-		void paintButtonArea(Graphics&, int, int, bool, bool) override
-		{
-		}
-
-		void contentAreaChanged(const Rectangle<int>& newArea) override
-		{
-			file_component_->setSize(newArea.getWidth() - 2, jmin(newArea.getHeight() - 2, 20));
-			file_component_->setCentrePosition(newArea.getCentreX(), newArea.getCentreY());
-		}
+			int& preferredSize, int& minSize, int& maxSize) override;
+		void paintButtonArea(Graphics&, int, int, bool, bool) override;
+		void contentAreaChanged(const Rectangle<int>& newArea) override;
+		void addFilenameListener(FilenameComponentListener* listener);
 
 	private:
-
 		std::unique_ptr<FilenameComponent> file_component_;
 	};
 };

@@ -104,7 +104,7 @@ void sspExecutiveManager::start()
 			play_manager_->start();
 		}
 		reset_manager_->start();
-		sspExecutionState::Instance().run();
+		sspExecutionState::Instance().running();
 	}
 }
 
@@ -113,7 +113,7 @@ void sspExecutiveManager::stop()
 	stopTimer();
 	play_manager_->stop();
 	reset_manager_->stop();
-	sspExecutionState::Instance().run(false);
+	sspExecutionState::Instance().running(false);
 }
 
 void sspExecutiveManager::timerCallback()

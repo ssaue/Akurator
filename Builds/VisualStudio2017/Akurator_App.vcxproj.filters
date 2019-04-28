@@ -5,6 +5,12 @@
     <Filter Include="Akurator\Resources">
       <UniqueIdentifier>{2F152848-3FFF-B38C-959B-6EEC06CC800D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Akurator\Source\OSC">
+      <UniqueIdentifier>{56D77215-D70D-27F2-7874-0BB52AE69BFD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Akurator\Source\Application">
+      <UniqueIdentifier>{2666B484-F54C-1819-8B4A-A05D2C8B0EB4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\Execution">
       <UniqueIdentifier>{C51A9D36-3264-167E-BBA3-15DF342FEF82}</UniqueIdentifier>
     </Filter>
@@ -451,6 +457,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspOscConsole.cpp">
+      <Filter>Akurator\Source\OSC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspOscSender.cpp">
+      <Filter>Akurator\Source\OSC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspOscSendChannel.cpp">
+      <Filter>Akurator\Source\OSC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Main.cpp">
+      <Filter>Akurator\Source\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspAkuratorApplication.cpp">
+      <Filter>Akurator\Source\Application</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspInputManager.cpp">
       <Filter>Akurator\Source\Execution</Filter>
     </ClCompile>
@@ -640,26 +661,11 @@
     <ClCompile Include="..\..\Source\MainWindow.cpp">
       <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspAkuratorApplication.cpp">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\sspToolbar.cpp">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\sspOscConsole.cpp">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\sspOscSender.cpp">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\sspOscSendChannel.cpp">
       <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>Akurator\Source\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Main.cpp">
-      <Filter>Akurator\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
@@ -2541,6 +2547,21 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspOscConsole.h">
+      <Filter>Akurator\Source\OSC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspOSCSender.h">
+      <Filter>Akurator\Source\OSC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspOscSendChannel.h">
+      <Filter>Akurator\Source\OSC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspAkuratorApplication.h">
+      <Filter>Akurator\Source\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspCommandIDs.h">
+      <Filter>Akurator\Source\Application</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspInputManager.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
@@ -2766,22 +2787,7 @@
     <ClInclude Include="..\..\Source\MainWindow.h">
       <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspAkuratorApplication.h">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\sspCommandIDs.h">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\sspToolbar.h">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\sspOscConsole.h">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\sspOSCSender.h">
-      <Filter>Akurator\Source\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\sspOscSendChannel.h">
       <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">

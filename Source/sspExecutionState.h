@@ -21,6 +21,8 @@ class sspExecutionState
 
 	bool running_ = false;
 	bool playing_ = false;
+	bool verified_ = false;
+	bool initialized_ = false;
 
 	std::chrono::steady_clock::time_point start_run_time_;
 	std::chrono::steady_clock::time_point start_play_time_;
@@ -28,9 +30,13 @@ class sspExecutionState
 public:
 	static sspExecutionState& Instance();
 
-	void run(bool yes = true);
-	void play(bool yes = true);
+	void verified(bool yes = true);
+	void initialized(bool yes = true);
+	void running(bool yes = true);
+	void playing(bool yes = true);
 
+	bool isVerified() const { return verified_; }
+	bool isInitialized() const { return initialized_; }
 	bool isRunning() const { return running_; }
 	bool isPlaying() const { return playing_; }
 

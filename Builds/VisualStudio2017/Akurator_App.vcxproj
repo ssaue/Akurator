@@ -146,6 +146,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\sspOscConsole.cpp"/>
+    <ClCompile Include="..\..\Source\sspOscSender.cpp"/>
+    <ClCompile Include="..\..\Source\sspOscSendChannel.cpp"/>
+    <ClCompile Include="..\..\Source\Main.cpp"/>
+    <ClCompile Include="..\..\Source\sspAkuratorApplication.cpp"/>
     <ClCompile Include="..\..\Source\sspInputManager.cpp"/>
     <ClCompile Include="..\..\Source\sspResetManager.cpp"/>
     <ClCompile Include="..\..\Source\sspExecutiveManager.cpp"/>
@@ -209,13 +214,8 @@
     <ClCompile Include="..\..\Source\sspDomainPool.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp"/>
     <ClCompile Include="..\..\Source\MainWindow.cpp"/>
-    <ClCompile Include="..\..\Source\sspAkuratorApplication.cpp"/>
     <ClCompile Include="..\..\Source\sspToolbar.cpp"/>
-    <ClCompile Include="..\..\Source\sspOscConsole.cpp"/>
-    <ClCompile Include="..\..\Source\sspOscSender.cpp"/>
-    <ClCompile Include="..\..\Source\sspOscSendChannel.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1961,6 +1961,11 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\sspOscConsole.h"/>
+    <ClInclude Include="..\..\Source\sspOSCSender.h"/>
+    <ClInclude Include="..\..\Source\sspOscSendChannel.h"/>
+    <ClInclude Include="..\..\Source\sspAkuratorApplication.h"/>
+    <ClInclude Include="..\..\Source\sspCommandIDs.h"/>
     <ClInclude Include="..\..\Source\sspInputManager.h"/>
     <ClInclude Include="..\..\Source\sspWatchDog.h"/>
     <ClInclude Include="..\..\Source\sspResetManager.h"/>
@@ -2036,12 +2041,7 @@
     <ClInclude Include="..\..\Source\sspDomainPool.h"/>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h"/>
     <ClInclude Include="..\..\Source\MainWindow.h"/>
-    <ClInclude Include="..\..\Source\sspAkuratorApplication.h"/>
-    <ClInclude Include="..\..\Source\sspCommandIDs.h"/>
     <ClInclude Include="..\..\Source\sspToolbar.h"/>
-    <ClInclude Include="..\..\Source\sspOscConsole.h"/>
-    <ClInclude Include="..\..\Source\sspOSCSender.h"/>
-    <ClInclude Include="..\..\Source\sspOscSendChannel.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>

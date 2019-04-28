@@ -28,13 +28,23 @@ sspExecutionState::~sspExecutionState(void)
 	s_destroyed_ = true;
 }
 
-void sspExecutionState::run(bool yes)
+void sspExecutionState::verified(bool yes)
+{
+	verified_ = yes;
+}
+
+void sspExecutionState::initialized(bool yes)
+{
+	initialized_ = yes;
+}
+
+void sspExecutionState::running(bool yes)
 {	
 	running_ = yes;
 	if (running_) start_run_time_ = steady_clock::now();
 }
 
-void sspExecutionState::play(bool yes)
+void sspExecutionState::playing(bool yes)
 {
 	playing_ = yes;
 	if (playing_) start_play_time_ = steady_clock::now();

@@ -37,11 +37,8 @@ public:
 	ApplicationCommandTarget* getNextCommandTarget() override;
 
 	void getAllCommands(Array<CommandID>& c) override;
-
 	void getCommandInfo(CommandID commandID, ApplicationCommandInfo& result) override;
-
 	bool perform(const InvocationInfo& info) override;
-
 	virtual void filenameComponentChanged(FilenameComponent* fileComponentThatHasChanged) override;
 
 	//==============================================================================
@@ -51,6 +48,10 @@ private:
 	ApplicationProperties app_properties_;
 	Toolbar toolbar_;
 	sspToolbarFactory toolbar_factory_;
+	File current_path_;
+
+	void onSave();
+	void onSaveAs();
 
 	void loadProperties();
 	void saveProperties();

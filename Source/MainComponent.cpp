@@ -13,6 +13,7 @@
 #include "sspStreamBus.h"
 #include "sspOscConsole.h"
 #include "sspExecutiveManager.h"
+#include "sspExecutionState.h"
 #include "sspResetManager.h"
 #include "sspCommandIDs.h"
 
@@ -22,31 +23,21 @@
 
 //==============================================================================
 MainComponent::MainComponent(String file_path)
-	: domain_(std::make_unique<sspDomainData>())
+	: toolbar_factory_(this)
+	, current_path_()
+	, domain_(std::make_unique<sspDomainData>())
 	, manager_(std::make_unique<sspExecutiveManager>())
 {
 	domain_->createInitialContent();
 	manager_->initialize(*domain_.get());
 
-	//File current_path;
-	//if (file_path.isNotEmpty() && File::isAbsolutePath(file_path)) {
-	//	File path = file_path;
-	//	if (path.existsAsFile()) {
-	//		current_path = file_path;
-	//	}
-	//}
-
-	//file_component_.reset(new FilenameComponent("fileComp",
-	//	current_path,             // current file
-	//	false,                    // can edit file name,
-	//	false,                    // is directory,
-	//	false,                    // is for saving,
-	//	"*.sspx",				  // browser wildcard suffix,
-	//	{},                       // enforced suffix,
-	//	"Select file to open"));  // text when nothing selected
-
-	//addAndMakeVisible(file_component_.get());
-	//file_component_->addListener(this);
+	if (file_path.isNotEmpty() && File::isAbsolutePath(file_path)) {
+		File path = file_path;
+		if (path.existsAsFile()) {
+			current_path_ = file_path;
+			toolbar_factory_.setFilepath(current_path_);
+		}
+	}
 
 	ApplicationCommandManager& cmd_manager = sspAkuratorApplication::getCommandManager();
 	cmd_manager.registerAllCommandsForTarget(this);
@@ -87,8 +78,6 @@ void MainComponent::paint (Graphics& g)
 void MainComponent::resized()
 {
 	auto b = getLocalBounds();
-//	menuBar_->setBounds(b.removeFromTop(LookAndFeel::getDefaultLookAndFeel().getDefaultMenuBarHeight()));
-//	file_component_->setBounds(b.removeFromTop(20));
 	toolbar_.setBounds(b.removeFromTop(40));
 }
 
@@ -102,9 +91,14 @@ void MainComponent::getAllCommands(Array<CommandID>& c)
 {
 	Array<CommandID> commands{ 
 		sspCommandIDs::DocNew,
-		sspCommandIDs::DocOpen,
 		sspCommandIDs::DocSave,
-		sspCommandIDs::DocSaveAs };
+		sspCommandIDs::DocSaveAs, 
+		sspCommandIDs::RunVerify,
+		sspCommandIDs::RunInit,
+		sspCommandIDs::RunStart,
+		sspCommandIDs::RunStop,
+		sspCommandIDs::EditSettings
+	};
 
 	c.addArray(commands);
 }
@@ -114,20 +108,44 @@ void MainComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& 
 	switch (commandID)
 	{
 	case sspCommandIDs::DocNew:
-		result.setInfo("New...", "Create a new Akurator project", "Menu", 0);
+		result.setInfo("New...", "Create a new Akurator project", "File", 0);
 		result.addDefaultKeypress('n', ModifierKeys::commandModifier);
-		break;
-	case sspCommandIDs::DocOpen:
-		result.setInfo("Open...", "Open an Akurator project file", "Menu", 0);
-		result.addDefaultKeypress('o', ModifierKeys::commandModifier);
+		result.setActive(!sspExecutionState::Instance().isRunning());
 		break;
 	case sspCommandIDs::DocSave:
-		result.setInfo("Save...", "Save Akurator project to file", "Menu", 0);
+		result.setInfo("Save...", "Save Akurator project to file", "File", 0);
 		result.addDefaultKeypress('s', ModifierKeys::commandModifier);
+		result.setActive(!sspExecutionState::Instance().isRunning());
 		break;
 	case sspCommandIDs::DocSaveAs:
-		result.setInfo("Save as...", "Save Akurator project to a different file", "Menu", 0);
+		result.setInfo("Save as...", "Save Akurator project to a different file", "File", 0);
 		result.addDefaultKeypress('a', ModifierKeys::commandModifier);
+		result.setActive(!sspExecutionState::Instance().isRunning());
+		break;
+	case sspCommandIDs::RunVerify:
+		result.setInfo("Verify", "Verify project correctness", "Run", 0);
+		result.addDefaultKeypress('v', ModifierKeys::commandModifier);
+		result.setActive(!sspExecutionState::Instance().isRunning());
+		break;
+	case sspCommandIDs::RunInit:
+		result.setInfo("Initialize", "Initialize project", "Run", 0);
+		result.addDefaultKeypress('i', ModifierKeys::commandModifier);
+		result.setActive(!sspExecutionState::Instance().isRunning() && sspExecutionState::Instance().isVerified());
+		break;
+	case sspCommandIDs::RunStart:
+		result.setInfo("Start", "Start running project", "Run", 0);
+		result.addDefaultKeypress(KeyPress::spaceKey, ModifierKeys::noModifiers);
+		result.setActive(!sspExecutionState::Instance().isRunning() && sspExecutionState::Instance().isInitialized());
+		break;
+	case sspCommandIDs::RunStop:
+		result.setInfo("Stop", "Stop running project", "Run", 0);
+		result.addDefaultKeypress(KeyPress::escapeKey, ModifierKeys::noModifiers);
+		result.setActive(sspExecutionState::Instance().isRunning());
+		break;
+	case sspCommandIDs::EditSettings:
+		result.setInfo("Settings", "Edit application settings", "Edit", 0);
+		result.addDefaultKeypress(KeyPress::F1Key, ModifierKeys::noModifiers);
+		result.setActive(!sspExecutionState::Instance().isRunning());
 		break;
 	default:
 		break;
@@ -144,23 +162,33 @@ bool MainComponent::perform(const InvocationInfo& info)
 		manager_->clearContents();
 		manager_->initialize(*domain_.get());
 		break;
-	case sspCommandIDs::DocOpen:
-	{
-		std::ifstream is("polymorphism_test.xml");
-		boost::archive::xml_iarchive ia(is);
-		domain_->clearContents();
-		manager_->clearContents();
-		ia >> boost::serialization::make_nvp("sspDomainData", *domain_.get()) >> boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
-	}
-		break;
 	case sspCommandIDs::DocSave:
-	{
-		std::ofstream os("polymorphism_test.xml");
-		boost::archive::xml_oarchive oa(os);			   		 
-		oa << boost::serialization::make_nvp("sspDomainData", *domain_.get()) << boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
-	}
+		onSave();
 		break;
 	case sspCommandIDs::DocSaveAs:
+		onSaveAs();
+		break;
+	case sspCommandIDs::RunVerify: 
+	{
+		int errors = 0, warnings = 0;
+		bool ok = domain_->verify(errors, warnings) && manager_->verify(errors, warnings);
+
+		// TODO: Make a report and a message box!
+
+		sspExecutionState::Instance().verified(ok);
+	}
+		break;
+	case sspCommandIDs::RunInit:
+	{
+		bool ok = manager_->initialize(*(domain_.get()));
+		sspExecutionState::Instance().initialized(ok);
+	}
+		break;
+	case sspCommandIDs::RunStart:
+		break;
+	case sspCommandIDs::RunStop:
+		break;
+	case sspCommandIDs::EditSettings:
 		break;
 	default:
 		return false;
@@ -171,11 +199,45 @@ bool MainComponent::perform(const InvocationInfo& info)
 
 void MainComponent::filenameComponentChanged(FilenameComponent* fileComponentThatHasChanged)
 {
-	//if (fileComponentThatHasChanged == file_component_.get()) {
-	//	// Do something
-	//}
+	current_path_ = fileComponentThatHasChanged->getCurrentFile();
+	String full_path = current_path_.getFullPathName();
+	std::ifstream is(full_path.toStdString());
+	boost::archive::xml_iarchive ia(is);
+	domain_->clearContents();
+	manager_->clearContents();
+	ia >> boost::serialization::make_nvp("sspDomainData", *domain_.get()) >> boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
 }
 
+
+void MainComponent::onSave()
+{
+	if (current_path_.hasFileExtension(".sspx")) {
+		String full_path = current_path_.getFullPathName();
+		std::ofstream os(full_path.toStdString());
+		boost::archive::xml_oarchive oa(os);
+		oa << boost::serialization::make_nvp("sspDomainData", *domain_.get()) << boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
+	}
+	else {
+		onSaveAs();
+	}
+}
+
+void MainComponent::onSaveAs()
+{
+	File previous;
+	if (current_path_.existsAsFile()) {
+		previous = current_path_.getParentDirectory();
+	}
+	FileChooser chooser("Save project as ...", previous, "*.sspx");
+	if (chooser.browseForFileToSave(true)) {
+		current_path_ = chooser.getResult();
+		// Update the file browser in the tool bar
+		toolbar_factory_.setFilepath(current_path_);
+		toolbar_.addDefaultItems(toolbar_factory_);
+
+		onSave();
+	}
+}
 
 void MainComponent::loadProperties()
 {

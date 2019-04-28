@@ -58,7 +58,7 @@ bool sspPlayManager::start()
 {
 	if (!sspExecutionState::Instance().isPlaying()) {
 		// TODO: Input manager
-		sspExecutionState::Instance().play();
+		sspExecutionState::Instance().playing();
 		sspScheduler::Instance().enableTasks();
 		previous_time_ = steady_clock::now();
 		root_stream_->start();
@@ -92,7 +92,7 @@ void sspPlayManager::stop()
 		sspScheduler::Instance().disableTasks();
 
 		// TODO: Input manager!
-		sspExecutionState::Instance().play(false);
+		sspExecutionState::Instance().playing(false);
 	}
 }
 

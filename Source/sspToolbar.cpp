@@ -12,6 +12,11 @@
 #include "sspCommandIDs.h"
 #include "sspAkuratorApplication.h"
 
+sspToolbarFactory::sspToolbarFactory(FilenameComponentListener * listener)
+	: filename_listener_(listener), filepath_()
+{
+}
+
 void sspToolbarFactory::getAllToolbarItemIds(Array<int>& ids)
 {
 	// This returns the complete list of all item IDs that are allowed to
@@ -43,17 +48,22 @@ void sspToolbarFactory::getDefaultItemSet(Array<int>& ids)
 	ids.add(sspCommandIDs::DocSave);
 	ids.add(sspCommandIDs::DocSaveAs);
 	ids.add(separatorBarId);
+	ids.add(flexibleSpacerId);
+	ids.add(sspCommandIDs::DocOpen);
+	ids.add(flexibleSpacerId);
+	ids.add(separatorBarId);
 	ids.add(sspCommandIDs::RunVerify);
 	ids.add(sspCommandIDs::RunInit);
 	ids.add(separatorBarId);
 	ids.add(sspCommandIDs::RunStart);
 	ids.add(sspCommandIDs::RunStop);
 	ids.add(separatorBarId);
-	ids.add(flexibleSpacerId);
-	ids.add(sspCommandIDs::DocOpen);
-	ids.add(flexibleSpacerId);
-	ids.add(separatorBarId);
 	ids.add(sspCommandIDs::EditSettings);
+}
+
+void sspToolbarFactory::setFilepath(const File & path)
+{
+	filepath_ = path;
 }
 
 ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
@@ -111,8 +121,8 @@ ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
 		return button;
 	}
 	case sspCommandIDs::DocOpen: {
-		CustomFilenameComponent* box = new CustomFilenameComponent(itemId);
-		box->setCommandToTrigger(nullptr, sspCommandIDs::DocOpen, true);
+		CustomFilenameComponent* box = new CustomFilenameComponent(itemId, filepath_);
+		box->addFilenameListener(filename_listener_);
 		return box;
 	}
 	default:                
@@ -120,4 +130,45 @@ ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
 	}
 
 	return nullptr;
+}
+
+sspToolbarFactory::CustomFilenameComponent::CustomFilenameComponent(const int toolbarItemId, const File& init_file_path)
+	: ToolbarItemComponent(toolbarItemId, "Custom Toolbar Item", false)
+{
+	file_component_.reset(new FilenameComponent("fileComp",
+		init_file_path,			  // current file
+		false,                    // can edit file name,
+		false,                    // is directory,
+		false,                    // is for saving,
+		"*.sspx",				  // browser wildcard suffix,
+		{},                       // enforced suffix,
+		"Select file to open"));  // text when nothing selected
+
+	addAndMakeVisible(file_component_.get());
+}
+
+bool sspToolbarFactory::CustomFilenameComponent::getToolbarItemSizes(int /*toolbarDepth*/, bool isVertical, int& preferredSize, int& minSize, int& maxSize) 
+{
+	if (isVertical)
+		return false;
+
+	preferredSize = 400;
+	minSize = 200;
+	maxSize = 600;
+	return true;
+}
+
+void sspToolbarFactory::CustomFilenameComponent::paintButtonArea(Graphics&, int, int, bool, bool)
+{
+}
+
+void sspToolbarFactory::CustomFilenameComponent::contentAreaChanged(const Rectangle<int>& newArea)
+{
+	file_component_->setSize(newArea.getWidth() - 2, jmin(newArea.getHeight() - 2, 20));
+	file_component_->setCentrePosition(newArea.getCentreX(), newArea.getCentreY());
+}
+
+void sspToolbarFactory::CustomFilenameComponent::addFilenameListener(FilenameComponentListener * listener)
+{
+	file_component_->addListener(listener);
 }

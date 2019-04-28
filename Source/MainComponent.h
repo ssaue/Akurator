@@ -9,7 +9,9 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "sspToolbar.h"
+
+#include "sspToolbarFactory.h"
+#include "sspTabbedComponent.h"
 
 class sspDomainData;
 class sspExecutiveManager;
@@ -45,16 +47,22 @@ public:
 
 private:
     //==============================================================================
-	ApplicationProperties app_properties_;
-	Toolbar toolbar_;
-	sspToolbarFactory toolbar_factory_;
 	File current_path_;
 
+	Toolbar toolbar_;
+	sspToolbarFactory toolbar_factory_;
+	sspTabbedComponent tabs_;
+
+	void onNew();
 	void onSave();
 	void onSaveAs();
 
-	void loadProperties();
-	void saveProperties();
+	void onVerify();
+	void onInit();
+	void onStart();
+	void onStop();
+
+	sspToolbarFilenameComponent& getFilenameComponent();
 
 	std::unique_ptr<sspDomainData> domain_;
 	std::unique_ptr<sspExecutiveManager> manager_;

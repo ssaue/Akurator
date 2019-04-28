@@ -24,8 +24,6 @@ namespace sspCommandIDs
 		RunStart = 0x300012, 
 		RunStop = 0x300013,
 
-		EditSettings = 0x300020,
-
 		lastCommandIDEntry
 	};
 }

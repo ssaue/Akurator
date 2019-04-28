@@ -28,6 +28,13 @@ ApplicationCommandManager& sspAkuratorApplication::getCommandManager()
 	return *cm;
 }
 
+RecentlyOpenedFilesList & sspAkuratorApplication::getRecentlyOpenedFiles()
+{
+	auto* files = sspAkuratorApplication::getApp().recent_files_.get();
+	jassert(files != nullptr);
+	return *files;
+}
+
 
 void sspAkuratorApplication::initialise(const String& commandLine)
 {
@@ -36,6 +43,8 @@ void sspAkuratorApplication::initialise(const String& commandLine)
 	// Get the optional commandLine argument
 	StringArray arguments = StringArray::fromTokens(commandLine, true);
 	String path = arguments.isEmpty() ? String() : arguments[0];
+
+	recent_files_.reset(new RecentlyOpenedFilesList());
 
 	command_manager_.reset(new ApplicationCommandManager());
 	command_manager_->registerAllCommandsForTarget(this);

@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    sspToolbar.h
+    sspToolbarFactory.h
     Created: 17 Apr 2019 5:43:58pm
     Author:  Sigurd Saue
 
@@ -22,6 +22,24 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+class sspToolbarFilenameComponent : public ToolbarItemComponent
+{
+public:
+	sspToolbarFilenameComponent(const int toolbarItemId);
+
+	bool getToolbarItemSizes(int /*toolbarDepth*/, bool isVertical,
+		int& preferredSize, int& minSize, int& maxSize) override;
+	void paintButtonArea(Graphics&, int, int, bool, bool) override;
+	void contentAreaChanged(const Rectangle<int>& newArea) override;
+
+	void addFilenameListener(FilenameComponentListener* listener);
+	void setRecentFiles(const StringArray& filenames);
+	void setCurrentFile(const File& file);
+
+private:
+	std::unique_ptr<FilenameComponent> file_component_;
+};
+
 
 class sspToolbarFactory : public ToolbarItemFactory
 {
@@ -30,27 +48,9 @@ public:
 
 	void getAllToolbarItemIds(Array<int>& ids) override;
 	void getDefaultItemSet(Array<int>& ids) override;
-	void setFilepath(const File& path);
-
-	ToolbarItemComponent* createItem(int itemId);
+	ToolbarItemComponent* createItem(int itemId) override;
 
 private:
 	FilenameComponentListener* filename_listener_;
-	File filepath_;
-
-	class CustomFilenameComponent : public ToolbarItemComponent
-	{
-	public:
-		CustomFilenameComponent(const int toolbarItemId, const File& init_file_path);
-
-		bool getToolbarItemSizes(int /*toolbarDepth*/, bool isVertical,
-			int& preferredSize, int& minSize, int& maxSize) override;
-		void paintButtonArea(Graphics&, int, int, bool, bool) override;
-		void contentAreaChanged(const Rectangle<int>& newArea) override;
-		void addFilenameListener(FilenameComponentListener* listener);
-
-	private:
-		std::unique_ptr<FilenameComponent> file_component_;
-	};
 };
 

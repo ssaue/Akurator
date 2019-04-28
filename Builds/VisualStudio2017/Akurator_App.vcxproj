@@ -213,8 +213,10 @@
     <ClCompile Include="..\..\Source\sspDomainData.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPool.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp"/>
+    <ClCompile Include="..\..\Source\sspSettingsPage.cpp"/>
+    <ClCompile Include="..\..\Source\sspTabbedComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainWindow.cpp"/>
-    <ClCompile Include="..\..\Source\sspToolbar.cpp"/>
+    <ClCompile Include="..\..\Source\sspToolbarFactory.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2040,8 +2042,10 @@
     <ClInclude Include="..\..\Source\sspDomainVector.h"/>
     <ClInclude Include="..\..\Source\sspDomainPool.h"/>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h"/>
+    <ClInclude Include="..\..\Source\sspSettingsPage.h"/>
+    <ClInclude Include="..\..\Source\sspTabbedComponent.h"/>
     <ClInclude Include="..\..\Source\MainWindow.h"/>
-    <ClInclude Include="..\..\Source\sspToolbar.h"/>
+    <ClInclude Include="..\..\Source\sspToolbarFactory.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>
@@ -2744,7 +2748,6 @@
     <None Include="..\..\Assets\run-stop.svg"/>
     <None Include="..\..\Assets\run-initialize.svg"/>
     <None Include="..\..\Assets\run-start.svg"/>
-    <None Include="..\..\Assets\edit-settings.svg"/>
     <None Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>
     <None Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\base\LICENSE.txt"/>

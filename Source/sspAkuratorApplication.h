@@ -22,6 +22,7 @@ public:
 
 	static sspAkuratorApplication& getApp();
 	static ApplicationCommandManager& getCommandManager();
+	static RecentlyOpenedFilesList& getRecentlyOpenedFiles();
 
 	const String getApplicationName() override { return ProjectInfo::projectName; }
 	const String getApplicationVersion() override { return ProjectInfo::versionString; }
@@ -38,6 +39,7 @@ public:
 	void anotherInstanceStarted(const String& commandLine) override;
 
 	std::unique_ptr<ApplicationCommandManager> command_manager_;
+	std::unique_ptr<RecentlyOpenedFilesList> recent_files_;
 
 private:
 	std::unique_ptr<MainWindow> main_window_;

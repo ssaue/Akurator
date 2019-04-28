@@ -15,8 +15,6 @@
       <FILE id="M4WlaG" name="run-initialize.svg" compile="0" resource="1"
             file="Assets/run-initialize.svg"/>
       <FILE id="q3dos0" name="run-start.svg" compile="0" resource="1" file="Assets/run-start.svg"/>
-      <FILE id="zGjQKG" name="edit-settings.svg" compile="0" resource="1"
-            file="Assets/edit-settings.svg"/>
     </GROUP>
     <GROUP id="{F249665B-74BF-BC6D-AB9F-04C47C7B0842}" name="Source">
       <GROUP id="{A1BA6C01-8A71-8C4A-0164-63D22D4B9260}" name="OSC">
@@ -286,10 +284,20 @@
               file="Source/sspDomainPrimitives.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
+        <FILE id="VbE4vH" name="sspSettingsPage.cpp" compile="1" resource="0"
+              file="Source/sspSettingsPage.cpp"/>
+        <FILE id="Ptq5k3" name="sspSettingsPage.h" compile="0" resource="0"
+              file="Source/sspSettingsPage.h"/>
+        <FILE id="ryi9AR" name="sspTabbedComponent.cpp" compile="1" resource="0"
+              file="Source/sspTabbedComponent.cpp"/>
+        <FILE id="YbE009" name="sspTabbedComponent.h" compile="0" resource="0"
+              file="Source/sspTabbedComponent.h"/>
         <FILE id="nry08C" name="MainWindow.cpp" compile="1" resource="0" file="Source/MainWindow.cpp"/>
         <FILE id="UeMKZe" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
-        <FILE id="LlqFzI" name="sspToolbar.cpp" compile="1" resource="0" file="Source/sspToolbar.cpp"/>
-        <FILE id="AjHu1S" name="sspToolbar.h" compile="0" resource="0" file="Source/sspToolbar.h"/>
+        <FILE id="LlqFzI" name="sspToolbarFactory.cpp" compile="1" resource="0"
+              file="Source/sspToolbarFactory.cpp"/>
+        <FILE id="AjHu1S" name="sspToolbarFactory.h" compile="0" resource="0"
+              file="Source/sspToolbarFactory.h"/>
         <FILE id="OWMZoQ" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
         <FILE id="hJUklS" name="MainComponent.cpp" compile="1" resource="0"
               file="Source/MainComponent.cpp"/>

@@ -63,6 +63,7 @@ public:
 	void stop();
 
 	Error getLastError() const { return last_error_; }
+
 	sspPlayManager* getPlayManager() { return play_manager_.get(); }
 	sspResetManager* getResetManager() { return reset_manager_.get(); }
 	sspInputManager* getInputManager() { return input_manager_.get(); }

@@ -1,19 +1,74 @@
 /*
   ==============================================================================
 
-    sspToolbar.cpp
+    sspToolbarFactory.cpp
     Created: 17 Apr 2019 5:43:58pm
     Author:  Sigurd Saue
 
   ==============================================================================
 */
 
-#include "sspToolbar.h"
+#include "sspToolbarFactory.h"
+
 #include "sspCommandIDs.h"
 #include "sspAkuratorApplication.h"
 
+sspToolbarFilenameComponent::sspToolbarFilenameComponent(const int toolbarItemId)
+	: ToolbarItemComponent(toolbarItemId, "Custom Toolbar Item", false)
+{
+	file_component_.reset(new FilenameComponent("fileComp",
+		{},						  // current file
+		false,                    // can edit file name,
+		false,                    // is directory,
+		false,                    // is for saving,
+		"*.sspx",				  // browser wildcard suffix,
+		{},                       // enforced suffix,
+		"Select file to open"));  // text when nothing selected
+
+	addAndMakeVisible(file_component_.get());
+}
+
+bool sspToolbarFilenameComponent::getToolbarItemSizes(int /*toolbarDepth*/, bool isVertical, int& preferredSize, int& minSize, int& maxSize)
+{
+	if (isVertical)
+		return false;
+
+	preferredSize = 550;
+	minSize = 300;
+	maxSize = 800;
+	return true;
+}
+
+void sspToolbarFilenameComponent::paintButtonArea(Graphics&, int, int, bool, bool)
+{
+}
+
+void sspToolbarFilenameComponent::contentAreaChanged(const Rectangle<int>& newArea)
+{
+	file_component_->setSize(newArea.getWidth() - 2, jmin(newArea.getHeight() - 2, 20));
+	file_component_->setCentrePosition(newArea.getCentreX(), newArea.getCentreY());
+}
+
+void sspToolbarFilenameComponent::addFilenameListener(FilenameComponentListener * listener)
+{
+	file_component_->addListener(listener);
+}
+
+void sspToolbarFilenameComponent::setRecentFiles(const StringArray & filenames)
+{
+	for (auto elem : filenames) {
+		file_component_->addRecentlyUsedFile(elem);
+	}
+}
+
+void sspToolbarFilenameComponent::setCurrentFile(const File & file)
+{
+	file_component_->setCurrentFile(file, true, juce::dontSendNotification);
+}
+
+
 sspToolbarFactory::sspToolbarFactory(FilenameComponentListener * listener)
-	: filename_listener_(listener), filepath_()
+	: filename_listener_(listener)
 {
 }
 
@@ -31,7 +86,6 @@ void sspToolbarFactory::getAllToolbarItemIds(Array<int>& ids)
 	ids.add(sspCommandIDs::RunInit);
 	ids.add(sspCommandIDs::RunStart);
 	ids.add(sspCommandIDs::RunStop);
-	ids.add(sspCommandIDs::EditSettings);
 
 	// If you're going to use separators, then they must also be added explicitly
 	// to the list.
@@ -57,13 +111,6 @@ void sspToolbarFactory::getDefaultItemSet(Array<int>& ids)
 	ids.add(separatorBarId);
 	ids.add(sspCommandIDs::RunStart);
 	ids.add(sspCommandIDs::RunStop);
-	ids.add(separatorBarId);
-	ids.add(sspCommandIDs::EditSettings);
-}
-
-void sspToolbarFactory::setFilepath(const File & path)
-{
-	filepath_ = path;
 }
 
 ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
@@ -114,15 +161,10 @@ ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
 		button->setCommandToTrigger(&cmd_manager, sspCommandIDs::RunStop, true);
 		return button;
 	}
-	case sspCommandIDs::EditSettings: {
-		ToolbarButton* button = new ToolbarButton(itemId, String("settings"),
-			Drawable::createFromImageData(BinaryData::editsettings_svg, BinaryData::editsettings_svgSize), 0);
-		button->setCommandToTrigger(&cmd_manager, sspCommandIDs::EditSettings, true);
-		return button;
-	}
 	case sspCommandIDs::DocOpen: {
-		CustomFilenameComponent* box = new CustomFilenameComponent(itemId, filepath_);
+		sspToolbarFilenameComponent* box = new sspToolbarFilenameComponent(itemId);
 		box->addFilenameListener(filename_listener_);
+		box->setCommandToTrigger(&cmd_manager, sspCommandIDs::DocOpen, true);
 		return box;
 	}
 	default:                
@@ -132,43 +174,3 @@ ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
 	return nullptr;
 }
 
-sspToolbarFactory::CustomFilenameComponent::CustomFilenameComponent(const int toolbarItemId, const File& init_file_path)
-	: ToolbarItemComponent(toolbarItemId, "Custom Toolbar Item", false)
-{
-	file_component_.reset(new FilenameComponent("fileComp",
-		init_file_path,			  // current file
-		false,                    // can edit file name,
-		false,                    // is directory,
-		false,                    // is for saving,
-		"*.sspx",				  // browser wildcard suffix,
-		{},                       // enforced suffix,
-		"Select file to open"));  // text when nothing selected
-
-	addAndMakeVisible(file_component_.get());
-}
-
-bool sspToolbarFactory::CustomFilenameComponent::getToolbarItemSizes(int /*toolbarDepth*/, bool isVertical, int& preferredSize, int& minSize, int& maxSize) 
-{
-	if (isVertical)
-		return false;
-
-	preferredSize = 400;
-	minSize = 200;
-	maxSize = 600;
-	return true;
-}
-
-void sspToolbarFactory::CustomFilenameComponent::paintButtonArea(Graphics&, int, int, bool, bool)
-{
-}
-
-void sspToolbarFactory::CustomFilenameComponent::contentAreaChanged(const Rectangle<int>& newArea)
-{
-	file_component_->setSize(newArea.getWidth() - 2, jmin(newArea.getHeight() - 2, 20));
-	file_component_->setCentrePosition(newArea.getCentreX(), newArea.getCentreY());
-}
-
-void sspToolbarFactory::CustomFilenameComponent::addFilenameListener(FilenameComponentListener * listener)
-{
-	file_component_->addListener(listener);
-}

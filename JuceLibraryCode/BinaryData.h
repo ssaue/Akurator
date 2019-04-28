@@ -29,11 +29,8 @@ namespace BinaryData
     extern const char*   runstart_svg;
     const int            runstart_svgSize = 9972;
 
-    extern const char*   editsettings_svg;
-    const int            editsettings_svgSize = 27140;
-
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 8;
+    const int namedResourceListSize = 7;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

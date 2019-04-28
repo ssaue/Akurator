@@ -658,10 +658,16 @@
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\sspSettingsPage.cpp">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspTabbedComponent.cpp">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MainWindow.cpp">
       <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\sspToolbar.cpp">
+    <ClCompile Include="..\..\Source\sspToolbarFactory.cpp">
       <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
@@ -2784,10 +2790,16 @@
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\sspSettingsPage.h">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspTabbedComponent.h">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MainWindow.h">
       <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspToolbar.h">
+    <ClInclude Include="..\..\Source\sspToolbarFactory.h">
       <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
@@ -4890,9 +4902,6 @@
       <Filter>Akurator\Resources</Filter>
     </None>
     <None Include="..\..\Assets\run-start.svg">
-      <Filter>Akurator\Resources</Filter>
-    </None>
-    <None Include="..\..\Assets\edit-settings.svg">
       <Filter>Akurator\Resources</Filter>
     </None>
     <None Include="..\..\..\..\..\Develop\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt">

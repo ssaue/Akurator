@@ -44,11 +44,11 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 void sspOSCPlayer::stop()
 {
 	auto ptr = getSendChannel().lock();
+	setSendChannel(std::weak_ptr<sspSendChannel>());	// Make sure that the OSC finished message is ignored
 	if (ptr && address_) {
-		std::string addr = address_->getString() + "/stop";
+		std::string addr = "/stop";
 		ptr->sendMessage(addr, std::vector<sspSendChannel::ArgumentType>());
 	}
-	setSendChannel(std::weak_ptr<sspSendChannel>());
 }
 
 bool sspOSCPlayer::update()

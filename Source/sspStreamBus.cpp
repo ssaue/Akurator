@@ -46,14 +46,14 @@ void sspStreamBus::stop()
 {
 	for (auto& chan : channels_) {
 		if (chan.second->busy()) {
-			chan.second->sendMessage("buffer/stop", std::vector<sspSendChannel::ArgumentType>());
+			chan.second->sendMessage("/stop", std::vector<sspSendChannel::ArgumentType>());
 		}
 	}
 }
 
 void sspStreamBus::masterVolume(double vol, double time, Reference ref)
 {
-	std::string chan_addr = "master/vol/";
+	std::string chan_addr = "/master/vol/";
 	chan_addr += (ref == Reference::Absolute ? "abs" : "rel");
 	std::vector<sspSendChannel::ArgumentType> args;
 	args.push_back(vol);
@@ -66,7 +66,7 @@ void sspStreamBus::masterVolume(double vol, double time, Reference ref)
 
 void sspStreamBus::masterFadeIn(double time)
 {
-	std::string chan_addr = "master/fadein/";
+	std::string chan_addr = "/master/fadein/";
 	std::vector<sspSendChannel::ArgumentType> args;
 	args.push_back(time);
 
@@ -77,7 +77,7 @@ void sspStreamBus::masterFadeIn(double time)
 
 void sspStreamBus::masterFadeOut(double time)
 {
-	std::string chan_addr = "master/fadeout/";
+	std::string chan_addr = "/master/fadeout/";
 	std::vector<sspSendChannel::ArgumentType> args;
 	args.push_back(time);
 
@@ -90,7 +90,7 @@ bool sspStreamBus::bufferVolume(unsigned int channel_id, double vol, double time
 {
 	auto channel = channels_.find(channel_id);
 	if (channel != channels_.end()) {
-		std::string chan_addr = "buffer/vol/";
+		std::string chan_addr = "/buffer/vol/";
 		chan_addr += (ref == Reference::Absolute ? "abs" : "rel");
 		std::vector<sspSendChannel::ArgumentType> args;
 		args.push_back(vol);
@@ -107,7 +107,7 @@ bool sspStreamBus::bufferFadeIn(unsigned int channel_id, double time)
 {
 	auto channel = channels_.find(channel_id);
 	if (channel != channels_.end()) {
-		std::string chan_addr = "buffer/fadein/";
+		std::string chan_addr = "/buffer/fadein/";
 		std::vector<sspSendChannel::ArgumentType> args;
 		args.push_back(time);
 		channel->second->sendMessage(chan_addr, args);
@@ -122,7 +122,7 @@ bool sspStreamBus::bufferFadeOut(unsigned int channel_id, double time)
 {
 	auto channel = channels_.find(channel_id);
 	if (channel != channels_.end()) {
-		std::string chan_addr = "buffer/fadeout/";
+		std::string chan_addr = "/buffer/fadeout/";
 		std::vector<sspSendChannel::ArgumentType> args;
 		args.push_back(time);
 		channel->second->sendMessage(chan_addr, args);

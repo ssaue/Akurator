@@ -12,10 +12,15 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+class sspDomainData;
+
 class sspTabbedComponent : public TabbedComponent
 {
 public:
-	sspTabbedComponent();
+	sspTabbedComponent(sspDomainData* domain);
+
+private:
+	sspDomainData* domain_;
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(sspTabbedComponent)
 };

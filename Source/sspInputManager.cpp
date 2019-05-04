@@ -10,17 +10,18 @@
 
 #include "sspInputManager.h"
 
-bool sspInputManager::verify(int & nErrors, int & nWarnings) const
+bool sspInputManager::verify(int& /*nErrors*/, int& /*nWarnings*/) const
 {
-	bool bReturn = true;
-	if (!inputs_.verify(nErrors, nWarnings))
-		bReturn = false;
-	return bReturn;
+	return true;
 }
 
-bool sspInputManager::initialize()
+bool sspInputManager::initialize(sspDomainPool<sspInput>* inputs)
 {
-	for (auto input : inputs_) {
+	if (inputs == nullptr)
+		return false;
+
+	inputs_ = inputs;
+	for (auto input : *inputs_) {
 		if (!input->initialize())
 			return false;
 	}
@@ -29,8 +30,11 @@ bool sspInputManager::initialize()
 
 bool sspInputManager::update()
 {
+	if (inputs_ == nullptr)
+		return false;
+
 	bool update = false;
-	for (auto input : inputs_) {
+	for (auto input : *inputs_) {
 		if (!input->update())
 			update = true;	// At least one input is updated
 	}
@@ -39,13 +43,10 @@ bool sspInputManager::update()
 
 void sspInputManager::terminate()
 {
-	for (auto input : inputs_) {
+	if (inputs_ == nullptr)
+		return;
+
+	for (auto input : *inputs_) {
 		input->terminate();
 	}
-}
-
-void sspInputManager::clearContents()
-{
-	terminate();
-	inputs_.clear();
 }

@@ -17,14 +17,13 @@
 template <typename T>
 class sspDomainVector
 {
+	std::vector<std::shared_ptr<T>> elements_;
+
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_NVP(elements_);
 	}
-
-protected:
-	std::vector<std::shared_ptr<T>> elements_;
 
 public:
 	sspDomainVector() : elements_() {}
@@ -54,20 +53,43 @@ public:
 	}
 	virtual ~sspDomainVector() {}
 
-	void add(std::shared_ptr<T> element) { elements_.push_back(element); }
+	void add(std::shared_ptr<T> element) 
+	{ 
+		elements_.push_back(element); 
+	}
+	
+	void removeAt(size_t const index)
+	{
+		assert(index < size());
+		auto elem = elements_.begin() + index;
+		elements_.erase(elem);
+	}
+
 	const std::shared_ptr<T> getAt(size_t const index) const
 	{
 		assert(index < size());
 		return elements_[index];
 	}
+
 	const std::shared_ptr<T> getLast() const
 	{
 		return elements_[size() - 1];
 	}
-	void clear() { elements_.clear(); }
 
-	size_t size() const { return elements_.size(); }
-	bool empty() const { return elements_.empty(); }
+	void clear() 
+	{ 
+		elements_.clear(); 
+	}
+
+	size_t size() const
+	{ 
+		return elements_.size(); 
+	}
+
+	bool empty() const 
+	{ 
+		return elements_.empty(); 
+	}
 };
 
 // sspDomainVector iterators

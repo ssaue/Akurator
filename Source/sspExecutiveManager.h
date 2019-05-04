@@ -30,7 +30,6 @@ class sspExecutiveManager : public Timer
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_NVP(play_manager_);
-		ar & BOOST_SERIALIZATION_NVP(input_manager_);
 	}
 
 public:

@@ -18,14 +18,23 @@ int sspOscConsole::receive_port_s = 9001;
 
 sspOscConsole::sspOscConsole() : channels_()
 {
-	receive_ready_= connect(receive_port_s);
-	send_ready_ = sspOscSender::connect(send_address_s, send_port_s);
 	addListener(this, "/finished");
 }
 
 sspOscConsole::~sspOscConsole()
 {
 	removeListener(this);
+	disconnectAll();
+}
+
+void sspOscConsole::connectAll()
+{
+	receive_ready_ = connect(receive_port_s);
+	send_ready_ = sspOscSender::connect(send_address_s, send_port_s);
+}
+
+void sspOscConsole::disconnectAll()
+{
 	sspOscSender::disconnect();
 	disconnect();
 }

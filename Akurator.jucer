@@ -4,6 +4,8 @@
               cppLanguageStandard="latest">
   <MAINGROUP id="ZF2la9" name="Akurator">
     <GROUP id="{E7DFC1A8-168F-F1D1-EE53-86D966ADD403}" name="Resources">
+      <FILE id="OkI5sd" name="edit-settings.svg" compile="0" resource="1"
+            file="Assets/edit-settings.svg"/>
       <FILE id="Sfe2y3" name="document-new.svg" compile="0" resource="1"
             file="Assets/document-new.svg"/>
       <FILE id="rfyxeZ" name="document-save.svg" compile="0" resource="1"
@@ -36,6 +38,7 @@
         <FILE id="PEMCPk" name="sspAkuratorApplication.h" compile="0" resource="0"
               file="Source/sspAkuratorApplication.h"/>
         <FILE id="D4Nqrc" name="sspCommandIDs.h" compile="0" resource="0" file="Source/sspCommandIDs.h"/>
+        <FILE id="IM3SR1" name="sspDefines.h" compile="0" resource="0" file="Source/sspDefines.h"/>
       </GROUP>
       <GROUP id="{6B72F253-A45D-5E1A-E22B-9B0FEA970C4A}" name="Execution">
         <FILE id="kVEmH1" name="sspInputManager.cpp" compile="1" resource="0"
@@ -93,7 +96,11 @@
               file="Source/sspSilenceTask.h"/>
       </GROUP>
       <GROUP id="{D69347C2-FB05-1EA2-03E9-0C96A2FD033A}" name="Domain">
+        <FILE id="PrA4cW" name="Storedal.cpp" compile="1" resource="0" file="Source/Storedal.cpp"/>
+        <FILE id="c3UTd6" name="Storedal.h" compile="0" resource="0" file="Source/Storedal.h"/>
         <GROUP id="{62E97640-8A56-9B87-C573-E4A8E575C63F}" name="Inputs">
+          <FILE id="UScHgM" name="sspICPinput.cpp" compile="1" resource="0" file="Source/sspICPinput.cpp"/>
+          <FILE id="pl7oYl" name="sspICPinput.h" compile="0" resource="0" file="Source/sspICPinput.h"/>
           <FILE id="l1S9MA" name="sspInput.cpp" compile="1" resource="0" file="Source/sspInput.cpp"/>
           <FILE id="kYIlZ3" name="sspInput.h" compile="0" resource="0" file="Source/sspInput.h"/>
         </GROUP>
@@ -134,6 +141,8 @@
                 file="Source/sspTriggerMsgList.h"/>
         </GROUP>
         <GROUP id="{4C41B598-ED08-09DC-8B9E-BE51C1BCB39F}" name="PlayObjects">
+          <FILE id="EkkHUj" name="sspPlayers.cpp" compile="1" resource="0" file="Source/sspPlayers.cpp"/>
+          <FILE id="OC1KLk" name="sspPlayers.h" compile="0" resource="0" file="Source/sspPlayers.h"/>
           <FILE id="Nx1Bwc" name="sspPlayTask.cpp" compile="1" resource="0" file="Source/sspPlayTask.cpp"/>
           <FILE id="WOGnSy" name="sspPlayTask.h" compile="0" resource="0" file="Source/sspPlayTask.h"/>
           <FILE id="MxQ1kE" name="sspDistributionPlayer.cpp" compile="1" resource="0"
@@ -284,6 +293,13 @@
               file="Source/sspDomainPrimitives.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
+        <FILE id="tZtXta" name="sspDomainListboxModel.cpp" compile="1" resource="0"
+              file="Source/sspDomainListboxModel.cpp"/>
+        <FILE id="QYhlTb" name="sspDomainListboxModel.h" compile="0" resource="0"
+              file="Source/sspDomainListboxModel.h"/>
+        <FILE id="Dn3KxH" name="sspDomainPage.cpp" compile="1" resource="0"
+              file="Source/sspDomainPage.cpp"/>
+        <FILE id="jOcV46" name="sspDomainPage.h" compile="0" resource="0" file="Source/sspDomainPage.h"/>
         <FILE id="VbE4vH" name="sspSettingsPage.cpp" compile="1" resource="0"
               file="Source/sspSettingsPage.cpp"/>
         <FILE id="Ptq5k3" name="sspSettingsPage.h" compile="0" resource="0"
@@ -307,10 +323,10 @@
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" libraryPath="C:\Develop\boost_1_69_0\stage\lib"
-                       headerPath="C:\Develop\boost_1_69_0"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="C:\Develop\boost_1_69_0"
-                       libraryPath="C:\Develop\boost_1_69_0\stage\lib"/>
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="C:\Develop\boost_1_69_0\stage\lib&#10;..\..\Extern"
+                       headerPath="C:\Develop\boost_1_69_0&#10;..\..\Extern"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="C:\Develop\boost_1_69_0&#10;..\..\Extern"
+                       libraryPath="C:\Develop\boost_1_69_0\stage\lib&#10;..\..\Extern"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../Develop/Juce/modules"/>

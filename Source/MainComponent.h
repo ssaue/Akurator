@@ -51,7 +51,6 @@ private:
 
 	Toolbar toolbar_;
 	sspToolbarFactory toolbar_factory_;
-	sspTabbedComponent tabs_;
 
 	void onNew();
 	void onSave();
@@ -66,6 +65,7 @@ private:
 
 	std::unique_ptr<sspDomainData> domain_;
 	std::unique_ptr<sspExecutiveManager> manager_;
+	std::unique_ptr<sspTabbedComponent> tabs_;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

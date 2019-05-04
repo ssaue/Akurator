@@ -11,6 +11,10 @@
 #include "sspTimeline.h"
 #include "sspLogging.h"
 
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/serialization/export.hpp>
+
 sspTimeline::sspTimeline()
 	: sspMessageHandler(), children_(), time_factor_()
 {
@@ -80,3 +84,10 @@ inline double sspTimeline::getTimeStep(double seconds)
 {
 	return time_factor_ ? seconds * time_factor_->getValue() : seconds;
 }
+
+#include "sspStream.h"
+#include "sspAudioStream.h"
+
+BOOST_CLASS_EXPORT(sspTimeline);
+BOOST_CLASS_EXPORT(sspStream);
+BOOST_CLASS_EXPORT(sspAudioStream);

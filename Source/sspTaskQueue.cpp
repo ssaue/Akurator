@@ -73,13 +73,12 @@ std::optional<std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr<s
 	return {};
 }
 
-void sspTaskQueue::remove(std::weak_ptr<sspPlayTask> task)
+void sspTaskQueue::removeInactive()
 {
 	std::scoped_lock<std::mutex> lock{ lock_ };
-	active_.remove_if([task](std::weak_ptr< sspPlayTask> p) {
+	active_.remove_if([](std::weak_ptr< sspPlayTask> p) {
 		auto sp = p.lock();
-		auto tsp = task.lock();
-		return sp && tsp && (tsp == sp);
+		return sp && !sp->isPlaying();
 	});
 }
 

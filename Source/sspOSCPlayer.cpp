@@ -21,7 +21,7 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 	if (isPlaying() || channel.expired() || !address_)
 		return false;
 
-	std::string addr = address_->getString() + "/start";
+	std::string addr = address_->getString();
 
 	std::vector<sspSendChannel::ArgumentType> arguments;
 	auto path = path_ ? path_->getString() : std::string();
@@ -43,16 +43,18 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 
 void sspOSCPlayer::stop()
 {
-	auto ptr = getSendChannel().lock();
-	setSendChannel(std::weak_ptr<sspSendChannel>());	// Make sure that the OSC finished message is ignored
-	if (ptr && address_) {
-		std::string addr = "/stop";
-		ptr->sendMessage(addr, std::vector<sspSendChannel::ArgumentType>());
+	if (auto ptr = getSendChannel().lock()) {
+		ptr->clearResponder();
+		std::string address = "/stop";
+		ptr->sendMessage(address, std::vector<sspSendChannel::ArgumentType>());
 	}
 }
 
 bool sspOSCPlayer::update()
 {
+	if (auto ptr = getSendChannel().lock()) {
+		ptr->clearResponder();
+	}
 	return false;
 }
 

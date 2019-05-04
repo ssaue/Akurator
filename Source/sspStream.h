@@ -33,10 +33,10 @@ public:
 
 	virtual void start() override;
 	virtual void update(double seconds) override;
-
 	virtual bool empty() const override;
 
 	virtual void handleMessage(const sspMessage& msg) override;
+	virtual void onFinished() override;
 
 protected:
 	virtual void play(std::weak_ptr<sspPlayTask> task);

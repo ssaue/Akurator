@@ -90,8 +90,6 @@ private:
     std::unique_ptr<ToggleButton> exec_use_interval_;
     std::unique_ptr<Label> label_osc_3;
     std::unique_ptr<Label> label_osc_sendaddr_13;
-    std::unique_ptr<TextEditor> exec_start_hour_2;
-    std::unique_ptr<TextEditor> exec_start_min_2;
     std::unique_ptr<Label> label_osc_sendaddr_14;
     std::unique_ptr<Label> label_osc_sendaddr_9;
     std::unique_ptr<TextEditor> reset_hour_;

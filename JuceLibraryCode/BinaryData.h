@@ -8,29 +8,32 @@
 
 namespace BinaryData
 {
+    extern const char*   editsettings_svg;
+    const int            editsettings_svgSize = 27140;
+
     extern const char*   documentnew_svg;
-    const int            documentnew_svgSize = 15964;
+    const int            documentnew_svgSize = 15598;
 
     extern const char*   documentsave_svg;
-    const int            documentsave_svgSize = 47666;
+    const int            documentsave_svgSize = 46619;
 
     extern const char*   runverify_svg;
-    const int            runverify_svgSize = 4477;
+    const int            runverify_svgSize = 4421;
 
     extern const char*   documentsaveas_svg;
-    const int            documentsaveas_svgSize = 50117;
+    const int            documentsaveas_svgSize = 49021;
 
     extern const char*   runstop_svg;
-    const int            runstop_svgSize = 10198;
+    const int            runstop_svgSize = 9905;
 
     extern const char*   runinitialize_svg;
-    const int            runinitialize_svgSize = 9105;
+    const int            runinitialize_svgSize = 8887;
 
     extern const char*   runstart_svg;
-    const int            runstart_svgSize = 10258;
+    const int            runstart_svgSize = 9972;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 7;
+    const int namedResourceListSize = 8;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

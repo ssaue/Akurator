@@ -28,6 +28,8 @@ public:
 	sspOscConsole& operator= (const sspOscConsole& obj) = delete;
 	virtual ~sspOscConsole();
 
+	void connectAll();
+	void disconnectAll();
 	bool isSendConnected() const { return send_ready_; }
 	bool isReceiveConnected() const { return receive_ready_; }
 

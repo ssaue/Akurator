@@ -29,7 +29,7 @@ public:
 	virtual ~sspTaskQueue();
 
 	std::optional<std::weak_ptr<sspPlayTask>> loadTask(std::weak_ptr<sspPlayTask> task);
-	void remove(std::weak_ptr<sspPlayTask> task);
+	void removeInactive();
 	std::weak_ptr<sspPlayTask> getWaitingTask();
 	bool empty() const;
 	void clear();

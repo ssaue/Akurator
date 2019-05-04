@@ -46,7 +46,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_->setColour (TextEditor::textColourId, Colours::black);
     label_osc_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_->setBounds (469, 30, 56, 24);
+    label_osc_->setBounds (465, 30, 56, 24);
 
     osc_send_addr_.reset (new TextEditor ("send_addr_editor"));
     addAndMakeVisible (osc_send_addr_.get());
@@ -58,7 +58,7 @@ sspSettingsPage::sspSettingsPage ()
     osc_send_addr_->setPopupMenuEnabled (false);
     osc_send_addr_->setText (String());
 
-    osc_send_addr_->setBounds (580, 60, 110, 24);
+    osc_send_addr_->setBounds (576, 60, 110, 24);
 
     label_osc_sendport_2.reset (new Label ("Osc receive port",
                                            TRANS("Receive port:")));
@@ -69,7 +69,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendport_2->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendport_2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendport_2->setBounds (469, 120, 96, 24);
+    label_osc_sendport_2->setBounds (465, 120, 96, 24);
 
     label_osc_sendport_.reset (new Label ("Osc send port",
                                           TRANS("Send port:")));
@@ -80,7 +80,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendport_->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendport_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendport_->setBounds (469, 90, 80, 24);
+    label_osc_sendport_->setBounds (465, 90, 80, 24);
 
     label_osc_sendaddr_.reset (new Label ("osc_send_adress",
                                           TRANS("Send address:")));
@@ -91,7 +91,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_->setBounds (469, 60, 96, 24);
+    label_osc_sendaddr_->setBounds (465, 60, 96, 24);
 
     osc_send_port_.reset (new TextEditor ("send_port_editor"));
     addAndMakeVisible (osc_send_port_.get());
@@ -103,7 +103,7 @@ sspSettingsPage::sspSettingsPage ()
     osc_send_port_->setPopupMenuEnabled (false);
     osc_send_port_->setText (String());
 
-    osc_send_port_->setBounds (580, 90, 50, 24);
+    osc_send_port_->setBounds (576, 90, 50, 24);
 
     osc_receive_port_.reset (new TextEditor ("receive_port_editor"));
     addAndMakeVisible (osc_receive_port_.get());
@@ -115,7 +115,7 @@ sspSettingsPage::sspSettingsPage ()
     osc_receive_port_->setPopupMenuEnabled (false);
     osc_receive_port_->setText (String());
 
-    osc_receive_port_->setBounds (580, 120, 50, 24);
+    osc_receive_port_->setBounds (576, 120, 50, 24);
 
     label_osc_2.reset (new Label ("OSC heading",
                                   TRANS("Exec\n")));
@@ -306,7 +306,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_3->setColour (TextEditor::textColourId, Colours::black);
     label_osc_3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_3->setBounds (32, 230, 80, 24);
+    label_osc_3->setBounds (465, 358, 80, 24);
 
     label_osc_sendaddr_13.reset (new Label ("osc_send_adress",
                                             TRANS("Play interval:")));
@@ -318,30 +318,6 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_13->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     label_osc_sendaddr_13->setBounds (32, 120, 152, 24);
-
-    exec_start_hour_2.reset (new TextEditor ("starttime_hour"));
-    addAndMakeVisible (exec_start_hour_2.get());
-    exec_start_hour_2->setMultiLine (false);
-    exec_start_hour_2->setReturnKeyStartsNewLine (false);
-    exec_start_hour_2->setReadOnly (false);
-    exec_start_hour_2->setScrollbarsShown (false);
-    exec_start_hour_2->setCaretVisible (true);
-    exec_start_hour_2->setPopupMenuEnabled (false);
-    exec_start_hour_2->setText (String());
-
-    exec_start_hour_2->setBounds (195, 120, 25, 24);
-
-    exec_start_min_2.reset (new TextEditor ("starttime_minute"));
-    addAndMakeVisible (exec_start_min_2.get());
-    exec_start_min_2->setMultiLine (false);
-    exec_start_min_2->setReturnKeyStartsNewLine (false);
-    exec_start_min_2->setReadOnly (false);
-    exec_start_min_2->setScrollbarsShown (false);
-    exec_start_min_2->setCaretVisible (true);
-    exec_start_min_2->setPopupMenuEnabled (false);
-    exec_start_min_2->setText (String());
-
-    exec_start_min_2->setBounds (230, 120, 25, 24);
 
     label_osc_sendaddr_14.reset (new Label ("osc_send_adress",
                                             TRANS(":")));
@@ -363,7 +339,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_9->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_9->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_9->setBounds (32, 260, 152, 24);
+    label_osc_sendaddr_9->setBounds (465, 388, 152, 24);
 
     reset_hour_.reset (new TextEditor ("reset_hour"));
     addAndMakeVisible (reset_hour_.get());
@@ -375,7 +351,7 @@ sspSettingsPage::sspSettingsPage ()
     reset_hour_->setPopupMenuEnabled (false);
     reset_hour_->setText (String());
 
-    reset_hour_->setBounds (195, 260, 25, 24);
+    reset_hour_->setBounds (628, 388, 25, 24);
 
     reset_min_.reset (new TextEditor ("reset_minute"));
     addAndMakeVisible (reset_min_.get());
@@ -387,7 +363,7 @@ sspSettingsPage::sspSettingsPage ()
     reset_min_->setPopupMenuEnabled (false);
     reset_min_->setText (String());
 
-    reset_min_->setBounds (230, 260, 25, 24);
+    reset_min_->setBounds (663, 388, 25, 24);
 
     label_osc_sendaddr_11.reset (new Label ("osc_send_adress",
                                             TRANS(":")));
@@ -398,7 +374,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_11->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_11->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_11->setBounds (216, 260, 16, 24);
+    label_osc_sendaddr_11->setBounds (649, 388, 16, 24);
 
     label_osc_sendaddr_10.reset (new Label ("osc_send_adress",
                                             TRANS("Reset interval:")));
@@ -409,7 +385,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_10->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_10->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_10->setBounds (32, 290, 152, 24);
+    label_osc_sendaddr_10->setBounds (465, 418, 152, 24);
 
     label.reset (new Label ("new label",
                             TRANS("seconds")));
@@ -431,7 +407,7 @@ sspSettingsPage::sspSettingsPage ()
     label2->setColour (TextEditor::textColourId, Colours::black);
     label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label2->setBounds (239, 290, 46, 24);
+    label2->setBounds (672, 418, 46, 24);
 
     reset_interval_.reset (new TextEditor ("reset_interval_"));
     addAndMakeVisible (reset_interval_.get());
@@ -443,7 +419,7 @@ sspSettingsPage::sspSettingsPage ()
     reset_interval_->setPopupMenuEnabled (false);
     reset_interval_->setText (String());
 
-    reset_interval_->setBounds (195, 290, 37, 24);
+    reset_interval_->setBounds (628, 418, 37, 24);
 
     label_osc_4.reset (new Label ("OSC heading",
                                   TRANS("Watchdog\n")));
@@ -454,7 +430,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_4->setColour (TextEditor::textColourId, Colours::black);
     label_osc_4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_4->setBounds (32, 365, 144, 24);
+    label_osc_4->setBounds (32, 299, 144, 24);
 
     label_osc_sendaddr_12.reset (new Label ("osc_send_adress",
                                             TRANS("Timeout:")));
@@ -465,7 +441,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_12->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_12->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_12->setBounds (32, 425, 152, 24);
+    label_osc_sendaddr_12->setBounds (32, 359, 152, 24);
 
     watchdog_timeout_.reset (new TextEditor ("watchdog_timeout"));
     addAndMakeVisible (watchdog_timeout_.get());
@@ -477,7 +453,7 @@ sspSettingsPage::sspSettingsPage ()
     watchdog_timeout_->setPopupMenuEnabled (false);
     watchdog_timeout_->setText (String());
 
-    watchdog_timeout_->setBounds (195, 425, 37, 24);
+    watchdog_timeout_->setBounds (195, 359, 37, 24);
 
     label3.reset (new Label ("new label",
                              TRANS("seconds")));
@@ -488,7 +464,7 @@ sspSettingsPage::sspSettingsPage ()
     label3->setColour (TextEditor::textColourId, Colours::black);
     label3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label3->setBounds (239, 425, 71, 24);
+    label3->setBounds (239, 359, 71, 24);
 
     label_osc_sendaddr_15.reset (new Label ("osc_send_adress",
                                             TRANS("Watchdog proceedure:")));
@@ -499,7 +475,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_15->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_15->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_15->setBounds (32, 395, 152, 24);
+    label_osc_sendaddr_15->setBounds (32, 329, 152, 24);
 
     watchdog_proc_cb_.reset (new ComboBox ("watchdog_proc"));
     addAndMakeVisible (watchdog_proc_cb_.get());
@@ -510,7 +486,7 @@ sspSettingsPage::sspSettingsPage ()
     watchdog_proc_cb_->addItem (TRANS("None"), 1);
     watchdog_proc_cb_->addListener (this);
 
-    watchdog_proc_cb_->setBounds (195, 395, 150, 24);
+    watchdog_proc_cb_->setBounds (195, 329, 150, 24);
 
     label_osc_sendaddr_16.reset (new Label ("osc_send_adress",
                                             TRANS("Reboot test:")));
@@ -521,21 +497,21 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_16->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_16->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_16->setBounds (32, 455, 152, 24);
+    label_osc_sendaddr_16->setBounds (32, 389, 152, 24);
 
     watchdog_soft_btn_.reset (new TextButton ("soft_reboot"));
     addAndMakeVisible (watchdog_soft_btn_.get());
     watchdog_soft_btn_->setButtonText (TRANS("Soft reboot"));
     watchdog_soft_btn_->setColour (TextButton::buttonColourId, Colours::brown);
 
-    watchdog_soft_btn_->setBounds (195, 455, 150, 24);
+    watchdog_soft_btn_->setBounds (195, 389, 150, 24);
 
     watchdog_hard_btn_.reset (new TextButton ("hard_reboot"));
     addAndMakeVisible (watchdog_hard_btn_.get());
     watchdog_hard_btn_->setButtonText (TRANS("Hard reboot"));
     watchdog_hard_btn_->setColour (TextButton::buttonColourId, Colours::brown);
 
-    watchdog_hard_btn_->setBounds (195, 485, 150, 24);
+    watchdog_hard_btn_->setBounds (195, 419, 150, 24);
 
     label_osc_5.reset (new Label ("OSC heading",
                                   TRANS("Mixer\n")));
@@ -546,7 +522,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_5->setColour (TextEditor::textColourId, Colours::black);
     label_osc_5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_5->setBounds (469, 190, 80, 24);
+    label_osc_5->setBounds (465, 190, 80, 24);
 
     label_osc_sendaddr_17.reset (new Label ("osc_send_adress",
                                             TRANS("Fade-in time:")));
@@ -557,7 +533,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_17->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_17->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_17->setBounds (469, 220, 110, 24);
+    label_osc_sendaddr_17->setBounds (465, 220, 110, 24);
 
     mix_fadein_.reset (new TextEditor ("fadein_time"));
     addAndMakeVisible (mix_fadein_.get());
@@ -569,7 +545,7 @@ sspSettingsPage::sspSettingsPage ()
     mix_fadein_->setPopupMenuEnabled (false);
     mix_fadein_->setText (String());
 
-    mix_fadein_->setBounds (578, 220, 37, 24);
+    mix_fadein_->setBounds (574, 220, 37, 24);
 
     label4.reset (new Label ("new label",
                              TRANS("seconds")));
@@ -580,7 +556,7 @@ sspSettingsPage::sspSettingsPage ()
     label4->setColour (TextEditor::textColourId, Colours::black);
     label4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label4->setBounds (619, 220, 71, 24);
+    label4->setBounds (615, 220, 71, 24);
 
     label_osc_sendaddr_18.reset (new Label ("osc_send_adress",
                                             TRANS("Fade-out time:")));
@@ -591,7 +567,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_18->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_18->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_18->setBounds (469, 250, 110, 24);
+    label_osc_sendaddr_18->setBounds (465, 250, 110, 24);
 
     mix_fadeout_.reset (new TextEditor ("fadeout_time"));
     addAndMakeVisible (mix_fadeout_.get());
@@ -603,7 +579,7 @@ sspSettingsPage::sspSettingsPage ()
     mix_fadeout_->setPopupMenuEnabled (false);
     mix_fadeout_->setText (String());
 
-    mix_fadeout_->setBounds (578, 250, 37, 24);
+    mix_fadeout_->setBounds (574, 250, 37, 24);
 
     label5.reset (new Label ("new label",
                              TRANS("seconds")));
@@ -614,7 +590,7 @@ sspSettingsPage::sspSettingsPage ()
     label5->setColour (TextEditor::textColourId, Colours::black);
     label5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label5->setBounds (619, 250, 71, 24);
+    label5->setBounds (615, 250, 71, 24);
 
     label_osc_sendaddr_19.reset (new Label ("osc_send_adress",
                                             TRANS("Volume change:")));
@@ -625,7 +601,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_19->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_19->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_19->setBounds (469, 280, 110, 24);
+    label_osc_sendaddr_19->setBounds (465, 280, 110, 24);
 
     mix_volume_change_.reset (new TextEditor ("volume_change_time"));
     addAndMakeVisible (mix_volume_change_.get());
@@ -637,7 +613,7 @@ sspSettingsPage::sspSettingsPage ()
     mix_volume_change_->setPopupMenuEnabled (false);
     mix_volume_change_->setText (String());
 
-    mix_volume_change_->setBounds (578, 280, 37, 24);
+    mix_volume_change_->setBounds (574, 280, 37, 24);
 
     label6.reset (new Label ("new label",
                              TRANS("seconds")));
@@ -648,7 +624,7 @@ sspSettingsPage::sspSettingsPage ()
     label6->setColour (TextEditor::textColourId, Colours::black);
     label6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label6->setBounds (619, 280, 71, 24);
+    label6->setBounds (615, 280, 71, 24);
 
 
     //[UserPreSize]
@@ -760,8 +736,6 @@ sspSettingsPage::~sspSettingsPage()
     exec_use_interval_ = nullptr;
     label_osc_3 = nullptr;
     label_osc_sendaddr_13 = nullptr;
-    exec_start_hour_2 = nullptr;
-    exec_start_min_2 = nullptr;
     label_osc_sendaddr_14 = nullptr;
     label_osc_sendaddr_9 = nullptr;
     reset_hour_ = nullptr;
@@ -805,7 +779,7 @@ void sspSettingsPage::paint (Graphics& g)
     g.fillAll (Colour (0xff323e44));
 
     {
-        float x = 452.0f, y = 15.0f, width = 260.0f, height = 145.0f;
+        float x = 455.0f, y = 15.0f, width = 260.0f, height = 145.0f;
         Colour fillColour = Colour (0xfb372a3b);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
@@ -823,7 +797,7 @@ void sspSettingsPage::paint (Graphics& g)
     }
 
     {
-        float x = 20.0f, y = 215.0f, width = 276.0f, height = 113.0f;
+        float x = 455.0f, y = 340.0f, width = 260.0f, height = 113.0f;
         Colour fillColour = Colour (0xfb372a3b);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
@@ -832,7 +806,7 @@ void sspSettingsPage::paint (Graphics& g)
     }
 
     {
-        float x = 20.0f, y = 350.0f, width = 340.0f, height = 170.0f;
+        float x = 20.0f, y = 283.0f, width = 412.0f, height = 170.0f;
         Colour fillColour = Colour (0xfb372a3b);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
@@ -841,7 +815,7 @@ void sspSettingsPage::paint (Graphics& g)
     }
 
     {
-        float x = 452.0f, y = 180.0f, width = 260.0f, height = 140.0f;
+        float x = 455.0f, y = 180.0f, width = 260.0f, height = 140.0f;
         Colour fillColour = Colour (0xfb372a3b);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
@@ -1002,46 +976,46 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44">
-    <ROUNDRECT pos="452 15 260 145" cornerSize="1e1" fill="solid: fb372a3b"
+    <ROUNDRECT pos="455 15 260 145" cornerSize="1e1" fill="solid: fb372a3b"
                hasStroke="0"/>
     <ROUNDRECT pos="20 15 412 177" cornerSize="1e1" fill="solid: fb372a3b" hasStroke="0"/>
-    <ROUNDRECT pos="20 215 276 113" cornerSize="1e1" fill="solid: fb372a3b"
+    <ROUNDRECT pos="455 340 260 113" cornerSize="1e1" fill="solid: fb372a3b"
                hasStroke="0"/>
-    <ROUNDRECT pos="20 350 340 170" cornerSize="1e1" fill="solid: fb372a3b"
+    <ROUNDRECT pos="20 283 412 170" cornerSize="1e1" fill="solid: fb372a3b"
                hasStroke="0"/>
-    <ROUNDRECT pos="452 180 260 140" cornerSize="1e1" fill="solid: fb372a3b"
+    <ROUNDRECT pos="455 180 260 140" cornerSize="1e1" fill="solid: fb372a3b"
                hasStroke="0"/>
   </BACKGROUND>
   <LABEL name="OSC heading" id="34ed693e197018ab" memberName="label_osc_"
-         virtualName="" explicitFocusOrder="0" pos="469 30 56 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 30 56 24" edTextCol="ff000000"
          edBkgCol="0" labelText="OSC&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="2.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="send_addr_editor" id="aae4df3090e4d4b1" memberName="osc_send_addr_"
-              virtualName="" explicitFocusOrder="0" pos="580 60 110 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="576 60 110 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="Osc receive port" id="12401d3f9c080796" memberName="label_osc_sendport_2"
-         virtualName="" explicitFocusOrder="0" pos="469 120 96 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 120 96 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Receive port:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="Osc send port" id="7b0d7a94d123afdb" memberName="label_osc_sendport_"
-         virtualName="" explicitFocusOrder="0" pos="469 90 80 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 90 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Send port:" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="osc_send_adress" id="7e914cf4d34466e3" memberName="label_osc_sendaddr_"
-         virtualName="" explicitFocusOrder="0" pos="469 60 96 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 60 96 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Send address:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="send_port_editor" id="e20132cc71e8be09" memberName="osc_send_port_"
-              virtualName="" explicitFocusOrder="0" pos="580 90 50 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="576 90 50 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <TEXTEDITOR name="receive_port_editor" id="29d40c6d87f5baed" memberName="osc_receive_port_"
-              virtualName="" explicitFocusOrder="0" pos="580 120 50 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="576 120 50 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="OSC heading" id="5bb4fb6610dbafdd" memberName="label_osc_2"
@@ -1116,7 +1090,7 @@ BEGIN_JUCER_METADATA
                 virtualName="" explicitFocusOrder="0" pos="354 120 75 24" buttonText="Use"
                 connectedEdges="0" needsCallback="0" radioGroupId="0" state="0"/>
   <LABEL name="OSC heading" id="e646e2a8680c0782" memberName="label_osc_3"
-         virtualName="" explicitFocusOrder="0" pos="32 230 80 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 358 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Reset&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="2.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
@@ -1125,39 +1099,31 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="Play interval:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
-  <TEXTEDITOR name="starttime_hour" id="504ffb8721ac6f85" memberName="exec_start_hour_2"
-              virtualName="" explicitFocusOrder="0" pos="195 120 25 24" initialText=""
-              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
-              caret="1" popupmenu="0"/>
-  <TEXTEDITOR name="starttime_minute" id="55d8f6739630e9f" memberName="exec_start_min_2"
-              virtualName="" explicitFocusOrder="0" pos="230 120 25 24" initialText=""
-              multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
-              caret="1" popupmenu="0"/>
   <LABEL name="osc_send_adress" id="fe01dc89ceefa985" memberName="label_osc_sendaddr_14"
          virtualName="" explicitFocusOrder="0" pos="216 120 16 24" edTextCol="ff000000"
          edBkgCol="0" labelText=":" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="osc_send_adress" id="a54117a86617a032" memberName="label_osc_sendaddr_9"
-         virtualName="" explicitFocusOrder="0" pos="32 260 152 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 388 152 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Time of day:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="reset_hour" id="7155cad94482e" memberName="reset_hour_"
-              virtualName="" explicitFocusOrder="0" pos="195 260 25 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="628 388 25 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <TEXTEDITOR name="reset_minute" id="800627da3cbe977c" memberName="reset_min_"
-              virtualName="" explicitFocusOrder="0" pos="230 260 25 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="663 388 25 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="osc_send_adress" id="6c465bc403aba25c" memberName="label_osc_sendaddr_11"
-         virtualName="" explicitFocusOrder="0" pos="216 260 16 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="649 388 16 24" edTextCol="ff000000"
          edBkgCol="0" labelText=":" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="36"/>
   <LABEL name="osc_send_adress" id="736d1ca96da8fb16" memberName="label_osc_sendaddr_10"
-         virtualName="" explicitFocusOrder="0" pos="32 290 152 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 418 152 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Reset interval:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
@@ -1167,99 +1133,99 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="a13f9fd9b4e6de9" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="239 290 46 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="672 418 46 24" edTextCol="ff000000"
          edBkgCol="0" labelText="days" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="reset_interval_" id="8adfbf1984e5a890" memberName="reset_interval_"
-              virtualName="" explicitFocusOrder="0" pos="195 290 37 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="628 418 37 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="OSC heading" id="f8130b7cb88b7651" memberName="label_osc_4"
-         virtualName="" explicitFocusOrder="0" pos="32 365 144 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="32 299 144 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Watchdog&#10;" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="2.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="osc_send_adress" id="4dad367c9d32657f" memberName="label_osc_sendaddr_12"
-         virtualName="" explicitFocusOrder="0" pos="32 425 152 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="32 359 152 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Timeout:" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="watchdog_timeout" id="7dcee50a1656053" memberName="watchdog_timeout_"
-              virtualName="" explicitFocusOrder="0" pos="195 425 37 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="195 359 37 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="new label" id="c21d34766f77eee9" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="239 425 71 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="239 359 71 24" edTextCol="ff000000"
          edBkgCol="0" labelText="seconds" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="osc_send_adress" id="d6d0361097a92a93" memberName="label_osc_sendaddr_15"
-         virtualName="" explicitFocusOrder="0" pos="32 395 152 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="32 329 152 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Watchdog proceedure:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <COMBOBOX name="watchdog_proc" id="c0cc6794ac3fef5f" memberName="watchdog_proc_cb_"
-            virtualName="" explicitFocusOrder="0" pos="195 395 150 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="195 329 150 24" editable="0"
             layout="33" items="None" textWhenNonSelected="Select proceedure"
             textWhenNoItems="(no choices)"/>
   <LABEL name="osc_send_adress" id="debb3a74a1d1471d" memberName="label_osc_sendaddr_16"
-         virtualName="" explicitFocusOrder="0" pos="32 455 152 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="32 389 152 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Reboot test:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTBUTTON name="soft_reboot" id="cf51d4ed10ca84bb" memberName="watchdog_soft_btn_"
-              virtualName="" explicitFocusOrder="0" pos="195 455 150 24" bgColOff="ffa52a2a"
+              virtualName="" explicitFocusOrder="0" pos="195 389 150 24" bgColOff="ffa52a2a"
               buttonText="Soft reboot" connectedEdges="0" needsCallback="0"
               radioGroupId="0"/>
   <TEXTBUTTON name="hard_reboot" id="3bb1ec125d000bc7" memberName="watchdog_hard_btn_"
-              virtualName="" explicitFocusOrder="0" pos="195 485 150 24" bgColOff="ffa52a2a"
+              virtualName="" explicitFocusOrder="0" pos="195 419 150 24" bgColOff="ffa52a2a"
               buttonText="Hard reboot" connectedEdges="0" needsCallback="0"
               radioGroupId="0"/>
   <LABEL name="OSC heading" id="2ff0d7a77e3ca678" memberName="label_osc_5"
-         virtualName="" explicitFocusOrder="0" pos="469 190 80 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 190 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Mixer&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="2.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="osc_send_adress" id="811cce34212f8bc3" memberName="label_osc_sendaddr_17"
-         virtualName="" explicitFocusOrder="0" pos="469 220 110 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 220 110 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Fade-in time:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="fadein_time" id="889ecee1501ecdff" memberName="mix_fadein_"
-              virtualName="" explicitFocusOrder="0" pos="578 220 37 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="574 220 37 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="new label" id="b1703552669e79e6" memberName="label4" virtualName=""
-         explicitFocusOrder="0" pos="619 220 71 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="615 220 71 24" edTextCol="ff000000"
          edBkgCol="0" labelText="seconds" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="osc_send_adress" id="f9f5edf96b63d619" memberName="label_osc_sendaddr_18"
-         virtualName="" explicitFocusOrder="0" pos="469 250 110 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 250 110 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Fade-out time:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="fadeout_time" id="25fa65456494a13f" memberName="mix_fadeout_"
-              virtualName="" explicitFocusOrder="0" pos="578 250 37 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="574 250 37 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="new label" id="8e193b3dd22746af" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="619 250 71 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="615 250 71 24" edTextCol="ff000000"
          edBkgCol="0" labelText="seconds" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>
   <LABEL name="osc_send_adress" id="4d8300c36f9d8277" memberName="label_osc_sendaddr_19"
-         virtualName="" explicitFocusOrder="0" pos="469 280 110 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="465 280 110 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Volume change:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="1.5e1" kerning="0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="volume_change_time" id="b71fb9efb97f4e6e" memberName="mix_volume_change_"
-              virtualName="" explicitFocusOrder="0" pos="578 280 37 24" initialText=""
+              virtualName="" explicitFocusOrder="0" pos="574 280 37 24" initialText=""
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="0"
               caret="1" popupmenu="0"/>
   <LABEL name="new label" id="55e7f47089eb3264" memberName="label6" virtualName=""
-         explicitFocusOrder="0" pos="619 280 71 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="615 280 71 24" edTextCol="ff000000"
          edBkgCol="0" labelText="seconds" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="1.5e1"
          kerning="0" bold="0" italic="0" justification="33"/>

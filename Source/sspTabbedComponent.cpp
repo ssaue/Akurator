@@ -9,18 +9,16 @@
 */
 
 #include "sspTabbedComponent.h"
+#include "sspDomainData.h"
 #include "sspSettingsPage.h"
+#include "sspDomainPage.h"
 
 
-sspTabbedComponent::sspTabbedComponent()
+sspTabbedComponent::sspTabbedComponent(sspDomainData* domain)
 	: TabbedComponent(TabbedButtonBar::TabsAtTop)
 {
 	auto colour = findColour(ResizableWindow::backgroundColourId);
 
+	addTab("Domain", colour, new sspDomainPage(domain), true);
 	addTab("Settings", colour, new sspSettingsPage(), true);
-	//addTab("Sliders", colour, new SlidersPage(), true);
-	//addTab("Toolbars", colour, new ToolbarDemoComp(), true);
-	//addTab("Misc", colour, new MiscPage(), true);
-	//addTab("Tables", colour, new TableDemoComponent(), true);
-	//addTab("Drag & Drop", colour, new DragAndDropDemo(), true);
 }

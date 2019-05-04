@@ -66,7 +66,7 @@ bool sspExecutiveManager::verify(int & nErrors, int & nWarnings) const
 bool sspExecutiveManager::initialize(sspDomainData & domain_data)
 {
 	last_error_ = Error::None;
-	if (!input_manager_->initialize()) {
+	if (!input_manager_->initialize(&domain_data.getInputs())) {
 		last_error_ = Error::Inputs;
 		return false;
 	}
@@ -91,7 +91,6 @@ void sspExecutiveManager::terminate()
 void sspExecutiveManager::clearContents()
 {
 	play_manager_->clearContents();
-	input_manager_->clearContents();
 }
 
 void sspExecutiveManager::start()

@@ -16,10 +16,10 @@ gkMVol[] init giIDs
 gkMFade[] init giIDs
 gkStop[] init giIDs 
 
-; Just for testing now!
-giThis = 33
+giOSCreceive init 8020
+giOSCsend	   init 9020
 
-gi_osc_handle OSCinit 7777
+gi_osc_handle OSCinit giOSCreceive
 
 vbaplsinit 2.01, 12, -150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 140, 180
 
@@ -30,12 +30,23 @@ instr Listener
   kID init 0
   kArg1 init 0
   kArg2 init 0
-  
+ 	Sfile	= ""
+ 
 next:
+
 	 ; Check for new messages
   kosc_count OSCcount
+  printk2 kosc_count
   if (kosc_count == 0) kgoto end
   printks("kosc_count=%d\n", 1, kosc_count)
+
+  kk OSClisten gi_osc_handle, "/play/kulisse", "isf", kID, Sfile, kArg1
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i101 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+    printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
 
   kk OSClisten gi_osc_handle, "/buffer/fadein", "if", kID, kArg1
   if (kk == 1 && kID < giIDs) then
@@ -60,13 +71,10 @@ end:
 endin
 
 instr 1
-		Sfile	= "C:/Storedal/Lyder/Bredbåndskjerne.wav"
-		kreverb init 1.5
-		kID init giThis
-		String sprintfk "i101 0 1 %d \"%s\" %f", kID, Sfile, kreverb
-		ktrig metro 1
-		scoreline String, ktrig
-		ktrig = 0
+;		String sprintfk "i101 0 1 %d \"%s\" %f", kID, Sfile, kreverb
+;		ktrig metro 1
+;		scoreline String, ktrig
+;		ktrig = 0
 endin
 		
 instr 10 ;init
@@ -91,20 +99,25 @@ endin
 instr 101
 		iID = p4
 		iFilLen filelen p5
-		p3	= iFilLen + p6
+		p3	= iFilLen
 		if (gkStop[iID] < 1) kgoto continue
 				turnoff
+
 continue: 
 		krel init 0	
 		krel release
 		if (krel < 1) kgoto cont
-			; send OSC message
+  		xtratim p6
+			 ktrig init 1
+			 OSCsend	ktrig, "127.0.0.1", giOSCsend, "/finished", "i", iID
+			 ktrig = 0
+
 cont:
 		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] ;* 0.5
 		ainn soundin p5
 		denorm ainn
 		a1, a2 reverbsc ainn, -ainn, p6/3, 12000
-		aSnd = kamp * ainn ;+ kamp * a2
+		aSnd = kamp * a1 + kamp * a2
 		kAzim      line       0, p3, -360
 		a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12 vbap aSnd, kAzim, 0, 0, 1
 
@@ -194,8 +207,8 @@ endin
 </CsInstruments>
 
 <CsScore>
+i 1 0 3600
 i 10 0 1
-i 1 1 1
 e
 </CsScore>
 </CsoundSynthesizer>

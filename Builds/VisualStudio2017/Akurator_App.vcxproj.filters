@@ -505,6 +505,12 @@
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Storedal.cpp">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspICPinput.cpp">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspInput.cpp">
       <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClCompile>
@@ -534,6 +540,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\sspTriggerMsgList.cpp">
       <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspPlayers.cpp">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspPlayTask.cpp">
       <Filter>Akurator\Source\Domain\PlayObjects</Filter>
@@ -657,6 +666,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp">
       <Filter>Akurator\Source\Domain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspDomainListboxModel.cpp">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspDomainPage.cpp">
+      <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspSettingsPage.cpp">
       <Filter>Akurator\Source\Components</Filter>
@@ -2568,6 +2583,9 @@
     <ClInclude Include="..\..\Source\sspCommandIDs.h">
       <Filter>Akurator\Source\Application</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\sspDefines.h">
+      <Filter>Akurator\Source\Application</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspInputManager.h">
       <Filter>Akurator\Source\Execution</Filter>
     </ClInclude>
@@ -2619,6 +2637,12 @@
     <ClInclude Include="..\..\Source\sspSilenceTask.h">
       <Filter>Akurator\Source\Scheduling</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Storedal.h">
+      <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspICPinput.h">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspInput.h">
       <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClInclude>
@@ -2651,6 +2675,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\sspTriggerMsgList.h">
       <Filter>Akurator\Source\Domain\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspPlayers.h">
+      <Filter>Akurator\Source\Domain\PlayObjects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspPlayTask.h">
       <Filter>Akurator\Source\Domain\PlayObjects</Filter>
@@ -2789,6 +2816,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h">
       <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspDomainListboxModel.h">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspDomainPage.h">
+      <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspSettingsPage.h">
       <Filter>Akurator\Source\Components</Filter>
@@ -4883,6 +4916,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Assets\edit-settings.svg">
+      <Filter>Akurator\Resources</Filter>
+    </None>
     <None Include="..\..\Assets\document-new.svg">
       <Filter>Akurator\Resources</Filter>
     </None>

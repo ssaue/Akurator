@@ -86,6 +86,7 @@ void sspToolbarFactory::getAllToolbarItemIds(Array<int>& ids)
 	ids.add(sspCommandIDs::RunInit);
 	ids.add(sspCommandIDs::RunStart);
 	ids.add(sspCommandIDs::RunStop);
+	ids.add(sspCommandIDs::EditSettings);
 
 	// If you're going to use separators, then they must also be added explicitly
 	// to the list.
@@ -111,6 +112,8 @@ void sspToolbarFactory::getDefaultItemSet(Array<int>& ids)
 	ids.add(separatorBarId);
 	ids.add(sspCommandIDs::RunStart);
 	ids.add(sspCommandIDs::RunStop);
+	ids.add(separatorBarId);
+	ids.add(sspCommandIDs::EditSettings);
 }
 
 ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
@@ -124,6 +127,12 @@ ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
 			Drawable::createFromImageData(BinaryData::documentnew_svg, BinaryData::documentnew_svgSize), 0);
 		button->setCommandToTrigger(&cmd_manager, sspCommandIDs::DocNew, true);
 		return button;
+	}
+	case sspCommandIDs::DocOpen: {
+		sspToolbarFilenameComponent* box = new sspToolbarFilenameComponent(itemId);
+		box->addFilenameListener(filename_listener_);
+		box->setCommandToTrigger(&cmd_manager, sspCommandIDs::DocOpen, true);
+		return box;
 	}
 	case sspCommandIDs::DocSave: {
 		ToolbarButton* button = new ToolbarButton(itemId, String("save"),
@@ -161,13 +170,13 @@ ToolbarItemComponent* sspToolbarFactory::createItem(int itemId)
 		button->setCommandToTrigger(&cmd_manager, sspCommandIDs::RunStop, true);
 		return button;
 	}
-	case sspCommandIDs::DocOpen: {
-		sspToolbarFilenameComponent* box = new sspToolbarFilenameComponent(itemId);
-		box->addFilenameListener(filename_listener_);
-		box->setCommandToTrigger(&cmd_manager, sspCommandIDs::DocOpen, true);
-		return box;
+	case sspCommandIDs::EditSettings: {
+		ToolbarButton* button = new ToolbarButton(itemId, String("edit"),
+			Drawable::createFromImageData(BinaryData::editsettings_svg, BinaryData::editsettings_svgSize), 0);
+		button->setCommandToTrigger(&cmd_manager, sspCommandIDs::EditSettings, true);
+		return button;
 	}
-	default:                
+	default:
 		break;
 	}
 

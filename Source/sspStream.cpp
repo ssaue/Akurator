@@ -78,6 +78,11 @@ void sspStream::handleMessage(const sspMessage& msg)
 	}
 }
 
+void sspStream::onFinished()
+{
+	// No action necessary
+}
+
 void sspStream::play(std::weak_ptr<sspPlayTask> task)
 {
 	// sspStream have no tasks that need a send channel (e.g. OSC)

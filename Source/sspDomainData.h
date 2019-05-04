@@ -14,6 +14,7 @@
 #include "sspPlayer.h"
 #include "sspPlayTask.h"
 #include "sspTimeline.h"
+#include "sspInput.h"
 
 #include "sspValueRange.h"
 #include "sspBoolean.h"
@@ -28,6 +29,7 @@ class sspDomainData
 	sspDomainPool<sspPlayer>		players_;
 	sspDomainPool<sspPlayTask>		tasks_;
 	sspDomainPool<sspTimeline>		timelines_;
+	sspDomainPool<sspInput>			inputs_;
 
 	sspDomainVector<sspValueRange>	input_values_;
 	sspDomainVector<sspBoolean>		input_conditionals_;
@@ -57,6 +59,7 @@ public:
 	sspDomainPool<sspPlayer>&		getPlayers() { return players_; }
 	sspDomainPool<sspPlayTask>&		getPlaytasks() { return tasks_; }
 	sspDomainPool<sspTimeline>&		getTimelines() { return timelines_; }
+	sspDomainPool<sspInput>&		getInputs() { return inputs_; }
 
 	// These values and conditionals are available for input (e.g. from external inputs or from GUI)
 	sspDomainVector<sspValueRange>&	getInputValues() { return input_values_; }

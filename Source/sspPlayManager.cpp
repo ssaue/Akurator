@@ -39,6 +39,7 @@ bool sspPlayManager::initialize(sspDomainPool<sspTimeline>& timelines)
 	if (timelines.empty())
 		return false;
 
+	osc_console_.connectAll();
 	osc_console_.clearChannels();
 
 	root_stream_ = timelines.getAt(0);
@@ -100,6 +101,7 @@ void sspPlayManager::terminate()
 {
 	stop();
 	if (root_stream_) root_stream_->terminate();
+	osc_console_.disconnectAll();
 }
 
 void sspPlayManager::clearContents()

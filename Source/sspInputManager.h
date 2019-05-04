@@ -15,28 +15,18 @@
 
 class sspInputManager
 {
-	sspDomainPool<sspInput> inputs_;
-
-	friend class boost::serialization::access;
-	template <typename Archive>
-	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_NVP(inputs_);
-	}
-
 public:
-	sspInputManager() 
-		: inputs_() {}
+	sspInputManager() : inputs_() {}
 	sspInputManager(const sspInputManager&) = delete;
 	sspInputManager& operator=(const sspInputManager&) = delete;
 	virtual ~sspInputManager() {}
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
-	bool initialize();
+	bool initialize(sspDomainPool<sspInput>* inputs);
 	bool update();
 	void terminate();
 
-	void clearContents();
-
-	sspDomainPool<sspInput>&	getInputs() { return inputs_; }
+private:
+	sspDomainPool<sspInput>* inputs_;
 };

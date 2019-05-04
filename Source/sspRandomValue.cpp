@@ -54,7 +54,7 @@ bool sspRandomValue::verify(int & nErrors, int & nWarnings) const
 		}
 
 		auto low = low_->getValue();
-		auto high = low_->getValue();
+		auto high = high_->getValue();
 		if (low > high) {
 			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": low is larger than high";
 		}

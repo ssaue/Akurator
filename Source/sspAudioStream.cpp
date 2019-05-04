@@ -104,6 +104,22 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 	}
 }
 
+void sspAudioStream::onFinished()
+{
+	sspStream::onFinished();
+	task_queue_.removeInactive();
+
+	if (running_) {
+		auto task = task_queue_.getWaitingTask();
+		while (auto ptr = task.lock()) {
+			if (bus_->play(task, std::weak_ptr<sspPlayTask>())) {
+				sspScheduler::Instance().add(task);
+			}
+			task = task_queue_.getWaitingTask();
+		}
+	}
+}
+
 void sspAudioStream::setMaxTasks(unsigned int active, unsigned int waiting)
 {
 	max_active_ = active;

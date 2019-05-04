@@ -14,6 +14,9 @@
 sspPlayTask::sspPlayTask()
 	: sspPlayer(), player_(), condition_(), volume_factor_(), messages_()
 {
+	for (auto& list : messages_) {
+		list.reset(new sspConditionalMsgList);
+	}
 }
 
 bool sspPlayTask::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)

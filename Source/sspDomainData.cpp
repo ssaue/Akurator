@@ -11,7 +11,7 @@
 #include "sspDomainData.h"
 
 sspDomainData::sspDomainData()
-	: values_(), conditionals_(), strings_(), players_(), tasks_(), timelines_()
+	: values_(), conditionals_(), strings_(), players_(), tasks_(), timelines_(), inputs_()
 {
 }
 
@@ -51,6 +51,7 @@ void sspDomainData::clearContents()
 	players_.clear();
 	tasks_.clear();
 	timelines_.clear();
+	inputs_.clear();
 
 	input_values_.clear();
 	input_conditionals_.clear();
@@ -66,6 +67,7 @@ bool sspDomainData::verify(int& nErrors, int& nWarnings) const
 	if (!players_.verify(nErrors, nWarnings)) bReturn = false;
 	if (!tasks_.verify(nErrors, nWarnings)) bReturn = false;
 	if (!timelines_.verify(nErrors, nWarnings)) bReturn = false;
+	if (!inputs_.verify(nErrors, nWarnings)) bReturn = false;
 
 	return bReturn;
 }

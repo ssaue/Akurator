@@ -29,10 +29,10 @@ template <typename T>
 bool sspDomainPool<T>::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
-	if (elements_.empty()) {
+	if (empty()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << "Pool of " << typeid(T).name() << " is empty";
 	}
-	for (auto&& element : elements_) {
+	for (auto&& element : *this) {
 		if (!element->verify(nErrors, nWarnings)) {
 			bReturn = false;
 		}

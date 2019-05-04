@@ -46,6 +46,7 @@ public:
 
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 	virtual void handleMessage(const sspMessage& msg) override;
+	virtual void onFinished() override;
 
 	void setVolumeFactor(std::shared_ptr<sspValue> value) { volume_factor_ = std::move(value); }
 	std::shared_ptr<sspValue> getVolumeFactor() const { return volume_factor_; }

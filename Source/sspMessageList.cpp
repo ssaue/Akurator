@@ -25,7 +25,7 @@ sspMessageList::sspMessageList()
 		}
 	}
 
-	return false;
+	return bReturn;
 }
 
 void sspMessageList::add(std::shared_ptr<sspMessageWithReceiver> message)

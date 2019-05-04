@@ -14,6 +14,8 @@
 #include "sspExecutionState.h"
 #include "sspCommandIDs.h"
 
+#include "Storedal.h"
+
 #include <fstream>
 #include <boost/archive/xml_oarchive.hpp> 
 #include <boost/archive/xml_iarchive.hpp> 
@@ -26,13 +28,12 @@
 //==============================================================================
 MainComponent::MainComponent(String file_path)
 	: toolbar_factory_(this)
-	, tabs_()
 	, current_path_()
 	, domain_(std::make_unique<sspDomainData>())
 	, manager_(std::make_unique<sspExecutiveManager>())
+	, tabs_(std::make_unique<sspTabbedComponent>(domain_.get()))
 {
 	domain_->createInitialContent();
-	manager_->initialize(*domain_.get());
 
 	if (file_path.isNotEmpty() && File::isAbsolutePath(file_path)) {
 		File path = file_path;
@@ -45,7 +46,7 @@ MainComponent::MainComponent(String file_path)
 	cmd_manager.registerAllCommandsForTarget(this);
 	addKeyListener(cmd_manager.getKeyMappings());
 
-	addAndMakeVisible(tabs_);
+	addAndMakeVisible(*tabs_.get());
 	addAndMakeVisible(toolbar_);
 	toolbar_.addDefaultItems(toolbar_factory_);
 
@@ -74,7 +75,7 @@ void MainComponent::resized()
 {
 	auto b = getLocalBounds();
 	toolbar_.setBounds(b.removeFromTop(40));
-	tabs_.setBounds(b.reduced(4));
+	tabs_->setBounds(b.reduced(4));
 }
 
 //==============================================================================
@@ -93,7 +94,8 @@ void MainComponent::getAllCommands(Array<CommandID>& c)
 		sspCommandIDs::RunVerify,
 		sspCommandIDs::RunInit,
 		sspCommandIDs::RunStart,
-		sspCommandIDs::RunStop
+		sspCommandIDs::RunStop,
+		sspCommandIDs::EditSettings
 	};
 
 	c.addArray(commands);
@@ -142,6 +144,11 @@ void MainComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& 
 		result.addDefaultKeypress(KeyPress::escapeKey, ModifierKeys::noModifiers);
 		result.setActive(sspExecutionState::Instance().isRunning());
 		break;
+	case sspCommandIDs::EditSettings:
+		result.setInfo("Edit", "Edit project settings", "Edit", 0);
+		result.addDefaultKeypress('e', ModifierKeys::commandModifier);
+		result.setActive(!sspExecutionState::Instance().isRunning());
+		break;
 	default:
 		break;
 	}
@@ -172,6 +179,9 @@ bool MainComponent::perform(const InvocationInfo& info)
 	case sspCommandIDs::RunStop:
 		onStop();
 		break;
+	case sspCommandIDs::EditSettings:
+		// TODO: Open settings panels
+		break;
 	default:
 		return false;
 	}
@@ -195,9 +205,9 @@ void MainComponent::filenameComponentChanged(FilenameComponent* fileComponentTha
 void MainComponent::onNew()
 {
 	domain_->clearContents();
-	domain_->createInitialContent();
 	manager_->clearContents();
-	manager_->initialize(*domain_.get());
+	domain_->createInitialContent();
+	Storedal::buildContent(domain_.get(), manager_->getPlayManager());
 }
 
 void MainComponent::onSave()

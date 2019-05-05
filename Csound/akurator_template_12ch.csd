@@ -8,7 +8,8 @@ sr 	= 	44100
 ksmps 	= 	32
 nchnls 	= 	12
 
-giIDs init 100
+; The number of buffers - this number must be large enough for the project!
+giIDs init 30
 
 gkVol[] init giIDs
 gkFade[] init giIDs
@@ -16,12 +17,18 @@ gkMVol[] init giIDs
 gkMFade[] init giIDs
 gkStop[] init giIDs 
 
-giOSCreceive init 8020
-giOSCsend	   init 9020
+giOSCreceive init 8010
+giOSCsend	   init 9010
 
 gi_osc_handle OSCinit giOSCreceive
 
-vbaplsinit 2.01, 12, -150, -120, -90, -60, -30, 0, 30, 60, 90, 120, 140, 180
+; VBAP
+; "Rundt kransen"
+vbaplsinit 2.01, 8, -135, -90, -45, 0, 45, 90, 135, 180 
+; "Hele skulpturen (simulerer lineær forflytning)"
+vbaplsinit 2.02, 12, 0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220
+; "Langs spiret (simulerer lineæar forflytning)"
+vbaplsinit 2.03, 3, 0, 45, 90 
 
 alwayson "Listener"
 alwayson "Outputfilters"
@@ -30,33 +37,116 @@ instr Listener
   kID init 0
   kArg1 init 0
   kArg2 init 0
- 	Sfile	= ""
+  Sfile	= ""
  
 next:
 
 	 ; Check for new messages
   kosc_count OSCcount
-  printk2 kosc_count
   if (kosc_count == 0) kgoto end
-  printks("kosc_count=%d\n", 1, kosc_count)
 
   kk OSClisten gi_osc_handle, "/play/kulisse", "isf", kID, Sfile, kArg1
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i101 0 1 %d \"%s\" %f", kID, Sfile, kArg1
-    printks("%s\n", 1, String)
+				String sprintfk "i \"Kulisse\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+     printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/play/rekke", "isf", kID, Sfile, kArg1
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i \"Rekke\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+     printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/play/signaler", "isf", kID, Sfile, kArg1
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i \"Signaler\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+     printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/play/attakker", "isf", kID, Sfile, kArg1
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i \"Attakker\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+     printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/play/kaskader", "isf", kID, Sfile, kArg1
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i \"Kaskader\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+     printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
+  
+  kk OSClisten gi_osc_handle, "/play/rens", "isf", kID, Sfile, kArg1
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i \"Rens\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+     printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/play/dunder", "isf", kID, Sfile, kArg1
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i \"Dunder\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+     printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
   endif
 
   kk OSClisten gi_osc_handle, "/buffer/fadein", "if", kID, kArg1
   if (kk == 1 && kID < giIDs) then
-    gkFade[kID] portk 1.0, kArg1	 ;TODO: Must do this with a fader instrument instead!
+    event "i", 20, 0, kArg1, kID, 1.0
     kgoto next
   endif
 
   kk OSClisten gi_osc_handle, "/buffer/fadeout", "if", kID, kArg1
   if (kk == 1 && kID < giIDs) then
-    gkFade[kID] portk 0.0, kArg1	 ;TODO: Must do this with a fader instrument instead!
+    event "i", 20, 0, kArg1, kID, 0.0
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/buffer/vol/abs", "if", kID, kArg1, kArg2
+  if (kk == 1 && kID < giIDs) then
+    event "i", 30, 0, kArg2, kID, kArg1
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/buffer/vol/rel", "if", kID, kArg1, kArg2
+  if (kk == 1 && kID < giIDs) then
+    event "i", 35, 0, kArg2, kID, kArg1
+    kgoto next
+  endif
+
+
+  kk OSClisten gi_osc_handle, "/master/fadein", "if", kID, kArg1
+  if (kk == 1 && kID < giIDs) then
+    event "i", 40, 0, kArg1, kID, 1.0
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/master/fadeout", "if", kID, kArg1
+  if (kk == 1 && kID < giIDs) then
+    event "i", 40, 0, kArg1, kID, 0.0
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/master/vol/abs", "if", kID, kArg1, kArg2
+  if (kk == 1 && kID < giIDs) then
+    event "i", 50, 0, kArg2, kID, kArg1
+    kgoto next
+  endif
+
+  kk OSClisten gi_osc_handle, "/master/vol/rel", "if", kID, kArg1, kArg2
+  if (kk == 1 && kID < giIDs) then
+    event "i", 55, 0, kArg2, kID, kArg1
     kgoto next
   endif
 
@@ -70,13 +160,6 @@ end:
 
 endin
 
-instr 1
-;		String sprintfk "i101 0 1 %d \"%s\" %f", kID, Sfile, kreverb
-;		ktrig metro 1
-;		scoreline String, ktrig
-;		ktrig = 0
-endin
-		
 instr 10 ;init
 		kndx init 0
 		until kndx == giIDs do
@@ -89,52 +172,46 @@ instr 10 ;init
 		od
 		turnoff
 endin
-		
-instr 20 ; test global arrays
-;		kfade = 0.3
-;		kfade port kfade, 2
-;		gkFade[giThis] = kfade
+
+instr 20 ; fade buffer
+				istart = gkFade[p4]
+    gkFade[p4] linen istart, p3, p5
 endin
-		
-instr 101
-		iID = p4
-		iFilLen filelen p5
-		p3	= iFilLen
-		if (gkStop[iID] < 1) kgoto continue
-				turnoff
 
-continue: 
-		krel init 0	
-		krel release
-		if (krel < 1) kgoto cont
-  		xtratim p6
-			 ktrig init 1
-			 OSCsend	ktrig, "127.0.0.1", giOSCsend, "/finished", "i", iID
-			 ktrig = 0
-
-cont:
-		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] ;* 0.5
-		ainn soundin p5
-		denorm ainn
-		a1, a2 reverbsc ainn, -ainn, p6/3, 12000
-		aSnd = kamp * a1 + kamp * a2
-		kAzim      line       0, p3, -360
-		a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12 vbap aSnd, kAzim, 0, 0, 1
-
-		chnmix		a1, "chn_1"
-		chnmix		a2, "chn_2"
-		chnmix		a3, "chn_3"
-		chnmix		a4, "chn_4"
-		chnmix		a5, "chn_5"
-		chnmix		a6, "chn_6"
-		chnmix		a7, "chn_7"
-		chnmix		a8, "chn_8"
-		chnmix		a9, "chn_9"
-		chnmix		a10, "chn_10"
-		chnmix		a11, "chn_11"
-		chnmix		a12, "chn_12"
-
+instr 30 ; volume buffer (abs)
+				istart = gkVol[p4]
+    gkVol[p4] linen istart, p3, p5
 endin
+
+instr 35 ; volume buffer (rel)
+				istart = gkVol[p4]
+				iend = istart + p5
+    gkVol[p4] linen istart, p3, iend
+endin
+
+instr 40 ; fade master
+				istart = gkMFade[p4]
+    gkMFade[p4] linen istart, p3, p5
+endin
+
+instr 50 ; volume master (abs)
+				istart = gkMVol[p4]
+    gkMVol[p4] linen istart, p3, p5
+endin
+
+instr 55 ; volume master (rel)
+				istart = gkMVol[p4]
+				iend = istart + p5
+    gkMVol[p4] linen istart, p3, iend
+endin
+
+#include "kulisse.inc"		
+#include "rekke.inc"
+#include "signaler.inc"
+#include "attakker.inc"
+#include "kaskader.inc"
+#include "rens.inc"
+#include "dunder.inc"
 
 instr Outputfilters	; Pre-filtering the loudspeakers
 
@@ -197,10 +274,10 @@ instr Outputfilters	; Pre-filtering the loudspeakers
 		outch 11, a11
 		chnclear "chn_11"
 		
-		a12	chnget "chn_12"
+		a12	chnget "sub"
 		a12 tone a12, iSub
 		outch 12, a12
-		chnclear "chn_12"
+		chnclear "sub"
 
 endin
 

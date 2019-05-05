@@ -29,10 +29,12 @@ bool sspRandomPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr
 	if (isPlaying())
 		return false;
 
+	double accum_sum = 0.0;
 	std::vector<double> accum_weight;
 	auto min_size = std::min(players_.size(), std::min(weights_.size(), const_weights_.size()));
 	for (size_t i = 0; i < min_size; i++) {
-		accum_weight.push_back(const_weights_[i] + weights_.getAt(i)->getValue());
+		accum_sum += const_weights_[i] + weights_.getAt(i)->getValue();
+		accum_weight.push_back(accum_sum);
 	}
 	
 	std::uniform_real_distribution<double> dist(0.0, accum_weight.back());
@@ -42,6 +44,7 @@ bool sspRandomPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr
 	for (size_t i = 0; i < min_size; i++) {
 		if (picked <= accum_weight[i]) {
 			player = players_.getAt(i);
+			break;
 		}
 	}
 	if (player->start(channel, weak_from_this())) {

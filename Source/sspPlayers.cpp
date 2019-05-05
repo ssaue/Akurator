@@ -14,7 +14,6 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/serialization/export.hpp>
 
-
 BOOST_CLASS_EXPORT(sspChainPlayer);
 BOOST_CLASS_EXPORT(sspConditionalPlayer);
 BOOST_CLASS_EXPORT(sspDistributionPlayer);
@@ -23,3 +22,4 @@ BOOST_CLASS_EXPORT(sspOSCPlayer);
 BOOST_CLASS_EXPORT(sspRandomPlayer);
 BOOST_CLASS_EXPORT(sspSequentialPlayer);
 BOOST_CLASS_EXPORT(sspSimultaneousPlayer);
+BOOST_CLASS_EXPORT(sspSilencePlayer);

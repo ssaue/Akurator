@@ -68,14 +68,14 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	domain->getValues().add(val_ai);
 
 	// Disable inputs when testing on laptop
-	//auto ai = std::make_shared<sspICPanalogInput>();
-	//ai->setName("Light input");
-	//domain->getInputs().add(ai);
-	//ai->setUpdateInterval(5.0);
-	//ai->setPort(5);
-	//ai->setChannel(0);
-	//ai->setAddress(1);
-	//ai->setValue(val_ai);
+	auto ai = std::make_shared<sspICPanalogInput>();
+	ai->setName("Light input");
+	domain->getInputs().add(ai);
+	ai->setUpdateInterval(5.0);
+	ai->setPort(5);
+	ai->setChannel(0);
+	ai->setAddress(1);
+	ai->setValue(val_ai);
 
 	auto val_limit = std::make_shared<sspBasicValue>();
 	val_limit->setName("Light limit 1");
@@ -136,8 +136,8 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	domain->getValues().add(val);
 
 	auto val2 = std::make_shared<sspBasicValue>();
-	val2->setName("2.0");
-	val2->setValue(2.0);
+	val2->setName("2.5");
+	val2->setValue(2.5);
 	domain->getValues().add(val2);
 
 	auto random = std::make_shared<sspRandomValue>();
@@ -150,18 +150,46 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	args.add(random);
 
 	auto osc = std::make_shared<sspOSCPlayer>();
-	osc->setName("Kulisse object");
+	osc->setName("Kulisse sounds");
 	osc->setAddress(str);
 	osc->setPath(file);
 	osc->setArguments(args);
 	domain->getPlayers().add(osc);
 
+	val.reset(new sspBasicValue);
+	val->setName("15");
+	val->setValue(15);
+	domain->getValues().add(val);
+
+	auto silent = std::make_shared<sspSilencePlayer>();
+	silent->setName("Kulisse silence");
+	silent->setDuration(val);
+	domain->getPlayers().add(silent);
+
+	sspDomainVector<sspPlayer> players;
+	players.add(osc);
+	players.add(silent);
+
+	args.clear();
+	args.add(val_ai);
+	args.add(val_0);
+
+	std::vector<double> const_weight{10, 1};
+
+	auto randplay = std::make_shared<sspRandomPlayer>();
+	randplay->setName("Kulisse all");
+	randplay->setPlayers(players);
+	randplay->setWeights(args);
+	randplay->setConstantWeights(const_weight);
+	domain->getPlayers().add(randplay);
+	   
 	auto task = std::make_shared<sspPlayTask>();
 	task->setName("Kulisse");
 	task->setCondition(bool_true);
 	task->setVolumeFactor(val_1);
-	task->setPlayer(osc);
+	task->setPlayer(randplay);
 	task->setPriority(sspPlayTask::Priority::Load);
+	domain->getPlaytasks().add(task);
 
 	auto msg_recv = std::make_shared<sspMessageWithReceiver>();
 	sspMessage& msg = msg_recv->getMessage();
@@ -177,7 +205,6 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	cond_msg->add(bool_true, msglist);
 
 	task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
-	domain->getPlaytasks().add(task);
 
 	auto& startlist = manager->getStartList();
 	startlist.add(bool_true, msglist);

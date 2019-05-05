@@ -19,14 +19,12 @@
 class sspSilencePlayer : public sspPlayer
 {
 	std::shared_ptr<sspValue> duration_;
-	std::shared_ptr<sspSilenceTask> silence_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
 		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspPlayer);
 		ar & BOOST_SERIALIZATION_NVP(duration_);
-		ar & BOOST_SERIALIZATION_NVP(silence_);
 	}
 
 public:
@@ -47,6 +45,7 @@ public:
 
 private:
 	bool is_playing_ = false;
+	std::shared_ptr<sspSilenceTask> silence_;
 
 	virtual bool update() override;
 };

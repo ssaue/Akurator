@@ -99,10 +99,16 @@
         <FILE id="PrA4cW" name="Storedal.cpp" compile="1" resource="0" file="Source/Storedal.cpp"/>
         <FILE id="c3UTd6" name="Storedal.h" compile="0" resource="0" file="Source/Storedal.h"/>
         <GROUP id="{62E97640-8A56-9B87-C573-E4A8E575C63F}" name="Inputs">
+          <FILE id="zcE6pW" name="sspICPanalogInput.cpp" compile="1" resource="0"
+                file="Source/sspICPanalogInput.cpp"/>
+          <FILE id="a4Vixk" name="sspICPanalogInput.h" compile="0" resource="0"
+                file="Source/sspICPanalogInput.h"/>
           <FILE id="UScHgM" name="sspICPinput.cpp" compile="1" resource="0" file="Source/sspICPinput.cpp"/>
           <FILE id="pl7oYl" name="sspICPinput.h" compile="0" resource="0" file="Source/sspICPinput.h"/>
           <FILE id="l1S9MA" name="sspInput.cpp" compile="1" resource="0" file="Source/sspInput.cpp"/>
           <FILE id="kYIlZ3" name="sspInput.h" compile="0" resource="0" file="Source/sspInput.h"/>
+          <FILE id="hcsXA7" name="sspInputs.cpp" compile="1" resource="0" file="Source/sspInputs.cpp"/>
+          <FILE id="qlahmQ" name="sspInputs.h" compile="0" resource="0" file="Source/sspInputs.h"/>
         </GROUP>
         <GROUP id="{D7C96312-F9D0-DE98-372E-87EABFA629BA}" name="Streams">
           <FILE id="dEeptr" name="sspAudioStream.cpp" compile="1" resource="0"

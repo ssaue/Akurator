@@ -13,11 +13,12 @@
 #include "sspMessageHandler.h"
 #include "sspDomainVector.h"
 #include "sspDomainPrimitives.h"
+#include "sspFinishedResponder.h"
 
 #include <memory>
 #include <atomic>
 
-class sspTimeline : public sspMessageHandler
+class sspTimeline : public sspMessageHandler, public sspFinishedResponder
 {
 	sspDomainVector<sspTimeline> children_;
 	std::shared_ptr<sspValue> time_factor_;
@@ -42,7 +43,8 @@ public:
 	virtual void terminate();
 
 	virtual bool empty() const;
-	
+
+	virtual void onFinished() override {}
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 	virtual void handleMessage(const sspMessage&) override {}
 

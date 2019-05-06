@@ -127,8 +127,9 @@ void sspScheduler::timer_thread()
 				ready_tasks_.push_back(head.task);
 				worker_cv_.notify_one();
 				ulck.unlock();
+
+				task_queue_.pop();
 			}
-			task_queue_.pop();
 		}
 
 		timer_cv_.wait_for(lck, duration);

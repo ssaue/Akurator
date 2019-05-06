@@ -53,6 +53,7 @@ private:
 	sspToolbarFactory toolbar_factory_;
 
 	void onNew();
+	void onLoad();
 	void onSave();
 	void onSaveAs();
 
@@ -60,6 +61,8 @@ private:
 	void onInit();
 	void onStart();
 	void onStop();
+
+	void onStartWithFile();
 
 	sspToolbarFilenameComponent& getFilenameComponent();
 

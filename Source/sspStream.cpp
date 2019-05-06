@@ -12,7 +12,7 @@
 #include "sspScheduler.h"
 
 sspStream::sspStream()
-	: sspTimeline(), sspFinishedResponder(), lock_(), task_list_()
+	: sspTimeline(),lock_(), task_list_()
 {
 }
 

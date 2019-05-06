@@ -16,9 +16,9 @@
 #include "sspConditionals.h"
 #include "sspStrings.h"
 #include "sspPlayers.h"
+#include "sspInputs.h"
 
 #include "sspTimeline.h"
-#include "sspICPinput.h"
 #include "sspAudioStream.h"
 
 #include "sspPlayTask.h"
@@ -58,6 +58,7 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	stream->setVolumeFactor(val);
 	stream->setMaxTasks(2, 0);
 	domain->getTimelines().add(stream);
+
 	sspDomainVector<sspTimeline> root_children;
 	root_children.add(stream);
 	root->setChildren(root_children);
@@ -185,7 +186,7 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	   
 	auto task = std::make_shared<sspPlayTask>();
 	task->setName("Kulisse");
-	task->setCondition(bool_true);
+	task->setCondition(light_1);
 	task->setVolumeFactor(val_1);
 	task->setPlayer(randplay);
 	task->setPriority(sspPlayTask::Priority::Load);

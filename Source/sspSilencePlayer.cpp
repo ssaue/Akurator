@@ -15,7 +15,6 @@
 sspSilencePlayer::sspSilencePlayer()
 	: sspPlayer(), duration_(), silence_(std::make_shared<sspSilenceTask>())
 {
-	silence_->setResponder(weak_from_this());
 }
 
 bool sspSilencePlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
@@ -23,7 +22,9 @@ bool sspSilencePlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_pt
 	if (isPlaying())
 		return false;
 
+	silence_->setResponder(weak_from_this());
 	silence_->setDuration(duration_->getValue());
+
 	if (sspScheduler::Instance().add(silence_)) {
 		is_playing_ = true;
 		setResponder(responder);

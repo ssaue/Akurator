@@ -12,6 +12,7 @@
 
 #include "sspStream.h"
 #include "sspTaskQueue.h"
+#include "sspTimeUpdater.h"
 
 #include <mutex>
 
@@ -60,7 +61,10 @@ public:
 
 private:
 	virtual void play(std::weak_ptr<sspPlayTask> task) final;
+
 	sspTaskQueue task_queue_;
 	std::unique_ptr<sspStreamBus> bus_;
+	double master_volume_ = 0.0;
+	sspTimeUpdater updater_;
 };
 

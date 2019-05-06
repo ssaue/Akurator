@@ -11,10 +11,6 @@
 #pragma once
 
 #include "sspInput.h"
-#include <vector>
-
-class SSpBoolean;
-class sspBasicValue;
 
 /*
 ** sspICPinput is currently guaranteed to work on Windows only - it needs to be verified on other platforms!
@@ -22,18 +18,17 @@ class sspBasicValue;
 
 class sspICPinput : public sspInput
 {
-protected:
-	typedef void* HANDLE;
-	HANDLE port_handle_;
-
 	unsigned short	port_;
+
+protected:
 	unsigned char	channel_;
 	unsigned char	address_;
 
+private:
 	friend class boost::serialization::access;
 	template <typename Archive>
 	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspInput);
 		ar & BOOST_SERIALIZATION_NVP(port_);
 		ar & BOOST_SERIALIZATION_NVP(channel_);
 		ar & BOOST_SERIALIZATION_NVP(address_);
@@ -43,7 +38,7 @@ public:
 	sspICPinput();
 	sspICPinput(const sspICPinput& inp) = delete;
 	sspICPinput& operator= (const sspICPinput& inp) = delete;
-	virtual ~sspICPinput() {}
+	virtual ~sspICPinput() = 0;	// Ensure abstract class
 
 	virtual bool initialize() override;
 	virtual bool update() override;
@@ -59,34 +54,16 @@ public:
 	unsigned char	getChannel() const { return channel_; }
 	unsigned char	getAddress() const { return address_; }
 
+protected:
+	typedef void* HANDLE;
+	HANDLE port_handle_;
+
 private:
 	bool initCom();
 };
 
-class sspICPanalogInput : public sspICPinput
-{
-	std::shared_ptr<sspBasicValue> value_;
+BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspICPinput)
 
-	friend class boost::serialization::access;
-	template <typename Archive>
-	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(sspDomainElement);
-		ar & BOOST_SERIALIZATION_NVP(value_);
-	}
-
-
-public:
-	sspICPanalogInput();
-	sspICPanalogInput(const sspICPanalogInput& inp) = delete;
-	sspICPanalogInput& operator= (const sspICPanalogInput& inp) = delete;
-	virtual ~sspICPanalogInput();
-
-	virtual bool update() override;
-	virtual bool verify(int& nErrors, int& nWarnings) const override;
-
-	void setValue(std::shared_ptr<sspBasicValue> value) { value_ = std::move(value); }
-	std::shared_ptr<sspBasicValue> getValue() const { return value_; }
-};
 //
 //
 //class sspICPdigitalInput : public sspICPinput

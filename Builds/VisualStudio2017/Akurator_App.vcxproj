@@ -163,8 +163,10 @@
     <ClCompile Include="..\..\Source\sspScheduler.cpp"/>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp"/>
     <ClCompile Include="..\..\Source\Storedal.cpp"/>
+    <ClCompile Include="..\..\Source\sspICPanalogInput.cpp"/>
     <ClCompile Include="..\..\Source\sspICPinput.cpp"/>
     <ClCompile Include="..\..\Source\sspInput.cpp"/>
+    <ClCompile Include="..\..\Source\sspInputs.cpp"/>
     <ClCompile Include="..\..\Source\sspAudioStream.cpp"/>
     <ClCompile Include="..\..\Source\sspTimeline.cpp"/>
     <ClCompile Include="..\..\Source\sspStream.cpp"/>
@@ -1992,8 +1994,10 @@
     <ClInclude Include="..\..\Source\sspScheduler.h"/>
     <ClInclude Include="..\..\Source\sspSilenceTask.h"/>
     <ClInclude Include="..\..\Source\Storedal.h"/>
+    <ClInclude Include="..\..\Source\sspICPanalogInput.h"/>
     <ClInclude Include="..\..\Source\sspICPinput.h"/>
     <ClInclude Include="..\..\Source\sspInput.h"/>
+    <ClInclude Include="..\..\Source\sspInputs.h"/>
     <ClInclude Include="..\..\Source\sspTimeline.h"/>
     <ClInclude Include="..\..\Source\sspAudioStream.h"/>
     <ClInclude Include="..\..\Source\sspStream.h"/>

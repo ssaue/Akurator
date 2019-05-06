@@ -10,7 +10,6 @@
 
 #include "sspICPinput.h"
 #include "sspLogging.h"
-#include "sspBasicValue.h"
 
 #include <string>
 #include <sstream>
@@ -35,6 +34,10 @@ sspICPinput::sspICPinput()
 	, address_(1)
 	, channel_(0)
 	, port_handle_(nullptr)
+{
+}
+
+sspICPinput::~sspICPinput()
 {
 }
 
@@ -88,51 +91,6 @@ bool sspICPinput::update()
 void sspICPinput::terminate()
 {
 	if (port_handle_) uart_Close(port_handle_);
-}
-
-//////////////////////////////////////////////////////////////////////
-// sspICPanalogInput
-//////////////////////////////////////////////////////////////////////
-
-sspICPanalogInput::sspICPanalogInput() 
-	: sspICPinput(), value_()
-{
-}
-
-sspICPanalogInput::~sspICPanalogInput()
-{
-	terminate();
-}
-
-bool sspICPanalogInput::verify(int& nErrors, int& nWarnings) const
-{
-	bool bReturn = true;
-
-	if (!sspICPinput::verify(nErrors, nWarnings))
-		bReturn = false;
-
-	if (!value_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid value";
-	}
-
-	return bReturn;
-}
-
-bool sspICPanalogInput::update()
-{
-	if (!sspICPinput::update())
-		return false;
-
-	float read_value;
-	if (pac_ReadAI(port_handle_, PAC_REMOTE_IO(address_), channel_, 8, &read_value)) {
-		bool bRtn = read_value != value_->getValue();
-		value_->setValue(read_value);
-		return bRtn;
-	}
-	else {
-		return false;
-	}
-	
 }
 //
 ////////////////////////////////////////////////////////////////////////

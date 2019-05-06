@@ -14,8 +14,9 @@
 #include "sspLogging.h"
 
 sspAudioStream::sspAudioStream()
-	: sspStream(), volume_factor_(), task_queue_(), bus_()
+	: sspStream(), volume_factor_(), task_queue_(), bus_(), updater_(sspStreamBus::volume_time_s)
 {
+	updater_.initialize(false);
 }
 
 sspAudioStream::~sspAudioStream()
@@ -25,6 +26,9 @@ sspAudioStream::~sspAudioStream()
 
 void sspAudioStream::start()
 {
+	updater_.initialize(false);
+	master_volume_ = volume_factor_->getValue();
+	bus_->masterVolume(volume_factor_->getValue(), sspStreamBus::volume_time_s);
 	task_queue_.clear();
 	task_queue_.setMaxTasks(max_active_, max_waiting_);
 	sspStream::start();
@@ -32,7 +36,13 @@ void sspAudioStream::start()
 
 void sspAudioStream::update(double seconds)
 {
-	bus_->masterVolume(volume_factor_->getValue(), sspStreamBus::volume_time_s);
+	if (updater_.update()) {
+		double volume = volume_factor_->getValue();
+		if (abs(volume - master_volume_) < 0.001) {
+			master_volume_ = volume;
+			bus_->masterVolume(volume_factor_->getValue(), sspStreamBus::volume_time_s);
+		}
+	}
 	sspStream::update(seconds);
 }
 

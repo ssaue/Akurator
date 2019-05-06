@@ -11,10 +11,6 @@
 #include "sspInput.h"
 #include "sspLogging.h"
 
-#include <boost/archive/xml_oarchive.hpp>
-#include <boost/archive/xml_iarchive.hpp>
-#include <boost/serialization/export.hpp>
-
 sspInput::sspInput()
 	: sspDomainElement(), update_interval_(1.0), updater_(update_interval_)
 {
@@ -42,5 +38,3 @@ bool sspInput::verify(int & nErrors, int & /*nWarnings*/) const
 
 	return bReturn;
 }
-
-BOOST_CLASS_EXPORT(sspInput);

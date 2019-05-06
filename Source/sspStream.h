@@ -11,13 +11,11 @@
 #pragma once
 
 #include "sspTimeline.h"
-#include "sspFinishedResponder.h"
 #include "sspSchedulePlayTaskList.h"
 
 #include <mutex>
 
-class sspStream : public sspTimeline,
-				  public sspFinishedResponder
+class sspStream : public sspTimeline
 {
 	friend class boost::serialization::access;
 	template <typename Archive>

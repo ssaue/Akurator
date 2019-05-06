@@ -16,7 +16,7 @@
 #include <boost/serialization/export.hpp>
 
 sspTimeline::sspTimeline()
-	: sspMessageHandler(), children_(), time_factor_()
+	: sspMessageHandler(), sspFinishedResponder(), children_(), time_factor_()
 {
 }
 

@@ -54,6 +54,10 @@ MainComponent::MainComponent(String file_path)
 	getFilenameComponent().setRecentFiles(sspAkuratorApplication::getRecentlyOpenedFiles().getAllFilenames());
 
     setSize (820, 620);
+
+	if (current_path_.existsAsFile()) {
+		MessageManager::callAsync([this] { onStartWithFile(); });
+	}
 }
 
 MainComponent::~MainComponent()
@@ -191,15 +195,11 @@ bool MainComponent::perform(const InvocationInfo& info)
 
 void MainComponent::filenameComponentChanged(FilenameComponent* fileComponentThatHasChanged)
 {
-	current_path_ = fileComponentThatHasChanged->getCurrentFile();
-	sspAkuratorApplication::getRecentlyOpenedFiles().addFile(current_path_);
-
-	String full_path = current_path_.getFullPathName();
-	std::ifstream is(full_path.toStdString());
-	boost::archive::xml_iarchive ia(is);
-	domain_->clearContents();
-	manager_->clearContents();
-	ia >> boost::serialization::make_nvp("sspDomainData", *domain_.get()) >> boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
+	auto path = fileComponentThatHasChanged->getCurrentFile();
+	if (path.existsAsFile()) {
+		current_path_ = path;
+		onLoad();
+	}
 }
 
 void MainComponent::onNew()
@@ -208,6 +208,17 @@ void MainComponent::onNew()
 	manager_->clearContents();
 	domain_->createInitialContent();
 	Storedal::buildContent(domain_.get(), manager_->getPlayManager());
+}
+
+void MainComponent::onLoad()
+{
+	sspAkuratorApplication::getRecentlyOpenedFiles().addFile(current_path_);
+	String full_path = current_path_.getFullPathName();
+	std::ifstream is(full_path.toStdString());
+	boost::archive::xml_iarchive ia(is);
+	domain_->clearContents();
+	manager_->clearContents();
+	ia >> boost::serialization::make_nvp("sspDomainData", *domain_.get()) >> boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
 }
 
 void MainComponent::onSave()
@@ -310,6 +321,19 @@ void MainComponent::onStart()
 void MainComponent::onStop()
 {
 	manager_->stop();
+}
+
+void MainComponent::onStartWithFile()
+{
+	if (current_path_.existsAsFile()) {
+		onLoad();
+		if (manager_->startup_proc_s != sspExecutiveManager::Startup::DoNothing) {
+			onInit();
+			if (manager_->startup_proc_s == sspExecutiveManager::Startup::Play && sspExecutionState::Instance().isInitialized()) {
+				onStart();
+			}
+		}
+	}
 }
 
 sspToolbarFilenameComponent & MainComponent::getFilenameComponent()

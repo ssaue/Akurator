@@ -41,8 +41,9 @@ class sspDomainData
 		ar & BOOST_SERIALIZATION_NVP(conditionals_);
 		ar & BOOST_SERIALIZATION_NVP(strings_);
 		ar & BOOST_SERIALIZATION_NVP(players_);
-		ar & BOOST_SERIALIZATION_NVP(tasks_);
 		ar & BOOST_SERIALIZATION_NVP(timelines_);
+		ar & BOOST_SERIALIZATION_NVP(tasks_);
+		ar & BOOST_SERIALIZATION_NVP(inputs_);
 		ar & BOOST_SERIALIZATION_NVP(input_values_);
 		ar & BOOST_SERIALIZATION_NVP(input_conditionals_);
 	}

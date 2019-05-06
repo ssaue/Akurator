@@ -508,10 +508,16 @@
     <ClCompile Include="..\..\Source\Storedal.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\sspICPanalogInput.cpp">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspICPinput.cpp">
       <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspInput.cpp">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\sspInputs.cpp">
       <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspAudioStream.cpp">
@@ -2640,10 +2646,16 @@
     <ClInclude Include="..\..\Source\Storedal.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\sspICPanalogInput.h">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspICPinput.h">
       <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspInput.h">
+      <Filter>Akurator\Source\Domain\Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspInputs.h">
       <Filter>Akurator\Source\Domain\Inputs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspTimeline.h">

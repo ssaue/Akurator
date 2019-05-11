@@ -22,7 +22,7 @@ bool sspTriggerMsgList::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	for (auto&& msg : messages_) {
-		if (!msg.first) {
+		if (msg.first.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Message list has an invalid trigger";
 		}
 		if (!msg.second->verify(nErrors, nWarnings)) {
@@ -37,14 +37,15 @@ bool sspTriggerMsgList::verify(int & nErrors, int & nWarnings) const
 	return bReturn;
 }
 
-void sspTriggerMsgList::add(std::shared_ptr<sspTrigger> cond, std::shared_ptr<sspConditionalMsgList> message)
+void sspTriggerMsgList::add(std::weak_ptr<sspTrigger> cond, std::shared_ptr<sspConditionalMsgList> message)
 {
 	messages_.push_back(std::make_pair(cond, message));
 }
 
-void sspTriggerMsgList::remove(std::shared_ptr<sspTrigger> cond)
+void sspTriggerMsgList::remove(std::weak_ptr<sspTrigger> cond)
 {
-	messages_.remove_if([=](TrigMsg msg) { return (msg.first == cond); });
+	auto test_ptr = cond.lock();
+	messages_.remove_if([=](TrigMsg msg) { auto ptr = msg.first.lock(); return (ptr == test_ptr); });
 }
 
 void sspTriggerMsgList::removeAll()
@@ -55,13 +56,14 @@ void sspTriggerMsgList::removeAll()
 void sspTriggerMsgList::reset()
 {
 	for (auto&& msg : messages_) {
-		msg.first->reset();
+		if (auto ptr = msg.first.lock()) ptr->reset();
 	}
 }
 
 void sspTriggerMsgList::testAndSend() const
 {
 	for (auto& msg : messages_) {
-		if (msg.first->isTrue()) msg.second->send();
+		auto ptr = msg.first.lock();
+		if (ptr && ptr->isTrue()) msg.second->send();
 	}
 }

@@ -15,12 +15,13 @@
 #include "sspTimeUpdater.h"
 
 #include <mutex>
+#include <boost/serialization/weak_ptr.hpp>
 
 class sspStreamBus;
 
 class sspAudioStream : public sspStream
 {
-	std::shared_ptr<sspValue> volume_factor_;
+	std::weak_ptr<sspValue> volume_factor_;
 	unsigned int max_active_ = 0;
 	unsigned int max_waiting_ = 0;
 
@@ -49,8 +50,8 @@ public:
 	virtual void handleMessage(const sspMessage& msg) override;
 	virtual void onFinished() override;
 
-	void setVolumeFactor(std::shared_ptr<sspValue> value) { volume_factor_ = std::move(value); }
-	std::shared_ptr<sspValue> getVolumeFactor() const { return volume_factor_; }
+	void setVolumeFactor(std::weak_ptr<sspValue> value) { volume_factor_ = std::move(value); }
+	std::weak_ptr<sspValue> getVolumeFactor() const { return volume_factor_; }
 
 	// Set max number of tasks in each list (0 implies no limit)
 	void   setMaxTasks(unsigned int active, unsigned int waiting);

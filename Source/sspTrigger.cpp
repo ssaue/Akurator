@@ -19,7 +19,8 @@ sspTrigger::sspTrigger()
   bool sspTrigger::isTrue() const
 {
 	bool ret = false;
-	bool now = conditional_->isTrue();
+	auto ptr = conditional_.lock();
+	bool now = ptr && ptr->isTrue();
 	switch (change_) {
 	case Trigger::False:
 		ret = !now & old_state_;
@@ -41,10 +42,11 @@ bool sspTrigger::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 
-	if (!conditional_) {
+	auto ptr = conditional_.lock();
+	if (!ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";
 	}
-	else if (conditional_.get() == this) {
+	else if (ptr.get() == this) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 	}
 
@@ -53,5 +55,7 @@ bool sspTrigger::verify(int & nErrors, int & /*nWarnings*/) const
 
 void sspTrigger::reset()
 {
-	old_state_ = conditional_->isTrue();
+	if (auto ptr = conditional_.lock()) {
+		old_state_ = ptr->isTrue();
+	}
 }

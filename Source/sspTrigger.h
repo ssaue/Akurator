@@ -11,7 +11,7 @@
 #pragma once
 
 #include "sspDomainPrimitives.h"
-#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 class sspTrigger : public sspConditional
 {
@@ -19,7 +19,7 @@ public:
 	enum class Trigger : unsigned int { False, True, Both };
 
 private:
-	std::shared_ptr<sspConditional> conditional_;
+	std::weak_ptr<sspConditional> conditional_;
 	Trigger change_ = Trigger::True;
 
 	friend class boost::serialization::access;
@@ -41,10 +41,10 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setConditional(std::shared_ptr<sspConditional> cond) { conditional_ = std::move(cond); }
+	void setConditional(std::weak_ptr<sspConditional> cond) { conditional_ = std::move(cond); }
 	void setChange(Trigger change) { change_ = change; }
 
-	std::shared_ptr<sspConditional> getConditional() const { return conditional_; }
+	std::weak_ptr<sspConditional> getConditional() const { return conditional_; }
 	Trigger getChange() const { return change_; }
 
 	void reset();

@@ -11,7 +11,7 @@
 #pragma once
 
 #include "sspMessageHandler.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 #include "sspDomainPrimitives.h"
 #include "sspFinishedResponder.h"
 
@@ -20,8 +20,8 @@
 
 class sspTimeline : public sspMessageHandler, public sspFinishedResponder
 {
-	sspDomainVector<sspTimeline> children_;
-	std::shared_ptr<sspValue> time_factor_;
+	sspWeakVector<sspTimeline> children_;
+	std::weak_ptr<sspValue> time_factor_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -49,11 +49,11 @@ public:
 	virtual void handleMessage(const sspMessage&) override {}
 
 	// Accessors
-	void setChildren(const sspDomainVector<sspTimeline>& children) { children_ = children; }
-	void setTimeFactor(std::shared_ptr<sspValue> factor) { time_factor_ = factor; }
+	void setChildren(const sspWeakVector<sspTimeline>& children) { children_ = children; }
+	void setTimeFactor(std::weak_ptr<sspValue> factor) { time_factor_ = factor; }
 
-	const sspDomainVector<sspTimeline>& getChildren() const { return children_; }
-	std::shared_ptr<sspValue> getTimeFactor() const { return time_factor_; }
+	const sspWeakVector<sspTimeline>& getChildren() const { return children_; }
+	std::weak_ptr<sspValue> getTimeFactor() const { return time_factor_; }
 
 protected:
 	double getTimeStep(double seconds);

@@ -11,13 +11,13 @@
 #pragma once
 
 #include "sspPlayer.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspConditionalPlayer : public sspPlayer
 {
-	sspDomainVector<sspPlayer> players_;
-	sspDomainVector<sspConditional> conditionals_;
-	std::shared_ptr<sspPlayer> default_player_;
+	sspWeakVector<sspPlayer> players_;
+	sspWeakVector<sspConditional> conditionals_;
+	std::weak_ptr<sspPlayer> default_player_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -40,13 +40,13 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPlayers(const sspDomainVector<sspPlayer>& players) { players_ = players; }
-	void setConditionals(const sspDomainVector<sspConditional>& conds) { conditionals_ = conds; }
-	void setDefaultPlayer(std::shared_ptr<sspPlayer> player) { default_player_ = player; }
+	void setPlayers(const sspWeakVector<sspPlayer>& players) { players_ = players; }
+	void setConditionals(const sspWeakVector<sspConditional>& conds) { conditionals_ = conds; }
+	void setDefaultPlayer(std::weak_ptr<sspPlayer> player) { default_player_ = player; }
 
-	const sspDomainVector<sspPlayer>& getPlayers() const { return players_; }
-	const sspDomainVector<sspConditional>& getConditionals() const { return conditionals_; }
-	std::shared_ptr<sspPlayer> getDefaultPlayer() const { return default_player_; }
+	const sspWeakVector<sspPlayer>& getPlayers() const { return players_; }
+	const sspWeakVector<sspConditional>& getConditionals() const { return conditionals_; }
+	std::weak_ptr<sspPlayer> getDefaultPlayer() const { return default_player_; }
 
 private:
 	std::weak_ptr<sspPlayer> selected_;

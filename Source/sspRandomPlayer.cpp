@@ -31,25 +31,27 @@ bool sspRandomPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr
 
 	double accum_sum = 0.0;
 	std::vector<double> accum_weight;
-	auto min_size = std::min(players_.size(), std::min(weights_.size(), const_weights_.size()));
-	for (size_t i = 0; i < min_size; i++) {
-		accum_sum += const_weights_[i] + weights_.getAt(i)->getValue();
+
+	auto cwi = const_weights_.cbegin();
+	for (auto wi = weights_.cbegin(); wi != weights_.cend() && cwi != const_weights_.cend(); ++wi, ++cwi) {
+		auto ptr = wi->lock();
+		accum_sum += *cwi + (ptr ? ptr->getValue() : 0.0);
 		accum_weight.push_back(accum_sum);
 	}
 	
 	std::uniform_real_distribution<double> dist(0.0, accum_weight.back());
 	auto picked = dist(random_generator);
 
-	auto player = players_.getLast();
-	for (size_t i = 0; i < min_size; i++) {
-		if (picked <= accum_weight[i]) {
-			player = players_.getAt(i);
+	auto pli = players_.cbegin();
+	for (auto awi = accum_weight.cbegin(); awi != accum_weight.cend() && pli != players_.cend(); ++awi, ++pli) {
+		if (picked <= *awi) {
 			break;
 		}
 	}
-	if (player->start(channel, weak_from_this())) {
+	auto ptr = pli != players_.cend() ? pli->lock() : players_.back().lock();
+	if (ptr && ptr->start(channel, weak_from_this())) {
 		setResponder(responder);
-		selected_ = player;
+		selected_ = ptr;
 	}
 
 	return isPlaying();
@@ -84,10 +86,11 @@ bool sspRandomPlayer::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
 	}
 	for (auto&& player : players_) {
-		if (!player) {
+		auto ptr = player.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
 		}
-		else if (player.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

@@ -24,7 +24,8 @@ bool sspDistributionPlayer::start(std::weak_ptr<sspSendChannel> channel, std::we
 	if (isPlaying())
 		return false;
 
-	if (player_->start(channel, weak_from_this())) {
+	auto ptr = player_.lock();
+	if (ptr && ptr->start(channel, weak_from_this())) {
 		setResponder(responder);
 		setSendChannel(channel);
 		is_silence_ = false;
@@ -38,7 +39,8 @@ bool sspDistributionPlayer::start(std::weak_ptr<sspSendChannel> channel, std::we
 
 bool sspDistributionPlayer::update()
 {
-	if (!condition_->isTrue()) {
+	auto c_ptr = condition_.lock();
+	if (!c_ptr || !c_ptr->isTrue()) {
 		is_playing_ = false;
 		return false;
 	}
@@ -47,19 +49,21 @@ bool sspDistributionPlayer::update()
 	double ramp_pos = 0.0;
 	if (!is_silence_) loop_counter_++;
 
-	switch (loop_mode_) {
-	case LoopMode::Duration:
-		std::chrono::duration<double, std::milli> diff 
-			= std::chrono::steady_clock::now() - init_time_;
-		std::chrono::duration<double, std::milli> dur 
-			= std::chrono::milliseconds(static_cast<long>(1000 * duration_->getValue()));
-		ramp_pos = (dur > std::chrono::seconds(1) && diff < dur) ? (diff / dur) : 2.0;
-		break;
-	case LoopMode::Count:
-		ramp_pos = (duration_->getValue() > 0.5) ? loop_counter_ / duration_->getValue() : 2.0;
-		break;
-	default:
-		break;
+	if (auto dur_ptr = duration_.lock()) {
+		switch (loop_mode_) {
+		case LoopMode::Duration:
+			std::chrono::duration<double, std::milli> diff
+				= std::chrono::steady_clock::now() - init_time_;
+			std::chrono::duration<double, std::milli> dur
+				= std::chrono::milliseconds(static_cast<long>(1000 * dur_ptr->getValue()));
+			ramp_pos = (dur > std::chrono::seconds(1) && diff < dur) ? (diff / dur) : 2.0;
+			break;
+		case LoopMode::Count:
+			ramp_pos = (dur_ptr->getValue() > 0.5) ? loop_counter_ / dur_ptr->getValue() : 2.0;
+			break;
+		default:
+			break;
+		}
 	}
 
 	if (ramp_pos >= 1.0) {	// Duration is passed
@@ -69,7 +73,8 @@ bool sspDistributionPlayer::update()
 
 	// If coming from silence, start player again
 	if (is_silence_) {
-		if (player_->start(getSendChannel(), weak_from_this())) {
+		auto ptr = player_.lock();
+		if (ptr && ptr->start(getSendChannel(), weak_from_this())) {
 			is_silence_ = false;
 			return true;
 		}
@@ -80,9 +85,10 @@ bool sspDistributionPlayer::update()
 	}
 
 	// If coming from player, calculate next silence
-	double silence_dur = start_time_->getValue();
-	if (end_time_) {
-		silence_dur += ramp_pos * (end_time_->getValue() - silence_dur);
+	auto start_ptr = start_time_.lock();
+	double silence_dur = start_ptr ? start_ptr->getValue() : 0.0;
+	if (auto ptr = end_time_.lock()) {
+		silence_dur += ramp_pos * (ptr->getValue() - silence_dur);
 	}
 	silence_->setDuration(silence_dur);
 	if (sspScheduler::Instance().add(silence_)) {
@@ -99,7 +105,7 @@ bool sspDistributionPlayer::isPlaying() const
 void sspDistributionPlayer::stop()
 {
 	if (!is_silence_) {
-		player_->stop();
+		if (auto ptr = player_.lock()) ptr->stop();
 	}
 	is_playing_ = false;
 }
@@ -108,19 +114,20 @@ bool sspDistributionPlayer::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 
-	if (!player_) {
+	auto ptr = player_.lock();
+	if (!ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid player";
 	}
-	else if (player_.get() == this) {
+	else if (ptr.get() == this) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 	}
-	if (!start_time_) {
+	if (start_time_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid start time";
 	}
-	if ((loop_mode_ != LoopMode::Condition) && !duration_) {
+	if ((loop_mode_ != LoopMode::Condition) && duration_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid duration";
 	}
-	if (!condition_) {
+	if (condition_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid conditional";
 	}
 	if (!silence_) {

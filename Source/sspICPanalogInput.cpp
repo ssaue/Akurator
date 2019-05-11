@@ -34,7 +34,7 @@ bool sspICPanalogInput::verify(int& nErrors, int& nWarnings) const
 	if (!sspICPinput::verify(nErrors, nWarnings))
 		bReturn = false;
 
-	if (!value_) {
+	if (value_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid value";
 	}
 
@@ -43,13 +43,16 @@ bool sspICPanalogInput::verify(int& nErrors, int& nWarnings) const
 
 bool sspICPanalogInput::update()
 {
-	if (!sspICPinput::update() || !set_value_)
+	if (!sspICPinput::update())
 		return false;
+
+	auto ptr = set_value_.lock();
+	if (!ptr) return false;
 
 	float read_value;
 	if (pac_ReadAI(port_handle_, PAC_REMOTE_IO(address_), channel_, 8, &read_value)) {
-		bool bRtn = read_value != value_->getValue();
-		set_value_->setValue(read_value);
+		bool bRtn = read_value != ptr->getValue();
+		ptr->setValue(read_value);
 		return bRtn;
 	}
 	else {
@@ -57,9 +60,8 @@ bool sspICPanalogInput::update()
 	}
 }
 
-void sspICPanalogInput::setValue(std::shared_ptr<sspValue> value) 
+void sspICPanalogInput::setValue(std::weak_ptr<sspValue> value)
 { 
 	value_ = value; 
-	// Hack to work around boost serialization
-	set_value_ = std::dynamic_pointer_cast<sspBasicValue>(value_);
+	set_value_ = std::dynamic_pointer_cast<sspBasicValue>(value_.lock());
 }

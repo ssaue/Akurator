@@ -20,7 +20,7 @@ std::string sspConcatString::getString() const
 {
 	std::string cat;
 	for (auto&& str : strings_) {
-		cat += str->getString();
+		if (auto ptr = str.lock()) ptr->getString();
 	}
 	return cat;
 }
@@ -36,10 +36,11 @@ bool sspConcatString::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one string";
 	}
 	for (auto&& str : strings_) {
-		if (!str) {
+		auto ptr = str.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid strings";
 		}
-		else if (str.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

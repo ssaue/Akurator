@@ -22,13 +22,18 @@ bool sspConditionalPlayer::start(std::weak_ptr<sspSendChannel> channel, std::wea
 	if (isPlaying())
 		return false;
 
-	auto ptr = default_player_;
-	assert(conditionals_.size() == players_.size());
-	for (size_t i = 0; i < conditionals_.size(); ++i) {
-		if (conditionals_.getAt(i)->isTrue())
-			selected_ = players_.getAt(i);
+	auto sel = default_player_;
+
+	auto pli = players_.cbegin();
+	for (auto ci = conditionals_.cbegin(); ci != conditionals_.cend() && pli != players_.cend(); ++ci, ++pli) {
+		auto c_ptr = ci->lock();
+		if (c_ptr && c_ptr->isTrue()) {
+			sel = *pli;
+			break;
+		}
 	}
-	if (ptr->start(channel, weak_from_this())) {
+	auto ptr = sel.lock();
+	if (ptr && ptr->start(channel, weak_from_this())) {
 		setResponder(responder);
 		selected_ = ptr;
 	}
@@ -60,14 +65,15 @@ bool sspConditionalPlayer::verify(int & nErrors, int & nWarnings) const
 	if (players_.empty()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no players";
 	}
-	else if (players_.size() == 1 && !default_player_) {
+	else if (players_.size() == 1 && default_player_.expired()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
 	}
 	for (auto&& player : players_) {
-		if (!player) {
+		auto ptr = player.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
 		}
-		else if (player.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
@@ -78,14 +84,15 @@ bool sspConditionalPlayer::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one conditional";
 	}
 	for (auto&& cond : conditionals_) {
-		if (!cond) {
+		if (cond.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";
 		}		
 	}
 	if (players_.size() != conditionals_.size()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": The number of players and conditionals do not match";
 	}
-	if (default_player_ && default_player_.get() == this) {
+	auto ptr = default_player_.lock();
+	if (ptr && ptr.get() == this) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 	}
 

@@ -11,11 +11,11 @@
 #pragma once
 
 #include "sspPlayer.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspSequentialPlayer : public sspPlayer
 {
-	sspDomainVector<sspPlayer> players_;
+	sspWeakVector<sspPlayer> players_;
 	
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -37,11 +37,11 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPlayers(const sspDomainVector<sspPlayer>& players) { players_ = players; }
-	const sspDomainVector<sspPlayer>& getPlayers() const { return players_; }
+	void setPlayers(const sspWeakVector<sspPlayer>& players);
+	const sspWeakVector<sspPlayer>& getPlayers() const { return players_; }
 
 private:
-	sspDomainVector_iterator<sspPlayer> iterator_ = end(players_);
+	sspWeakVector<sspPlayer>::iterator iterator_;
 	bool is_playing_ = false;
 
 	virtual bool update() override;

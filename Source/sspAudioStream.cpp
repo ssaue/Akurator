@@ -27,8 +27,10 @@ sspAudioStream::~sspAudioStream()
 void sspAudioStream::start()
 {
 	updater_.initialize(false);
-	master_volume_ = volume_factor_->getValue();
-	bus_->masterVolume(volume_factor_->getValue(), sspStreamBus::volume_time_s);
+	if (auto ptr = volume_factor_.lock()) {
+		master_volume_ = ptr->getValue();
+		bus_->masterVolume(ptr->getValue(), sspStreamBus::volume_time_s);
+	}
 	task_queue_.clear();
 	task_queue_.setMaxTasks(max_active_, max_waiting_);
 	sspStream::start();
@@ -37,10 +39,12 @@ void sspAudioStream::start()
 void sspAudioStream::update(double seconds)
 {
 	if (updater_.update()) {
-		double volume = volume_factor_->getValue();
-		if (abs(volume - master_volume_) < 0.001) {
-			master_volume_ = volume;
-			bus_->masterVolume(volume_factor_->getValue(), sspStreamBus::volume_time_s);
+		if (auto ptr = volume_factor_.lock()) {
+			double volume = ptr->getValue();
+			if (abs(volume - master_volume_) < 0.001) {
+				master_volume_ = volume;
+				bus_->masterVolume(ptr->getValue(), sspStreamBus::volume_time_s);
+			}
 		}
 	}
 	sspStream::update(seconds);
@@ -70,7 +74,7 @@ bool sspAudioStream::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 
-	if (!volume_factor_) {
+	if (volume_factor_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid volume fader";
 	}
 
@@ -81,33 +85,40 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 {
 	sspStream::handleMessage(msg);
 
+	auto t_ptr = msg.getTime().lock();
+	auto v_ptr = msg.getValue().lock();
+
 	switch (msg.getType())
 	{
 	case sspMessage::Type::Solo:
 		if (auto ptr = msg.getTask().lock()) {
-			if (ptr->getID() >= 0) {
-				bus_->bufferSolo(ptr->getID(), msg.getTime()->getValue());
+			if (ptr->getID() >= 0 && t_ptr) {
+				bus_->bufferSolo(ptr->getID(), t_ptr->getValue());
 			}
 		}
 		break;
 	case sspMessage::Type::Unsolo:
 		if (auto ptr = msg.getTask().lock()) {
-			if (ptr->getID() >= 0) {
-				bus_->bufferUnSolo(ptr->getID(), msg.getTime()->getValue());
+			if (ptr->getID() >= 0 && t_ptr) {
+				bus_->bufferUnSolo(ptr->getID(), t_ptr->getValue());
 			}
 		}
 		break;
 	case sspMessage::Type::Mute:
-		bus_->masterFadeOut(msg.getTime()->getValue());
+		if (t_ptr) bus_->masterFadeOut(t_ptr->getValue());
 		break;
 	case sspMessage::Type::Unmute:
-		bus_->masterFadeIn(msg.getTime()->getValue());
+		if (t_ptr) bus_->masterFadeIn(t_ptr->getValue());
 		break;
 	case sspMessage::Type::SetVolume:
-		bus_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamBus::Reference::Absolute);
+		if (t_ptr && v_ptr) {
+			bus_->masterVolume(v_ptr->getValue(), t_ptr->getValue(), sspStreamBus::Reference::Absolute);
+		}
 		break;
 	case sspMessage::Type::AdjustVolume:
-		bus_->masterVolume(msg.getValue()->getValue(), msg.getTime()->getValue(), sspStreamBus::Reference::Relative);
+		if (t_ptr && v_ptr) {
+			bus_->masterVolume(v_ptr->getValue(), t_ptr->getValue(), sspStreamBus::Reference::Relative);
+		}
 		break;
 	default:
 		break;

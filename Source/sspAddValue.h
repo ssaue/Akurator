@@ -11,11 +11,11 @@
 #pragma once
 
 #include "sspDomainPrimitives.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspAddValue : public sspValue
 {
-	sspDomainVector<sspValue> addends_;
+	sspWeakVector<sspValue> addends_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -35,7 +35,7 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setAddends(const sspDomainVector<sspValue>& values) { addends_ = values; }
-	const sspDomainVector<sspValue>& getAddends() const { return addends_; }
+	void setAddends(const sspWeakVector<sspValue>& values) { addends_ = values; }
+	const sspWeakVector<sspValue>& getAddends() const { return addends_; }
 };
 

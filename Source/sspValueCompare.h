@@ -11,7 +11,7 @@
 #pragma once
 
 #include "sspDomainPrimitives.h"
-#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 class sspValueCompare : public sspConditional
 {
@@ -19,8 +19,8 @@ public:
 	enum class Relation : unsigned int { Equal, Unequal, Smaller, Larger, SmallEq, LargeEq };
 
 private:
-	std::shared_ptr<sspValue> test_;
-	std::shared_ptr<sspValue> threshold_;
+	std::weak_ptr<sspValue> test_;
+	std::weak_ptr<sspValue> threshold_;
 	Relation relation_ = Relation::Equal;
 
 	friend class boost::serialization::access;
@@ -43,11 +43,11 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setTest(std::shared_ptr<sspValue> value) { test_ = std::move(value); }
-	void setThreshold(std::shared_ptr<sspValue> value) { threshold_ = std::move(value); }
+	void setTest(std::weak_ptr<sspValue> value) { test_ = std::move(value); }
+	void setThreshold(std::weak_ptr<sspValue> value) { threshold_ = std::move(value); }
 	void setRelationship(Relation value) { relation_ = value; }
 	
-	std::shared_ptr<sspValue> getTest() const { return test_; }
-	std::shared_ptr<sspValue> getThreshold() const { return threshold_; }
+	std::weak_ptr<sspValue> getTest() const { return test_; }
+	std::weak_ptr<sspValue> getThreshold() const { return threshold_; }
 	Relation getRelationship() const { return relation_; }
 };

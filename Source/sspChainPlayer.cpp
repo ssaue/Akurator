@@ -39,8 +39,8 @@ bool sspChainPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<
 		chain_count_++;
 	}
 
-	auto player = players_.getAt(selected_);
-	if (player->start(channel, weak_from_this())) {
+	auto ptr = selected_ < players_.size() ? players_[selected_].lock() : std::shared_ptr<sspPlayer>();
+	if (ptr && ptr->start(channel, weak_from_this())) {
 		is_playing_ = true;
 		setResponder(responder);
 	}
@@ -50,8 +50,8 @@ bool sspChainPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<
 void sspChainPlayer::stop()
 {
 	is_playing_ = false;
-	auto player = players_.getAt(selected_);
-	player->stop();
+	auto ptr = selected_ < players_.size() ? players_[selected_].lock() : std::shared_ptr<sspPlayer>();
+	if (ptr) ptr->stop();
 	chain_count_ = chain_length_;
 }
 
@@ -77,10 +77,11 @@ bool sspChainPlayer::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
 	}
 	for (auto&& player : players_) {
-		if (!player) {
+		auto ptr = player.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
 		}
-		else if (player.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

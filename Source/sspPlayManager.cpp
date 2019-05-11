@@ -42,7 +42,7 @@ bool sspPlayManager::initialize(sspDomainPool<sspTimeline>& timelines)
 	osc_console_.connectAll();
 	osc_console_.clearChannels();
 
-	root_stream_ = timelines.getAt(0);
+	root_stream_ = timelines[0];
 	for (auto& stream : timelines) {
 		auto audio = std::dynamic_pointer_cast<sspAudioStream>(stream);
 		if (audio) {
@@ -62,7 +62,7 @@ bool sspPlayManager::start()
 		sspExecutionState::Instance().playing();
 		sspScheduler::Instance().enableTasks();
 		previous_time_ = steady_clock::now();
-		root_stream_->start();
+		if (auto ptr = root_stream_.lock()) ptr->start();
 		trigger_messages_.reset();
 		clock_messages_.reset();
 		start_messages_.send();
@@ -78,9 +78,10 @@ bool sspPlayManager::update()
 
 		auto now = steady_clock::now();
 		std::chrono::duration<double> diff = steady_clock::now() - previous_time_;
-		root_stream_->update(diff.count());
 		previous_time_ = now;
-		return (!root_stream_->empty() || !sspScheduler::Instance().empty());
+		auto ptr = root_stream_.lock();
+		if (ptr) ptr->update(diff.count());
+		return ((ptr && !ptr->empty()) || !sspScheduler::Instance().empty());
 	}
 	else 
 		return false;
@@ -89,7 +90,7 @@ bool sspPlayManager::update()
 void sspPlayManager::stop()
 {
 	if (sspExecutionState::Instance().isPlaying()) {
-		root_stream_->stop();
+		if (auto ptr = root_stream_.lock()) ptr->stop();
 		sspScheduler::Instance().disableTasks();
 
 		// TODO: Input manager!
@@ -100,7 +101,7 @@ void sspPlayManager::stop()
 void sspPlayManager::terminate()
 {
 	stop();
-	if (root_stream_) root_stream_->terminate();
+	if (auto ptr = root_stream_.lock()) ptr->terminate();
 	osc_console_.disconnectAll();
 }
 

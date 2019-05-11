@@ -24,14 +24,14 @@ void sspTimeline::start()
 {
 	running_ = true;
 	for (auto child : children_) {
-		child->start();
+		if (auto ptr = child.lock()) ptr->start();
 	}
 }
 
 void sspTimeline::update(double seconds)
 {
 	for (auto child : children_) {
-		child->update(getTimeStep(seconds));
+		if (auto ptr = child.lock()) ptr->update(getTimeStep(seconds));
 	}
 }
 
@@ -39,7 +39,7 @@ void sspTimeline::stop()
 {
 	running_ = false;
 	for (auto child : children_) {
-		child->stop();
+		if (auto ptr = child.lock()) ptr->stop();
 	}
 }
 
@@ -47,14 +47,15 @@ void sspTimeline::terminate()
 {
 	stop();
 	for (auto child : children_) {
-		child->terminate();
+		if (auto ptr = child.lock()) ptr->terminate();
 	}
 }
 
 bool sspTimeline::empty() const
 {
 	for (auto child : children_) {
-		if (!child->empty()) {
+		auto ptr = child.lock();
+		if (ptr && !ptr->empty()) {
 			return false;
 		}
 	}
@@ -66,14 +67,15 @@ bool sspTimeline::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	for (auto&& child : children_) {
-		if (!child) {
+		auto ptr = child.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid child";
 		}
-		else if (child.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
-	if (!time_factor_) {
+	if (time_factor_.expired()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no time factor";
 	}
 
@@ -82,7 +84,8 @@ bool sspTimeline::verify(int & nErrors, int & nWarnings) const
 
 inline double sspTimeline::getTimeStep(double seconds)
 {
-	return time_factor_ ? seconds * time_factor_->getValue() : seconds;
+	auto ptr = time_factor_.lock();
+	return ptr ? seconds * ptr->getValue() : seconds;
 }
 
 #include "sspStream.h"

@@ -16,19 +16,21 @@ sspNot::sspNot()
 {
 }
 
-  bool sspNot::isTrue() const
+bool sspNot::isTrue() const
 {
-	return !operand_->isTrue();
+	auto ptr = operand_.lock();
+	return !ptr || !ptr->isTrue();
 }
 
 bool sspNot::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 
-	if (!operand_) {
+	auto ptr = operand_.lock();
+	if (!ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid operands";
 	}
-	else if (operand_.get() == this) {
+	else if (ptr.get() == this) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 	}
 

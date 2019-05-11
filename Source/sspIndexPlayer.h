@@ -11,12 +11,12 @@
 #pragma once
 
 #include "sspPlayer.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspIndexPlayer : public sspPlayer
 {
-	sspDomainVector<sspPlayer> players_;
-	std::shared_ptr<sspValue> index_;
+	sspWeakVector<sspPlayer> players_;
+	std::weak_ptr<sspValue> index_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -39,14 +39,13 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPlayers(const sspDomainVector<sspPlayer>& players) { players_ = players; }
-	const sspDomainVector<sspPlayer>& getPlayers() const { return players_; }
+	void setPlayers(const sspWeakVector<sspPlayer>& players) { players_ = players; }
+	const sspWeakVector<sspPlayer>& getPlayers() const { return players_; }
 
-	void setIndex(std::shared_ptr<sspValue> value) { index_ = std::move(value); }
-	std::shared_ptr<sspValue> getIndex() const { return index_; }
+	void setIndex(std::weak_ptr<sspValue> value) { index_ = std::move(value); }
+	std::weak_ptr<sspValue> getIndex() const { return index_; }
 
 private:
 	virtual bool update() override;
-
 	std::weak_ptr<sspPlayer> selected_;
 };

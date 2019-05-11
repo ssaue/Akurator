@@ -21,10 +21,14 @@ bool sspIndexPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<
 	if (players_.empty())
 		return false;
 
-	auto value = index_->getValue() + 0.5; // Rounding
+	auto value = 0.0;
+	if (auto ptr = index_.lock()) {
+		value = ptr->getValue() + 0.5; // Rounding
+	}
 	size_t index = value < 0.0 ? 0 : static_cast<size_t>(value);
-	auto player = (index < players_.size()) ? players_.getAt(index) : players_.getLast();
-	if (player->start(channel, weak_from_this())) {
+	auto player = (index < players_.size()) ? players_[index] : players_.back();
+	auto ptr = player.lock();	
+	if (ptr && ptr->start(channel, weak_from_this())) {
 		setResponder(responder);
 		selected_ = player;
 	}
@@ -60,14 +64,15 @@ bool sspIndexPlayer::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
 	}
 	for (auto&& player : players_) {
-		if (!player) {
+		auto ptr = player.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
 		}
-		else if (player.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
-	if (!index_) {
+	if (index_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid index value";
 	}
 

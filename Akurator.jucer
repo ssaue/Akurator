@@ -288,8 +288,8 @@
         <FILE id="BuvLiN" name="sspDomainData.h" compile="0" resource="0" file="Source/sspDomainData.h"/>
         <FILE id="Jyhyo0" name="sspDomainElement.h" compile="0" resource="0"
               file="Source/sspDomainElement.h"/>
-        <FILE id="FS2jkz" name="sspDomainVector.h" compile="0" resource="0"
-              file="Source/sspDomainVector.h"/>
+        <FILE id="bZPHrK" name="sspSharedVector.h" compile="0" resource="0"
+              file="Source/sspSharedVector.h"/>
         <FILE id="fg22AH" name="sspDomainPool.cpp" compile="1" resource="0"
               file="Source/sspDomainPool.cpp"/>
         <FILE id="HYOEsC" name="sspDomainPool.h" compile="0" resource="0" file="Source/sspDomainPool.h"/>

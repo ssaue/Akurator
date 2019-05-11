@@ -63,7 +63,7 @@ void sspStream::handleMessage(const sspMessage& msg)
 	switch (msg.getType())
 	{
 	case sspMessage::Type::Load:
-		task_list_.loadTask(msg.getTask(), msg.getTime()->getValue());
+		if (auto ptr = msg.getTime().lock()) task_list_.loadTask(msg.getTask(), ptr->getValue());
 		break;
 	case sspMessage::Type::Mute:
 	case sspMessage::Type::Solo:

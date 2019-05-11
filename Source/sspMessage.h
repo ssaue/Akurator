@@ -13,7 +13,6 @@
 #include "sspDomainPrimitives.h"
 
 #include <memory>
-#include <boost/serialization/shared_ptr.hpp>
 #include <boost/serialization/weak_ptr.hpp>
 
 class sspPlayTask;
@@ -25,9 +24,9 @@ public:
 
 private:
 	Type type_ = Type::None;
-	std::shared_ptr<sspValue> time_;
+	std::weak_ptr<sspValue> time_;
 	std::weak_ptr<sspPlayTask> task_;
-	std::shared_ptr<sspValue> value_;
+	std::weak_ptr<sspValue> value_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -48,12 +47,12 @@ public:
 
 	// Accessors
 	void setType(Type type) { type_ = type; }
-	void setTime(std::shared_ptr<sspValue> time) { time_ = time; }
+	void setTime(std::weak_ptr<sspValue> time) { time_ = time; }
 	void setTask(std::weak_ptr<sspPlayTask> task) { task_ = task; }
-	void setValue(std::shared_ptr<sspValue> value) { value_ = value; }
+	void setValue(std::weak_ptr<sspValue> value) { value_ = value; }
 
 	Type getType() const { return type_; }
-	std::shared_ptr<sspValue> getTime() const { return time_; }
+	std::weak_ptr<sspValue> getTime() const { return time_; }
 	std::weak_ptr<sspPlayTask> getTask() const { return task_; }
-	std::shared_ptr<sspValue> getValue() const { return value_; }
+	std::weak_ptr<sspValue> getValue() const { return value_; }
 };

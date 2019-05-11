@@ -2820,7 +2820,7 @@
     <ClInclude Include="..\..\Source\sspDomainElement.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\sspDomainVector.h">
+    <ClInclude Include="..\..\Source\sspSharedVector.h">
       <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDomainPool.h">

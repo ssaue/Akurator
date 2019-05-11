@@ -20,6 +20,7 @@
 #include "sspBoolean.h"
 
 #include "sspDomainPool.h"
+#include "sspSharedVector.h"
 
 class sspDomainData
 {
@@ -31,8 +32,8 @@ class sspDomainData
 	sspDomainPool<sspTimeline>		timelines_;
 	sspDomainPool<sspInput>			inputs_;
 
-	sspDomainVector<sspValueRange>	input_values_;
-	sspDomainVector<sspBoolean>		input_conditionals_;
+	sspWeakVector<sspValueRange>	input_values_;
+	sspWeakVector<sspBoolean>		input_conditionals_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -63,11 +64,11 @@ public:
 	sspDomainPool<sspInput>&		getInputs() { return inputs_; }
 
 	// These values and conditionals are available for input (e.g. from external inputs or from GUI)
-	sspDomainVector<sspValueRange>&	getInputValues() { return input_values_; }
-	sspDomainVector<sspBoolean>&	getInputConditionals() { return input_conditionals_; }
+	sspWeakVector<sspValueRange>&	getInputValues() { return input_values_; }
+	sspWeakVector<sspBoolean>&	getInputConditionals() { return input_conditionals_; }
 
-	sspDomainVector<sspValueRange>	getAllPossibleInputValues();
-	sspDomainVector<sspBoolean>		getAllPossibleInputConditionals();
+	sspWeakVector<sspValueRange>	getAllPossibleInputValues();
+	sspWeakVector<sspBoolean>		getAllPossibleInputConditionals();
 
 	void createInitialContent();
 	void clearContents();

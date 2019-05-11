@@ -17,19 +17,19 @@
 #include <array>
 #include <memory>
 #include <boost/serialization/array.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 #include <boost/serialization/shared_ptr.hpp>
 
-class sspPlayTask : public sspPlayer, 
-					public sspScheduleTask
+class sspPlayTask : public sspPlayer, public sspScheduleTask
 {
 public:
 	enum class Priority : unsigned int { Cancel, Wait, Load, LoadAlways };
 	enum Messages { Enter, Start, End, Exit, Num };
 
 private:
-	std::shared_ptr<sspPlayer> player_;
-	std::shared_ptr<sspConditional> condition_;
-	std::shared_ptr<sspValue> volume_factor_;
+	std::weak_ptr<sspPlayer> player_;
+	std::weak_ptr<sspConditional> condition_;
+	std::weak_ptr<sspValue> volume_factor_;
 	std::array<std::shared_ptr<sspConditionalMsgList>, Messages::Num> messages_;
 	Priority priority_ = Priority::Cancel;
 
@@ -63,15 +63,15 @@ public:
 	virtual bool run() override;
 
 	// Accessors
-	void setPlayer(std::shared_ptr<sspPlayer> player) { player_ = player; }
-	void setCondition(std::shared_ptr<sspConditional> cond) { condition_ = cond; }
-	void setVolumeFactor(std::shared_ptr<sspValue> value) { volume_factor_ = value; }
+	void setPlayer(std::weak_ptr<sspPlayer> player) { player_ = player; }
+	void setCondition(std::weak_ptr<sspConditional> cond) { condition_ = cond; }
+	void setVolumeFactor(std::weak_ptr<sspValue> value) { volume_factor_ = value; }
 	void setMessageList(Messages type, std::shared_ptr<sspConditionalMsgList> list);
 	void setPriority(Priority priority) { priority_ = priority; }
 
-	std::shared_ptr<sspPlayer> getPlayer() const { return player_; }
-	std::shared_ptr<sspConditional> getCondition() const { return condition_; }
-	std::shared_ptr<sspValue> getVolumeFactor() const { return volume_factor_; }
+	std::weak_ptr<sspPlayer> getPlayer() const { return player_; }
+	std::weak_ptr<sspConditional> getCondition() const { return condition_; }
+	std::weak_ptr<sspValue> getVolumeFactor() const { return volume_factor_; }
 	std::shared_ptr<sspConditionalMsgList> getMessageList(Messages type);
 	Priority getPriority() const { return priority_; }
 	int getID() const;

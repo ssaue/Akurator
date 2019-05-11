@@ -59,8 +59,9 @@ public:
 		g.setFont(height * 0.7f);
 
 		if (rowNumber < pool_->size()) {
-			std::string name = std::string(pool_->getAt(rowNumber)->getName()).c_str();
-			g.drawText(name,
+			std::stringstream text;
+			text << rowNumber << ": " << std::string(pool_->at(rowNumber)->getName()).c_str();
+			g.drawText(text.str(),
 				5, 0, width, height,
 				Justification::centredLeft, true);
 		}
@@ -87,7 +88,8 @@ public:
 	virtual void deleteKeyPressed(int lastRowSelected) override
 	{
 		if (lastRowSelected < pool_->size()) {
-			pool_->removeAt(lastRowSelected);
+			auto elem = pool_->begin() + lastRowSelected;
+			pool_->erase(elem);
 		}
 		row_selected_ = -1;
 		onSelected();

@@ -2052,7 +2052,7 @@
     <ClInclude Include="..\..\Source\sspValues.h"/>
     <ClInclude Include="..\..\Source\sspDomainData.h"/>
     <ClInclude Include="..\..\Source\sspDomainElement.h"/>
-    <ClInclude Include="..\..\Source\sspDomainVector.h"/>
+    <ClInclude Include="..\..\Source\sspSharedVector.h"/>
     <ClInclude Include="..\..\Source\sspDomainPool.h"/>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h"/>
     <ClInclude Include="..\..\Source\sspDomainListboxModel.h"/>

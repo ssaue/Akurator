@@ -68,7 +68,11 @@ sspFileString::sspFileString()
 
 std::string sspFileString::getString() const
 {
-	auto path = fs::path(path_->getString());
+	auto path_ptr = path_.lock();
+	if (!path_ptr) 
+		return std::string("");
+	
+	auto path = fs::path(path_ptr->getString());
 	auto err = std::error_code();
 
 	if (fs::exists(path, err)) {
@@ -108,15 +112,17 @@ bool sspFileString::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 
-	if (!path_) {
+	auto path_ptr = path_.lock();
+
+	if (!path_ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid folder string";
 	}
 	else {
-		if (path_.get() == this) {
+		if (path_ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 		else {
-			auto path = fs::path(path_->getString());
+			auto path = fs::path(path_ptr->getString());
 			auto err = std::error_code();
 			if (!fs::exists(path, err) || !(fs::is_directory(path) || fs::is_regular_file(path))) {
 				SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " points to an invalid path";

@@ -14,11 +14,11 @@
 #include "sspSilenceTask.h"
 
 #include <memory>
-#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 class sspSilencePlayer : public sspPlayer
 {
-	std::shared_ptr<sspValue> duration_;
+	std::weak_ptr<sspValue> duration_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -40,8 +40,8 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setDuration(std::shared_ptr<sspValue> value) { duration_ = value; }
-	std::shared_ptr<sspValue> getDuration() const { return duration_; }
+	void setDuration(std::weak_ptr<sspValue> value) { duration_ = value; }
+	std::weak_ptr<sspValue> getDuration() const { return duration_; }
 
 private:
 	bool is_playing_ = false;

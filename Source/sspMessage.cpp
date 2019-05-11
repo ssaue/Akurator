@@ -20,7 +20,7 @@ sspMessage::sspMessage()
 {
 	bool bReturn = true;
 
-	if (!time_) {
+	if (time_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Message has an invalid time";
 	}
 	switch (type_) {
@@ -33,7 +33,7 @@ sspMessage::sspMessage()
 		break;
 	case Type::SetVolume:
 	case Type::AdjustVolume:
-		if (!value_) {
+		if (value_.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Message has an invalid volume value";
 		}
 		break;

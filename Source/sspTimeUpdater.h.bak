@@ -22,7 +22,7 @@ public:
 	sspTimeUpdater() 
 		: interval_(0) {}
 	sspTimeUpdater(double seconds)
-		: interval_(std::chrono::milliseconds(static_cast<int>(seconds * 1000))) {}
+		: interval_(static_cast<int>(seconds * 1000)) {}
 
 	void setInterval(double seconds)
 	{ 

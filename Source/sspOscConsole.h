@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "sspSendChannel.h"
+#include "sspSharedVector.h"
 
 #include <vector>
 #include <map>
@@ -39,7 +40,7 @@ public:
 private:
 	virtual void oscMessageReceived(const OSCMessage& message) override;
 
-	std::vector<std::shared_ptr<sspSendChannel>> channels_;
+	sspSharedVector<sspSendChannel> channels_;
 	bool send_ready_ = false;
 	bool receive_ready_ = false;
 };

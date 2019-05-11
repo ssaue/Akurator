@@ -18,10 +18,12 @@ sspSelectString::sspSelectString()
 
 std::string sspSelectString::getString() const
 {
-	auto val = value_->getValue();
+	auto ptr = value_.lock();
+	auto val = ptr ? ptr->getValue() : 0.0;
 	auto index = val < 0.0 ? 0 : static_cast<size_t>(val + 0.5);	// rounding
-	auto select = index < strings_.size() ? strings_.getAt(index) : strings_.getAt(strings_.size() - 1);
-	return select->getString();
+	auto select = index < strings_.size() ? strings_[index] : strings_.back();
+	auto select_ptr = select.lock();
+	return select_ptr ? select_ptr->getString() : std::string("");
 }
 
 bool sspSelectString::verify(int & nErrors, int & nWarnings) const
@@ -35,14 +37,15 @@ bool sspSelectString::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one string";
 	}
 	for (auto&& str : strings_) {
-		if (!str) {
+		auto ptr = str.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid strings";
 		}
-		else if (str.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
-	if (!value_) {
+	if (value_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid select value";
 	}
 

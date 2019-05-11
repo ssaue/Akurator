@@ -11,12 +11,14 @@
 #pragma once
 
 #include "sspMessageWithReceiver.h"
+
 #include <list>
 #include <boost/serialization/list.hpp>
+#include <boost/serialization/unique_ptr.hpp>
 
 class sspMessageList
 {
-	std::list<std::shared_ptr<sspMessageWithReceiver>> messages_;
+	std::list<std::unique_ptr<sspMessageWithReceiver>> messages_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -32,8 +34,8 @@ public:
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
-	void add(std::shared_ptr<sspMessageWithReceiver> message);
-	void remove(std::shared_ptr<sspMessageWithReceiver> message);
+	void add(std::unique_ptr<sspMessageWithReceiver> message);
+	void remove(std::unique_ptr<sspMessageWithReceiver> message);
 	void removeAll();
 
 	void send() const;

@@ -11,11 +11,13 @@
 #pragma once
 
 #include "sspMessageList.h"
+
 #include <boost/serialization/utility.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 class sspConditionalMsgList
 {
-	using CondMsg = std::pair<std::shared_ptr<sspConditional>, std::shared_ptr<sspMessageList>>;
+	using CondMsg = std::pair<std::weak_ptr<sspConditional>, std::shared_ptr<sspMessageList>>;
 	std::list<CondMsg> messages_;
 
 	friend class boost::serialization::access;
@@ -32,8 +34,8 @@ public:
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
-	void add(std::shared_ptr<sspConditional> cond, std::shared_ptr<sspMessageList> message);
-	void remove(std::shared_ptr<sspConditional> cond);
+	void add(std::weak_ptr<sspConditional> cond, std::shared_ptr<sspMessageList> message);
+	void remove(std::weak_ptr<sspConditional> cond);
 	void removeAll();
 
 	size_t  size() { return messages_.size(); }

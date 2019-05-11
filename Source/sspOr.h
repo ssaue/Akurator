@@ -11,12 +11,12 @@
 #pragma once
 
 #include "sspDomainPrimitives.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspOr : public sspConditional
 {
 private:
-	sspDomainVector<sspConditional> operands_;
+	sspWeakVector<sspConditional> operands_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -36,6 +36,6 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setOperands(const sspDomainVector<sspConditional>& ops) { operands_ = ops; }
-	const sspDomainVector<sspConditional>& getOperands() const { return operands_; }
+	void setOperands(const sspWeakVector<sspConditional>& ops) { operands_ = ops; }
+	const sspWeakVector<sspConditional>& getOperands() const { return operands_; }
 };

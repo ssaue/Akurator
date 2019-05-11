@@ -11,11 +11,11 @@
 #pragma once
 
 #include "sspPlayer.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspChainPlayer : public sspPlayer
 {
-	sspDomainVector<sspPlayer> players_;
+	sspWeakVector<sspPlayer> players_;
 	size_t chain_length_ = 1;
 	size_t chain_hop_ = 1;
 
@@ -41,11 +41,11 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPlayers(const sspDomainVector<sspPlayer>& players) { players_ = players; }
+	void setPlayers(const sspWeakVector<sspPlayer>& players) { players_ = players; }
 	void setChainLength(size_t length) { chain_length_ = length; }
 	void setChainHop(size_t hop) { chain_hop_ = hop; }
 
-	const sspDomainVector<sspPlayer>& getPlayers() const { return players_; }
+	const sspWeakVector<sspPlayer>& getPlayers() const { return players_; }
 	size_t getChainLength() const { return chain_length_; }
 	size_t getChainHop() const { return chain_hop_; }
 

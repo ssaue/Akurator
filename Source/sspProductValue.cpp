@@ -20,7 +20,7 @@ sspProductValue::sspProductValue()
 {
 	double fVal = 1.0;
 	for (auto fac : factors_)
-		fVal *= fac->getValue();
+		if (auto ptr = fac.lock()) fVal *= ptr->getValue();
 	return fVal;
 }
 
@@ -35,10 +35,11 @@ bool sspProductValue::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one factor";
 	}
 	for (auto&& fac : factors_) {
-		if (!fac) {
+		auto ptr = fac.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid factors";
 		}
-		else if (fac.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

@@ -13,13 +13,13 @@
 #include "sspICPinput.h"
 #include "sspDomainPrimitives.h"
 
-#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 class sspBasicValue;
 
 class sspICPanalogInput : public sspICPinput
 {
-	std::shared_ptr<sspValue> value_;
+	std::weak_ptr<sspValue> value_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -37,11 +37,10 @@ public:
 	virtual bool update() override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
-	void setValue(std::shared_ptr<sspValue> value);
-	std::shared_ptr<sspValue> getValue() const { return value_; }
+	void setValue(std::weak_ptr<sspValue> value);
+	std::weak_ptr<sspValue> getValue() const { return value_; }
 
 private:
-	// Hack for boost serialization
-	std::shared_ptr<sspBasicValue> set_value_;
+	std::weak_ptr<sspBasicValue> set_value_;
 };
 

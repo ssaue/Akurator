@@ -23,7 +23,7 @@ bool sspSilencePlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_pt
 		return false;
 
 	silence_->setResponder(weak_from_this());
-	silence_->setDuration(duration_->getValue());
+	if (auto ptr = duration_.lock()) silence_->setDuration(ptr->getValue());
 
 	if (sspScheduler::Instance().add(silence_)) {
 		is_playing_ = true;
@@ -53,7 +53,7 @@ bool sspSilencePlayer::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 
-	if (!duration_) {
+	if (duration_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid duration";
 	}
 	if (!silence_) {

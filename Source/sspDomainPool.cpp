@@ -21,7 +21,8 @@
 #include <typeinfo>
 
 template<typename T>
-sspDomainPool<T>::sspDomainPool() : sspDomainVector<T>()
+sspDomainPool<T>::sspDomainPool() 
+	: sspSharedVector<T>()
 {
 }
 

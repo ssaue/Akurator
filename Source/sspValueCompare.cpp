@@ -18,10 +18,12 @@ sspValueCompare::sspValueCompare()
 {
 }
 
-  bool sspValueCompare::isTrue() const
+bool sspValueCompare::isTrue() const
 {
-	auto test = test_->getValue();
-	auto threshold = threshold_->getValue();
+	double test = 0.0, threshold = 0.0;
+
+	if (auto ptr = test_.lock()) test = ptr->getValue();
+	if (auto ptr = threshold_.lock()) threshold = ptr->getValue();
 
 	switch (relation_) {
 	case Relation::Equal: 
@@ -52,10 +54,10 @@ bool sspValueCompare::verify(int & nErrors, int & /*nWarnings*/) const
 {
 	bool bReturn = true;
 
-	if (!test_) {
+	if (test_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid test value";
 	}
-	if (!threshold_) {
+	if (threshold_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid threshold value";
 	}
 

@@ -18,11 +18,19 @@ sspValueInRange::sspValueInRange()
 {
 }
 
-  bool sspValueInRange::isTrue() const
+bool sspValueInRange::isTrue() const
 {
-	auto test = test_->getValue();
-	auto min = min_->getValue();
-	auto max = max_->getValue();
+	auto test_ptr = test_.lock();
+	if (!test_ptr) return false;
+	auto test = test_ptr->getValue();
+
+	auto min_ptr = min_.lock();
+	if (!min_ptr) return false;
+	auto min = min_ptr->getValue();
+
+	auto max_ptr = max_.lock();
+	if (!max_ptr) return false;
+	auto max = max_ptr->getValue();
 
 	return ((test >= min && test <= max) || (test >= max && test <= min));
 }
@@ -31,19 +39,23 @@ bool sspValueInRange::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 
-	if (!test_) {
+	auto test_ptr = test_.lock();
+	auto min_ptr = min_.lock();
+	auto max_ptr = max_.lock();
+
+	if (!test_ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid test value";
 	}
-	if (!min_) {
+	if (!min_ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid threshold value";
 	}
-	if (!max_) {
+	if (!max_ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid threshold value";
 	}
-	if (test_.get() == min_.get() || test_.get() == max_.get()) {
+	if (test_ptr == min_ptr || test_ptr == max_ptr) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": test value is a range extreme";
 	}
-	if (min_.get() == max_.get()) {
+	if (min_ptr == max_ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": min and max are equal values";
 	}
 

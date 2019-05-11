@@ -21,8 +21,10 @@ bool sspSimultaneousPlayer::start(std::weak_ptr<sspSendChannel> channel, std::we
 	if (isPlaying())
 		return false;
 
+	player_count_ = 0;
 	for (auto&& player : players_) {
-		if (player->start(channel, weak_from_this())) {
+		auto ptr = player.lock();
+		if (ptr && ptr->start(channel, weak_from_this())) {
 			player_count_++;
 		}
 	}
@@ -38,7 +40,7 @@ bool sspSimultaneousPlayer::start(std::weak_ptr<sspSendChannel> channel, std::we
 void sspSimultaneousPlayer::stop()
 {
 	for (auto&& player : players_) {
-		player->stop();
+		if (auto ptr = player.lock()) ptr->stop();
 	}
 	player_count_ = 0;
 }
@@ -65,10 +67,11 @@ bool sspSimultaneousPlayer::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
 	}
 	for (auto&& player : players_) {
-		if (!player) {
+		auto ptr = player.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
 		}
-		else if (player.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

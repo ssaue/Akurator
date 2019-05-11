@@ -16,10 +16,12 @@ sspAnd::sspAnd()
 {
 }
 
-  bool sspAnd::isTrue() const
+bool sspAnd::isTrue() const
 {
-	for (auto op : operands_)
-		if (!op->isTrue()) return false;
+	for (auto op : operands_) {
+		auto ptr = op.lock();
+		if (!ptr || !ptr->isTrue()) return false;
+	}
 	return true;
 }
 
@@ -34,10 +36,11 @@ bool sspAnd::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one operand";
 	}
 	for (auto&& op : operands_) {
-		if (!op) {
+		auto ptr = op.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid operands";
 		}
-		else if (op.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}

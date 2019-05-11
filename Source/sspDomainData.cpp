@@ -15,22 +15,22 @@ sspDomainData::sspDomainData()
 {
 }
 
-sspDomainVector<sspValueRange> sspDomainData::getAllPossibleInputValues()
+sspWeakVector<sspValueRange> sspDomainData::getAllPossibleInputValues()
 {
-	sspDomainVector<sspValueRange> inputs;
+	sspWeakVector<sspValueRange> inputs;
 	for (auto value : values_) {
 		auto range = std::dynamic_pointer_cast<sspValueRange>(value);
-		if (range) inputs.add(range);
+		if (range) inputs.push_back(range);
 	}
 	return std::move(inputs);
 }
 
-sspDomainVector<sspBoolean> sspDomainData::getAllPossibleInputConditionals()
+sspWeakVector<sspBoolean> sspDomainData::getAllPossibleInputConditionals()
 {
-	sspDomainVector<sspBoolean> inputs;
+	sspWeakVector<sspBoolean> inputs;
 	for (auto cond : conditionals_) {
 		auto boolean = std::dynamic_pointer_cast<sspBoolean>(cond);
-		if (boolean) inputs.add(boolean);
+		if (boolean) inputs.push_back(boolean);
 	}
 	return std::move(inputs);
 }
@@ -40,7 +40,7 @@ void sspDomainData::createInitialContent()
 	// Add root stream
 	auto root = std::make_shared<sspTimeline>();
 	root->setName("Root stream");
-	timelines_.add(std::move(root));
+	timelines_.push_back(std::move(root));
 }
 
 void sspDomainData::clearContents()

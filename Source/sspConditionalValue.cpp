@@ -18,13 +18,16 @@ sspConditionalValue::sspConditionalValue()
 
 double sspConditionalValue::getValue() const
 {
-	auto ci = begin(conditionals_);
-	auto vi = begin(values_);
-	while (ci != end(conditionals_) && vi != end(values_)) {
-		if ((*ci)->isTrue()) return (*vi)->getValue();
-		++vi; ++ci;
+	auto ci = conditionals_.cbegin();
+	auto vi = values_.cbegin();
+	for (; ci != conditionals_.cend() && vi != values_.cend(); ++vi, ++ci) {
+		auto c_ptr = ci->lock(); auto v_ptr = vi->lock();
+		if (c_ptr && v_ptr && c_ptr->isTrue()) {
+			return v_ptr->getValue();
+		}
 	}
-	return default_value_->getValue();
+	auto ptr = default_value_.lock();
+	return ptr ? ptr->getValue() : 0.0;
 }
 
 bool sspConditionalValue::verify(int & nErrors, int & nWarnings) const
@@ -42,22 +45,24 @@ bool sspConditionalValue::verify(int & nErrors, int & nWarnings) const
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one value";
 	}
 	for (auto&& cond : conditionals_) {
-		if (!cond) {
+		if (cond.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditionals";
 		}
 	}
 	for (auto&& val : values_) {
-		if (!val) {
+		auto ptr = val.lock();
+		if (!ptr) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid values";
 		}
-		else if (val.get() == this) {
+		else if (ptr.get() == this) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 		}
 	}
-	if (!default_value_) {
+	auto ptr = default_value_.lock();
+	if (!ptr) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid default value";
 	}
-	else if (default_value_.get() == this) {
+	else if (ptr.get() == this) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
 	}
 

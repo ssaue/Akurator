@@ -18,8 +18,10 @@ sspIsPlaying::sspIsPlaying()
 
 bool sspIsPlaying::isTrue() const
 {
-	for (auto play : players_)
-		if (play->isPlaying()) return true;
+	for (auto play : players_) {
+		auto ptr = play.lock();
+		if (ptr && ptr->isPlaying()) return true;
+	}
 	return false;
 }
 
@@ -31,7 +33,7 @@ bool sspIsPlaying::verify(int & nErrors, int & /*nWarnings*/) const
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no play objects";
 	}
 	for (auto&& play : players_) {
-		if (!play) {
+		if (play.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid play objects";
 		}
 	}

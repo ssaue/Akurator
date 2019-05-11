@@ -34,7 +34,9 @@ bool sspStreamBus::play(std::weak_ptr<sspPlayTask> task, std::weak_ptr<sspPlayTa
 					bufferFadeOut(old_ptr->getID(), fadeout_time_s);
 					bufferVolume(chan.first, 0.0);
 				}
-				bufferVolume(chan.first, ptr->getVolumeFactor()->getValue(), fadein_time_s);
+				if (auto v_ptr = ptr->getVolumeFactor().lock()) {
+					bufferVolume(chan.first, v_ptr->getValue(), fadein_time_s);
+				}
 				return (ptr->start(chan.second, responder_));
 			}
 		}

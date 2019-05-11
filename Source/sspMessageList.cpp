@@ -28,12 +28,12 @@ sspMessageList::sspMessageList()
 	return bReturn;
 }
 
-void sspMessageList::add(std::shared_ptr<sspMessageWithReceiver> message)
+void sspMessageList::add(std::unique_ptr<sspMessageWithReceiver> message)
 {
-	messages_.push_back(message);
+	messages_.push_back(std::move(message));
 }
 
-void sspMessageList::remove(std::shared_ptr<sspMessageWithReceiver> message)
+void sspMessageList::remove(std::unique_ptr<sspMessageWithReceiver> message)
 {
 	messages_.remove(message);
 }

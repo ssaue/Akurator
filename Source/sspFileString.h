@@ -11,11 +11,11 @@
 #pragma once
 
 #include "sspDomainPrimitives.h"
-#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 class sspFileString : public sspString
 {
-	std::shared_ptr<sspString> path_;
+	std::weak_ptr<sspString> path_;
 	bool recursive_;
 	bool audio_only_;
 
@@ -39,11 +39,11 @@ public:
 	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override;
 
 	// Accessors
-	void setPath(std::shared_ptr<sspString> str) { path_ = std::move(str); }
+	void setPath(std::weak_ptr<sspString> str) { path_ = std::move(str); }
 	void setRecursiveSearch(bool rec) { recursive_ = rec; }
 	void setAudioOnly(bool audio) { audio_only_ = audio; }
 
-	std::shared_ptr<sspString> getPath() const { return path_; }
+	std::weak_ptr<sspString> getPath() const { return path_; }
 	bool isRecursiveSearch() const { return recursive_; }
 	bool isAudioOnly() const { return audio_only_; }
 

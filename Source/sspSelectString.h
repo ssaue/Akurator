@@ -11,12 +11,12 @@
 #pragma once
 
 #include "sspDomainPrimitives.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspSelectString : public sspString
 {
-	sspDomainVector<sspString> strings_;
-	std::shared_ptr<sspValue> value_;
+	sspWeakVector<sspString> strings_;
+	std::weak_ptr<sspValue> value_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -37,10 +37,10 @@ public:
 	virtual bool verify(int& /*nErrors*/, int& /*nWarnings*/) const override;
 
 	// Accessors
-	void setStrings(const sspDomainVector<sspString>& strings) { strings_ = strings; }
-	void setValue(std::shared_ptr<sspValue> value) { value_ = std::move(value); }
+	void setStrings(const sspWeakVector<sspString>& strings) { strings_ = strings; }
+	void setValue(std::weak_ptr<sspValue> value) { value_ = std::move(value); }
 
-	const sspDomainVector<sspString>& getStrings() const { return strings_; }
-	std::shared_ptr<sspValue> getValue() const { return value_; }
+	const sspWeakVector<sspString>& getStrings() const { return strings_; }
+	std::weak_ptr<sspValue> getValue() const { return value_; }
 };
 

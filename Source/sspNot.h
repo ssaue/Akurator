@@ -11,12 +11,12 @@
 #pragma once
 
 #include "sspDomainPrimitives.h"
-#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/weak_ptr.hpp>
 
 class sspNot : public sspConditional
 {
 private:
-	std::shared_ptr<sspConditional> operand_;
+	std::weak_ptr<sspConditional> operand_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -36,6 +36,6 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setOperand(std::shared_ptr<sspConditional> op) { operand_ = std::move(op); }
-	std::shared_ptr<sspConditional> getOperand() const { return operand_; }
+	void setOperand(std::weak_ptr<sspConditional> op) { operand_ = std::move(op); }
+	std::weak_ptr<sspConditional> getOperand() const { return operand_; }
 };

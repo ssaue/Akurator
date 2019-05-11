@@ -15,7 +15,7 @@
 
 class sspTriggerMsgList
 {
-	using TrigMsg = std::pair<std::shared_ptr<sspTrigger>, std::shared_ptr<sspConditionalMsgList>>;
+	using TrigMsg = std::pair<std::weak_ptr<sspTrigger>, std::shared_ptr<sspConditionalMsgList>>;
 	std::list<TrigMsg> messages_;
 
 	friend class boost::serialization::access;
@@ -32,8 +32,8 @@ public:
 
 	bool verify(int& nErrors, int& nWarnings) const;
 
-	void add(std::shared_ptr<sspTrigger> cond, std::shared_ptr<sspConditionalMsgList> message);
-	void remove(std::shared_ptr<sspTrigger> cond);
+	void add(std::weak_ptr<sspTrigger> cond, std::shared_ptr<sspConditionalMsgList> message);
+	void remove(std::weak_ptr<sspTrigger> cond);
 	void removeAll();
 
 	void reset();

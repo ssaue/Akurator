@@ -11,12 +11,12 @@
 #pragma once
 
 #include "sspPlayer.h"
-#include "sspDomainVector.h"
+#include "sspSharedVector.h"
 
 class sspRandomPlayer : public sspPlayer
 {
-	sspDomainVector<sspPlayer> players_;
-	sspDomainVector<sspValue> weights_;
+	sspWeakVector<sspPlayer> players_;
+	sspWeakVector<sspValue> weights_;
 	std::vector<double> const_weights_;
 
 	friend class boost::serialization::access;
@@ -41,12 +41,12 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setPlayers(const sspDomainVector<sspPlayer>& players) { players_ = players; }
-	void setWeights(const sspDomainVector<sspValue>& values) { weights_ = values; }
+	void setPlayers(const sspWeakVector<sspPlayer>& players) { players_ = players; }
+	void setWeights(const sspWeakVector<sspValue>& values) { weights_ = values; }
 	void setConstantWeights(const std::vector<double>& nums) { const_weights_ = nums; }
 
-	const sspDomainVector<sspPlayer>& getPlayers() const { return players_; }
-	const sspDomainVector<sspValue>& getWeights() const { return weights_; }
+	const sspWeakVector<sspPlayer>& getPlayers() const { return players_; }
+	const sspWeakVector<sspValue>& getWeights() const { return weights_; }
 	const std::vector<double>& getConstantWeights() const { return const_weights_; }
 
 private:

@@ -21,7 +21,7 @@ bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	for (auto&& msg : messages_) {
-		if (!msg.first) {
+		if (msg.first.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Message list has an invalid conditional";
 		}
 		if (!msg.second->verify(nErrors, nWarnings)) {
@@ -36,14 +36,15 @@ bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
 	return bReturn;
 }
 
-void sspConditionalMsgList::add(std::shared_ptr<sspConditional> cond, std::shared_ptr<sspMessageList> message)
+void sspConditionalMsgList::add(std::weak_ptr<sspConditional> cond, std::shared_ptr<sspMessageList> message)
 {
-	messages_.push_back(std::make_pair(cond, message));
+	messages_.push_back(std::make_pair(cond, std::move(message)));
 }
 
-void sspConditionalMsgList::remove(std::shared_ptr<sspConditional> cond)
+void sspConditionalMsgList::remove(std::weak_ptr<sspConditional> cond)
 {
-	messages_.remove_if([=](CondMsg msg) { return (msg.first == cond); });
+	auto test_ptr = cond.lock();
+	messages_.remove_if([=](CondMsg msg) { auto ptr = msg.first.lock(); return (ptr == test_ptr); });
 }
 
 void sspConditionalMsgList::removeAll()
@@ -54,7 +55,8 @@ void sspConditionalMsgList::removeAll()
 void sspConditionalMsgList::send() const
 {
 	for (auto&& elem : messages_) {
-		if (elem.first->isTrue()) {
+		auto ptr = elem.first.lock();
+		if (ptr && ptr->isTrue()) {
 			elem.second->send();
 		}
 	}

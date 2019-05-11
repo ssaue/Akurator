@@ -18,17 +18,20 @@ sspOSCPlayer::sspOSCPlayer()
 
 bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
-	if (isPlaying() || channel.expired() || !address_)
+	auto addr_ptr = address_.lock();
+	if (isPlaying() || channel.expired() || !addr_ptr)
 		return false;
 
-	std::string addr = address_->getString();
+	std::string addr = addr_ptr->getString();
 
 	std::vector<sspSendChannel::ArgumentType> arguments;
-	auto path = path_ ? path_->getString() : std::string();
+	auto path_ptr = path_.lock();
+	auto path = path_ptr ? path_ptr->getString() : std::string();
  	arguments.push_back(path);
 
 	for (auto &&arg : arguments_) {
-		arguments.push_back(static_cast<float>(arg->getValue()));
+		if (auto ptr = arg.lock()) 
+			arguments.push_back(static_cast<float>(ptr->getValue()));
 	}
 
 	if (auto ptr = channel.lock()) {
@@ -67,10 +70,10 @@ bool sspOSCPlayer::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 
-	if (!address_) {
+	if (address_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no address";
 	}
-	if (!path_) {
+	if (path_.expired()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no file path";
 	}
 	if (arguments_.empty()) {

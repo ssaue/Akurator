@@ -30,7 +30,7 @@ void sspPlayTask::stop()
 {
 	if (is_playing_) {
 		is_playing_ = false;
-		player_->stop();
+		if (auto ptr = player_.lock()) ptr->stop();
 		messages_[Messages::End]->send();
 		messages_[Messages::Exit]->send();
 	}
@@ -52,13 +52,13 @@ bool sspPlayTask::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;
 
-	if (!player_) {
+	if (player_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid player";
 	}
-	if (!condition_) {
+	if (condition_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";
 	}
-	if (!volume_factor_) {
+	if (volume_factor_.expired()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid volume factor";
 	}
 	for (auto&& list : messages_) {
@@ -84,7 +84,15 @@ void sspPlayTask::setScheduleTime(double seconds)
 bool sspPlayTask::run()
 {
 	messages_[Messages::Enter]->send();
-	is_playing_ = condition_->isTrue() && player_->start(getSendChannel(), weak_from_this());
+
+	if (auto c_ptr = condition_.lock()) {
+		if (c_ptr->isTrue()) {
+			if (auto p_ptr = player_.lock()) {
+				is_playing_ = p_ptr->start(getSendChannel(), weak_from_this());
+			}
+		}
+	}
+
 	if (is_playing_) {
 		messages_[Messages::Start]->send();
 	}

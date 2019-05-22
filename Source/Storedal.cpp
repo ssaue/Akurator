@@ -28,46 +28,42 @@
 
 void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 {
-	if (!domain) return;
+	if (!domain || !manager) return;
 
+	buildBasicContent(domain);
+	buildInputContent(domain);
+
+	buildTimelineHierarchy(domain);
+
+	buildKulisse(domain);
+
+	buildStartList(domain, manager);
+}
+
+void Storedal::buildBasicContent(sspDomainData * domain)
+{
 	auto bool_true = std::make_shared<sspBoolean>();
 	bool_true->setName("true");
 	bool_true->setValue(true);
 	domain->getConditionals().push_back(bool_true);
 
-	auto val_0 = std::make_shared<sspBasicValue>();
-	val_0->setName("0.0");
-	val_0->setValue(0.0);
-	domain->getValues().push_back(val_0);
-
-	auto val_1 = std::make_shared<sspBasicValue>();
-	val_1->setName("1.0");
-	val_1->setValue(1.0);
-	domain->getValues().push_back(val_1);
-
-	auto root = domain->getTimelines()[0];
-	root->setTimeFactor(val_1);
-
 	auto val = std::make_shared<sspBasicValue>();
-	val->setName("Kulisse volume");
-	val->setValue(1.0);
+	val->setName("0.0");
+	val->setValue(0.0);
 	domain->getValues().push_back(val);
 
-	auto stream = std::make_shared<sspAudioStream>();
-	stream->setName("Kulisse stream");
-	stream->setTimeFactor(val_1);
-	stream->setVolumeFactor(val);
-	stream->setMaxTasks(2, 0);
-	domain->getTimelines().push_back(stream);
+	val.reset(new sspBasicValue());
+	val->setName("1.0");
+	val->setValue(1.0);
+	domain->getValues().push_back(val);
+}
 
-	sspWeakVector<sspTimeline> root_children;
-	root_children.push_back(stream);
-	root->setChildren(root_children);
-
-	auto val_ai = std::make_shared<sspBasicValue>();
-	val_ai->setName("Light value");
-	val_ai->setValue(4.0);
-	domain->getValues().push_back(val_ai);
+void Storedal::buildInputContent(sspDomainData * domain)
+{
+	auto val = std::make_shared<sspBasicValue>();
+	val->setName("Light value");
+	val->setValue(4.0);
+	domain->getValues().push_back(val);
 
 	// Disable inputs when testing on laptop
 	auto ai = std::make_shared<sspICPanalogInput>();
@@ -77,44 +73,88 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	ai->setPort(5);
 	ai->setChannel(0);
 	ai->setAddress(1);
-	ai->setValue(val_ai);
+	ai->setValue(val);
 
 	auto val_limit = std::make_shared<sspBasicValue>();
 	val_limit->setName("Light limit 1");
 	val_limit->setValue(0.3);
 	domain->getValues().push_back(val_limit);
 
-	auto light_1 = std::make_shared<sspValueCompare>();
-	light_1->setName("Minimum light");
-	light_1->setRelationship(sspValueCompare::Relation::LargeEq);
-	light_1->setThreshold(val_limit);
-	light_1->setTest(val_ai);
-	domain->getConditionals().push_back(light_1);
+	auto light = std::make_shared<sspValueCompare>();
+	light->setName("Minimum light");
+	light->setRelationship(sspValueCompare::Relation::LargeEq);
+	light->setThreshold(val_limit);
+	light->setTest(val);
+	domain->getConditionals().push_back(light);
 
 	val_limit.reset(new sspBasicValue);
 	val_limit->setName("Light limit 2");
 	val_limit->setValue(1.5);
 	domain->getValues().push_back(val_limit);
 
-	auto light_2 = std::make_shared<sspValueCompare>();
-	light_2->setName("Medium light");
-	light_2->setRelationship(sspValueCompare::Relation::LargeEq);
-	light_2->setThreshold(val_limit);
-	light_2->setTest(val_ai);
-	domain->getConditionals().push_back(light_2);
+	light.reset(new sspValueCompare());
+	light->setName("Medium light");
+	light->setRelationship(sspValueCompare::Relation::LargeEq);
+	light->setThreshold(val_limit);
+	light->setTest(val);
+	domain->getConditionals().push_back(light);
 
 	val_limit.reset(new sspBasicValue);
 	val_limit->setName("Light limit 3");
 	val_limit->setValue(3.0);
 	domain->getValues().push_back(val_limit);
 
-	auto light_3 = std::make_shared<sspValueCompare>();
-	light_3->setName("Maximum light");
-	light_3->setRelationship(sspValueCompare::Relation::LargeEq);
-	light_3->setThreshold(val_limit);
-	light_3->setTest(val_ai);
-	domain->getConditionals().push_back(light_3);
+	light.reset(new sspValueCompare());
+	light->setName("Maximum light");
+	light->setRelationship(sspValueCompare::Relation::LargeEq);
+	light->setThreshold(val_limit);
+	light->setTest(val);
+	domain->getConditionals().push_back(light);
+}
 
+void Storedal::buildTimelineHierarchy(sspDomainData * domain)
+{
+	auto root = domain->getTimelines()[0];
+	root->setTimeFactor(domain->getValues()[1]);
+
+	auto val = std::make_shared<sspBasicValue>();
+	val->setName("Kulisse volume");
+	val->setValue(1.0);
+	domain->getValues().push_back(val);
+
+	auto stream = std::make_shared<sspAudioStream>();
+	stream->setName("Kulisse stream");
+	stream->setTimeFactor(domain->getValues()[1]);
+	stream->setVolumeFactor(val);
+	stream->setMaxTasks(2, 0);
+	domain->getTimelines().push_back(stream);
+
+	sspWeakVector<sspTimeline> root_children;
+	root_children.push_back(domain->getTimelines()[1]);
+	root->setChildren(root_children);
+}
+
+void Storedal::buildStartList(sspDomainData * domain, sspPlayManager * manager)
+{
+	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+	sspMessage& msg = msg_recv->getMessage();
+	msg.setTask(domain->getPlaytasks()[0]);
+	msg.setTime(domain->getValues()[0]);
+	msg.setType(sspMessage::Type::Load);
+	msg_recv->setReceiver(domain->getTimelines()[1]);
+
+	auto msglist = std::make_shared<sspMessageList>();
+	msglist->add(std::move(msg_recv));
+
+	auto cond_msg = std::make_shared<sspConditionalMsgList>();
+	cond_msg->add(domain->getConditionals()[0], msglist);
+
+	auto& startlist = manager->getStartList();
+	startlist.add(domain->getConditionals()[0], msglist);
+}
+
+void Storedal::buildKulisse(sspDomainData * domain)
+{
 	auto str = std::make_shared<sspSimpleString>();
 	str->setString("c:/Storedal/Lyder/Kulisser/");
 	str->setName(str->getString());
@@ -132,7 +172,7 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	str->setName(str->getString());
 	domain->getStrings().push_back(str);
 
-	val.reset(new sspBasicValue);
+	auto val = std::make_shared<sspBasicValue>();
 	val->setName("0.5");
 	val->setValue(0.5);
 	domain->getValues().push_back(val);
@@ -147,7 +187,7 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	random->setLow(val);
 	random->setHigh(val2);
 	domain->getValues().push_back(random);
-	
+
 	sspWeakVector<sspValue> args;
 	args.push_back(random);
 
@@ -173,10 +213,10 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	players.push_back(silent);
 
 	args.clear();
-	args.push_back(val_ai);
-	args.push_back(val_0);
+	args.push_back(domain->getValues()[2]);
+	args.push_back(domain->getValues()[0]);
 
-	std::vector<double> const_weight{10, 1};
+	std::vector<double> const_weight{ 10, 1 };
 
 	auto randplay = std::make_shared<sspRandomPlayer>();
 	randplay->setName("Kulisse all");
@@ -184,11 +224,12 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	randplay->setWeights(args);
 	randplay->setConstantWeights(const_weight);
 	domain->getPlayers().push_back(randplay);
-	   
+
+	// Task
 	auto task = std::make_shared<sspPlayTask>();
 	task->setName("Kulisse");
-	task->setCondition(light_1);
-	task->setVolumeFactor(val_1);
+	task->setCondition(domain->getConditionals()[1]);
+	task->setVolumeFactor(domain->getValues()[1]);
 	task->setPlayer(randplay);
 	task->setPriority(sspPlayTask::Priority::Load);
 	domain->getPlaytasks().push_back(task);
@@ -196,18 +237,15 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
 	sspMessage& msg = msg_recv->getMessage();
 	msg.setTask(task);
-	msg.setTime(val_0);
+	msg.setTime(domain->getValues()[0]);
 	msg.setType(sspMessage::Type::Load);
-	msg_recv->setReceiver(stream);
+	msg_recv->setReceiver(domain->getTimelines()[1]);
 
 	auto msglist = std::make_shared<sspMessageList>();
 	msglist->add(std::move(msg_recv));
 
 	auto cond_msg = std::make_shared<sspConditionalMsgList>();
-	cond_msg->add(bool_true, msglist);
+	cond_msg->add(domain->getConditionals()[0], msglist);
 
 	task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
-
-	auto& startlist = manager->getStartList();
-	startlist.add(bool_true, msglist);
 }

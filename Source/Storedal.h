@@ -17,4 +17,12 @@ class sspPlayManager;
 
 struct Storedal {
 	static void buildContent(sspDomainData* domain, sspPlayManager* manager);
+
+private:
+	static void buildBasicContent(sspDomainData* domain);
+	static void buildInputContent(sspDomainData* domain);
+	static void buildTimelineHierarchy(sspDomainData* domain);
+	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
+
+	static void buildKulisse(sspDomainData* domain);
 };

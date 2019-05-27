@@ -10,29 +10,15 @@
 
 #include "sspDomainData.h"
 
+#include "sspBasicValue.h"
+#include "sspValueRange.h"
+#include "sspBoolean.h"
+
+
 sspDomainData::sspDomainData()
 	: values_(), conditionals_(), strings_(), players_(), tasks_(), timelines_(), inputs_()
+	, input_values_(), input_conditionals_(), output_values_(), output_conditionals_()
 {
-}
-
-sspWeakVector<sspValueRange> sspDomainData::getAllPossibleInputValues()
-{
-	sspWeakVector<sspValueRange> inputs;
-	for (auto value : values_) {
-		auto range = std::dynamic_pointer_cast<sspValueRange>(value);
-		if (range) inputs.push_back(range);
-	}
-	return std::move(inputs);
-}
-
-sspWeakVector<sspBoolean> sspDomainData::getAllPossibleInputConditionals()
-{
-	sspWeakVector<sspBoolean> inputs;
-	for (auto cond : conditionals_) {
-		auto boolean = std::dynamic_pointer_cast<sspBoolean>(cond);
-		if (boolean) inputs.push_back(boolean);
-	}
-	return std::move(inputs);
 }
 
 void sspDomainData::createInitialContent()

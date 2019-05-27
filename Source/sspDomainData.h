@@ -16,9 +16,6 @@
 #include "sspTimeline.h"
 #include "sspInput.h"
 
-#include "sspValueRange.h"
-#include "sspBoolean.h"
-
 #include "sspDomainPool.h"
 #include "sspSharedVector.h"
 
@@ -32,8 +29,12 @@ class sspDomainData
 	sspDomainPool<sspTimeline>		timelines_;
 	sspDomainPool<sspInput>			inputs_;
 
-	sspWeakVector<sspValueRange>	input_values_;
-	sspWeakVector<sspBoolean>		input_conditionals_;
+	// These vectors represent selections of values and conditionals
+	// that could serve as input or output through GUI
+	sspWeakVector<sspValue>			input_values_;
+	sspWeakVector<sspValue>			output_values_;
+	sspWeakVector<sspConditional>	input_conditionals_;
+	sspWeakVector<sspConditional>	output_conditionals_;
 
 	friend class boost::serialization::access;
 	template <typename Archive>
@@ -46,7 +47,9 @@ class sspDomainData
 		ar & BOOST_SERIALIZATION_NVP(tasks_);
 		ar & BOOST_SERIALIZATION_NVP(inputs_);
 		ar & BOOST_SERIALIZATION_NVP(input_values_);
+		ar & BOOST_SERIALIZATION_NVP(output_values_);
 		ar & BOOST_SERIALIZATION_NVP(input_conditionals_);
+		ar & BOOST_SERIALIZATION_NVP(output_conditionals_);
 	}
 
 public:
@@ -64,14 +67,41 @@ public:
 	sspDomainPool<sspInput>&		getInputs() { return inputs_; }
 
 	// These values and conditionals are available for input (e.g. from external inputs or from GUI)
-	sspWeakVector<sspValueRange>&	getInputValues() { return input_values_; }
-	sspWeakVector<sspBoolean>&	getInputConditionals() { return input_conditionals_; }
+	sspWeakVector<sspValue>&		getInputValues() { return input_values_; }
+	sspWeakVector<sspValue>&		getOutputValues() { return output_values_; }
+	sspWeakVector<sspConditional>&	getInputConditionals() { return input_conditionals_; }
+	sspWeakVector<sspConditional>&	getOutputConditionals() { return output_conditionals_; }
 
-	sspWeakVector<sspValueRange>	getAllPossibleInputValues();
-	sspWeakVector<sspBoolean>		getAllPossibleInputConditionals();
+	// Get all values of a specified type
+	template <typename T>
+	sspWeakVector<sspValue>			getAllPossibleValues();
+
+	// Get all conditionals of a specified type
+	template <typename T>
+	sspWeakVector<sspConditional>	getAllPossibleConditionals();
 
 	void createInitialContent();
 	void clearContents();
 	
 	bool verify(int& nErrors, int& nWarnings) const;
 };
+
+template<typename T>
+inline sspWeakVector<sspValue> sspDomainData::getAllPossibleValues()
+{
+	sspWeakVector<sspValue> vals;
+	for (auto value : values_) {
+		if (std::dynamic_pointer_cast<T>(value)) vals.push_back(value);
+	}
+	return std::move(vals);
+}
+
+template<typename T>
+inline sspWeakVector<sspConditional> sspDomainData::getAllPossibleConditionals()
+{
+	sspWeakVector<sspConditional> conds;
+	for (auto cond : conditionals_) {
+		if (std::dynamic_pointer_cast<T>(cond)) conds.push_back(cond);
+	}
+	return std::move(conds);
+}

@@ -32,12 +32,14 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 
 	buildBasicContent(domain);
 	buildInputContent(domain);
+	buildUserInputContent(domain);
 
 	buildTimelineHierarchy(domain);
 
 	buildKulisse(domain);
 
 	buildStartList(domain, manager);
+	buildUserOutput(domain);
 }
 
 void Storedal::buildBasicContent(sspDomainData * domain)
@@ -112,14 +114,35 @@ void Storedal::buildInputContent(sspDomainData * domain)
 	domain->getConditionals().push_back(light);
 }
 
+void Storedal::buildUserInputContent(sspDomainData * domain)
+{
+	auto range = std::make_shared<sspValueRange>();
+	range->setName("Master volume control");
+	range->setValue(1.0);
+	range->setValueRange(0.0, 1.0);
+	domain->getValues().push_back(range);
+	domain->getInputValues().push_back(range);
+
+	range.reset(new sspValueRange);
+	range->setName("Kulisse volume control");
+	range->setValue(1.0);
+	range->setValueRange(0.0, 1.0);
+	domain->getValues().push_back(range);
+	domain->getInputValues().push_back(range);
+}
+
 void Storedal::buildTimelineHierarchy(sspDomainData * domain)
 {
 	auto root = domain->getTimelines()[0];
 	root->setTimeFactor(domain->getValues()[1]);
 
-	auto val = std::make_shared<sspBasicValue>();
+	sspWeakVector<sspValue> factors;
+	factors.push_back(domain->getValues()[6]);
+	factors.push_back(domain->getValues()[7]);
+
+	auto val = std::make_shared<sspProductValue>();
 	val->setName("Kulisse volume");
-	val->setValue(1.0);
+	val->setFactors(factors);
 	domain->getValues().push_back(val);
 
 	auto stream = std::make_shared<sspAudioStream>();
@@ -132,25 +155,6 @@ void Storedal::buildTimelineHierarchy(sspDomainData * domain)
 	sspWeakVector<sspTimeline> root_children;
 	root_children.push_back(domain->getTimelines()[1]);
 	root->setChildren(root_children);
-}
-
-void Storedal::buildStartList(sspDomainData * domain, sspPlayManager * manager)
-{
-	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-	sspMessage& msg = msg_recv->getMessage();
-	msg.setTask(domain->getPlaytasks()[0]);
-	msg.setTime(domain->getValues()[0]);
-	msg.setType(sspMessage::Type::Load);
-	msg_recv->setReceiver(domain->getTimelines()[1]);
-
-	auto msglist = std::make_shared<sspMessageList>();
-	msglist->add(std::move(msg_recv));
-
-	auto cond_msg = std::make_shared<sspConditionalMsgList>();
-	cond_msg->add(domain->getConditionals()[0], msglist);
-
-	auto& startlist = manager->getStartList();
-	startlist.add(domain->getConditionals()[0], msglist);
 }
 
 void Storedal::buildKulisse(sspDomainData * domain)
@@ -248,4 +252,28 @@ void Storedal::buildKulisse(sspDomainData * domain)
 	cond_msg->add(domain->getConditionals()[0], msglist);
 
 	task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
+}
+
+void Storedal::buildStartList(sspDomainData * domain, sspPlayManager * manager)
+{
+	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+	sspMessage& msg = msg_recv->getMessage();
+	msg.setTask(domain->getPlaytasks()[0]);
+	msg.setTime(domain->getValues()[0]);
+	msg.setType(sspMessage::Type::Load);
+	msg_recv->setReceiver(domain->getTimelines()[1]);
+
+	auto msglist = std::make_shared<sspMessageList>();
+	msglist->add(std::move(msg_recv));
+
+	auto cond_msg = std::make_shared<sspConditionalMsgList>();
+	cond_msg->add(domain->getConditionals()[0], msglist);
+
+	auto& startlist = manager->getStartList();
+	startlist.add(domain->getConditionals()[0], msglist);
+}
+
+void Storedal::buildUserOutput(sspDomainData * domain)
+{
+	domain->getOutputValues().push_back(domain->getValues()[2]);
 }

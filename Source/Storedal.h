@@ -21,8 +21,11 @@ struct Storedal {
 private:
 	static void buildBasicContent(sspDomainData* domain);
 	static void buildInputContent(sspDomainData* domain);
+	static void buildUserInputContent(sspDomainData* domain);
 	static void buildTimelineHierarchy(sspDomainData* domain);
-	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
 
 	static void buildKulisse(sspDomainData* domain);
+
+	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
+	static void buildUserOutput(sspDomainData* domain);
 };

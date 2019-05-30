@@ -673,6 +673,9 @@
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp">
       <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\sspRunPage.cpp">
+      <Filter>Akurator\Source\Components</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspDomainListboxModel.cpp">
       <Filter>Akurator\Source\Components</Filter>
     </ClCompile>
@@ -2828,6 +2831,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h">
       <Filter>Akurator\Source\Domain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\sspRunPage.h">
+      <Filter>Akurator\Source\Components</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspDomainListboxModel.h">
       <Filter>Akurator\Source\Components</Filter>

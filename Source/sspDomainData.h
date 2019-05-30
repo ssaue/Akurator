@@ -72,6 +72,11 @@ public:
 	sspWeakVector<sspConditional>&	getInputConditionals() { return input_conditionals_; }
 	sspWeakVector<sspConditional>&	getOutputConditionals() { return output_conditionals_; }
 
+	// Input values are stored as application properties
+	static std::vector<double>		value_properties_s;
+	void loadValuePropertiesToInputs();
+	void saveValuePropertiesFromInputs();
+
 	// Get all values of a specified type
 	template <typename T>
 	sspWeakVector<sspValue>			getAllPossibleValues();
@@ -84,6 +89,8 @@ public:
 	void clearContents();
 	
 	bool verify(int& nErrors, int& nWarnings) const;
+
+private:
 };
 
 template<typename T>

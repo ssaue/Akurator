@@ -14,6 +14,7 @@
 #include "sspValueRange.h"
 #include "sspBoolean.h"
 
+std::vector<double> sspDomainData::value_properties_s;
 
 sspDomainData::sspDomainData()
 	: values_(), conditionals_(), strings_(), players_(), tasks_(), timelines_(), inputs_()
@@ -21,7 +22,38 @@ sspDomainData::sspDomainData()
 {
 }
 
-void sspDomainData::createInitialContent()
+  void sspDomainData::loadValuePropertiesToInputs()
+  {
+	auto input_values = getInputValues();
+	if (input_values.size() > value_properties_s.size()) {
+		value_properties_s.resize(input_values.size(), 0.0);
+	}
+
+	for (int i = 0; i < input_values.size(); ++i) {
+		if (auto s_ptr = std::dynamic_pointer_cast<sspValueRange>(input_values[i].lock())) {
+			s_ptr->setValue(value_properties_s[i]);
+		}
+		else if (auto b_ptr = std::dynamic_pointer_cast<sspBasicValue>(input_values[i].lock())) {
+			b_ptr->setValue(value_properties_s[i]);
+		}
+	}
+  }
+
+  void sspDomainData::saveValuePropertiesFromInputs()
+  {
+	  auto input_values = getInputValues();
+	  if (input_values.size() > value_properties_s.size()) {
+		  value_properties_s.resize(input_values.size(), 0.0);
+	  }
+
+	  for (int i = 0; i < input_values.size(); ++i) {
+		  if (auto ptr = input_values[i].lock()) {
+			  value_properties_s[i] = ptr->getValue();
+		  }
+	  }
+  }
+
+  void sspDomainData::createInitialContent()
 {
 	// Add root stream
 	auto root = std::make_shared<sspTimeline>();

@@ -62,6 +62,7 @@ MainComponent::MainComponent(String file_path)
 
 MainComponent::~MainComponent()
 {
+	domain_->saveValuePropertiesFromInputs();
 }
 
 //==============================================================================
@@ -208,6 +209,7 @@ void MainComponent::onNew()
 	manager_->clearContents();
 	domain_->createInitialContent();
 	Storedal::buildContent(domain_.get(), manager_->getPlayManager());
+	domain_->loadValuePropertiesToInputs();
 }
 
 void MainComponent::onLoad()
@@ -219,6 +221,7 @@ void MainComponent::onLoad()
 	domain_->clearContents();
 	manager_->clearContents();
 	ia >> boost::serialization::make_nvp("sspDomainData", *domain_.get()) >> boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
+	domain_->loadValuePropertiesToInputs();
 }
 
 void MainComponent::onSave()

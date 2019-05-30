@@ -299,6 +299,8 @@
               file="Source/sspDomainPrimitives.h"/>
       </GROUP>
       <GROUP id="{9175C53E-421B-9076-DB65-1A6CCD5B12DF}" name="Components">
+        <FILE id="a3F5E3" name="sspRunPage.cpp" compile="1" resource="0" file="Source/sspRunPage.cpp"/>
+        <FILE id="eRxHvh" name="sspRunPage.h" compile="0" resource="0" file="Source/sspRunPage.h"/>
         <FILE id="tZtXta" name="sspDomainListboxModel.cpp" compile="1" resource="0"
               file="Source/sspDomainListboxModel.cpp"/>
         <FILE id="QYhlTb" name="sspDomainListboxModel.h" compile="0" resource="0"

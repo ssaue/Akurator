@@ -665,7 +665,6 @@ sspSettingsPage::sspSettingsPage ()
 
     setSize (600, 400);
 
-
     //[Constructor] You can add your own custom stuff here..
 	PropertiesFile::Options options;
 	options.applicationName = ProjectInfo::projectName;
@@ -904,6 +903,18 @@ void sspSettingsPage::loadProperties()
 
 	sspResetManager::watchdog_type_s = sspWatchdog::Type{ props->getIntValue("watchdog_type", 0) };
 	sspResetManager::watchdog_timeout_s = props->getDoubleValue("watchdog_timeout", 5);
+
+	// Load input value properties (we don't know how many)
+	sspDomainData::value_properties_s.clear();
+	for (int i = 0;; ++i) {
+		String name = "input_value_" + String(i);
+		if (props->containsKey(name)) {
+			sspDomainData::value_properties_s.push_back(props->getDoubleValue(name, 0.0));
+		}
+		else {
+			break;
+		}
+	}
 }
 
 void sspSettingsPage::saveProperties()
@@ -936,6 +947,13 @@ void sspSettingsPage::saveProperties()
 
 	props->setValue("watchdog_type", static_cast<int>(sspResetManager::watchdog_type_s));
 	props->setValue("watchdog_timeout", sspResetManager::watchdog_timeout_s);
+
+	// Save input value properties
+	auto vals = sspDomainData::value_properties_s;
+	for (int i = 0; i < vals.size(); ++i) {
+		String name = "input_value_" + String(i);
+		props->setValue(name, vals[i]);
+	}
 }
 
 void sspSettingsPage::onEditStartTime()

@@ -117,14 +117,14 @@ void Storedal::buildInputContent(sspDomainData * domain)
 void Storedal::buildUserInputContent(sspDomainData * domain)
 {
 	auto range = std::make_shared<sspValueRange>();
-	range->setName("Master volume control");
+	range->setName("Master");
 	range->setValue(1.0);
 	range->setValueRange(0.0, 1.0);
 	domain->getValues().push_back(range);
 	domain->getInputValues().push_back(range);
 
 	range.reset(new sspValueRange);
-	range->setName("Kulisse volume control");
+	range->setName("Kulisse");
 	range->setValue(1.0);
 	range->setValueRange(0.0, 1.0);
 	domain->getValues().push_back(range);

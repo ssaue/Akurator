@@ -218,6 +218,7 @@
     <ClCompile Include="..\..\Source\sspDomainData.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPool.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPrimitives.cpp"/>
+    <ClCompile Include="..\..\Source\sspRunPage.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainListboxModel.cpp"/>
     <ClCompile Include="..\..\Source\sspDomainPage.cpp"/>
     <ClCompile Include="..\..\Source\sspSettingsPage.cpp"/>
@@ -2055,6 +2056,7 @@
     <ClInclude Include="..\..\Source\sspSharedVector.h"/>
     <ClInclude Include="..\..\Source\sspDomainPool.h"/>
     <ClInclude Include="..\..\Source\sspDomainPrimitives.h"/>
+    <ClInclude Include="..\..\Source\sspRunPage.h"/>
     <ClInclude Include="..\..\Source\sspDomainListboxModel.h"/>
     <ClInclude Include="..\..\Source\sspDomainPage.h"/>
     <ClInclude Include="..\..\Source\sspSettingsPage.h"/>

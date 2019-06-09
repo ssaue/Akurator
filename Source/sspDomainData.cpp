@@ -22,8 +22,8 @@ sspDomainData::sspDomainData()
 {
 }
 
-  void sspDomainData::loadValuePropertiesToInputs()
-  {
+void sspDomainData::loadValuePropertiesToInputs()
+{
 	auto input_values = getInputValues();
 	if (input_values.size() > value_properties_s.size()) {
 		value_properties_s.resize(input_values.size(), 0.0);
@@ -37,28 +37,20 @@ sspDomainData::sspDomainData()
 			b_ptr->setValue(value_properties_s[i]);
 		}
 	}
-  }
+}
 
-  void sspDomainData::saveValuePropertiesFromInputs()
-  {
-	  auto input_values = getInputValues();
-	  if (input_values.size() > value_properties_s.size()) {
-		  value_properties_s.resize(input_values.size(), 0.0);
-	  }
-
-	  for (int i = 0; i < input_values.size(); ++i) {
-		  if (auto ptr = input_values[i].lock()) {
-			  value_properties_s[i] = ptr->getValue();
-		  }
-	  }
-  }
-
-  void sspDomainData::createInitialContent()
+void sspDomainData::saveValuePropertiesFromInputs()
 {
-	// Add root stream
-	auto root = std::make_shared<sspTimeline>();
-	root->setName("Root stream");
-	timelines_.push_back(std::move(root));
+	auto input_values = getInputValues();
+	if (input_values.size() > value_properties_s.size()) {
+		value_properties_s.resize(input_values.size(), 0.0);
+	}
+
+	for (int i = 0; i < input_values.size(); ++i) {
+		if (auto ptr = input_values[i].lock()) {
+			value_properties_s[i] = ptr->getValue();
+		}
+	}
 }
 
 void sspDomainData::clearContents()

@@ -47,12 +47,12 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Akurator</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);C:\Develop\boost_1_69_0\stage\lib;..\..\Extern</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\lib;..\..\Extern</LibraryPath>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\App\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\App\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Akurator</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);C:\Develop\boost_1_69_0\stage\lib;..\..\Extern</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\lib;..\..\Extern</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
@@ -65,7 +65,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;C:\Develop\JUCE\modules;C:\Develop\boost_1_69_0;..\..\Extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;C:\Develop\JUCE\modules;C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\include\boost;..\..\Extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2017_78A5024=1;JUCE_APP_VERSION=1.0.0;JUCE_APP_VERSION_HEX=0x10000;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -88,7 +88,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)\Akurator.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <AdditionalLibraryDirectories>C:\Develop\boost_1_69_0\stage\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <Bscmake>
@@ -96,7 +96,7 @@
       <OutputFile>$(IntDir)\Akurator.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalLibraryDirectories>C:\Develop\boost_1_69_0\stage\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -109,7 +109,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;C:\Develop\JUCE\modules;C:\Develop\boost_1_69_0;..\..\Extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;C:\Develop\JUCE\modules;C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\include\boost;..\..\Extern;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_78A5024=1;JUCE_APP_VERSION=1.0.0;JUCE_APP_VERSION_HEX=0x10000;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -134,7 +134,7 @@
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>C:\Develop\boost_1_69_0\stage\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
     <Bscmake>
@@ -142,10 +142,12 @@
       <OutputFile>$(IntDir)\Akurator.bsc</OutputFile>
     </Bscmake>
     <Lib>
-      <AdditionalLibraryDirectories>C:\Develop\boost_1_69_0\stage\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Spotics\Prosjekter\Huldra\vendor\vcpkg\installed\x64-windows\lib;..\..\Extern;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\BlankProject.cpp"/>
+    <ClCompile Include="..\..\Source\Storedal.cpp"/>
     <ClCompile Include="..\..\Source\sspOscConsole.cpp"/>
     <ClCompile Include="..\..\Source\sspOscSender.cpp"/>
     <ClCompile Include="..\..\Source\sspOscSendChannel.cpp"/>
@@ -162,7 +164,6 @@
     <ClCompile Include="..\..\Source\sspTaskQueue.cpp"/>
     <ClCompile Include="..\..\Source\sspScheduler.cpp"/>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp"/>
-    <ClCompile Include="..\..\Source\Storedal.cpp"/>
     <ClCompile Include="..\..\Source\sspICPanalogInput.cpp"/>
     <ClCompile Include="..\..\Source\sspICPinput.cpp"/>
     <ClCompile Include="..\..\Source\sspInput.cpp"/>
@@ -1971,6 +1972,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\BlankProject.h"/>
+    <ClInclude Include="..\..\Source\Storedal.h"/>
     <ClInclude Include="..\..\Source\sspOscConsole.h"/>
     <ClInclude Include="..\..\Source\sspOSCSender.h"/>
     <ClInclude Include="..\..\Source\sspOscSendChannel.h"/>
@@ -1994,7 +1997,6 @@
     <ClInclude Include="..\..\Source\sspScheduleTask.h"/>
     <ClInclude Include="..\..\Source\sspScheduler.h"/>
     <ClInclude Include="..\..\Source\sspSilenceTask.h"/>
-    <ClInclude Include="..\..\Source\Storedal.h"/>
     <ClInclude Include="..\..\Source\sspICPanalogInput.h"/>
     <ClInclude Include="..\..\Source\sspICPinput.h"/>
     <ClInclude Include="..\..\Source\sspInput.h"/>

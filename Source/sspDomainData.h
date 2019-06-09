@@ -85,7 +85,6 @@ public:
 	template <typename T>
 	sspWeakVector<sspConditional>	getAllPossibleConditionals();
 
-	void createInitialContent();
 	void clearContents();
 	
 	bool verify(int& nErrors, int& nWarnings) const;

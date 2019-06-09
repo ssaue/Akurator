@@ -29,7 +29,7 @@ void sspAudioStream::start()
 	updater_.initialize(false);
 	if (auto ptr = volume_factor_.lock()) {
 		master_volume_ = ptr->getValue();
-		bus_->masterVolume(ptr->getValue(), sspStreamBus::volume_time_s);
+		bus_->masterVolume(master_volume_, sspStreamBus::volume_time_s);
 	}
 	task_queue_.clear();
 	task_queue_.setMaxTasks(max_active_, max_waiting_);
@@ -41,9 +41,9 @@ void sspAudioStream::update(double seconds)
 	if (updater_.update()) {
 		if (auto ptr = volume_factor_.lock()) {
 			double volume = ptr->getValue();
-			if (abs(volume - master_volume_) < 0.001) {
+			if (abs(volume - master_volume_) > 0.001) {
 				master_volume_ = volume;
-				bus_->masterVolume(ptr->getValue(), sspStreamBus::volume_time_s);
+				bus_->masterVolume(master_volume_, sspStreamBus::volume_time_s);
 			}
 		}
 	}

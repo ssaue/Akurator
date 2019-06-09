@@ -5,6 +5,9 @@
     <Filter Include="Akurator\Resources">
       <UniqueIdentifier>{2F152848-3FFF-B38C-959B-6EEC06CC800D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Akurator\Source\Project data">
+      <UniqueIdentifier>{18ACE2BE-CD7B-D67E-CEFA-9416C5AB44E1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Akurator\Source\OSC">
       <UniqueIdentifier>{56D77215-D70D-27F2-7874-0BB52AE69BFD}</UniqueIdentifier>
     </Filter>
@@ -457,6 +460,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\BlankProject.cpp">
+      <Filter>Akurator\Source\Project data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Storedal.cpp">
+      <Filter>Akurator\Source\Project data</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\sspOscConsole.cpp">
       <Filter>Akurator\Source\OSC</Filter>
     </ClCompile>
@@ -504,9 +513,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\sspSilenceTask.cpp">
       <Filter>Akurator\Source\Scheduling</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Storedal.cpp">
-      <Filter>Akurator\Source\Domain</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\sspICPanalogInput.cpp">
       <Filter>Akurator\Source\Domain\Inputs</Filter>
@@ -2577,6 +2583,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\BlankProject.h">
+      <Filter>Akurator\Source\Project data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Storedal.h">
+      <Filter>Akurator\Source\Project data</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\sspOscConsole.h">
       <Filter>Akurator\Source\OSC</Filter>
     </ClInclude>
@@ -2645,9 +2657,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\sspSilenceTask.h">
       <Filter>Akurator\Source\Scheduling</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Storedal.h">
-      <Filter>Akurator\Source\Domain</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\sspICPanalogInput.h">
       <Filter>Akurator\Source\Domain\Inputs</Filter>

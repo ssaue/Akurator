@@ -33,8 +33,6 @@ MainComponent::MainComponent(String file_path)
 	, manager_(std::make_unique<sspExecutiveManager>())
 	, tabs_(std::make_unique<sspTabbedComponent>(domain_.get()))
 {
-	domain_->createInitialContent();
-
 	if (file_path.isNotEmpty() && File::isAbsolutePath(file_path)) {
 		File path = file_path;
 		if (path.existsAsFile()) {
@@ -205,9 +203,14 @@ void MainComponent::filenameComponentChanged(FilenameComponent* fileComponentTha
 
 void MainComponent::onNew()
 {
-	domain_->clearContents();
-	manager_->clearContents();
-	domain_->createInitialContent();
+	/*
+	** There is currently no GUI for editing project data.
+	** Therefore we build content using source files.
+	** BlankProject is the minimum content expected.
+	** #include "BlankProject.h"
+	** BlankProject::buildContent(domain_.get(), manager_->getPlayManager());	
+	*/
+
 	Storedal::buildContent(domain_.get(), manager_->getPlayManager());
 	domain_->loadValuePropertiesToInputs();
 }

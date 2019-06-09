@@ -30,6 +30,9 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 {
 	if (!domain || !manager) return;
 
+	domain->clearContents();
+	manager->clearContents();
+
 	buildBasicContent(domain);
 	buildInputContent(domain);
 	buildUserInputContent(domain);
@@ -68,14 +71,14 @@ void Storedal::buildInputContent(sspDomainData * domain)
 	domain->getValues().push_back(val);
 
 	// Disable inputs when testing on laptop
-	auto ai = std::make_shared<sspICPanalogInput>();
-	ai->setName("Light input");
-	domain->getInputs().push_back(ai);
-	ai->setUpdateInterval(5.0);
-	ai->setPort(5);
-	ai->setChannel(0);
-	ai->setAddress(1);
-	ai->setValue(val);
+	//auto ai = std::make_shared<sspICPanalogInput>();
+	//ai->setName("Light input");
+	//domain->getInputs().push_back(ai);
+	//ai->setUpdateInterval(5.0);
+	//ai->setPort(5);
+	//ai->setChannel(0);
+	//ai->setAddress(1);
+	//ai->setValue(val);
 
 	auto val_limit = std::make_shared<sspBasicValue>();
 	val_limit->setName("Light limit 1");
@@ -133,8 +136,10 @@ void Storedal::buildUserInputContent(sspDomainData * domain)
 
 void Storedal::buildTimelineHierarchy(sspDomainData * domain)
 {
-	auto root = domain->getTimelines()[0];
+	auto root = std::make_shared<sspTimeline>();
+	root->setName("Root stream");
 	root->setTimeFactor(domain->getValues()[1]);
+	domain->getTimelines().push_back(std::move(root));
 
 	sspWeakVector<sspValue> factors;
 	factors.push_back(domain->getValues()[6]);
@@ -149,7 +154,7 @@ void Storedal::buildTimelineHierarchy(sspDomainData * domain)
 	stream->setName("Kulisse stream");
 	stream->setTimeFactor(domain->getValues()[1]);
 	stream->setVolumeFactor(val);
-	stream->setMaxTasks(2, 0);
+	stream->setMaxTasks(1, 0);
 	domain->getTimelines().push_back(stream);
 
 	sspWeakVector<sspTimeline> root_children;
@@ -159,23 +164,7 @@ void Storedal::buildTimelineHierarchy(sspDomainData * domain)
 
 void Storedal::buildKulisse(sspDomainData * domain)
 {
-	auto str = std::make_shared<sspSimpleString>();
-	str->setString("c:/Storedal/Lyder/Kulisser/");
-	str->setName(str->getString());
-	domain->getStrings().push_back(str);
-
-	auto file = std::make_shared<sspFileString>();
-	file->setName("Kulisse path");
-	file->setPath(str);
-	file->setAudioOnly(true);
-	file->setRecursiveSearch(false);
-	domain->getStrings().push_back(file);
-
-	str.reset(new sspSimpleString);
-	str->setString("/play/kulisse");
-	str->setName(str->getString());
-	domain->getStrings().push_back(str);
-
+	// Common for all Kulisse
 	auto val = std::make_shared<sspBasicValue>();
 	val->setName("0.5");
 	val->setValue(0.5);
@@ -192,16 +181,103 @@ void Storedal::buildKulisse(sspDomainData * domain)
 	random->setHigh(val2);
 	domain->getValues().push_back(random);
 
+	auto speed = std::make_shared<sspBasicValue>();
+	speed->setName("0.5");
+	speed->setValue(0.5);
+	domain->getValues().push_back(speed);
+
 	sspWeakVector<sspValue> args;
 	args.push_back(random);
+	args.push_back(speed);
 
-	auto osc = std::make_shared<sspOSCPlayer>();
-	osc->setName("Kulisse sounds");
-	osc->setAddress(str);
-	osc->setPath(file);
-	osc->setArguments(args);
-	domain->getPlayers().push_back(osc);
+	auto addr = std::make_shared<sspSimpleString>();
+	addr->setString("/play/kulisse");
+	addr->setName(addr->getString());
+	domain->getStrings().push_back(addr);
 
+	// Sildring
+	auto str = std::make_shared<sspSimpleString>();
+	str->setString("c:/Storedal/Lyder/Kulisser/Sildring/");
+	str->setName(str->getString());
+	domain->getStrings().push_back(str);
+
+	auto file = std::make_shared<sspFileString>();
+	file->setName("Sildring path");
+	file->setPath(str);
+	file->setAudioOnly(true);
+	file->setRecursiveSearch(false);
+	domain->getStrings().push_back(file);
+
+	auto sildring = std::make_shared<sspOSCPlayer>();
+	sildring->setName("Sildring");
+	sildring->setAddress(addr);
+	sildring->setPath(file);
+	sildring->setArguments(args);
+	domain->getPlayers().push_back(sildring);
+
+	// Klokker
+	str.reset(new sspSimpleString);
+	str->setString("c:/Storedal/Lyder/Kulisser/Klokker/");
+	str->setName(str->getString());
+	domain->getStrings().push_back(str);
+
+	file.reset(new sspFileString);
+	file->setName("Klokker path");
+	file->setPath(str);
+	file->setAudioOnly(true);
+	file->setRecursiveSearch(false);
+	domain->getStrings().push_back(file);
+
+	args[1] = domain->getValues()[0];
+	auto klokker = std::make_shared<sspOSCPlayer>();
+	klokker->setName("Klokker");
+	klokker->setAddress(addr);
+	klokker->setPath(file);
+	klokker->setArguments(args);
+	domain->getPlayers().push_back(klokker);
+
+	// Drypping1
+	str.reset(new sspSimpleString);
+	str->setString("c:/Storedal/Lyder/Kulisser/Drypping1/");
+	str->setName(str->getString());
+	domain->getStrings().push_back(str);
+
+	file.reset(new sspFileString);
+	file->setName("Drypping1 path");
+	file->setPath(str);
+	file->setAudioOnly(true);
+	file->setRecursiveSearch(false);
+	domain->getStrings().push_back(file);
+
+	args[1] = domain->getValues()[1];
+	auto drypping1 = std::make_shared<sspOSCPlayer>();
+	drypping1->setName("Drypping1");
+	drypping1->setAddress(addr);
+	drypping1->setPath(file);
+	drypping1->setArguments(args);
+	domain->getPlayers().push_back(drypping1);
+
+	// Drypping2
+	str.reset(new sspSimpleString);
+	str->setString("c:/Storedal/Lyder/Kulisser/Drypping2/");
+	str->setName(str->getString());
+	domain->getStrings().push_back(str);
+
+	file.reset(new sspFileString);
+	file->setName("Drypping2 path");
+	file->setPath(str);
+	file->setAudioOnly(true);
+	file->setRecursiveSearch(false);
+	domain->getStrings().push_back(file);
+
+	auto drypping2 = std::make_shared<sspOSCPlayer>();
+	drypping2->setName("Drypping2");
+	drypping2->setAddress(addr);
+	drypping2->setPath(file);
+	drypping2->setArguments(args);
+	domain->getPlayers().push_back(drypping2);
+
+	// Silence
 	val.reset(new sspBasicValue);
 	val->setName("15");
 	val->setValue(15);
@@ -213,14 +289,20 @@ void Storedal::buildKulisse(sspDomainData * domain)
 	domain->getPlayers().push_back(silent);
 
 	sspWeakVector<sspPlayer> players;
-	players.push_back(osc);
+	players.push_back(sildring);
+	players.push_back(klokker);
+	players.push_back(drypping1);
+	players.push_back(drypping2);
 	players.push_back(silent);
 
 	args.clear();
 	args.push_back(domain->getValues()[2]);
+	args.push_back(domain->getValues()[2]);
+	args.push_back(domain->getValues()[2]);
+	args.push_back(domain->getValues()[2]);
 	args.push_back(domain->getValues()[0]);
 
-	std::vector<double> const_weight{ 10, 1 };
+	std::vector<double> const_weight{ 2, 2, 2, 2, 1 };
 
 	auto randplay = std::make_shared<sspRandomPlayer>();
 	randplay->setName("Kulisse all");

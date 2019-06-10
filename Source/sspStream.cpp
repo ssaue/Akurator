@@ -67,10 +67,12 @@ void sspStream::handleMessage(const sspMessage& msg)
 		break;
 	case sspMessage::Type::Mute:
 	case sspMessage::Type::Solo:
+	case sspMessage::Type::MuteOnSolo:
 		running_ = false;
 		break;
 	case sspMessage::Type::Unmute:
 	case sspMessage::Type::Unsolo:
+	case sspMessage::Type::UnmuteOnSolo:
 		running_ = true;
 		break;
 	default:

@@ -91,6 +91,7 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 	switch (msg.getType())
 	{
 	case sspMessage::Type::Solo:
+		is_solostream_ = true;
 		if (auto ptr = msg.getTask().lock()) {
 			if (ptr->getID() >= 0 && t_ptr) {
 				bus_->bufferSolo(ptr->getID(), t_ptr->getValue());
@@ -98,6 +99,7 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 		}
 		break;
 	case sspMessage::Type::Unsolo:
+		is_solostream_ = false;
 		if (auto ptr = msg.getTask().lock()) {
 			if (ptr->getID() >= 0 && t_ptr) {
 				bus_->bufferUnSolo(ptr->getID(), t_ptr->getValue());
@@ -107,8 +109,14 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 	case sspMessage::Type::Mute:
 		if (t_ptr) bus_->masterFadeOut(t_ptr->getValue());
 		break;
+	case sspMessage::Type::MuteOnSolo:
+		if (!is_solostream_ && t_ptr) bus_->masterFadeOut(t_ptr->getValue());
+		break;
 	case sspMessage::Type::Unmute:
 		if (t_ptr) bus_->masterFadeIn(t_ptr->getValue());
+		break;
+	case sspMessage::Type::UnmuteOnSolo:
+		if (!is_solostream_ && t_ptr) bus_->masterFadeIn(t_ptr->getValue());
 		break;
 	case sspMessage::Type::SetVolume:
 		if (t_ptr && v_ptr) {

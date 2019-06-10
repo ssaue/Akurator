@@ -62,6 +62,25 @@ bool sspTimeline::empty() const
 	return true;
 }
 
+void sspTimeline::handleMessage(const sspMessage& msg)
+{
+	// There two messages should be handled by all children
+	switch (msg.getType())
+	{
+	case sspMessage::Type::MuteOnSolo:
+	case sspMessage::Type::UnmuteOnSolo:
+		for (auto child : children_) {
+			auto ptr = child.lock();
+			if (ptr) ptr->handleMessage(msg);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+
+
 bool sspTimeline::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;

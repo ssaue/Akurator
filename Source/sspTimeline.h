@@ -46,7 +46,7 @@ public:
 
 	virtual void onFinished() override {}
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
-	virtual void handleMessage(const sspMessage&) override {}
+	virtual void handleMessage(const sspMessage&) override;
 
 	// Accessors
 	void setChildren(const sspWeakVector<sspTimeline>& children) { children_ = children; }

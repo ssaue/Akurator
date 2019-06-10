@@ -25,6 +25,7 @@ private:
 	static void buildTimelineHierarchy(sspDomainData* domain);
 
 	static void buildKulisse(sspDomainData* domain);
+	static void buildRekke(sspDomainData* domain);
 
 	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
 	static void buildUserOutput(sspDomainData* domain);

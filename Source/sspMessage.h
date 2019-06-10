@@ -20,7 +20,7 @@ class sspPlayTask;
 class sspMessage
 {
 public:
-	enum class Type {Load, Solo, Mute, Unsolo, Unmute, SetVolume, AdjustVolume, Start, Stop, None};
+	enum class Type {Load, Solo, Mute, MuteOnSolo, Unsolo, Unmute, UnmuteOnSolo, SetVolume, AdjustVolume, Start, Stop, None};
 
 private:
 	Type type_ = Type::None;

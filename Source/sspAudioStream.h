@@ -67,5 +67,6 @@ private:
 	std::unique_ptr<sspStreamBus> bus_;
 	double master_volume_ = 0.0;
 	sspTimeUpdater updater_;
+	bool is_solostream_ = false;
 };
 

@@ -62,6 +62,9 @@ public:
 	void setScheduleTime(double seconds);
 	virtual bool run() override;
 
+	// The internals of run(), with an option for not playing
+	bool execute(bool run_now);
+
 	// Accessors
 	void setPlayer(std::weak_ptr<sspPlayer> player) { player_ = player; }
 	void setCondition(std::weak_ptr<sspConditional> cond) { condition_ = cond; }

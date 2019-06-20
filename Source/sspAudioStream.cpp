@@ -164,8 +164,13 @@ void sspAudioStream::setBus(std::unique_ptr<sspStreamBus> mixer)
 
 void sspAudioStream::play(std::weak_ptr<sspPlayTask> task)
 {
-	auto ready = task_queue_.loadTask(task);
-	if (ready.has_value() && bus_->play(task, ready.value())) {
+	auto load = task_queue_.loadTask(task);
+	if (std::get<0>(load) && bus_->play(task, std::get<2>(load))) {
 		sspScheduler::Instance().add(task);
+	}
+	else if (std::get<1>(load)) {
+		if (auto ptr = task.lock()) {
+			ptr->execute(false);
+		}
 	}
 }

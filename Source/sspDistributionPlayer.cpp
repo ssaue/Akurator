@@ -16,7 +16,6 @@ sspDistributionPlayer::sspDistributionPlayer()
 	: sspPlayer(), player_(), condition_(), start_time_(), end_time_(),
 	duration_(), init_time_(), silence_(std::make_shared<sspSilenceTask>())
 {
-	silence_->setResponder(weak_from_this());
 }
 
 bool sspDistributionPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
@@ -32,6 +31,7 @@ bool sspDistributionPlayer::start(std::weak_ptr<sspSendChannel> channel, std::we
 		loop_counter_ = 0;
 		is_playing_ = true;
 		init_time_ = std::chrono::steady_clock::now();
+		silence_->setResponder(weak_from_this());
 	}
 
 	return isPlaying();
@@ -59,7 +59,10 @@ bool sspDistributionPlayer::update()
 			ramp_pos = (dur > std::chrono::seconds(1) && diff < dur) ? (diff / dur) : 2.0;
 			break;
 		case LoopMode::Count:
-			ramp_pos = (dur_ptr->getValue() > 0.5) ? loop_counter_ / dur_ptr->getValue() : 2.0;
+		{
+			auto max_count = dur_ptr->getValue();
+			ramp_pos = (max_count > 0.5) ? loop_counter_ / max_count : 2.0;
+		}
 			break;
 		default:
 			break;

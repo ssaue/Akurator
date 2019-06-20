@@ -25,7 +25,7 @@ public:
 	static double volume_time_s;
 
 	sspStreamBus(const std::map<unsigned int, std::shared_ptr<sspSendChannel>>& channels);
-	virtual ~sspStreamBus();	// Ensure abstract class
+	virtual ~sspStreamBus();
 
 	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
 	bool play(std::weak_ptr<sspPlayTask> task, std::weak_ptr<sspPlayTask> old_task);

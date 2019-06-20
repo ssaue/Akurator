@@ -56,14 +56,14 @@ public:
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	// Accessors
-	void setDefaultPlayer(std::weak_ptr<sspPlayer> player) { player_ = player; }
+	void setPlayer(std::weak_ptr<sspPlayer> player) { player_ = player; }
 	void setCondition(std::weak_ptr<sspConditional> cond) { condition_ = cond; }
 	void setStartTime(std::weak_ptr<sspValue> start) { start_time_ = start; }
 	void setEndTime(std::weak_ptr<sspValue> end) { end_time_ = end; }
 	void setDuration(std::weak_ptr<sspValue> dur) { duration_ = dur; }
 	void setLoopMode(LoopMode mode) { loop_mode_ = mode; }
 
-	std::weak_ptr<sspPlayer> getDefaultPlayer() const { return player_; }
+	std::weak_ptr<sspPlayer> getPlayer() const { return player_; }
 	std::weak_ptr<sspValue> getStartTime() const { return start_time_; }
 	std::weak_ptr<sspValue> getEndTime() const { return end_time_; }
 	std::weak_ptr<sspValue> getDuration() const { return duration_; }

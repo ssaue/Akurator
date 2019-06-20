@@ -158,7 +158,7 @@ void sspDomainPage::paint (Graphics& g)
 void sspDomainPage::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
-	listbox_.setBounds(200, 13, 200, 248);
+	listbox_.setBounds(200, 13, 350, 248);
     //[/UserPreResize]
 
     //[UserResized] Add your own custom resize handling here..

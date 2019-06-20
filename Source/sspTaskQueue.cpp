@@ -20,27 +20,28 @@ sspTaskQueue::~sspTaskQueue()
 	clear();
 }
 
-std::optional<std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr<sspPlayTask> task)
+sspTaskQueue::TaskReturn sspTaskQueue::loadTask(std::weak_ptr<sspPlayTask> task)
 {
 	std::scoped_lock<std::mutex> lock{ lock_ };
 
 	if (max_active_ == 0 || active_.size() < max_active_) {
 		active_.push_back(task);
-		return std::weak_ptr<sspPlayTask>();
+		return std::make_tuple(true, true, std::weak_ptr<sspPlayTask>());
 	}
 	else if (auto load_task = task.lock()) {
 		auto pri = load_task->getPriority();
 		switch (pri)
 		{
 		case sspPlayTask::Priority::Cancel:
-			return {};
+			return std::make_tuple(false, true, std::weak_ptr<sspPlayTask>());
 			break;
 		case sspPlayTask::Priority::Wait:
 			if (max_waiting_ == 0 || waiting_.size() < max_waiting_) {
 				waiting_.push(task);
+				return std::make_tuple(false, false, std::weak_ptr<sspPlayTask>());
 			}
 			else {
-				return {};
+				return std::make_tuple(false, true, std::weak_ptr<sspPlayTask>());
 			}
 			break;
 		case sspPlayTask::Priority::Load:
@@ -49,10 +50,10 @@ std::optional<std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr<s
 				if (ptr && ptr->getPriority() < pri) {
 					active_.erase(qe);
 					active_.push_back(task);
-					return ptr;
+					return std::make_tuple(true, true, ptr);
 				}
 			}
-			return {};
+			return std::make_tuple(false, true, std::weak_ptr<sspPlayTask>());
 			break;
 		case sspPlayTask::Priority::LoadAlways:
 			for (auto qe = active_.begin(); qe != active_.end(); ++qe) {
@@ -60,17 +61,18 @@ std::optional<std::weak_ptr<sspPlayTask>> sspTaskQueue::loadTask(std::weak_ptr<s
 				if (ptr && ptr != load_task) {	// A task cannot remove itself
 					active_.erase(qe);
 					active_.push_back(task);
-					return ptr;
+					return std::make_tuple(true, true, ptr);
 				}
 			}
-			return {};
+			return std::make_tuple(false, true, std::weak_ptr<sspPlayTask>());
 			break;
 		default:
+			return std::make_tuple(false, true, std::weak_ptr<sspPlayTask>());
 			break;
 		}
 
 	}
-	return {};
+	return std::make_tuple(false, true, std::weak_ptr<sspPlayTask>());
 }
 
 void sspTaskQueue::removeInactive()

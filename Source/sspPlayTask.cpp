@@ -38,8 +38,8 @@ void sspPlayTask::stop()
 
 void sspPlayTask::onFinished()
 {
-	sspPlayer::onFinished();
 	messages_[Messages::End]->send();
+	sspPlayer::onFinished();
 	messages_[Messages::Exit]->send();
 }
 
@@ -83,12 +83,19 @@ void sspPlayTask::setScheduleTime(double seconds)
 
 bool sspPlayTask::run()
 {
+	return execute(true);
+}
+
+bool sspPlayTask::execute(bool run_now)
+{
 	messages_[Messages::Enter]->send();
 
-	if (auto c_ptr = condition_.lock()) {
-		if (c_ptr->isTrue()) {
-			if (auto p_ptr = player_.lock()) {
-				is_playing_ = p_ptr->start(getSendChannel(), weak_from_this());
+	if (run_now) {
+		if (auto c_ptr = condition_.lock()) {
+			if (c_ptr->isTrue()) {
+				if (auto p_ptr = player_.lock()) {
+					is_playing_ = p_ptr->start(getSendChannel(), weak_from_this());
+				}
 			}
 		}
 	}

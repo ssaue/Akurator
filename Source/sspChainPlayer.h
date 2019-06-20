@@ -42,7 +42,7 @@ public:
 
 	// Accessors
 	void setPlayers(const sspWeakVector<sspPlayer>& players) { players_ = players; }
-	void setChainLength(size_t length) { chain_length_ = length; }
+	void setChainLength(size_t length) { chain_length_ = length; chain_count_ = length; }
 	void setChainHop(size_t hop) { chain_hop_ = hop; }
 
 	const sspWeakVector<sspPlayer>& getPlayers() const { return players_; }

@@ -26,6 +26,10 @@ private:
 
 	static void buildKulisse(sspDomainData* domain);
 	static void buildRekke(sspDomainData* domain);
+	static void buildSignaler(sspDomainData* domain);
+	static void buildAttakker(sspDomainData* domain);	// Includes Kaskader and KulisseBend
+	static void buildRens(sspDomainData* domain);
+	static void buildDunder(sspDomainData* domain);
 
 	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
 	static void buildUserOutput(sspDomainData* domain);

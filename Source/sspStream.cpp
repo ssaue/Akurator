@@ -34,11 +34,17 @@ void sspStream::start()
 void sspStream::update(double seconds)
 {
 	if (running_.load()) {
-		std::scoped_lock<std::mutex> lck{ lock_ };
-		auto task = task_list_.getFirst(getTimeStep(seconds));
+		std::weak_ptr<sspPlayTask> task;
+		{
+			std::scoped_lock<std::mutex> lck{ lock_ };
+			task = task_list_.getFirst(getTimeStep(seconds));
+		}
 		while (!task.expired()) {
 			play(task);
-			task = task_list_.getNext();
+			{
+				std::scoped_lock<std::mutex> lck{ lock_ };
+				task = task_list_.getNext();
+			}
 		}
 	}
 	sspTimeline::update(seconds);
@@ -59,11 +65,13 @@ void sspStream::handleMessage(const sspMessage& msg)
 {
 	sspTimeline::handleMessage(msg);
 
-	std::scoped_lock<std::mutex> lck{ lock_ };
 	switch (msg.getType())
 	{
 	case sspMessage::Type::Load:
-		if (auto ptr = msg.getTime().lock()) task_list_.loadTask(msg.getTask(), ptr->getValue());
+		if (auto ptr = msg.getTime().lock()) {
+			std::scoped_lock<std::mutex> lck{ lock_ };
+			task_list_.loadTask(msg.getTask(), ptr->getValue());
+		}
 		break;
 	case sspMessage::Type::Mute:
 	case sspMessage::Type::Solo:

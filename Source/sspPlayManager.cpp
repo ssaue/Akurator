@@ -46,7 +46,7 @@ bool sspPlayManager::initialize(sspDomainPool<sspTimeline>& timelines)
 	for (auto& stream : timelines) {
 		auto audio = std::dynamic_pointer_cast<sspAudioStream>(stream);
 		if (audio) {
-			unsigned int num_channels = audio->getMaxActive();
+			unsigned int num_channels = audio->getMaxActive() + 1;	// Add an extra channel for transitions
 			auto bus = std::make_unique<sspStreamBus>(std::move(osc_console_.getBusChannels(num_channels)));
 			audio->setBus(std::move(bus));
 		}

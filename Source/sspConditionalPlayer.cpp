@@ -80,9 +80,6 @@ bool sspConditionalPlayer::verify(int & nErrors, int & nWarnings) const
 	if (conditionals_.empty()) {
 		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no conditionals";
 	}
-	else if (conditionals_.size() == 1) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one conditional";
-	}
 	for (auto&& cond : conditionals_) {
 		if (cond.expired()) {
 			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";

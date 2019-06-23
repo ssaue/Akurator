@@ -16,8 +16,9 @@
 
 #include <vector>
 #include <map>
+#include <atomic>
 
-class sspOscConsole : private OSCReceiver, private OSCReceiver::ListenerWithOSCAddress<OSCReceiver::MessageLoopCallback>
+class sspOscConsole : private OSCReceiver, private OSCReceiver::Listener<OSCReceiver::MessageLoopCallback>
 {
 public:
 	static String	send_address_s;
@@ -33,6 +34,7 @@ public:
 	void disconnectAll();
 	bool isSendConnected() const { return send_ready_; }
 	bool isReceiveConnected() const { return receive_ready_; }
+	bool verifyPlaying() { return amp_change_.exchange(false); }
 
 	std::map<unsigned int, std::shared_ptr<sspSendChannel>> getBusChannels(unsigned int num);
 	void clearChannels() { channels_.clear(); }
@@ -43,4 +45,9 @@ private:
 	sspSharedVector<sspSendChannel> channels_;
 	bool send_ready_ = false;
 	bool receive_ready_ = false;
+	std::atomic_bool amp_change_ = false;
+
+	// The two address patterns handled by sspOscConsole
+	const OSCAddressPattern finished_ = OSCAddressPattern("/finished");
+	const OSCAddressPattern amplitude_ = OSCAddressPattern("/amp");
 };

@@ -18,7 +18,7 @@ int sspOscConsole::receive_port_s = 9001;
 
 sspOscConsole::sspOscConsole() : channels_()
 {
-	addListener(this, "/finished");
+	addListener(this);
 }
 
 sspOscConsole::~sspOscConsole()
@@ -55,10 +55,21 @@ std::map<unsigned int, std::shared_ptr<sspSendChannel>> sspOscConsole::getBusCha
 
 void sspOscConsole::oscMessageReceived(const OSCMessage & message)
 {
-	if (message.size() == 1 && message[0].isInt32()) {
-		auto channel = message[0].getInt32();
-		if (channel < channels_.size()) {
-			channels_[channel]->setFinished();
+	static float old_amp = 0.0f;
+	const OSCAddressPattern& address = message.getAddressPattern();
+	if (address == amplitude_) {
+		if (message.size() == 1 && message[0].isFloat32()) {
+			auto amp = message[0].getFloat32();
+			if (amp != old_amp) amp_change_ = true;
+			old_amp = amp;
+		}
+	}
+	else if (address == finished_) {
+		if (message.size() == 1 && message[0].isInt32()) {
+			auto channel = message[0].getInt32();
+			if (channel < channels_.size()) {
+				channels_[channel]->setFinished();
+			}
 		}
 	}
 }

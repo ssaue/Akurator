@@ -39,6 +39,8 @@ public:
 	bool update();
 	void stop();
 
+	void reboot();	// Force reboot, either soft or hard
+
 	static bool softReboot();
 
 private:

@@ -121,7 +121,8 @@ void sspExecutiveManager::timerCallback()
 
 #ifdef NDEBUG
 	// Only do resets when running in release
-	if (!play_manager_->verifyRunning() || !reset_manager_->update()) {
+	if (!play_manager_->verifyPlaying() || !reset_manager_->update()) {
+		reset_manager_->reboot();
 		stop();
 	}
 #endif

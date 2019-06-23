@@ -16,6 +16,7 @@
 
 #include "sspOscConsole.h"
 #include "sspDomainData.h"
+#include "sspTimeUpdater.h"
 
 #include <chrono>
 
@@ -50,7 +51,7 @@ public:
 	void terminate();
 	void clearContents();
 
-	bool verifyRunning();
+	bool verifyPlaying();
 
 	sspConditionalMsgList&	getStartList() { return start_messages_; }
 	sspTriggerMsgList&		getTriggerList() { return trigger_messages_; }
@@ -60,5 +61,6 @@ private:
 	sspOscConsole osc_console_;
 	std::weak_ptr<sspTimeline> root_stream_;
 	std::chrono::steady_clock::time_point previous_time_;
+	sspTimeUpdater updater_;
 };
 

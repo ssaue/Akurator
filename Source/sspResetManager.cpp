@@ -55,33 +55,35 @@ bool sspResetManager::start()
 
 bool sspResetManager::update()
 {
-	bool reset = false;
 	if (reset_interval_s.days() > 0) {
 		auto today = boost::gregorian::day_clock::universal_day();
 		if (today == next_reset_) {
 			auto diff = second_clock::local_time().time_of_day() - reset_time_s;
-			reset = abs(diff.minutes()) < reset_minutes_;
+			if (abs(diff.minutes()) < reset_minutes_) 
+				return false;	// If time for reset, force reboot
 		}
 	}
 
-	if (reset) {
-		if (softReboot()) {
-			stop();
-		}
-		else if (watchdog_enabled_) {
-			watchdog_enabled_ = false;	// Forces hard reboot
-		}
-		return false;
-	}
 	if (watchdog_enabled_) {
 		watchdog_->refresh();
 	}
+
 	return true;
 }
 
 void sspResetManager::stop()
 {
 	if (watchdog_enabled_ && watchdog_) watchdog_->disable();
+}
+
+void sspResetManager::reboot()
+{
+	if (softReboot()) {	// Try soft reboot first
+		stop();
+	}
+	else if (watchdog_enabled_) {
+		watchdog_enabled_ = false;	// Forces hard reboot
+	}
 }
 
 bool sspResetManager::softReboot()

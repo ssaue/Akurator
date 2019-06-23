@@ -13,6 +13,7 @@
 #include "sspStreamBus.h"
 #include "sspExecutionState.h"
 #include "sspScheduler.h"
+#include "sspResetManager.h"
 
 using namespace std::chrono;
 
@@ -38,6 +39,8 @@ bool sspPlayManager::initialize(sspDomainPool<sspTimeline>& timelines)
 	// Initialize the root timeline and add OSC-channels to the audio streams
 	if (timelines.empty())
 		return false;
+
+	updater_.setInterval(sspResetManager::watchdog_timeout_s);
 
 	osc_console_.connectAll();
 	osc_console_.clearChannels();
@@ -66,6 +69,7 @@ bool sspPlayManager::start()
 		trigger_messages_.reset();
 		clock_messages_.reset();
 		start_messages_.send();
+		updater_.initialize();
 	}
 	return sspExecutionState::Instance().isPlaying();
 }
@@ -113,9 +117,7 @@ void sspPlayManager::clearContents()
 	clock_messages_.removeAll();
 }
 
-bool sspPlayManager::verifyRunning()
+bool sspPlayManager::verifyPlaying()
 {
-	// TODO: Is there a suitable definition of this one?
-	//   return (m_bPlaying && m_update.update()) ? m_scheduler.verifyRunning(1) : true;
-	return true;
+	return (sspExecutionState::Instance().isPlaying() && updater_.update()) ? osc_console_.verifyPlaying() : true;
 }

@@ -21,6 +21,9 @@ sspPlayTask::sspPlayTask()
 
 bool sspPlayTask::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<sspFinishedResponder> responder)
 {
+	if (auto ptr = channel.lock()) {
+		ptr->setAssigned(true);
+	}
 	setResponder(responder);
 	setSendChannel(channel);
 	return true;
@@ -39,6 +42,9 @@ void sspPlayTask::stop()
 void sspPlayTask::onFinished()
 {
 	messages_[Messages::End]->send();
+	if (auto ptr = getSendChannel().lock()) {
+		ptr->setAssigned(false);
+	}
 	sspPlayer::onFinished();
 	messages_[Messages::Exit]->send();
 }

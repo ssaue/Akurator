@@ -12,6 +12,7 @@
 
 #include <memory>
 #include <map>
+#include <mutex>
 
 class sspPlayTask;
 class sspFinishedResponder;
@@ -45,6 +46,7 @@ public:
 	void bufferUnSolo(unsigned int channel_id, double time);
 
 private:
+	mutable std::mutex lock_;
 	std::map<unsigned int, std::shared_ptr<sspSendChannel>> channels_;
 	std::weak_ptr<sspFinishedResponder> responder_;
 };

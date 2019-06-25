@@ -13,8 +13,6 @@
 #include "sspTimeline.h"
 #include "sspSchedulePlayTaskList.h"
 
-#include <mutex>
-
 class sspStream : public sspTimeline
 {
 	friend class boost::serialization::access;
@@ -40,6 +38,5 @@ protected:
 	virtual void play(std::weak_ptr<sspPlayTask> task);
 
 private:
-	mutable std::mutex lock_;
 	sspSchedulePlayTaskList task_list_;
 };

@@ -13,18 +13,21 @@
 double sspSchedulePlayTaskList::look_ahead_ = 2.0;
 
 sspSchedulePlayTaskList::sspSchedulePlayTaskList()
-	: tasks_()
+	: tasks_(), lock_()
 {
 }
 
 void sspSchedulePlayTaskList::reset()
 {
+	std::scoped_lock<std::mutex> lck{ lock_ };
 	tasks_.clear();
 	time_counter_ = 0.0;
 }
 
 void sspSchedulePlayTaskList::loadTask(std::weak_ptr<sspPlayTask> task, double seconds)
 {
+	std::scoped_lock<std::mutex> lck{ lock_ };
+
 	auto schedule_task = std::make_unique<sspSchedulePlayTask>(task, seconds);
 
 	auto iter = tasks_.begin();
@@ -43,13 +46,26 @@ void sspSchedulePlayTaskList::loadTask(std::weak_ptr<sspPlayTask> task, double s
 	}
 }
 
+bool sspSchedulePlayTaskList::empty() const
+{
+	std::scoped_lock<std::mutex> lck{ lock_ };
+	return tasks_.empty();
+}
+
 std::weak_ptr<sspPlayTask> sspSchedulePlayTaskList::getFirst(double time)
 {
+	std::scoped_lock<std::mutex> lck{ lock_ };
 	time_counter_ += time;
-	return getNext();
+	return getNextInternal();
 }
 
 std::weak_ptr<sspPlayTask> sspSchedulePlayTaskList::getNext()
+{
+	std::scoped_lock<std::mutex> lck{ lock_ };
+	return getNextInternal();
+}
+
+std::weak_ptr<sspPlayTask> sspSchedulePlayTaskList::getNextInternal()
 {
 	if (tasks_.empty()) {
 		time_counter_ = 0.0;

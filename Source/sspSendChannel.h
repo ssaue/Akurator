@@ -31,12 +31,16 @@ public:
 	void clearResponder() { responder_.reset(); }
 	void setFinished() { if (auto ptr = responder_.lock()) { ptr->onFinished(); } }
 
-	bool busy() { return !responder_.expired(); }
+	bool assigned() const { return assigned_; }
+	bool busy() const { return !responder_.expired(); }
 
 	void setID(int value) { id_ = value; }
 	int  getID() const { return id_; }
 
+	void setAssigned(bool yes) { assigned_ = yes; }
+
 private:
 	int id_;
+	bool assigned_ = false;
 	std::weak_ptr<sspFinishedResponder> responder_;
 };

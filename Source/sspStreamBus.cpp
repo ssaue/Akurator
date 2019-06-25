@@ -17,7 +17,7 @@ double sspStreamBus::fadeout_time_s = 5.0;
 double sspStreamBus::volume_time_s = 1.0;
 
 sspStreamBus::sspStreamBus(const std::map<unsigned int, std::shared_ptr<sspSendChannel>>& channels)
-	: channels_(channels), responder_()
+	: channels_(channels), responder_(), lock_()
 {
 }
 
@@ -27,9 +27,11 @@ sspStreamBus::~sspStreamBus()
 
 bool sspStreamBus::play(std::weak_ptr<sspPlayTask> task, std::weak_ptr<sspPlayTask> old_task)
 {
+	std::scoped_lock<std::mutex> lck{ lock_ };
+
 	if (auto ptr = task.lock()) {
 		for (auto& chan : channels_) {
-			if (!chan.second->busy()) {
+			if (!chan.second->assigned()) {
 				if (auto old_ptr = old_task.lock()) {	// Need to fade out old buffer first
 					bufferFadeOut(old_ptr->getID(), fadeout_time_s);
 					bufferVolume(chan.first, 0.0);

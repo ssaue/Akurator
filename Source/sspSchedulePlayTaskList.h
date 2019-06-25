@@ -13,6 +13,7 @@
 #include "sspSchedulePlayTask.h"
 
 #include <list>
+#include <mutex>
 
 class sspSchedulePlayTaskList 
 {
@@ -28,8 +29,12 @@ public:
 	
 	void reset();
 	void loadTask(std::weak_ptr<sspPlayTask> task, double seconds);
-	bool empty() const { return tasks_.empty(); }
+	bool empty() const;
 
 	std::weak_ptr<sspPlayTask> getFirst(double time);
 	std::weak_ptr<sspPlayTask> getNext();
+
+private:
+	mutable std::mutex lock_;
+	std::weak_ptr<sspPlayTask> getNextInternal();
 };

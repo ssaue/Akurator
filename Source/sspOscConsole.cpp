@@ -45,12 +45,21 @@ std::map<unsigned int, std::shared_ptr<sspSendChannel>> sspOscConsole::getBusCha
 
 	unsigned int id = static_cast<unsigned int>(channels_.size());
 	for (unsigned int i = 0; i < num; ++i) {
-		channels_.push_back(std::make_shared<sspOscSendChannel>());
-		channels_.back()->setID(id+i);
-		bus_channels[id + i] = channels_.back();
+		auto channel = std::make_shared<sspOscSendChannel>();
+		channel->setBusID(buses_);
+		channel->setChannelID(id + i);
+		channels_.push_back(channel);
+		bus_channels[id + i] = channel;
 	}
+	buses_++;
 	
 	return std::move(bus_channels);
+}
+
+void sspOscConsole::clearChannels()
+{ 
+	channels_.clear();
+	buses_ = 0;
 }
 
 void sspOscConsole::oscMessageReceived(const OSCMessage & message)

@@ -20,7 +20,8 @@ void sspOscSendChannel::sendMessage(std::string address, std::vector<ArgumentTyp
 {
 	OSCAddressPattern pattern(address);
 	OSCMessage message(pattern);
-	message.addInt32(getID());	// Always add the channel ID when sending messages
+	message.addInt32(getBusID());	// Always add the bus ID when sending messages
+	message.addInt32(getChannelID());	// Always add the channel ID when sending messages
 	for (auto&& arg : arguments) {
 		std::visit(overloaded {
 			[&message](int i) { message.addInt32(i); },

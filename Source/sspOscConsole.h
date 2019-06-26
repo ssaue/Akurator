@@ -37,12 +37,13 @@ public:
 	bool verifyPlaying() { return amp_change_.exchange(false); }
 
 	std::map<unsigned int, std::shared_ptr<sspSendChannel>> getBusChannels(unsigned int num);
-	void clearChannels() { channels_.clear(); }
+	void clearChannels();
 
 private:
 	virtual void oscMessageReceived(const OSCMessage& message) override;
 
 	sspSharedVector<sspSendChannel> channels_;
+	int buses_ = 0;
 	bool send_ready_ = false;
 	bool receive_ready_ = false;
 	std::atomic_bool amp_change_ = false;

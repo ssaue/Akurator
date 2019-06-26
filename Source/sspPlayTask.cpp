@@ -127,10 +127,10 @@ std::shared_ptr<sspConditionalMsgList> sspPlayTask::getMessageList(Messages type
 	return messages_[type];
 }
 
-int sspPlayTask::getID() const
+int sspPlayTask::getChannelID() const
 {
 	if (auto sender = getSendChannel().lock()) {
-		return sender->getID();
+		return sender->getChannelID();
 	}
 	return -1;
 }

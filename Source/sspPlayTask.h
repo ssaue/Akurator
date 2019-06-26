@@ -77,7 +77,7 @@ public:
 	std::weak_ptr<sspValue> getVolumeFactor() const { return volume_factor_; }
 	std::shared_ptr<sspConditionalMsgList> getMessageList(Messages type);
 	Priority getPriority() const { return priority_; }
-	int getID() const;
+	int getChannelID() const;
 
 private:
 	bool is_playing_ = false;

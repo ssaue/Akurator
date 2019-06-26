@@ -29,7 +29,7 @@ void sspAudioStream::start()
 	updater_.initialize(false);
 	if (auto ptr = volume_factor_.lock()) {
 		master_volume_ = ptr->getValue();
-		bus_->masterVolume(master_volume_, sspStreamBus::volume_time_s);
+		bus_->busVolume(master_volume_, sspStreamBus::volume_time_s);
 	}
 	task_queue_.clear();
 	task_queue_.setMaxTasks(max_active_, max_waiting_);
@@ -43,7 +43,7 @@ void sspAudioStream::update(double seconds)
 			double volume = ptr->getValue();
 			if (abs(volume - master_volume_) > 0.001) {
 				master_volume_ = volume;
-				bus_->masterVolume(master_volume_, sspStreamBus::volume_time_s);
+				bus_->busVolume(master_volume_, sspStreamBus::volume_time_s);
 			}
 		}
 	}
@@ -93,39 +93,39 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
 	case sspMessage::Type::Solo:
 		is_solostream_ = true;
 		if (auto ptr = msg.getTask().lock()) {
-			if (ptr->getID() >= 0 && t_ptr) {
-				bus_->bufferSolo(ptr->getID(), t_ptr->getValue());
+			if (ptr->getChannelID() >= 0 && t_ptr) {
+				bus_->channelSolo(ptr->getChannelID(), t_ptr->getValue());
 			}
 		}
 		break;
 	case sspMessage::Type::Unsolo:
 		is_solostream_ = false;
 		if (auto ptr = msg.getTask().lock()) {
-			if (ptr->getID() >= 0 && t_ptr) {
-				bus_->bufferUnSolo(ptr->getID(), t_ptr->getValue());
+			if (ptr->getChannelID() >= 0 && t_ptr) {
+				bus_->channelUnSolo(ptr->getChannelID(), t_ptr->getValue());
 			}
 		}
 		break;
 	case sspMessage::Type::Mute:
-		if (t_ptr) bus_->masterFadeOut(t_ptr->getValue());
+		if (t_ptr) bus_->busFadeOut(t_ptr->getValue());
 		break;
 	case sspMessage::Type::MuteOnSolo:
-		if (!is_solostream_ && t_ptr) bus_->masterFadeOut(t_ptr->getValue());
+		if (!is_solostream_ && t_ptr) bus_->busFadeOut(t_ptr->getValue());
 		break;
 	case sspMessage::Type::Unmute:
-		if (t_ptr) bus_->masterFadeIn(t_ptr->getValue());
+		if (t_ptr) bus_->busFadeIn(t_ptr->getValue());
 		break;
 	case sspMessage::Type::UnmuteOnSolo:
-		if (!is_solostream_ && t_ptr) bus_->masterFadeIn(t_ptr->getValue());
+		if (!is_solostream_ && t_ptr) bus_->busFadeIn(t_ptr->getValue());
 		break;
 	case sspMessage::Type::SetVolume:
 		if (t_ptr && v_ptr) {
-			bus_->masterVolume(v_ptr->getValue(), t_ptr->getValue(), sspStreamBus::Reference::Absolute);
+			bus_->busVolume(v_ptr->getValue(), t_ptr->getValue(), sspStreamBus::Reference::Absolute);
 		}
 		break;
 	case sspMessage::Type::AdjustVolume:
 		if (t_ptr && v_ptr) {
-			bus_->masterVolume(v_ptr->getValue(), t_ptr->getValue(), sspStreamBus::Reference::Relative);
+			bus_->busVolume(v_ptr->getValue(), t_ptr->getValue(), sspStreamBus::Reference::Relative);
 		}
 		break;
 	default:

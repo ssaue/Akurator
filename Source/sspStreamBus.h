@@ -34,16 +34,16 @@ public:
 
 	enum class Reference : unsigned int { Relative, Absolute };
 
-	void masterVolume(double vol, double time, Reference ref = Reference::Absolute);
-	void masterFadeIn(double time);
-	void masterFadeOut(double time);
+	void busVolume(double vol, double time, Reference ref = Reference::Absolute);
+	void busFadeIn(double time);
+	void busFadeOut(double time);
 	
 	// Figure out how to address the correct buffer later
-	bool bufferVolume(unsigned int channel_id, double vol, double time = 0.0, Reference ref = Reference::Absolute);
-	bool bufferFadeIn(unsigned int channel_id, double time);
-	bool bufferFadeOut(unsigned int channel_id, double time);
-	void bufferSolo(unsigned int channel_id, double time);
-	void bufferUnSolo(unsigned int channel_id, double time);
+	bool channelVolume(unsigned int channel_id, double vol, double time = 0.0, Reference ref = Reference::Absolute);
+	bool channelFadeIn(unsigned int channel_id, double time);
+	bool channelFadeOut(unsigned int channel_id, double time);
+	void channelSolo(unsigned int channel_id, double time);
+	void channelUnSolo(unsigned int channel_id, double time);
 
 private:
 	mutable std::mutex lock_;

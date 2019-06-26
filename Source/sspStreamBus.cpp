@@ -33,12 +33,12 @@ bool sspStreamBus::play(std::weak_ptr<sspPlayTask> task, std::weak_ptr<sspPlayTa
 		for (auto& chan : channels_) {
 			if (!chan.second->assigned()) {
 				if (auto old_ptr = old_task.lock()) {	// Need to fade out old buffer first
-					bufferFadeOut(old_ptr->getID(), fadeout_time_s);
-					bufferVolume(chan.first, 0.0);
+					channelFadeOut(old_ptr->getChannelID(), fadeout_time_s);
+					channelVolume(chan.first, 0.0);
 				}
 				if (auto v_ptr = ptr->getVolumeFactor().lock()) {
-					bufferFadeIn(chan.first, fadein_time_s);	// To compensate for previous fadeout
-					bufferVolume(chan.first, v_ptr->getValue(), fadein_time_s);
+					channelFadeIn(chan.first, fadein_time_s);	// To compensate for previous fadeout
+					channelVolume(chan.first, v_ptr->getValue(), fadein_time_s);
 				}
 				return (ptr->start(chan.second, responder_));
 			}
@@ -56,46 +56,43 @@ void sspStreamBus::stop()
 	}
 }
 
-void sspStreamBus::masterVolume(double vol, double time, Reference ref)
+void sspStreamBus::busVolume(double vol, double time, Reference ref)
 {
-	std::string chan_addr = "/master/vol/";
+	std::string chan_addr = "/bus/vol/";
 	chan_addr += (ref == Reference::Absolute ? "abs" : "rel");
 	std::vector<sspSendChannel::ArgumentType> args;
 	args.push_back(vol);
 	args.push_back(time);
 
-	for (auto& chan : channels_) {
-		chan.second->sendMessage(chan_addr, args);
-	}
+	// Use the first channel to send the message
+	channels_.cbegin()->second->sendMessage(chan_addr, args);
 }
 
-void sspStreamBus::masterFadeIn(double time)
+void sspStreamBus::busFadeIn(double time)
 {
-	std::string chan_addr = "/master/fadein/";
+	std::string chan_addr = "/bus/fadein/";
 	std::vector<sspSendChannel::ArgumentType> args;
 	args.push_back(time);
 
-	for (auto& chan : channels_) {
-		chan.second->sendMessage(chan_addr, args);
-	}
+	// Use the first channel to send the message
+	channels_.cbegin()->second->sendMessage(chan_addr, args);
 }
 
-void sspStreamBus::masterFadeOut(double time)
+void sspStreamBus::busFadeOut(double time)
 {
-	std::string chan_addr = "/master/fadeout/";
+	std::string chan_addr = "/bus/fadeout/";
 	std::vector<sspSendChannel::ArgumentType> args;
 	args.push_back(time);
 
-	for (auto& chan : channels_) {
-		chan.second->sendMessage(chan_addr, args);
-	}
+	// Use the first channel to send the message
+	channels_.cbegin()->second->sendMessage(chan_addr, args);
 }
 
-bool sspStreamBus::bufferVolume(unsigned int channel_id, double vol, double time, Reference ref)
+bool sspStreamBus::channelVolume(unsigned int channel_id, double vol, double time, Reference ref)
 {
 	auto channel = channels_.find(channel_id);
 	if (channel != channels_.end()) {
-		std::string chan_addr = "/buffer/vol/";
+		std::string chan_addr = "/channel/vol/";
 		chan_addr += (ref == Reference::Absolute ? "abs" : "rel");
 		std::vector<sspSendChannel::ArgumentType> args;
 		args.push_back(vol);
@@ -108,11 +105,11 @@ bool sspStreamBus::bufferVolume(unsigned int channel_id, double vol, double time
 	}
 }
 
-bool sspStreamBus::bufferFadeIn(unsigned int channel_id, double time)
+bool sspStreamBus::channelFadeIn(unsigned int channel_id, double time)
 {
 	auto channel = channels_.find(channel_id);
 	if (channel != channels_.end()) {
-		std::string chan_addr = "/buffer/fadein/";
+		std::string chan_addr = "/channel/fadein/";
 		std::vector<sspSendChannel::ArgumentType> args;
 		args.push_back(time);
 		channel->second->sendMessage(chan_addr, args);
@@ -123,11 +120,11 @@ bool sspStreamBus::bufferFadeIn(unsigned int channel_id, double time)
 	}
 }
 
-bool sspStreamBus::bufferFadeOut(unsigned int channel_id, double time)
+bool sspStreamBus::channelFadeOut(unsigned int channel_id, double time)
 {
 	auto channel = channels_.find(channel_id);
 	if (channel != channels_.end()) {
-		std::string chan_addr = "/buffer/fadeout/";
+		std::string chan_addr = "/channel/fadeout/";
 		std::vector<sspSendChannel::ArgumentType> args;
 		args.push_back(time);
 		channel->second->sendMessage(chan_addr, args);
@@ -138,23 +135,23 @@ bool sspStreamBus::bufferFadeOut(unsigned int channel_id, double time)
 	}
 }
 
-void sspStreamBus::bufferSolo(unsigned int channel_id, double time)
+void sspStreamBus::channelSolo(unsigned int channel_id, double time)
 {
 	for (auto& chan : channels_) {
 		if (chan.first == channel_id) {
-			bufferFadeIn(chan.first, time);
+			channelFadeIn(chan.first, time);
 		}
 		else {
-			bufferFadeOut(chan.first, time);
+			channelFadeOut(chan.first, time);
 		}
 	}
 }
 
-void sspStreamBus::bufferUnSolo(unsigned int channel_id, double time)
+void sspStreamBus::channelUnSolo(unsigned int channel_id, double time)
 {
 	for (auto& chan : channels_) {
 		if (chan.first != channel_id) {
-			bufferFadeIn(chan.first, time);
+			channelFadeIn(chan.first, time);
 		}
 	}
 }

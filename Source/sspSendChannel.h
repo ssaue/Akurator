@@ -34,13 +34,17 @@ public:
 	bool assigned() const { return assigned_; }
 	bool busy() const { return !responder_.expired(); }
 
-	void setID(int value) { id_ = value; }
-	int  getID() const { return id_; }
+	void setChannelID(int value) { channel_id_ = value; }
+	int  getChannelID() const { return channel_id_; }
+
+	void setBusID(int value) { bus_id_ = value; }
+	int  getBusID() const { return bus_id_; }
 
 	void setAssigned(bool yes) { assigned_ = yes; }
 
 private:
-	int id_;
+	int channel_id_ = 0;
+	int bus_id_ = 0;
 	bool assigned_ = false;
 	std::weak_ptr<sspFinishedResponder> responder_;
 };

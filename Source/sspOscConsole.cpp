@@ -39,6 +39,14 @@ void sspOscConsole::disconnectAll()
 	disconnect();
 }
 
+void sspOscConsole::initializeMixer()
+{
+	OSCAddressPattern pattern("/init");
+	OSCMessage message(pattern);
+	message.addInt32(static_cast<int>(channels_.size()));		// Number of channels are sent as parameter
+	sspOscSender::send(message);
+}
+
 std::map<unsigned int, std::shared_ptr<sspSendChannel>> sspOscConsole::getBusChannels(unsigned int num)
 {
 	std::map<unsigned int, std::shared_ptr<sspSendChannel>> bus_channels;

@@ -64,6 +64,7 @@ bool sspPlayManager::start()
 		// TODO: Input manager
 		sspExecutionState::Instance().playing();
 		sspScheduler::Instance().enableTasks();
+		osc_console_.initializeMixer();
 		previous_time_ = steady_clock::now();
 		if (auto ptr = root_stream_.lock()) ptr->start();
 		trigger_messages_.reset();
@@ -97,7 +98,6 @@ void sspPlayManager::stop()
 		if (auto ptr = root_stream_.lock()) ptr->stop();
 		sspScheduler::Instance().disableTasks();
 
-		// TODO: Input manager!
 		sspExecutionState::Instance().playing(false);
 	}
 }

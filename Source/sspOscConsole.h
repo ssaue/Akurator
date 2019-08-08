@@ -32,6 +32,8 @@ public:
 
 	void connectAll();
 	void disconnectAll();
+	void initializeMixer();
+
 	bool isSendConnected() const { return send_ready_; }
 	bool isReceiveConnected() const { return receive_ready_; }
 	bool verifyPlaying() { return amp_change_.exchange(false); }

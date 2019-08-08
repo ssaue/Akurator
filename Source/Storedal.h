@@ -32,5 +32,6 @@ private:
 	static void buildDunder(sspDomainData* domain);
 
 	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
+	static void buildTriggerList(sspDomainData* domain, sspPlayManager* manager);
 	static void buildUserOutput(sspDomainData* domain);
 };

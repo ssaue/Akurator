@@ -47,6 +47,7 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	buildDunder(domain);
 
 	buildStartList(domain, manager);
+	buildTriggerList(domain, manager);
 	buildUserOutput(domain);
 }
 
@@ -1312,28 +1313,6 @@ void Storedal::buildRens(sspDomainData * domain)
 	task->setPriority(sspPlayTask::Priority::LoadAlways);
 	domain->getPlaytasks().push_back(task);
 
-	// This does not work yet: There is a risk that Kulisse will stop
-	//// Message at Exit
-	//auto val = std::make_shared<sspBasicValue>();
-	//val->setName("One hour");
-	//val->setValue(3600);
-	//domain->getValues().push_back(val);
-
-	//auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-	//sspMessage& msg = msg_recv->getMessage();
-	//msg.setTask(task);
-	//msg.setTime(val);	// One hour
-	//msg.setType(sspMessage::Type::Load);
-	//msg_recv->setReceiver(domain->getTimelines()[1]);
-
-	//auto msglist = std::make_shared<sspMessageList>();
-	//msglist->add(std::move(msg_recv));
-
-	//auto cond_msg = std::make_shared<sspConditionalMsgList>();
-	//cond_msg->add(domain->getConditionals()[0], msglist);
-
-	//task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
-
 	// Message at Start
 	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
 	sspMessage& msg2 = msg_recv->getMessage();
@@ -1343,7 +1322,6 @@ void Storedal::buildRens(sspDomainData * domain)
 	msg_recv->setReceiver(domain->getTimelines()[1]);
 
 	auto msglist = std::make_shared<sspMessageList>();
-//	msglist.reset(new sspMessageList);
 	msglist->add(std::move(msg_recv));
 
 	msg_recv = std::make_unique<sspMessageWithReceiver>();
@@ -1355,7 +1333,6 @@ void Storedal::buildRens(sspDomainData * domain)
 	msglist->add(std::move(msg_recv));
 
 	auto cond_msg = std::make_shared<sspConditionalMsgList>();
-//	cond_msg.reset(new sspConditionalMsgList);
 	cond_msg->add(domain->getConditionals()[0], msglist);
 
 	task->setMessageList(sspPlayTask::Messages::Start, cond_msg);
@@ -1564,6 +1541,54 @@ void Storedal::buildStartList(sspDomainData * domain, sspPlayManager * manager)
 
 	auto& startlist = manager->getStartList();
 	startlist.add(domain->getConditionals()[0], msglist);
+}
+
+void Storedal::buildTriggerList(sspDomainData * domain, sspPlayManager * manager)
+{
+	auto msglist = std::make_shared<sspMessageList>();
+
+	// Rens should appear every hour
+	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+	sspMessage& msg1 = msg_recv->getMessage();
+	msg1.setTask(domain->getPlaytasks()[4]);
+	msg1.setTime(domain->getValues()[0]);
+	msg1.setType(sspMessage::Type::Load);
+	msg_recv->setReceiver(domain->getTimelines()[1]);
+	msglist->add(std::move(msg_recv));
+
+	// The conditional message list
+	// Should not play if it is already playing
+	sspWeakVector<sspPlayer> players;
+	players.push_back(domain->getPlayers()[40]);
+
+	auto playing = std::make_shared<sspIsPlaying>();
+	playing->setName("Rens is playing");
+	playing->setPlayers(players);
+	domain->getConditionals().push_back(playing);
+
+	auto not_playing = std::make_shared<sspNot>();
+	not_playing->setName("Rens is not playing");
+	not_playing->setOperand(playing);
+	domain->getConditionals().push_back(not_playing);
+
+	auto cond_msglist = std::make_shared<sspConditionalMsgList>();
+	cond_msglist->add(not_playing, msglist);
+
+	// Finally, the triggered message list in sspPlayManager
+	auto hour = std::make_shared<sspMinuteCompare>();
+	hour->setName("0 minutes passed the hour");
+	hour->setMinutes(0);
+	hour->setRelationship(sspMinuteCompare::Relation::Equal);
+	domain->getConditionals().push_back(hour);
+
+	auto trigger = std::make_shared<sspTrigger>();
+	trigger->setName("Trigger on the hour");
+	trigger->setConditional(hour);
+	trigger->setChange(sspTrigger::Trigger::True);
+	domain->getConditionals().push_back(trigger);
+
+	auto& trigger_list = manager->getTriggerList();
+	trigger_list.add(trigger, cond_msglist);
 }
 
 void Storedal::buildUserOutput(sspDomainData * domain)

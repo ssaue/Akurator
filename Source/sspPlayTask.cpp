@@ -35,6 +35,7 @@ void sspPlayTask::stop()
 		is_playing_ = false;
 		if (auto ptr = player_.lock()) ptr->stop();
 		messages_[Messages::End]->send();
+		if (auto ptr = getSendChannel().lock()) ptr->setAssigned(false);
 		messages_[Messages::Exit]->send();
 	}
 }

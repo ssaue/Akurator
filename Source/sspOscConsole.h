@@ -13,12 +13,13 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "sspSendChannel.h"
 #include "sspSharedVector.h"
+#include "sspOSCSender.h"
 
 #include <vector>
 #include <map>
 #include <atomic>
 
-class sspOscConsole : private OSCReceiver, private OSCReceiver::Listener<OSCReceiver::MessageLoopCallback>
+class sspOscConsole : private OSCReceiver, private OSCReceiver::Listener<OSCReceiver::MessageLoopCallback>, private sspOscSender
 {
 public:
 	static String	send_address_s;
@@ -32,7 +33,7 @@ public:
 
 	void connectAll();
 	void disconnectAll();
-	void initializeMixer();
+	void initializeChannels();
 
 	bool isSendConnected() const { return send_ready_; }
 	bool isReceiveConnected() const { return receive_ready_; }

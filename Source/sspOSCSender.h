@@ -15,12 +15,11 @@
 
 class sspOscSender
 {
-public:
+protected:
 	static bool connect(const String& address, const int port);
 	static void disconnect();
 	static void send(const OSCMessage& msg);
 
-protected:
 	sspOscSender() = default;
 	sspOscSender(const sspOscSender& obj) = delete;
 	sspOscSender& operator= (const sspOscSender& obj) = delete;

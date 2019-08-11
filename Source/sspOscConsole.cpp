@@ -29,17 +29,17 @@ sspOscConsole::~sspOscConsole()
 
 void sspOscConsole::connectAll()
 {
-	receive_ready_ = connect(receive_port_s);
+	receive_ready_ = OSCReceiver::connect(receive_port_s);
 	send_ready_ = sspOscSender::connect(send_address_s, send_port_s);
 }
 
 void sspOscConsole::disconnectAll()
 {
 	sspOscSender::disconnect();
-	disconnect();
+	OSCReceiver::disconnect();
 }
 
-void sspOscConsole::initializeMixer()
+void sspOscConsole::initializeChannels()
 {
 	OSCAddressPattern pattern("/init");
 	OSCMessage message(pattern);

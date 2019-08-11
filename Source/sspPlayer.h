@@ -41,6 +41,7 @@ protected:
 	void setSendChannel(std::weak_ptr<sspSendChannel> channel) { channel_ = channel; }
 	std::weak_ptr<sspFinishedResponder> getResponder() const { return responder_; }
 	std::weak_ptr<sspSendChannel> getSendChannel() const { return channel_; }
+	void clearSendChannel() { channel_.reset(); }
 
 	virtual bool update() = 0;
 

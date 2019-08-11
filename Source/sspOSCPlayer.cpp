@@ -51,6 +51,7 @@ void sspOSCPlayer::stop()
 		std::string address = "/stop";
 		ptr->sendMessage(address, std::vector<sspSendChannel::ArgumentType>());
 	}
+	clearSendChannel();
 }
 
 bool sspOSCPlayer::update()

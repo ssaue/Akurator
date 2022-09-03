@@ -1,0 +1,9 @@
+{
+  "name": "akurator",
+  "version": "0.1.0",
+  "dependencies": [
+    "boost-serialization",
+    "boost-log"
+  ],
+  "builtin-baseline": "acc3bcf76b84ae5041c86ab55fe138ae7b8255c7"
+}

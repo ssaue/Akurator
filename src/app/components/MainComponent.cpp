@@ -14,7 +14,14 @@
 #include "engine/sspExecutionState.h"
 #include "app/sspCommandIDs.h"
 
+// TODO: Find a more elegant way to solve building different projects
+#define BUILD_STOREDAL 1
+
+#ifdef BUILD_STOREDAL
 #include "projects/Storedal.h"
+#else
+#include "projects/BlankProject.h"
+#endif
 
 #include <fstream>
 #include <boost/archive/xml_oarchive.hpp> 
@@ -26,6 +33,7 @@
 #include <boost/log/utility/setup/file.hpp>
 
 //==============================================================================
+
 MainComponent::MainComponent(String file_path)
 	: toolbar_factory_(this)
 	, current_path_()
@@ -68,10 +76,6 @@ void MainComponent::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
-
-    //g.setFont (Font (16.0f));
-    //g.setColour (Colours::white);
-    //g.drawText ("Hello World!", getLocalBounds(), Justification::centred, true);
 }
 
 void MainComponent::resized()
@@ -207,11 +211,14 @@ void MainComponent::onNew()
 	** There is currently no GUI for editing project data.
 	** Therefore we build content using source files.
 	** BlankProject is the minimum content expected.
-	** #include "BlankProject.h"
-	** BlankProject::buildContent(domain_.get(), manager_->getPlayManager());	
 	*/
 
+#ifdef BUILD_STOREDAL
 	Storedal::buildContent(domain_.get(), manager_->getPlayManager());
+#else
+	BlankProject::buildContent(domain_.get(), manager_->getPlayManager());
+#endif
+
 	domain_->loadValuePropertiesToInputs();
 }
 

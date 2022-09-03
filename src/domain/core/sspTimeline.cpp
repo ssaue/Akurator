@@ -101,7 +101,7 @@ bool sspTimeline::verify(int & nErrors, int & nWarnings) const
 	return bReturn;
 }
 
-inline double sspTimeline::getTimeStep(double seconds)
+double sspTimeline::getTimeStep(double seconds)
 {
 	auto ptr = time_factor_.lock();
 	return ptr ? seconds * ptr->getValue() : seconds;

@@ -19,7 +19,7 @@
 
 //[Headers] You can add your own extra header files here...
 #include "engine/sspStreamBus.h"
-#include "app/osc/sspOscConsole.h"
+#include "access/osc/sspOscConsole.h"
 #include "engine/sspExecutiveManager.h"
 #include "engine/sspResetManager.h"
 #include "app/sspAkuratorApplication.h"

@@ -15,5 +15,7 @@ The application has been built for windows only, so there could be issues with o
 
 ### Windows
 
-From root folder run: powershell buildscripts\win-x64\generateProject.ps1
+* Install Visual Studio 2022 IDE. Make sure to install the “Desktop development with C++” workload.
+* Install CMake (minimum required version 3.21.0). Remember to add CMake to the system PATH (install option).
+* From root folder run: powershell buildscripts\win-x64\generateProject.ps1
 

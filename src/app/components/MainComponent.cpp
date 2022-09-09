@@ -15,10 +15,13 @@
 #include "app/sspCommandIDs.h"
 
 // TODO: Find a more elegant way to solve building different projects
-#define BUILD_STOREDAL 1
+//#define BUILD_STOREDAL 1
+#define BUILD_BEKKELAGET 1
 
 #ifdef BUILD_STOREDAL
 #include "projects/Storedal.h"
+#elif BUILD_BEKKELAGET
+#include "projects/Bekkelaget.h"
 #else
 #include "projects/BlankProject.h"
 #endif
@@ -215,6 +218,8 @@ void MainComponent::onNew()
 
 #ifdef BUILD_STOREDAL
 	Storedal::buildContent(domain_.get(), manager_->getPlayManager());
+#elif BUILD_BEKKELAGET
+	Bekkelaget::buildContent(domain_.get(), manager_->getPlayManager());
 #else
 	BlankProject::buildContent(domain_.get(), manager_->getPlayManager());
 #endif

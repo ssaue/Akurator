@@ -15,3 +15,4 @@
 #include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT(sspICPanalogInput);
+BOOST_CLASS_EXPORT(sspICPdigitalInput);

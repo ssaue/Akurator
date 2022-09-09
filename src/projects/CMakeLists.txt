@@ -4,6 +4,8 @@
 
 add_library(project-lib
     STATIC
+    Bekkelaget.cpp 
+    Bekkelaget.h 
     BlankProject.cpp 
     BlankProject.h 
     Storedal.cpp 

@@ -11,3 +11,4 @@
 #pragma once
 
 #include "sspICPanalogInput.h"
+#include "sspICPdigitalInput.h"

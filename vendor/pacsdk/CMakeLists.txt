@@ -1,14 +1,14 @@
 add_library(pacsdk INTERFACE)
 target_include_directories(pacsdk INTERFACE .)
 
-#set(ONNXRUNTIME_LIBPATH "${CMAKE_CURRENT_SOURCE_DIR}/lib")
+set(PACSDK_LIBPATH "${CMAKE_CURRENT_SOURCE_DIR}")
 
-#if (WIN32)
-#    set(ONNXRUNTIME_LIBRARY "${ONNXRUNTIME_LIBPATH}/win-x64/onnxruntime.lib")
-#    set_property(GLOBAL APPEND PROPERTY DLLS_TO_COPY "${ONNXRUNTIME_LIBPATH}/win-x64/onnxruntime.dll")
-#else()
+if (WIN32)
+    set(PACSDK_LIBRARY "${PACSDK_LIBPATH}/pacsdk.lib")
+    set_property(GLOBAL APPEND PROPERTY DLLS_TO_COPY "${PACSDK_LIBPATH}/pacsdk.dll")
+else()
 #    set(ONNXRUNTIME_LIBRARY "${ONNXRUNTIME_LIBPATH}/${CMAKE_SYSTEM_PROCESSOR}/libonnxruntime.so.1.11.1")
 #    install(FILES ${ONNXRUNTIME_LIBRARY} TYPE LIB)
-#endif()
+endif()
 
-#target_link_libraries(onnxruntime INTERFACE ${ONNXRUNTIME_LIBRARY})
+target_link_libraries(pacsdk INTERFACE ${PACSDK_LIBRARY})

@@ -63,28 +63,3 @@ private:
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspICPinput)
-
-//
-//
-//class sspICPdigitalInput : public sspICPinput
-//{
-//protected:
-//	DECLARE_SERIAL(sspICPdigitalInput)
-//	int			m_nCondIndex;
-//	SSpBoolean*	m_pCond;
-//
-//public:
-//	sspICPdigitalInput();
-//	sspICPdigitalInput(const sspICPdigitalInput& inp);
-//	sspICPdigitalInput& operator= (const sspICPdigitalInput& inp);
-//	virtual ~sspICPdigitalInput();
-//	void Serialize(CArchive& ar);
-//
-//	void printASCII(sspOutStream& outStr);
-//	bool verify(sspOutStream& outStr, int& nErrors, int& nWarnings);
-//	bool initialize(LPVOID pWnd);
-//	bool update();
-//
-//	void setConditional(int nCond) { m_nCondIndex = nCond; }
-//	int getConditional() const { return m_nCondIndex; }
-//};

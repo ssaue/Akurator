@@ -4,6 +4,8 @@ add_library(inputs-lib
     STATIC
     sspICPanalogInput.cpp
     sspICPanalogInput.h
+    sspICPdigitalInput.cpp
+    sspICPdigitalInput.h
     sspICPinput.cpp 
     sspICPinput.h
     sspInputs.cpp 

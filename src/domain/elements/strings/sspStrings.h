@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include "sspConditionalString.h"
 #include "sspConcatString.h"
 #include "sspFileString.h"
 #include "sspSelectString.h"

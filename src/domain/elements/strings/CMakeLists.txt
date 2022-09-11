@@ -2,6 +2,8 @@
 
 add_library(strings-lib
     STATIC
+    sspConditionalString.cpp
+    sspConditionalString.h
     sspConcatString.cpp
     sspConcatString.h
     sspFileString.cpp 

@@ -14,6 +14,7 @@
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/serialization/export.hpp>
 
+BOOST_CLASS_EXPORT(sspConditionalString);
 BOOST_CLASS_EXPORT(sspConcatString);
 BOOST_CLASS_EXPORT(sspFileString);
 BOOST_CLASS_EXPORT(sspSelectString);

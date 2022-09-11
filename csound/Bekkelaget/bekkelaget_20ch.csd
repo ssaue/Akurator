@@ -68,9 +68,17 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/hall_konkret", "is", kID, Sfile
+  kk OSClisten gi_osc_handle, "/play/hall4_konkret", "is", kID, Sfile
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i \"Hall_konkret\" 0 1 %d \"%s\" ", kID, Sfile
+				String sprintfk "i \"Hall4_konkret\" 0 1 %d \"%s\" ", kID, Sfile
+     printks("%s\n", 1, String)
+				scoreline String, 1
+    kgoto next
+  endif
+  
+  kk OSClisten gi_osc_handle, "/play/hallene_konkret", "is", kID, Sfile
+  if (kk == 1 && kID < giIDs) then
+				String sprintfk "i \"Hallene_konkret\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
@@ -199,7 +207,8 @@ endin
 #include "tunnel_kaskade.inc"		
 #include "tunnel_konkret.inc"
 #include "hall_kaskade.inc"
-#include "hall_konkret.inc"
+#include "hall4_konkret.inc"
+#include "hallene_konkret.inc"
 #include "draape.inc"
 #include "kepler.inc"
 

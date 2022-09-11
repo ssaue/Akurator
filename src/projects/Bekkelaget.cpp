@@ -42,6 +42,10 @@ void Bekkelaget::buildContent(sspDomainData* domain, sspPlayManager* manager)
 
     buildHallDraape(domain);
     buildHallKepler(domain);
+    buildHallKaskade(domain);
+    buildHallKonkret(domain);
+    buildTunnelKaskade(domain);
+    buildTunnelKonkret(domain);
 
     buildStartList(domain, manager);
     buildUserOutput(domain);
@@ -261,9 +265,17 @@ void Bekkelaget::buildTimelineHierarchy(sspDomainData* domain)
     val->setFactors(factors);
     domain->getValues().push_back(val);
 
+    // Time factor based on Filternivå
+    auto map = std::make_shared<sspLinearMap>();
+    map->setName("Kaskade tetthet");
+    map->setInputRange(20,0);
+    map->setOutputRange(0.75,1.25);
+    map->setValue(domain->getValues()[5]);
+    domain->getValues().push_back(map);
+
     stream.reset(new sspAudioStream);
     stream->setName("Hall kaskade stream");
-    stream->setTimeFactor(domain->getValues()[1]);
+    stream->setTimeFactor(map);
     stream->setVolumeFactor(val);
     stream->setMaxTasks(1, 1);
     domain->getTimelines().push_back(stream);
@@ -295,7 +307,7 @@ void Bekkelaget::buildTimelineHierarchy(sspDomainData* domain)
 
     stream.reset(new sspAudioStream);
     stream->setName("Tunnel kaskade stream");
-    stream->setTimeFactor(domain->getValues()[1]);
+    stream->setTimeFactor(map);
     stream->setVolumeFactor(val);
     stream->setMaxTasks(1, 1);
     domain->getTimelines().push_back(stream);
@@ -387,41 +399,12 @@ void Bekkelaget::buildHallDraape(sspDomainData* domain)
     task->setPriority(sspPlayTask::Priority::Wait);
     domain->getPlaytasks().push_back(task);
 
-    // Random repeat at 1 to 5 seconds
-    
-    auto val = std::make_shared<sspBasicValue>();
-    val->setName("5");
-    val->setValue(5);
-    domain->getValues().push_back(val);
-    
-    auto random = std::make_shared<sspRandomValue>();
-    random->setName("1 to 5 seconds");
-    random->setLow(domain->getValues()[1]);
-    random->setHigh(val);
-    domain->getValues().push_back(random);
-
-    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-    sspMessage& msg = msg_recv->getMessage();
-
-    // TODO: This should be the "Hall kaskade task instad
-    msg.setTask(task);
-    msg.setTime(random);
-    msg.setType(sspMessage::Type::Load);
-    msg_recv->setReceiver(domain->getTimelines()[2]);
-
-    auto msglist = std::make_shared<sspMessageList>();
-    msglist->add(std::move(msg_recv));
-
-    auto cond_msg = std::make_shared<sspConditionalMsgList>();
-    cond_msg->add(domain->getConditionals()[0], msglist);
-
-    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
+    // The message list is added later when the necessary task is defined
 }
 
 void Bekkelaget::buildHallKepler(sspDomainData* domain)
 {
     // Kepler 1
-
     auto addr = std::make_shared<sspSimpleString>();
     addr->setString("/play/kepler");
     addr->setName(addr->getString());
@@ -455,7 +438,6 @@ void Bekkelaget::buildHallKepler(sspDomainData* domain)
     domain->getPlaytasks().push_back(task);
 
     // Random repeat at 0 to 10 seconds
-
     auto val = std::make_shared<sspBasicValue>();
     val->setName("10");
     val->setValue(10);
@@ -483,7 +465,6 @@ void Bekkelaget::buildHallKepler(sspDomainData* domain)
     task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
 
     // Kepler 2
-
     path.reset(new sspSimpleString());
     path->setString("c:/Bekkelaget/Lyder/Kepler 2.wav");
     path->setName(path->getString());
@@ -527,1328 +508,459 @@ void Bekkelaget::buildHallKepler(sspDomainData* domain)
     task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
 }
 
-//void Bekkelaget::buildKulisse(sspDomainData* domain)
-//{
-//    // Common for all Kulisse
-//    auto val = std::make_shared<sspBasicValue>();
-//    val->setName("0.5");
-//    val->setValue(0.5);
-//    domain->getValues().push_back(val);
-//
-//    auto val2 = std::make_shared<sspBasicValue>();
-//    val2->setName("2.5");
-//    val2->setValue(2.5);
-//    domain->getValues().push_back(val2);
-//
-//    auto random = std::make_shared<sspRandomValue>();
-//    random->setName("Reverb kulisse");
-//    random->setLow(val);
-//    random->setHigh(val2);
-//    domain->getValues().push_back(random);
-//
-//    auto speed = std::make_shared<sspBasicValue>();
-//    speed->setName("0.5");
-//    speed->setValue(0.5);
-//    domain->getValues().push_back(speed);
-//
-//    sspWeakVector<sspValue> args;
-//    args.push_back(random);
-//    args.push_back(speed);
-//
-//    auto addr = std::make_shared<sspSimpleString>();
-//    addr->setString("/play/kulisse");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    // Sildring
-//    auto str = std::make_shared<sspSimpleString>();
-//    str->setString("c:/Bekkelaget/Lyder/Kulisser/Sildring/");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    auto file = std::make_shared<sspFileString>();
-//    file->setName("Sildring path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto sildring = std::make_shared<sspOSCPlayer>();
-//    sildring->setName("Sildring");
-//    sildring->setAddress(addr);
-//    sildring->setPath(file);
-//    sildring->setArguments(args);
-//    domain->getPlayers().push_back(sildring);
-//
-//    // Klokker
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kulisser/Klokker/");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Klokker path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    args[1] = domain->getValues()[0];
-//    auto klokker = std::make_shared<sspOSCPlayer>();
-//    klokker->setName("Klokker");
-//    klokker->setAddress(addr);
-//    klokker->setPath(file);
-//    klokker->setArguments(args);
-//    domain->getPlayers().push_back(klokker);
-//
-//    // Drypping1
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kulisser/Drypping1/");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Drypping1 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    args[1] = domain->getValues()[1];
-//    auto drypping1 = std::make_shared<sspOSCPlayer>();
-//    drypping1->setName("Drypping1");
-//    drypping1->setAddress(addr);
-//    drypping1->setPath(file);
-//    drypping1->setArguments(args);
-//    domain->getPlayers().push_back(drypping1);
-//
-//    // Drypping2
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kulisser/Drypping2/");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Drypping2 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto drypping2 = std::make_shared<sspOSCPlayer>();
-//    drypping2->setName("Drypping2");
-//    drypping2->setAddress(addr);
-//    drypping2->setPath(file);
-//    drypping2->setArguments(args);
-//    domain->getPlayers().push_back(drypping2);
-//
-//    // Silence
-//    val.reset(new sspBasicValue);
-//    val->setName("15");
-//    val->setValue(15);
-//    domain->getValues().push_back(val);
-//
-//    auto silent = std::make_shared<sspSilencePlayer>();
-//    silent->setName("Kulisse silence");
-//    silent->setDuration(val);
-//    domain->getPlayers().push_back(silent);
-//
-//    sspWeakVector<sspPlayer> players;
-//    players.push_back(sildring);
-//    players.push_back(klokker);
-//    players.push_back(drypping1);
-//    players.push_back(drypping2);
-//    players.push_back(silent);
-//
-//    args.clear();
-//    args.push_back(domain->getValues()[2]);
-//    args.push_back(domain->getValues()[2]);
-//    args.push_back(domain->getValues()[2]);
-//    args.push_back(domain->getValues()[2]);
-//    args.push_back(domain->getValues()[0]);
-//
-//    std::vector<double> const_weight{ 2, 2, 2, 2, 1 };
-//
-//    auto randplay = std::make_shared<sspRandomPlayer>();
-//    randplay->setName("Kulisse all");
-//    randplay->setPlayers(players);
-//    randplay->setWeights(args);
-//    randplay->setConstantWeights(const_weight);
-//    domain->getPlayers().push_back(randplay);
-//
-//    // Task
-//    auto task = std::make_shared<sspPlayTask>();
-//    task->setName("Kulisse");
-//    task->setCondition(domain->getConditionals()[1]);
-//    task->setVolumeFactor(domain->getValues()[1]);
-//    task->setPlayer(randplay);
-//    task->setPriority(sspPlayTask::Priority::Wait);
-//    domain->getPlaytasks().push_back(task);
-//
-//    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg = msg_recv->getMessage();
-//    msg.setTask(task);
-//    msg.setTime(domain->getValues()[0]);
-//    msg.setType(sspMessage::Type::Load);
-//    msg_recv->setReceiver(domain->getTimelines()[1]);
-//
-//    auto msglist = std::make_shared<sspMessageList>();
-//    msglist->add(std::move(msg_recv));
-//
-//    auto cond_msg = std::make_shared<sspConditionalMsgList>();
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
-//}
-//
-//void Bekkelaget::buildRekke(sspDomainData* domain)
-//{
-//    auto val = std::make_shared<sspBasicValue>();
-//    val->setName("1.5");
-//    val->setValue(1.5);
-//    domain->getValues().push_back(val);
-//
-//    auto random = std::make_shared<sspRandomValue>();
-//    random->setName("Reverb rekke");
-//    random->setLow(val);
-//    random->setHigh(domain->getValues()[14]);
-//    domain->getValues().push_back(random);
-//
-//    sspWeakVector<sspValue> args;
-//    args.push_back(random);
-//
-//    auto addr = std::make_shared<sspSimpleString>();
-//    addr->setString("/play/rekke");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    // Smalbånd
-//    auto str = std::make_shared<sspSimpleString>();
-//    str->setString("c:/Bekkelaget/Lyder/Rekker/Smalband.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    auto file = std::make_shared<sspFileString>();
-//    file->setName("Smalbånd path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto smalband = std::make_shared<sspOSCPlayer>();
-//    smalband->setName("Smalbåndrekke");
-//    smalband->setAddress(addr);
-//    smalband->setPath(file);
-//    smalband->setArguments(args);
-//    domain->getPlayers().push_back(smalband);
-//
-//    // Bellrekke
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Rekker/Bellrekke.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Bellrekke path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto bellrekke = std::make_shared<sspOSCPlayer>();
-//    bellrekke->setName("Bellrekke");
-//    bellrekke->setAddress(addr);
-//    bellrekke->setPath(file);
-//    bellrekke->setArguments(args);
-//    domain->getPlayers().push_back(bellrekke);
-//
-//    // Bredbånd
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Rekker/Bredbandskjerne.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Bredbånd path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    args[0] = domain->getValues()[0];
-//    auto wideband = std::make_shared<sspOSCPlayer>();
-//    wideband->setName("Bredbåndsrekke");
-//    wideband->setAddress(addr);
-//    wideband->setPath(file);
-//    wideband->setArguments(args);
-//    domain->getPlayers().push_back(wideband);
-//
-//    sspWeakVector<sspPlayer> players;
-//    players.push_back(smalband);
-//    players.push_back(bellrekke);
-//    players.push_back(wideband);
-//
-//    args.clear();
-//    args.push_back(domain->getValues()[0]);
-//    args.push_back(domain->getValues()[0]);
-//    args.push_back(domain->getValues()[0]);
-//
-//    std::vector<double> const_weight{ 1, 1, 1 };
-//
-//    auto randplay = std::make_shared<sspRandomPlayer>();
-//    randplay->setName("Rekker all");
-//    randplay->setPlayers(players);
-//    randplay->setWeights(args);
-//    randplay->setConstantWeights(const_weight);
-//    domain->getPlayers().push_back(randplay);
-//
-//    // Task
-//    auto task = std::make_shared<sspPlayTask>();
-//    task->setName("Rekker");
-//    task->setCondition(domain->getConditionals()[2]);
-//    task->setVolumeFactor(domain->getValues()[1]);
-//    task->setPlayer(randplay);
-//    task->setPriority(sspPlayTask::Priority::Load);
-//    domain->getPlaytasks().push_back(task);
-//
-//    // Random repeat at 6 to 9 minutes
-//    val.reset(new sspBasicValue);
-//    val->setName("360");
-//    val->setValue(360);
-//    domain->getValues().push_back(val);
-//
-//    auto val2 = std::make_shared<sspBasicValue>();
-//    val2->setName("540");
-//    val2->setValue(540);
-//    domain->getValues().push_back(val2);
-//
-//    random.reset(new sspRandomValue);
-//    random->setName("6 to 9 minutes");
-//    random->setLow(val);
-//    random->setHigh(val2);
-//    domain->getValues().push_back(random);
-//
-//    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg = msg_recv->getMessage();
-//    msg.setTask(task);
-//    msg.setTime(random);
-//    msg.setType(sspMessage::Type::Load);
-//    msg_recv->setReceiver(domain->getTimelines()[2]);
-//
-//    auto msglist = std::make_shared<sspMessageList>();
-//    msglist->add(std::move(msg_recv));
-//
-//    auto cond_msg = std::make_shared<sspConditionalMsgList>();
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
-//
-//}
-//
-//void Bekkelaget::buildSignaler(sspDomainData* domain)
-//{
-//    sspWeakVector<sspValue> args;
-//    args.push_back(domain->getValues()[19]);	// Reuse reverb rekke
-//
-//    sspWeakVector<sspPlayer> players;
-//
-//    auto addr = std::make_shared<sspSimpleString>();
-//    addr->setString("/play/signaler");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    // Jegerpling1
-//    auto str = std::make_shared<sspSimpleString>();
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Jegerpling1.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    auto file = std::make_shared<sspFileString>();
-//    file->setName("Jegerpling1 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto signal = std::make_shared<sspOSCPlayer>();
-//    signal->setName("Jegerpling1");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Jegerpling2
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Jegerpling2.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Jegerpling2 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Jegerpling2");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Jegerpling3
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Jegerpling3.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Jegerpling3 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Jegerpling3");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Hardkort1
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Hardkort1.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Hardkort1 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Hardkort1");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Hardkort2
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Hardkort2.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Hardkort2 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Hardkort2");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Hardkort3
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Hardkort3.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Hardkort3 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Hardkort3");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Klokkesignal1
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Klokkesignal1.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Klokkesignal1 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Klokkesignal1");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Klokkesignal2
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Klokkesignal2.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Klokkesignal2 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Klokkesignal2");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Klokkesignal3
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Signaler/Klokkesignal3.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Klokkesignal3 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    signal.reset(new sspOSCPlayer);
-//    signal->setName("Klokkesignal3");
-//    signal->setAddress(addr);
-//    signal->setPath(file);
-//    signal->setArguments(args);
-//    domain->getPlayers().push_back(signal);
-//    players.push_back(signal);
-//
-//    // Chainplayer
-//    auto chain = std::make_shared<sspChainPlayer>();
-//    chain->setName("Signalkjede");
-//    chain->setPlayers(players);
-//    chain->setChainHop(3);
-//    chain->setChainLength(3);
-//    domain->getPlayers().push_back(chain);
-//
-//    // Distributionplayer
-//    auto low = std::make_shared<sspBasicValue>();
-//    low->setName("3.0");
-//    low->setValue(3.0);
-//    domain->getValues().push_back(low);
-//
-//    auto high = std::make_shared<sspBasicValue>();
-//    high->setName("5.0");
-//    high->setValue(5.0);
-//    domain->getValues().push_back(high);
-//
-//    auto random = std::make_shared<sspRandomValue>();
-//    random->setName("3 to 5 seconds");
-//    random->setLow(low);
-//    random->setHigh(high);
-//    domain->getValues().push_back(random);
-//
-//    auto distro = std::make_shared<sspDistributionPlayer>();
-//    distro->setName("Signaler");
-//    distro->setPlayer(chain);
-//    distro->setCondition(domain->getConditionals()[2]);
-//    distro->setStartTime(random);
-//    distro->setDuration(low);
-//    distro->setLoopMode(sspDistributionPlayer::LoopMode::Count);
-//    domain->getPlayers().push_back(distro);
-//
-//    // Task
-//    auto task = std::make_shared<sspPlayTask>();
-//    task->setName("Signaler");
-//    task->setCondition(domain->getConditionals()[2]);
-//    task->setVolumeFactor(domain->getValues()[1]);
-//    task->setPlayer(distro);
-//    task->setPriority(sspPlayTask::Priority::Load);
-//    domain->getPlaytasks().push_back(task);
-//
-//    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg = msg_recv->getMessage();
-//    msg.setTask(task);
-//    msg.setTime(domain->getValues()[22]);
-//    msg.setType(sspMessage::Type::Load);
-//    msg_recv->setReceiver(domain->getTimelines()[3]);
-//
-//    auto msglist = std::make_shared<sspMessageList>();
-//    msglist->add(std::move(msg_recv));
-//
-//    auto cond_msg = std::make_shared<sspConditionalMsgList>();
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::Enter, cond_msg);
-//}
-//
-//void Bekkelaget::buildAttakker(sspDomainData* domain)
-//{
-//    sspWeakVector<sspPlayer> players;
-//    players.push_back(domain->getPlayers()[4]);	// 15 seconds silence
-//
-//    auto random = std::make_shared<sspRandomValue>();
-//    random->setName("Reverb attakk");
-//    random->setLow(domain->getValues()[16]);
-//    random->setHigh(domain->getValues()[18]);
-//    domain->getValues().push_back(random);
-//
-//    sspWeakVector<sspValue> args;
-//    args.push_back(random);
-//
-//    auto addr = std::make_shared<sspSimpleString>();
-//    addr->setString("/play/attakker");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    // Metallstuff
-//    auto str = std::make_shared<sspSimpleString>();
-//    str->setString("c:/Bekkelaget/Lyder/Attakker/Metallstuff/");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    auto file = std::make_shared<sspFileString>();
-//    file->setName("Metallstuff path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto stuff = std::make_shared<sspOSCPlayer>();
-//    stuff->setName("Metallstuff");
-//    stuff->setAddress(addr);
-//    stuff->setPath(file);
-//    stuff->setArguments(args);
-//    domain->getPlayers().push_back(stuff);
-//
-//    // The rest
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Attakker/");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Attakker path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    args[0] = domain->getValues()[13];	// Very little reverb on the rest
-//    auto attakk = std::make_shared<sspOSCPlayer>();
-//    attakk->setName("Attakk");
-//    attakk->setAddress(addr);
-//    attakk->setPath(file);
-//    attakk->setArguments(args);
-//    domain->getPlayers().push_back(attakk);
-//
-//    // Random select attakker
-//    sspWeakVector<sspPlayer> attakker;
-//    attakker.push_back(attakk);
-//    attakker.push_back(stuff);
-//
-//    args.clear();
-//    args.push_back(domain->getValues()[0]);
-//    args.push_back(domain->getValues()[0]);
-//
-//    std::vector<double> const_weight{ 2, 1 };
-//
-//    auto randplay = std::make_shared<sspRandomPlayer>();
-//    randplay->setName("Attakker");
-//    randplay->setPlayers(attakker);
-//    randplay->setWeights(args);
-//    randplay->setConstantWeights(const_weight);
-//    domain->getPlayers().push_back(randplay);
-//
-//    players.push_back(randplay);
-//    players.push_back(domain->getPlayers()[4]);	// 15 seconds silence
-//
-//    // Kaskader (always follow attakker)
-//    sspWeakVector<sspPlayer> kaskader;
-//
-//    args.clear();
-//    args.push_back(domain->getValues()[19]);
-//
-//    addr.reset(new sspSimpleString);
-//    addr->setString("/play/kaskader");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    // Kaskade01
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade01.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade01 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto kaskade = std::make_shared<sspOSCPlayer>();
-//    kaskade->setName("Kaskade01");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade02
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade02.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade02 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade02");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade03
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade03.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade03 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade03");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade04
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade04.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade04 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade04");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade05
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade05.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade05 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade05");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade06
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade06.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade06 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade06");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade07
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade07.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade07 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade07");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade08
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade08.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade08 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade08");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade09
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade09.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade09 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade09");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade10
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade10.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade10 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade10");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade11
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade11.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade11 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade11");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Kaskade12
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kaskader/Kaskade12.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kaskade12 path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    kaskade.reset(new sspOSCPlayer);
-//    kaskade->setName("Kaskade12");
-//    kaskade->setAddress(addr);
-//    kaskade->setPath(file);
-//    kaskade->setArguments(args);
-//    domain->getPlayers().push_back(kaskade);
-//    kaskader.push_back(kaskade);
-//
-//    // Chainplayer
-//    auto chain = std::make_shared<sspChainPlayer>();
-//    chain->setName("Kaskade chain");
-//    chain->setPlayers(kaskader);
-//    chain->setChainHop(2);
-//    chain->setChainLength(3);
-//    domain->getPlayers().push_back(chain);
-//
-//    // Distributionplayer
-//    auto interval = std::make_shared<sspRandomValue>();
-//    interval->setName("1 to 3 seconds");
-//    interval->setLow(domain->getValues()[1]);
-//    interval->setHigh(domain->getValues()[23]);
-//    domain->getValues().push_back(interval);
-//
-//    auto distro = std::make_shared<sspDistributionPlayer>();
-//    distro->setName("Kaskade distro");
-//    distro->setPlayer(chain);
-//    distro->setCondition(domain->getConditionals()[3]);
-//    distro->setStartTime(interval);
-//    distro->setDuration(domain->getValues()[23]);
-//    distro->setLoopMode(sspDistributionPlayer::LoopMode::Count);
-//    domain->getPlayers().push_back(distro);
-//
-//    players.push_back(distro);
-//
-//    // Kulisse bend
-//    args[0] = domain->getValues()[15];
-//    args.push_back(domain->getValues()[13]);
-//
-//    addr.reset(new sspSimpleString);
-//    addr->setString("/play/kulisse");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/Kulisser/Bend/");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("Kulissebend path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto bend = std::make_shared<sspOSCPlayer>();
-//    bend->setName("Kulissebend");
-//    bend->setAddress(addr);
-//    bend->setPath(file);
-//    bend->setArguments(args);
-//    domain->getPlayers().push_back(bend);
-//    players.push_back(bend);
-//
-//    auto all = std::make_shared<sspSequentialPlayer>();
-//    all->setName("Attakk komplett");
-//    all->setPlayers(players);
-//    domain->getPlayers().push_back(all);
-//
-//    // Task
-//    auto task = std::make_shared<sspPlayTask>();
-//    task->setName("Attakker");
-//    task->setCondition(domain->getConditionals()[3]);
-//    task->setVolumeFactor(domain->getValues()[1]);
-//    task->setPlayer(all);
-//    task->setPriority(sspPlayTask::Priority::Load);
-//    domain->getPlaytasks().push_back(task);
-//
-//    // Message at Exit
-//    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg = msg_recv->getMessage();
-//    msg.setTask(task);
-//    msg.setTime(domain->getValues()[22]);
-//    msg.setType(sspMessage::Type::Load);
-//    msg_recv->setReceiver(domain->getTimelines()[2]);
-//
-//    auto msglist = std::make_shared<sspMessageList>();
-//    msglist->add(std::move(msg_recv));
-//
-//    auto cond_msg = std::make_shared<sspConditionalMsgList>();
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
-//
-//    // Message at Start
-//    msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg2 = msg_recv->getMessage();
-//    msg2.setTask(task);
-//    msg2.setTime(domain->getValues()[24]);
-//    msg2.setType(sspMessage::Type::Solo);
-//    msg_recv->setReceiver(domain->getTimelines()[2]);
-//
-//    msglist.reset(new sspMessageList);
-//    msglist->add(std::move(msg_recv));
-//
-//    msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg3 = msg_recv->getMessage();
-//    msg3.setType(sspMessage::Type::MuteOnSolo);
-//    msg3.setTime(domain->getValues()[18]);
-//    msg_recv->setReceiver(domain->getTimelines()[0]);
-//
-//    msglist->add(std::move(msg_recv));
-//
-//    cond_msg.reset(new sspConditionalMsgList);
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::Start, cond_msg);
-//
-//    // Message at End
-//    msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg5 = msg_recv->getMessage();
-//    msg5.setType(sspMessage::Type::UnmuteOnSolo);
-//    msg5.setTime(domain->getValues()[18]);
-//    msg_recv->setReceiver(domain->getTimelines()[0]);
-//
-//    msglist.reset(new sspMessageList);
-//    msglist->add(std::move(msg_recv));
-//
-//    msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg4 = msg_recv->getMessage();
-//    msg4.setTask(task);
-//    msg4.setTime(domain->getValues()[18]);
-//    msg4.setType(sspMessage::Type::Unsolo);
-//    msg_recv->setReceiver(domain->getTimelines()[2]);
-//
-//    msglist->add(std::move(msg_recv));
-//
-//    cond_msg.reset(new sspConditionalMsgList);
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::End, cond_msg);
-//}
-//
-//void Bekkelaget::buildRens(sspDomainData* domain)
-//{
-//    sspWeakVector<sspValue> args;
-//    args.push_back(domain->getValues()[15]);
-//
-//    auto addr = std::make_shared<sspSimpleString>();
-//    addr->setString("/play/rens");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    auto str = std::make_shared<sspSimpleString>();
-//    str->setString("c:/Bekkelaget/Lyder/Sildrerens.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    auto file = std::make_shared<sspFileString>();
-//    file->setName("Rens path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto rens = std::make_shared<sspOSCPlayer>();
-//    rens->setName("Sildrerens");
-//    rens->setAddress(addr);
-//    rens->setPath(file);
-//    rens->setArguments(args);
-//    domain->getPlayers().push_back(rens);
-//
-//    // Task
-//    auto task = std::make_shared<sspPlayTask>();
-//    task->setName("Rens");
-//    task->setCondition(domain->getConditionals()[1]);
-//    task->setVolumeFactor(domain->getValues()[1]);
-//    task->setPlayer(rens);
-//    task->setPriority(sspPlayTask::Priority::LoadAlways);
-//    domain->getPlaytasks().push_back(task);
-//
-//    // Message at Start
-//    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg2 = msg_recv->getMessage();
-//    msg2.setTask(task);
-//    msg2.setTime(domain->getValues()[24]);
-//    msg2.setType(sspMessage::Type::Solo);
-//    msg_recv->setReceiver(domain->getTimelines()[1]);
-//
-//    auto msglist = std::make_shared<sspMessageList>();
-//    msglist->add(std::move(msg_recv));
-//
-//    msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg3 = msg_recv->getMessage();
-//    msg3.setTime(domain->getValues()[18]);
-//    msg3.setType(sspMessage::Type::MuteOnSolo);
-//    msg_recv->setReceiver(domain->getTimelines()[0]);
-//
-//    msglist->add(std::move(msg_recv));
-//
-//    auto cond_msg = std::make_shared<sspConditionalMsgList>();
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::Start, cond_msg);
-//
-//    // Message at End
-//    msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg5 = msg_recv->getMessage();
-//    msg5.setTime(domain->getValues()[18]);
-//    msg5.setType(sspMessage::Type::UnmuteOnSolo);
-//    msg_recv->setReceiver(domain->getTimelines()[0]);
-//
-//    msglist.reset(new sspMessageList);
-//    msglist->add(std::move(msg_recv));
-//
-//    msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg4 = msg_recv->getMessage();
-//    msg4.setTask(task);
-//    msg4.setTime(domain->getValues()[18]);
-//    msg4.setType(sspMessage::Type::Unsolo);
-//    msg_recv->setReceiver(domain->getTimelines()[1]);
-//
-//    msglist->add(std::move(msg_recv));
-//
-//    cond_msg.reset(new sspConditionalMsgList);
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::End, cond_msg);
-//}
-//
-//void Bekkelaget::buildDunder(sspDomainData* domain)
-//{
-//    sspWeakVector<sspValue> args;
-//    args.push_back(domain->getValues()[15]);
-//
-//    auto addr = std::make_shared<sspSimpleString>();
-//    addr->setString("/play/dunder");
-//    addr->setName(addr->getString());
-//    domain->getStrings().push_back(addr);
-//
-//    auto str = std::make_shared<sspSimpleString>();
-//    str->setString("c:/Bekkelaget/Lyder/DunderKort.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    auto file = std::make_shared<sspFileString>();
-//    file->setName("DunderKort path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto kort = std::make_shared<sspOSCPlayer>();
-//    kort->setName("DunderKort");
-//    kort->setAddress(addr);
-//    kort->setPath(file);
-//    kort->setArguments(args);
-//    domain->getPlayers().push_back(kort);
-//
-//    str.reset(new sspSimpleString);
-//    str->setString("c:/Bekkelaget/Lyder/DunderLang.wav");
-//    str->setName(str->getString());
-//    domain->getStrings().push_back(str);
-//
-//    file.reset(new sspFileString);
-//    file->setName("DunderLang path");
-//    file->setPath(str);
-//    file->setAudioOnly(true);
-//    file->setRecursiveSearch(false);
-//    domain->getStrings().push_back(file);
-//
-//    auto lang = std::make_shared<sspOSCPlayer>();
-//    lang->setName("DunderLang");
-//    lang->setAddress(addr);
-//    lang->setPath(file);
-//    lang->setArguments(args);
-//    domain->getPlayers().push_back(lang);
-//
-//    sspWeakVector<sspPlayer> players;
-//    players.push_back(kort);
-//    players.push_back(lang);
-//
-//    args.clear();
-//    args.push_back(domain->getValues()[0]);
-//    args.push_back(domain->getValues()[2]);
-//
-//    std::vector<double> const_weight{ 3, 1 };
-//
-//    auto randplay = std::make_shared<sspRandomPlayer>();
-//    randplay->setName("Dunder lys");
-//    randplay->setPlayers(players);
-//    randplay->setWeights(args);
-//    randplay->setConstantWeights(const_weight);
-//    domain->getPlayers().push_back(randplay);
-//
-//    players.clear();
-//    players.push_back(randplay);
-//
-//    sspWeakVector<sspConditional> conds;
-//    conds.push_back(domain->getConditionals()[2]);
-//
-//    auto condplay = std::make_shared<sspConditionalPlayer>();
-//    condplay->setName("Dunder all");
-//    condplay->setPlayers(players);
-//    condplay->setConditionals(conds);
-//    condplay->setDefaultPlayer(kort);
-//    domain->getPlayers().push_back(condplay);
-//
-//    // Task
-//    auto task = std::make_shared<sspPlayTask>();
-//    task->setName("Dunder");
-//    task->setCondition(domain->getConditionals()[1]);
-//    task->setVolumeFactor(domain->getValues()[1]);
-//    task->setPlayer(condplay);
-//    task->setPriority(sspPlayTask::Priority::Load);
-//    domain->getPlaytasks().push_back(task);
-//
-//    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-//    sspMessage& msg = msg_recv->getMessage();
-//    msg.setTask(task);
-//    msg.setTime(domain->getValues()[22]);
-//    msg.setType(sspMessage::Type::Load);
-//    msg_recv->setReceiver(domain->getTimelines()[2]);
-//%
-//    auto msglist = std::make_shared<sspMessageList>();
-//    msglist->add(std::move(msg_recv));
-//
-//    auto cond_msg = std::make_shared<sspConditionalMsgList>();
-//    cond_msg->add(domain->getConditionals()[0], msglist);
-//
-//    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
-//}
+void Bekkelaget::buildHallKaskade(sspDomainData* domain)
+{
+    auto addr = std::make_shared<sspSimpleString>();
+    addr->setString("/play/hall_kaskade");
+    addr->setName(addr->getString());
+    domain->getStrings().push_back(addr);
+
+    auto parent_str = std::make_shared<sspSimpleString>();
+    parent_str->setString("C:/Bekkelaget/Lyder/Syntetisk/");
+    parent_str->setName(parent_str->getString());
+    domain->getStrings().push_back(parent_str);
+
+    auto norm_str = std::make_shared<sspSimpleString>();
+    norm_str->setString("Normal lang syntetisk");
+    norm_str->setName(norm_str->getString());
+    domain->getStrings().push_back(norm_str);
+
+    auto mod_str = std::make_shared<sspSimpleString>();
+    mod_str->setString("Modulert lang syntetisk");
+    mod_str->setName(mod_str->getString());
+    domain->getStrings().push_back(mod_str);
+
+    sspWeakVector<sspString> folder_strings;
+    folder_strings.push_back(mod_str);
+
+    sspWeakVector<sspConditional> conds;
+    conds.push_back(domain->getConditionals()[1]);
+
+    auto cond_str = std::make_shared<sspConditionalString>();
+    cond_str->setName("Kaskade norm/mod");
+    cond_str->setConditionals(conds);
+    cond_str->setStrings(folder_strings);
+    cond_str->setDefaultString(norm_str);
+    domain->getStrings().push_back(cond_str);
+
+    sspWeakVector<sspString> concat_strings;
+    concat_strings.push_back(parent_str);
+    concat_strings.push_back(cond_str);
+
+    auto full_path = std::make_shared<sspConcatString>();
+    full_path->setName("Kaskade folder");
+    full_path->setStrings(concat_strings);
+    domain->getStrings().push_back(full_path);
+
+    auto file = std::make_shared<sspFileString>();
+    file->setName("Kaskade path");
+    file->setPath(full_path);
+    file->setAudioOnly(true);
+    file->setRecursiveSearch(false);
+    domain->getStrings().push_back(file);
+
+    // Speed factor based on "Hall_slam"
+    auto map = std::make_shared<sspLinearMap>();
+    map->setName("Hastighet hall");
+    map->setInputRange(20, 0);
+    map->setOutputRange(0.85, 1.15);
+    map->setValue(domain->getValues()[4]);
+    domain->getValues().push_back(map);
+
+    sspWeakVector<sspValue> args;
+    args.push_back(map);
+
+    auto kaskade = std::make_shared<sspOSCPlayer>();
+    kaskade->setName("Hall kaskade");
+    kaskade->setAddress(addr);
+    kaskade->setPath(file);
+    kaskade->setArguments(args);
+    domain->getPlayers().push_back(kaskade);
+
+    // Random repeat at 10 to 30 seconds    
+    auto val = std::make_shared<sspBasicValue>();
+    val->setName("30");
+    val->setValue(30);
+    domain->getValues().push_back(val);
+
+    auto random = std::make_shared<sspRandomValue>();
+    random->setName("10 to 30 seconds");
+    random->setLow(domain->getValues()[19]);
+    random->setHigh(val);
+    domain->getValues().push_back(random);
+
+    // Double count if not "Start spyling"
+    auto val2 = std::make_shared<sspBasicValue>();
+    val2->setName("2");
+    val2->setValue(2);
+    domain->getValues().push_back(val2);
+
+    auto val4 = std::make_shared<sspBasicValue>();
+    val4->setName("4");
+    val4->setValue(4);
+    domain->getValues().push_back(val4);
+
+    sspWeakVector<sspValue> cond_values;
+    cond_values.push_back(val2);
+
+    sspWeakVector<sspConditional> val_conds;
+    val_conds.push_back(domain->getConditionals()[3]);
+
+    auto cond_val = std::make_shared<sspConditionalValue>();
+    cond_val->setName("Start spyling ? 2 : 4");
+    cond_val->setConditionals(val_conds);
+    cond_val->setValues(cond_values);
+    cond_val->setDefaultValue(val4);
+    domain->getValues().push_back(cond_val);
+
+    auto dist = std::make_shared<sspDistributionPlayer>();
+    dist->setName("Hall kaskade distro");
+    dist->setPlayer(kaskade);
+    dist->setLoopMode(sspDistributionPlayer::LoopMode::Count);
+    dist->setStartTime(random);
+    dist->setCondition(domain->getConditionals()[0]);
+    dist->setDuration(cond_val);
+    domain->getPlayers().push_back(dist);
+
+    // Task
+    auto task = std::make_shared<sspPlayTask>();
+    task->setName("Hall kaskade");
+    task->setCondition(domain->getConditionals()[0]);
+    task->setVolumeFactor(domain->getValues()[1]);
+    task->setPlayer(dist);
+    task->setPriority(sspPlayTask::Priority::Wait);
+    domain->getPlaytasks().push_back(task);
+
+    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+    sspMessage& msg = msg_recv->getMessage();
+    msg.setTask(domain->getPlaytasks()[0]);
+    msg.setTime(val);
+    msg.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[1]);
+
+    auto msglist = std::make_shared<sspMessageList>();
+    msglist->add(std::move(msg_recv));
+
+    auto cond_msg = std::make_shared<sspConditionalMsgList>();
+    cond_msg->add(domain->getConditionals()[0], msglist);
+
+    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
+
+    // Add msg list for draape, now that the hall kaskade task is defined
+    // Random repeat at 1 to 5 seconds    
+    val.reset(new sspBasicValue());
+    val->setName("5");
+    val->setValue(5);
+    domain->getValues().push_back(val);
+
+    random.reset(new sspRandomValue());
+    random->setName("1 to 5 seconds");
+    random->setLow(domain->getValues()[1]);
+    random->setHigh(val);
+    domain->getValues().push_back(random);
+
+    msg_recv.reset(new sspMessageWithReceiver());
+    sspMessage& msg2 = msg_recv->getMessage();
+    msg2.setTask(task);
+    msg2.setTime(random);
+    msg2.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[2]);
+
+    msglist.reset(new sspMessageList());
+    msglist->add(std::move(msg_recv));
+
+    cond_msg.reset(new sspConditionalMsgList());
+    cond_msg->add(domain->getConditionals()[0], msglist);
+
+    domain->getPlaytasks()[0]->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
+}
+
+void Bekkelaget::buildHallKonkret(sspDomainData* domain)
+{
+    auto addr = std::make_shared<sspSimpleString>();
+    addr->setString("/play/hall4_konkret");
+    addr->setName(addr->getString());
+    domain->getStrings().push_back(addr);
+
+    auto parent_str = std::make_shared<sspSimpleString>();
+    parent_str->setString("C:/Bekkelaget/Lyder/");
+    parent_str->setName(parent_str->getString());
+    domain->getStrings().push_back(parent_str);
+
+    auto norm_str = std::make_shared<sspSimpleString>();
+    norm_str->setString("Konkret/Kort konkret/");
+    norm_str->setName(norm_str->getString());
+    domain->getStrings().push_back(norm_str);
+
+    auto mod_str = std::make_shared<sspSimpleString>();
+    mod_str->setString("Syntetisk/Kort syntetisk");
+    mod_str->setName(mod_str->getString());
+    domain->getStrings().push_back(mod_str);
+
+    sspWeakVector<sspString> folder_strings;
+    folder_strings.push_back(mod_str);
+
+    sspWeakVector<sspConditional> conds;
+    conds.push_back(domain->getConditionals()[4]);
+
+    auto cond_str = std::make_shared<sspConditionalString>();
+    cond_str->setName("Konkret konkret/syntetisk");
+    cond_str->setConditionals(conds);
+    cond_str->setStrings(folder_strings);
+    cond_str->setDefaultString(norm_str);
+    domain->getStrings().push_back(cond_str);
+
+    sspWeakVector<sspString> concat_strings;
+    concat_strings.push_back(parent_str);
+    concat_strings.push_back(cond_str);
+
+    auto full_path = std::make_shared<sspConcatString>();
+    full_path->setName("Kort konkret folder");
+    full_path->setStrings(concat_strings);
+    domain->getStrings().push_back(full_path);
+
+    auto file = std::make_shared<sspFileString>();
+    file->setName("Kort konkret path");
+    file->setPath(full_path);
+    file->setAudioOnly(true);
+    file->setRecursiveSearch(false);
+    domain->getStrings().push_back(file);
+
+    auto hall4 = std::make_shared<sspOSCPlayer>();
+    hall4->setName("Hall 4 konkret");
+    hall4->setAddress(addr);
+    hall4->setPath(file);
+    domain->getPlayers().push_back(hall4);
+
+    // Hall konkret 1 - 3
+    addr.reset(new sspSimpleString());
+    addr->setString("/play/hallene_konkret");
+    addr->setName(addr->getString());
+    domain->getStrings().push_back(addr);
+
+    auto path_str = std::make_shared<sspSimpleString>();
+    path_str->setString("C:/Bekkelaget/Lyder/Konkret/Lang konkret");
+    path_str->setName(path_str->getString());
+    domain->getStrings().push_back(path_str);
+
+    file.reset(new sspFileString());
+    file->setName("Hallene konkret path");
+    file->setPath(path_str);
+    file->setAudioOnly(true);
+    file->setRecursiveSearch(false);
+    domain->getStrings().push_back(file);
+
+    auto hallene = std::make_shared<sspOSCPlayer>();
+    hallene->setName("Hallene konkret");
+    hallene->setAddress(addr);
+    hallene->setPath(file);
+    domain->getPlayers().push_back(hallene);
+
+    sspWeakVector<sspPlayer> players;
+    players.push_back(hall4);
+    players.push_back(hallene);
+
+    auto random_player = std::make_shared<sspRandomPlayer>();
+    random_player->setName("Hall konkret");
+    random_player->setConstantWeights({1,2});
+    random_player->setPlayers(players);
+    domain->getPlayers().push_back(random_player);
+
+    // Task
+    auto task = std::make_shared<sspPlayTask>();
+    task->setName("Hall konkret");
+    task->setCondition(domain->getConditionals()[0]);
+    task->setVolumeFactor(domain->getValues()[1]);
+    task->setPlayer(random_player);
+    task->setPriority(sspPlayTask::Priority::Wait);
+    domain->getPlaytasks().push_back(task);
+
+    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+    sspMessage& msg = msg_recv->getMessage();
+    msg.setTask(task);
+    msg.setTime(domain->getValues()[22]);
+    msg.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[3]);
+
+    auto msglist = std::make_shared<sspMessageList>();
+    msglist->add(std::move(msg_recv));
+
+    auto cond_msg = std::make_shared<sspConditionalMsgList>();
+    cond_msg->add(domain->getConditionals()[0], msglist);
+
+    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
+}
+
+void Bekkelaget::buildTunnelKaskade(sspDomainData* domain)
+{
+    auto addr = std::make_shared<sspSimpleString>();
+    addr->setString("/play/tunnel_kaskade");
+    addr->setName(addr->getString());
+    domain->getStrings().push_back(addr);
+
+    // Speed factor based on "Hall_slam"
+    auto map = std::make_shared<sspLinearMap>();
+    map->setName("Hastighet tunnel");
+    map->setInputRange(20, 0);
+    map->setOutputRange(0.85, 1.15);
+    map->setValue(domain->getValues()[3]);
+    domain->getValues().push_back(map);
+
+    sspWeakVector<sspValue> args;
+    args.push_back(map);
+
+    auto kaskade = std::make_shared<sspOSCPlayer>();
+    kaskade->setName("Tunnel kaskade");
+    kaskade->setAddress(addr);
+    kaskade->setPath(domain->getStrings()[18]);
+    kaskade->setArguments(args);
+    domain->getPlayers().push_back(kaskade);
+
+    // Task
+    auto task = std::make_shared<sspPlayTask>();
+    task->setName("Tunnel kaskade");
+    task->setCondition(domain->getConditionals()[0]);
+    task->setVolumeFactor(domain->getValues()[1]);
+    task->setPlayer(kaskade);
+    task->setPriority(sspPlayTask::Priority::Wait);
+    domain->getPlaytasks().push_back(task);
+
+    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+    sspMessage& msg = msg_recv->getMessage();
+    msg.setTask(task);
+    msg.setTime(domain->getValues()[26]);
+    msg.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[4]);
+
+    auto msglist = std::make_shared<sspMessageList>();
+    msglist->add(std::move(msg_recv));
+
+    auto cond_msg = std::make_shared<sspConditionalMsgList>();
+    cond_msg->add(domain->getConditionals()[0], msglist);
+
+    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
+}
+
+void Bekkelaget::buildTunnelKonkret(sspDomainData* domain)
+{
+    auto addr = std::make_shared<sspSimpleString>();
+    addr->setString("/play/tunnel_konkret");
+    addr->setName(addr->getString());
+    domain->getStrings().push_back(addr);
+
+    auto tunnel = std::make_shared<sspOSCPlayer>();
+    tunnel->setName("Tunnel konkret");
+    tunnel->setAddress(addr);
+    tunnel->setPath(domain->getStrings()[25]);
+    domain->getPlayers().push_back(tunnel);
+
+    // Task
+    auto task = std::make_shared<sspPlayTask>();
+    task->setName("Tunnel konkret");
+    task->setCondition(domain->getConditionals()[0]);
+    task->setVolumeFactor(domain->getValues()[1]);
+    task->setPlayer(tunnel);
+    task->setPriority(sspPlayTask::Priority::Wait);
+    domain->getPlaytasks().push_back(task);
+
+    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+    sspMessage& msg = msg_recv->getMessage();
+    msg.setTask(task);
+    msg.setTime(domain->getValues()[22]);
+    msg.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[5]);
+
+    auto msglist = std::make_shared<sspMessageList>();
+    msglist->add(std::move(msg_recv));
+
+    auto cond_msg = std::make_shared<sspConditionalMsgList>();
+    cond_msg->add(domain->getConditionals()[0], msglist);
+
+    task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
+}
 
 void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
 {
-    //auto msglist = std::make_shared<sspMessageList>();
+    auto msglist = std::make_shared<sspMessageList>();
 
-    //// Kulisser
-    //auto val = std::make_shared<sspBasicValue>();
-    //val->setName("60");
-    //val->setValue(60);
-    //domain->getValues().push_back(val);
+    // Dråpe
+    auto val1 = std::make_shared<sspBasicValue>();
+    val1->setName("20");
+    val1->setValue(20);
+    domain->getValues().push_back(val1);
 
-    //auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-    //sspMessage& msg1 = msg_recv->getMessage();
-    //msg1.setTask(domain->getPlaytasks()[0]);
-    //msg1.setTime(domain->getValues()[24]);
-    //msg1.setType(sspMessage::Type::Load);
-    //msg_recv->setReceiver(domain->getTimelines()[1]);
-    //msglist->add(std::move(msg_recv));
+    auto val2 = std::make_shared<sspBasicValue>();
+    val2->setName("40");
+    val2->setValue(40);
+    domain->getValues().push_back(val2);
 
-    //// Rekker
-    //msg_recv.reset(new sspMessageWithReceiver);
-    //sspMessage& msg2 = msg_recv->getMessage();
-    //msg2.setTask(domain->getPlaytasks()[1]);
-    //msg2.setTime(domain->getValues()[22]);
-    //msg2.setType(sspMessage::Type::Load);
-    //msg_recv->setReceiver(domain->getTimelines()[2]);
-    //msglist->add(std::move(msg_recv));
+    auto randval = std::make_shared<sspRandomValue>();
+    randval->setName("20 to 40 seconds");
+    randval->setLow(val1);
+    randval->setHigh(val2);
+    domain->getValues().push_back(randval);
 
-    //// Signaler
-    //val.reset(new sspBasicValue);
-    //val->setName("180");
-    //val->setValue(180);
-    //domain->getValues().push_back(val);
+    auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+    sspMessage& msg1 = msg_recv->getMessage();
+    msg1.setTask(domain->getPlaytasks()[0]);
+    msg1.setTime(randval);
+    msg1.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[1]);
+    msglist->add(std::move(msg_recv));
 
-    //auto randval = std::make_shared<sspRandomValue>();
-    //randval->setName("3 to 9 minutes");
-    //randval->setLow(val);
-    //randval->setHigh(domain->getValues()[21]);
-    //domain->getValues().push_back(randval);
+    // Kepler 1
+    msg_recv.reset(new sspMessageWithReceiver);
+    sspMessage& msg2 = msg_recv->getMessage();
+    msg2.setTask(domain->getPlaytasks()[1]);
+    msg2.setTime(domain->getValues()[1]);
+    msg2.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[1]);
+    msglist->add(std::move(msg_recv));
 
-    //msg_recv.reset(new sspMessageWithReceiver);
-    //sspMessage& msg3 = msg_recv->getMessage();
-    //msg3.setTask(domain->getPlaytasks()[2]);
-    //msg3.setTime(randval);
-    //msg3.setType(sspMessage::Type::Load);
-    //msg_recv->setReceiver(domain->getTimelines()[3]);
-    //msglist->add(std::move(msg_recv));
+    // Kepler 2
+    msg_recv.reset(new sspMessageWithReceiver);
+    sspMessage& msg3 = msg_recv->getMessage();
+    msg3.setTask(domain->getPlaytasks()[2]);
+    msg3.setTime(domain->getValues()[1]);
+    msg3.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[1]);
+    msglist->add(std::move(msg_recv));
 
-    //// Attakker
-    //msg_recv.reset(new sspMessageWithReceiver);
-    //sspMessage& msg4 = msg_recv->getMessage();
-    //msg4.setTask(domain->getPlaytasks()[3]);
-    //msg4.setTime(domain->getValues()[22]);
-    //msg4.setType(sspMessage::Type::Load);
-    //msg_recv->setReceiver(domain->getTimelines()[2]);
-    //msglist->add(std::move(msg_recv));
+    // Hall konkret
+    randval.reset(new sspRandomValue());
+    randval->setName("10 to 20 seconds");
+    randval->setLow(domain->getValues()[18]);
+    randval->setHigh(val1);
+    domain->getValues().push_back(randval);
 
-    //// Rens
-    //msg_recv.reset(new sspMessageWithReceiver);
-    //sspMessage& msg5 = msg_recv->getMessage();
-    //msg5.setTask(domain->getPlaytasks()[4]);
-    //msg5.setTime(domain->getValues()[0]);
-    //msg5.setType(sspMessage::Type::Load);
-    //msg_recv->setReceiver(domain->getTimelines()[1]);
-    //msglist->add(std::move(msg_recv));
+    msg_recv.reset(new sspMessageWithReceiver);
+    sspMessage& msg4 = msg_recv->getMessage();
+    msg4.setTask(domain->getPlaytasks()[4]);
+    msg4.setTime(randval);
+    msg4.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[3]);
+    msglist->add(std::move(msg_recv));
 
-    //// Dunder
-    //msg_recv.reset(new sspMessageWithReceiver);
-    //sspMessage& msg6 = msg_recv->getMessage();
-    //msg6.setTask(domain->getPlaytasks()[5]);
-    //msg6.setTime(randval);
-    //msg6.setType(sspMessage::Type::Load);
-    //msg_recv->setReceiver(domain->getTimelines()[2]);
-    //msglist->add(std::move(msg_recv));
+    // Tunnel kaskade
+    msg_recv.reset(new sspMessageWithReceiver);
+    sspMessage& msg5 = msg_recv->getMessage();
+    msg5.setTask(domain->getPlaytasks()[5]);
+    msg5.setTime(domain->getValues()[22]);
+    msg5.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[4]);
+    msglist->add(std::move(msg_recv));
 
-    //auto& startlist = manager->getStartList();
-//    startlist.add(domain->getConditionals()[0], msglist);
+    // Tunnel konkret
+    msg_recv.reset(new sspMessageWithReceiver);
+    sspMessage& msg6 = msg_recv->getMessage();
+    msg6.setTask(domain->getPlaytasks()[6]);
+    msg6.setTime(domain->getValues()[22]);
+    msg6.setType(sspMessage::Type::Load);
+    msg_recv->setReceiver(domain->getTimelines()[5]);
+    msglist->add(std::move(msg_recv));
+
+    auto& startlist = manager->getStartList();
+    startlist.add(domain->getConditionals()[0], msglist);
 }
 
 void Bekkelaget::buildUserOutput(sspDomainData* domain)

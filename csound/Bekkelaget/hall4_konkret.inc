@@ -1,4 +1,4 @@
-instr Hall_konkret
+instr Hall4_konkret
 		iID = p4
 		iFilLen filelen p5
 		p3	= iFilLen
@@ -18,13 +18,8 @@ cont:
 		aSnd soundin p5
 		denorm aSnd
 
-		; p6 determines the hall the sound should play in		
-		kChannel = p6
-		if (kChannel > 3.5) then
-			; Hall 4 contains 5 channels 4 - 8
-			kChannel random 4.0, 8.99
-		endif
-	
+		kChannel random 4.0, 8.99
+
 		String sprintfk "hall_%d", int(kChannel)
 		chnmix		aSnd, String
 

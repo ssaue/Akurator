@@ -24,12 +24,19 @@ private:
 	static void buildUserInputContent(sspDomainData* domain);
 	static void buildTimelineHierarchy(sspDomainData* domain);
 
-	static void buildKulisse(sspDomainData* domain);
-	static void buildRekke(sspDomainData* domain);
-	static void buildSignaler(sspDomainData* domain);
-	static void buildAttakker(sspDomainData* domain);	// Includes Kaskader and KulisseBend
-	static void buildRens(sspDomainData* domain);
-	static void buildDunder(sspDomainData* domain);
+	static void buildHallDraape(sspDomainData* domain);
+	static void buildHallKepler(sspDomainData* domain);
+	static void buildHallKaskade(sspDomainData* domain);
+	static void buildHallKonkret(sspDomainData* domain);
+	static void buildTunnelKaskade(sspDomainData* domain);
+	static void buildTunnelKonkret(sspDomainData* domain);
+
+	//static void buildKulisse(sspDomainData* domain);
+	//static void buildRekke(sspDomainData* domain);
+	//static void buildSignaler(sspDomainData* domain);
+	//static void buildAttakker(sspDomainData* domain);	// Includes Kaskader and KulisseBend
+	//static void buildRens(sspDomainData* domain);
+	//static void buildDunder(sspDomainData* domain);
 
 	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
 	static void buildUserOutput(sspDomainData* domain);

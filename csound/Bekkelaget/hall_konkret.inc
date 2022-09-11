@@ -1,4 +1,4 @@
-instr Tunnel_kaskade
+instr Hall_konkret
 		iID = p4
 		iFilLen filelen p5
 		p3	= iFilLen
@@ -17,15 +17,15 @@ cont:
 		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID]
 		aSnd soundin p5
 		denorm aSnd
-		aSnd = kamp * aSnd
 
-		kAzim      line       0, p3, 90
-		a1, a2, a3, a4, a5  vbap aSnd, kAzim, 0, 0, 2
-
-		chnmix		a1, "hall_4"
-		chnmix		a2, "hall_5"
-		chnmix		a3, "hall_6"
-		chnmix		a4, "hall_7"
-		chnmix		a5, "hall_8"
+		; p6 determines the hall the sound should play in		
+		kChannel = p6
+		if (kChannel > 3.5) then
+			; Hall 4 contains 5 channels 4 - 8
+			kChannel random 4.0, 8.99
+		endif
+	
+		String sprintfk "hall_%d", int(kChannel)
+		chnmix		aSnd, String
 
 endin

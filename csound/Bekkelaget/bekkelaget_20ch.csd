@@ -52,9 +52,9 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/tunnel_konkret", "isf", kID, Sfile, kArg1
+  kk OSClisten gi_osc_handle, "/play/tunnel_konkret", "is", kID, Sfile
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i \"Tunnel_konkret\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+				String sprintfk "i \"Tunnel_konkret\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
@@ -68,25 +68,25 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/hall_konkret", "isf", kID, Sfile, kArg1
+  kk OSClisten gi_osc_handle, "/play/hall_konkret", "is", kID, Sfile
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i \"Hall_konkret\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+				String sprintfk "i \"Hall_konkret\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/draape", "isf", kID, Sfile, kArg1
+  kk OSClisten gi_osc_handle, "/play/draape", "is", kID, Sfile
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i \"Draape\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+				String sprintfk "i \"Draape\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
   endif
   
-  kk OSClisten gi_osc_handle, "/play/kepler", "isf", kID, Sfile, kArg1
+  kk OSClisten gi_osc_handle, "/play/kepler", "is", kID, Sfile
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i \"Kepler\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+				String sprintfk "i \"Kepler\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
@@ -165,35 +165,35 @@ instr 10 ;init
 endin
 
 instr 20 ; fade buffer
-				istart = gkFade[p4]
-    gkFade[p4] linen istart, p3, p5
+	  kStart = gkFade[p4]
+    gkFade[p4] linseg i(kStart), p3, p5
 endin
 
 instr 30 ; volume buffer (abs)
-				istart = gkVol[p4]
-    gkVol[p4] linen istart, p3, p5
+	  kStart = gkVol[p4]
+    gkVol[p4] linseg i(kStart), p3, p5
 endin
 
 instr 35 ; volume buffer (rel)
-				istart = gkVol[p4]
-				iend = istart + p5
-    gkVol[p4] linen istart, p3, iend
+	  kStart = gkVol[p4]
+		iend = i(kStart) + p5
+    gkVol[p4] linseg i(kStart), p3, iend
 endin
 
 instr 40 ; fade master
-				istart = gkMFade[p4]
-    gkMFade[p4] linen istart, p3, p5
+	  kStart = gkMFade[p4]
+    gkMFade[p4] linseg i(kStart), p3, p5
 endin
 
 instr 50 ; volume master (abs)
-				istart = gkMVol[p4]
-    gkMVol[p4] linen istart, p3, p5
+	  kStart = gkMVol[p4]
+    gkMVol[p4] linseg i(kStart), p3, p5
 endin
 
 instr 55 ; volume master (rel)
-				istart = gkMVol[p4]
-				iend = istart + p5
-    gkMVol[p4] linen istart, p3, iend
+	  kStart = gkMVol[p4]
+	  iend = i(kStart) + p5
+    gkMVol[p4] linseg i(kStart), p3, iend
 endin
 
 #include "tunnel_kaskade.inc"		
@@ -313,10 +313,10 @@ e
 <bsbPanel>
  <label>Widgets</label>
  <objectName/>
- <x>100</x>
- <y>100</y>
- <width>320</width>
- <height>240</height>
+ <x>0</x>
+ <y>0</y>
+ <width>0</width>
+ <height>0</height>
  <visible>true</visible>
  <uuid/>
  <bgcolor mode="nobackground">

@@ -9,7 +9,6 @@ continue:
 		krel init 0	
 		krel release
 		if (krel < 1) kgoto cont
-  		xtratim p6
 			 ktrig init 1
 			 OSCsend	ktrig, "127.0.0.1", giOSCsend, "/finished", "i", iID
 			 ktrig = 0

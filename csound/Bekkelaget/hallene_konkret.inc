@@ -2,6 +2,10 @@ instr Hallene_konkret
 		iID = p4
 		iFilLen filelen p5
 		p3	= iFilLen
+		
+		iChannel random 6.0, 8.99
+		iChannel = int(iChannel)
+
 		if (gkStop[iID] < 1) kgoto continue
 				turnoff
 
@@ -17,10 +21,9 @@ cont:
 		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID]
 		aSnd soundin p5
 		denorm aSnd
+		aSnd = kamp * aSnd
 
-		kChannel random 6.0, 8.99
-	
-		String sprintfk "hall_%d", int(kChannel)
+		String sprintfk "hall_%d", iChannel
 		chnmix		aSnd, String
 
 endin

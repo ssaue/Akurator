@@ -14,10 +14,10 @@ continue:
 			 ktrig = 0
 
 cont:
-		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] * 0.05
-		a1 soundin p5
-		denorm a1
-		aSnd = kamp * a1
+		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] * 0.25
+		a1,a2 soundin p5
+		denorm a1, a2
+		aSnd = kamp * a1 + kamp * a2
 
 		kAzim      line       0, p3, 90
 		a1, a2, a3, a4, a5  vbap aSnd, kAzim, 0, 0, 2

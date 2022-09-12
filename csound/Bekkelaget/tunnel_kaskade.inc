@@ -15,11 +15,12 @@ continue:
 
 cont:
 		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] * 0.5
-		ainn soundin p5
-		denorm ainn
+		a1,a2 soundin p5
+		denorm a1, a2
+		aSnd = kamp * a1 + kamp * a2
 
 		kAzim      line       0, p3, 175
-		a1, a2, a3, a4, a5, a6, a7, a8  vbap ainn, kAzim, 0, 0, 1
+		a1, a2, a3, a4, a5, a6, a7, a8  vbap aSnd, kAzim, 0, 0, 1
 
 		chnmix		a1, "tunnel_1"
 		chnmix		a2, "tunnel_2"

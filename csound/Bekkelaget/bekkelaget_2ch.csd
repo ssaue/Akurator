@@ -1,12 +1,12 @@
 <CsoundSynthesizer>
 <CsOptions>
--odac6
+-odac1
 </CsOptions>
 <CsInstruments>
 
 sr 	= 	44100
 ksmps 	= 	32
-nchnls 	= 	24
+nchnls 	= 	2
 0dbfs = 1
 
 ; The number of buffers - this number must be large enough for the project!
@@ -217,6 +217,7 @@ instr Outputfilters	; Pre-filtering the loudspeakers
 
 		iDNH = 90	; HPF 
 		
+		
 		a1	chnget "tunnel_1"
 		a1 atone a1, iDNH
 		outch 1, a1
@@ -229,85 +230,85 @@ instr Outputfilters	; Pre-filtering the loudspeakers
 		
 		a3	chnget "tunnel_3"
 		a3 atone a3, iDNH
-		outch 3, a3
+		outch 1, a3
 		chnclear "tunnel_3"
 		
 		a4	chnget "tunnel_4"
 		a4 atone a4, iDNH
-		outch 4, a4
+		outch 2, a4
 		chnclear "tunnel_4"
 		
 		a5	chnget "tunnel_5"
 		a5 atone a5, iDNH
-		outch 5, a5
+		outch 1, a5
 		chnclear "tunnel_5"
 		
 		a6	chnget "tunnel_6"
 		a6 atone a6, iDNH
-		outch 6, a6
+		outch 2, a6
 		chnclear "tunnel_6"
 		
 		a7	chnget "tunnel_7"
 		a7 atone a7, iDNH
-		outch 7, a7
+		outch 1, a7
 		chnclear "tunnel_7"
 		
 		a8	chnget "tunnel_8"
 		a8 atone a8, iDNH
-		outch 8, a8
+		outch 2, a8
 		chnclear "tunnel_8"
 		
 		a9	chnget "hall_1"
 		a9 atone a9, iDNH
-		outch 9, a9
+		outch 1, a9
 		chnclear "hall_1"
 		
 		a10	chnget "hall_2"
 		a10 atone a10, iDNH
-		outch 10, a10
+		outch 2, a10
 		chnclear "hall_2"
 		
 		a11	chnget "hall_3"
 		a11 atone a11, iDNH
-		outch 11, a11
+		outch 1, a11
 		chnclear "hall_3"
 		
 		a12	chnget "hall_4"
 		a12 tone a12, iDNH
-		outch 12, a12
+		outch 2, a12
 		chnclear "hall_4"
 
 		a13	chnget "hall_5"
 		a13 tone a13, iDNH
-		outch 13, a13
+		outch 1, a13
 		chnclear "hall_5"
 
 		a14	chnget "hall_6"
 		a14 tone a14, iDNH
-		outch 14, a14
+		outch 2, a14
 		chnclear "hall_6"
 
 		a15	chnget "hall_7"
 		a15 tone a15, iDNH
-		outch 15, a15
+		outch 1, a15
 		chnclear "hall_7"
 
 		a16	chnget "hall_8"
 		a16 tone a16, iDNH
-		outch 16, a16
+		outch 2, a16
 		chnclear "hall_8"
 
 ; No filtering on the large loudspeakers in hall 4
 		a17	chnget "drop_1"
-		outch 17, a17
+		outch 1, a17
 		chnclear "drop_1"
 
 		a18	chnget "drop_2"
-		outch 18, a18
+		outch 2, a18
 		chnclear "drop_2"
 
 		a19	chnget "drop_3"
-		outch 19, a19
+		outch 1, a19
 		chnclear "drop_3"
 
 endin

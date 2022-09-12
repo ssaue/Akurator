@@ -26,6 +26,7 @@
 #include "domain/core/sspPlayTask.h"
 #include "domain/elements/messages/sspConditionalMsgList.h"
 
+//#define SUPPORT_INPUTS 1
 
 void Bekkelaget::buildContent(sspDomainData* domain, sspPlayManager* manager)
 {
@@ -76,6 +77,8 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     val->setValue(1.0);
     domain->getValues().push_back(val);
 
+#ifdef SUPPORT_INPUTS
+
     auto ai = std::make_shared<sspICPanalogInput>();
     ai->setName("Vannmengde");
     domain->getInputs().push_back(ai);
@@ -85,10 +88,14 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setAddress(2);
     ai->setValue(val);
 
+#endif
+
     val.reset(new sspBasicValue());
     val->setName("Tunnel_slam");
     val->setValue(1.0);
     domain->getValues().push_back(val);
+
+#ifdef SUPPORT_INPUTS
 
     ai.reset(new sspICPanalogInput());
     ai->setName("Tunnel_slam");
@@ -99,10 +106,14 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setAddress(2);
     ai->setValue(val);
 
+#endif
+
     val.reset(new sspBasicValue());
     val->setName("Hall_slam");
     val->setValue(1.0);
     domain->getValues().push_back(val);
+
+#ifdef SUPPORT_INPUTS
 
     ai.reset(new sspICPanalogInput());
     ai->setName("Hall_slam");
@@ -113,10 +124,14 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setAddress(2);
     ai->setValue(val);
 
+#endif
+
     val.reset(new sspBasicValue());
     val->setName("Filterlevel");
     val->setValue(1.0);
     domain->getValues().push_back(val);
+
+#ifdef SUPPORT_INPUTS
 
     ai.reset(new sspICPanalogInput());
     ai->setName("Filterlevel");
@@ -127,10 +142,14 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setAddress(2);
     ai->setValue(val);
 
+#endif
+
     auto cond = std::make_shared<sspBoolean>();
     cond->setName("High_water");
     cond->setValue(false);
     domain->getConditionals().push_back(cond);
+
+#ifdef SUPPORT_INPUTS
 
     auto di = std::make_shared<sspICPdigitalInput>();
     di->setName("High_water");
@@ -141,10 +160,14 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setAddress(1);
     di->setConditional(cond);
 
+#endif
+
     cond.reset(new sspBoolean());
     cond->setName("Start_pumpe");
     cond->setValue(false);
     domain->getConditionals().push_back(cond);
+
+#ifdef SUPPORT_INPUTS
 
     di.reset(new sspICPdigitalInput());
     di->setName("Start_pumpe");
@@ -155,10 +178,14 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setAddress(1);
     di->setConditional(cond);
 
+#endif
+
     cond.reset(new sspBoolean());
     cond->setName("Start_spyling");
     cond->setValue(false);
     domain->getConditionals().push_back(cond);
+
+#ifdef SUPPORT_INPUTS
 
     di.reset(new sspICPdigitalInput());
     di->setName("Start_spyling");
@@ -169,10 +196,14 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setAddress(1);
     di->setConditional(cond);
 
+#endif
+
     cond.reset(new sspBoolean());
     cond->setName("Start_blaasing");
     cond->setValue(false);
     domain->getConditionals().push_back(cond);
+
+#ifdef SUPPORT_INPUTS
 
     di.reset(new sspICPdigitalInput());
     di->setName("Start_blaasing");
@@ -182,6 +213,9 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setChannel(3);
     di->setAddress(1);
     di->setConditional(cond);
+
+#endif
+
 }
 
 void Bekkelaget::buildUserInputContent(sspDomainData* domain)

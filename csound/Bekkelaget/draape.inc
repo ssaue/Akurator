@@ -2,6 +2,10 @@ instr Draape
 		iID = p4
 		iFilLen filelen p5
 		p3	= iFilLen
+		
+		iChannel random 1.0, 3.99
+		iChannel = int(iChannel)
+		
 		if (gkStop[iID] < 1) kgoto continue
 				turnoff
 
@@ -18,9 +22,8 @@ cont:
 		aSnd soundin p5
 		denorm aSnd
 		
-		kChannel random 1.0, 3.99
+		String sprintfk "tunnel_%d", iChannel
 
-		String sprintfk "tunnel_%d", int(kChannel)
 		chnmix		aSnd, String
 
 endin

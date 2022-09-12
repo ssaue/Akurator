@@ -1,4 +1,4 @@
-instr Tunnel_kaskade
+instr Hall_kaskade
 		iID = p4
 		iFilLen filelen p5
 		p3	= iFilLen
@@ -14,18 +14,18 @@ continue:
 			 ktrig = 0
 
 cont:
-		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID]
-		aSnd soundin p5
-		denorm aSnd
-		aSnd = kamp * aSnd
+		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] * 0.05
+		a1 soundin p5
+		denorm a1
+		aSnd = kamp * a1
 
 		kAzim      line       0, p3, 90
 		a1, a2, a3, a4, a5  vbap aSnd, kAzim, 0, 0, 2
 
-		chnmix		a1, "hall_4"
-		chnmix		a2, "hall_5"
-		chnmix		a3, "hall_6"
-		chnmix		a4, "hall_7"
-		chnmix		a5, "hall_8"
+		chnmix		a1, "hall_1"
+		chnmix		a2, "hall_2"
+		chnmix		a3, "hall_3"
+		chnmix		a4, "hall_4"
+		chnmix		a5, "hall_5"
 
 endin

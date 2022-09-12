@@ -1,12 +1,13 @@
 <CsoundSynthesizer>
 <CsOptions>
--odac7
+-odac6
 </CsOptions>
 <CsInstruments>
 
 sr 	= 	44100
 ksmps 	= 	32
-nchnls 	= 	19
+nchnls 	= 	24
+0dbfs = 1
 
 ; The number of buffers - this number must be large enough for the project!
 giIDs init 30
@@ -17,14 +18,14 @@ gkMVol[] init giIDs
 gkMFade[] init giIDs
 gkStop[] init giIDs 
 
-giOSCreceive init 8010
-giOSCsend	   init 9010
+giOSCreceive init 8001
+giOSCsend	 init 9001
 
 gi_osc_handle OSCinit giOSCreceive
 
 ; VBAP
 ; "Tunnel (simulerer lineæar forflytning)"
-vbaplsinit 2.01, 0, 25, 50, 75, 100, 125, 150, 175
+vbaplsinit 2.01, 8, 0, 25, 50, 75, 100, 125, 150, 175
 
 ; "Hall 4 (simulerer lineæar forflytning)"
 vbaplsinit 2.02, 5, 0, 22.5, 45, 67.5, 90 
@@ -40,7 +41,7 @@ instr Listener
  
 next:
 
-	 ; Check for new messages
+  ; Check for new messages
   kosc_count OSCcount
   if (kosc_count == 0) kgoto end
 
@@ -112,13 +113,13 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/buffer/vol/abs", "if", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/buffer/vol/abs", "iff", kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 30, 0, kArg2, kID, kArg1
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/buffer/vol/rel", "if", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/buffer/vol/rel", "iff", kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 35, 0, kArg2, kID, kArg1
     kgoto next
@@ -137,13 +138,13 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/master/vol/abs", "if", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/master/vol/abs", "iff", kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 50, 0, kArg2, kID, kArg1
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/master/vol/rel", "if", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/master/vol/rel", "iff", kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 55, 0, kArg2, kID, kArg1
     kgoto next
@@ -314,8 +315,8 @@ endin
 </CsInstruments>
 
 <CsScore>
-i 1 0 3600
 i 10 0 1
+f 0 z ; run "forever"
 e
 </CsScore>
 </CsoundSynthesizer>

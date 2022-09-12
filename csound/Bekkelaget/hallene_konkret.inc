@@ -18,7 +18,7 @@ cont:
 		aSnd soundin p5
 		denorm aSnd
 
-		kChannel random 1.0, 3.99
+		kChannel random 6.0, 8.99
 	
 		String sprintfk "hall_%d", int(kChannel)
 		chnmix		aSnd, String

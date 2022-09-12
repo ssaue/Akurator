@@ -35,7 +35,7 @@ bool sspInputManager::update()
 
 	bool update = false;
 	for (auto input : *inputs_) {
-		if (!input->update())
+		if (input->update())
 			update = true;	// At least one input is updated
 	}
 	return update;

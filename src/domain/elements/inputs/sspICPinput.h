@@ -56,7 +56,7 @@ public:
 
 protected:
 	typedef void* HANDLE;
-	HANDLE port_handle_;
+	static HANDLE port_handle_;
 
 private:
 	bool initCom();

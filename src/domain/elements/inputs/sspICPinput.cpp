@@ -28,12 +28,13 @@ namespace {
 	enum IpcCommandSlots { IPC_COMPORT, IPC_ADDRESS, IPC_ID, IPC_CHECKSUM, IPC_TIMEOUT, IPC_CHANNEL, IPC_DEBUGINFO };
 }
 
+sspICPinput::HANDLE sspICPinput::port_handle_ = nullptr;
+
 sspICPinput::sspICPinput()
 	: sspInput()
 	, port_(DEFAULT_PORT)
 	, address_(1)
 	, channel_(0)
-	, port_handle_(nullptr)
 {
 }
 
@@ -90,5 +91,8 @@ bool sspICPinput::update()
 
 void sspICPinput::terminate()
 {
-	if (port_handle_) uart_Close(port_handle_);
+	if (port_handle_) {
+		uart_Close(port_handle_);
+		port_handle_ = nullptr;
+	}
 }

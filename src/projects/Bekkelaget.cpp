@@ -114,26 +114,26 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setValue(val);
 
     val.reset(new sspBasicValue());
-    val->setName("Filternivå");
+    val->setName("Filterlevel");
     val->setValue(1.0);
     domain->getValues().push_back(val);
 
     ai.reset(new sspICPanalogInput());
-    ai->setName("Filternivå");
+    ai->setName("Filterlevel");
     domain->getInputs().push_back(ai);
     ai->setUpdateInterval(5.0);
     ai->setPort(1);
-    ai->setChannel(2);
+    ai->setChannel(3);
     ai->setAddress(2);
     ai->setValue(val);
 
     auto cond = std::make_shared<sspBoolean>();
-    cond->setName("Høy_vannføring");
+    cond->setName("High_water");
     cond->setValue(false);
     domain->getConditionals().push_back(cond);
 
     auto di = std::make_shared<sspICPdigitalInput>();
-    di->setName("Høy_vannføring");
+    di->setName("High_water");
     domain->getInputs().push_back(di);
     di->setUpdateInterval(5.0);
     di->setPort(1);
@@ -170,12 +170,12 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setConditional(cond);
 
     cond.reset(new sspBoolean());
-    cond->setName("Start_blåsing");
+    cond->setName("Start_blaasing");
     cond->setValue(false);
     domain->getConditionals().push_back(cond);
 
     di.reset(new sspICPdigitalInput());
-    di->setName("Start_blåsing");
+    di->setName("Start_blaasing");
     domain->getInputs().push_back(di);
     di->setUpdateInterval(5.0);
     di->setPort(1);
@@ -985,8 +985,8 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
 
 void Bekkelaget::buildUserOutput(sspDomainData* domain)
 {
-    domain->getOutputValues().push_back(domain->getInputValues()[0]);
-    domain->getOutputValues().push_back(domain->getInputValues()[1]);
-    domain->getOutputValues().push_back(domain->getInputValues()[2]);
-    domain->getOutputValues().push_back(domain->getInputValues()[3]);
+    domain->getOutputValues().push_back(domain->getValues()[2]);
+    domain->getOutputValues().push_back(domain->getValues()[3]);
+    domain->getOutputValues().push_back(domain->getValues()[4]);
+    domain->getOutputValues().push_back(domain->getValues()[5]);
 }

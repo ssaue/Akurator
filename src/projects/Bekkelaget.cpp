@@ -80,9 +80,9 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setName("Vannmengde");
     domain->getInputs().push_back(ai);
     ai->setUpdateInterval(5.0);
-    ai->setPort(5);
+    ai->setPort(1);
     ai->setChannel(0);
-    ai->setAddress(1);
+    ai->setAddress(2);
     ai->setValue(val);
 
     val.reset(new sspBasicValue());
@@ -94,9 +94,9 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setName("Tunnel_slam");
     domain->getInputs().push_back(ai);
     ai->setUpdateInterval(5.0);
-    ai->setPort(5);
+    ai->setPort(1);
     ai->setChannel(1);
-    ai->setAddress(1);
+    ai->setAddress(2);
     ai->setValue(val);
 
     val.reset(new sspBasicValue());
@@ -108,9 +108,9 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setName("Hall_slam");
     domain->getInputs().push_back(ai);
     ai->setUpdateInterval(5.0);
-    ai->setPort(5);
+    ai->setPort(1);
     ai->setChannel(2);
-    ai->setAddress(1);
+    ai->setAddress(2);
     ai->setValue(val);
 
     val.reset(new sspBasicValue());
@@ -122,9 +122,9 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     ai->setName("Filternivå");
     domain->getInputs().push_back(ai);
     ai->setUpdateInterval(5.0);
-    ai->setPort(5);
+    ai->setPort(1);
     ai->setChannel(2);
-    ai->setAddress(1);
+    ai->setAddress(2);
     ai->setValue(val);
 
     auto cond = std::make_shared<sspBoolean>();
@@ -136,7 +136,7 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setName("Høy_vannføring");
     domain->getInputs().push_back(di);
     di->setUpdateInterval(5.0);
-    di->setPort(5);
+    di->setPort(1);
     di->setChannel(0);
     di->setAddress(1);
     di->setConditional(cond);
@@ -150,7 +150,7 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setName("Start_pumpe");
     domain->getInputs().push_back(di);
     di->setUpdateInterval(5.0);
-    di->setPort(5);
+    di->setPort(1);
     di->setChannel(1);
     di->setAddress(1);
     di->setConditional(cond);
@@ -164,7 +164,7 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setName("Start_spyling");
     domain->getInputs().push_back(di);
     di->setUpdateInterval(5.0);
-    di->setPort(5);
+    di->setPort(1);
     di->setChannel(2);
     di->setAddress(1);
     di->setConditional(cond);
@@ -178,7 +178,7 @@ void Bekkelaget::buildInputContent(sspDomainData* domain)
     di->setName("Start_blåsing");
     domain->getInputs().push_back(di);
     di->setUpdateInterval(5.0);
-    di->setPort(5);
+    di->setPort(1);
     di->setChannel(3);
     di->setAddress(1);
     di->setConditional(cond);
@@ -232,9 +232,18 @@ void Bekkelaget::buildUserInputContent(sspDomainData* domain)
 void Bekkelaget::buildTimelineHierarchy(sspDomainData* domain)
 {
     // Root timeline
+
+    // Time factor based on Vannmengde
+    auto map = std::make_shared<sspLinearMap>();
+    map->setName("Global tetthet");
+    map->setInputRange(20, 0);
+    map->setOutputRange(0.75, 1.25);
+    map->setValue(domain->getValues()[2]);
+    domain->getValues().push_back(map);
+
     auto root = std::make_shared<sspTimeline>();
     root->setName("Root stream");
-    root->setTimeFactor(domain->getValues()[1]);
+    root->setTimeFactor(map);
     domain->getTimelines().push_back(root);
 
     sspWeakVector<sspTimeline> root_children;
@@ -266,10 +275,10 @@ void Bekkelaget::buildTimelineHierarchy(sspDomainData* domain)
     domain->getValues().push_back(val);
 
     // Time factor based on Filternivå
-    auto map = std::make_shared<sspLinearMap>();
+    map.reset(new sspLinearMap());
     map->setName("Kaskade tetthet");
-    map->setInputRange(20,0);
-    map->setOutputRange(0.75,1.25);
+    map->setInputRange(20, 0);
+    map->setOutputRange(0.75, 1.25);
     map->setValue(domain->getValues()[5]);
     domain->getValues().push_back(map);
 
@@ -577,14 +586,14 @@ void Bekkelaget::buildHallKaskade(sspDomainData* domain)
     kaskade->setArguments(args);
     domain->getPlayers().push_back(kaskade);
 
-    // Random repeat at 10 to 30 seconds    
+    // Random repeat at 10 to 20 seconds    
     auto val = std::make_shared<sspBasicValue>();
-    val->setName("30");
-    val->setValue(30);
+    val->setName("20");
+    val->setValue(20);
     domain->getValues().push_back(val);
 
     auto random = std::make_shared<sspRandomValue>();
-    random->setName("10 to 30 seconds");
+    random->setName("10 to 20 seconds");
     random->setLow(domain->getValues()[19]);
     random->setHigh(val);
     domain->getValues().push_back(random);
@@ -766,7 +775,7 @@ void Bekkelaget::buildHallKonkret(sspDomainData* domain)
 
     auto random_player = std::make_shared<sspRandomPlayer>();
     random_player->setName("Hall konkret");
-    random_player->setConstantWeights({1,2});
+    random_player->setConstantWeights({ 1,2 });
     random_player->setWeights(zeros);
     random_player->setPlayers(players);
     domain->getPlayers().push_back(random_player);
@@ -783,7 +792,7 @@ void Bekkelaget::buildHallKonkret(sspDomainData* domain)
     auto msg_recv = std::make_unique<sspMessageWithReceiver>();
     sspMessage& msg = msg_recv->getMessage();
     msg.setTask(task);
-    msg.setTime(domain->getValues()[22]);
+    msg.setTime(domain->getValues()[23]);
     msg.setType(sspMessage::Type::Load);
     msg_recv->setReceiver(domain->getTimelines()[3]);
 
@@ -871,7 +880,7 @@ void Bekkelaget::buildTunnelKonkret(sspDomainData* domain)
     auto msg_recv = std::make_unique<sspMessageWithReceiver>();
     sspMessage& msg = msg_recv->getMessage();
     msg.setTask(task);
-    msg.setTime(domain->getValues()[22]);
+    msg.setTime(domain->getValues()[20]);
     msg.setType(sspMessage::Type::Load);
     msg_recv->setReceiver(domain->getTimelines()[5]);
 
@@ -889,11 +898,6 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
     auto msglist = std::make_shared<sspMessageList>();
 
     // Dråpe
-    auto val1 = std::make_shared<sspBasicValue>();
-    val1->setName("20");
-    val1->setValue(20);
-    domain->getValues().push_back(val1);
-
     auto val2 = std::make_shared<sspBasicValue>();
     val2->setName("40");
     val2->setValue(40);
@@ -901,7 +905,7 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
 
     auto randval = std::make_shared<sspRandomValue>();
     randval->setName("20 to 40 seconds");
-    randval->setLow(val1);
+    randval->setLow(domain->getValues()[22]);
     randval->setHigh(val2);
     domain->getValues().push_back(randval);
 
@@ -934,8 +938,8 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
     // Hall konkret
     randval.reset(new sspRandomValue());
     randval->setName("10 to 20 seconds");
-    randval->setLow(domain->getValues()[18]);
-    randval->setHigh(val1);
+    randval->setLow(domain->getValues()[19]);
+    randval->setHigh(domain->getValues()[22]);
     domain->getValues().push_back(randval);
 
     msg_recv.reset(new sspMessageWithReceiver);
@@ -947,10 +951,21 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
     msglist->add(std::move(msg_recv));
 
     // Tunnel kaskade
+    auto val1 = std::make_shared<sspBasicValue>();
+    val1->setName("30");
+    val1->setValue(30);
+    domain->getValues().push_back(val1);
+
+    randval.reset(new sspRandomValue());
+    randval->setName("10 to 30 seconds");
+    randval->setLow(domain->getValues()[19]);
+    randval->setHigh(val1);
+    domain->getValues().push_back(randval);
+
     msg_recv.reset(new sspMessageWithReceiver);
     sspMessage& msg5 = msg_recv->getMessage();
     msg5.setTask(domain->getPlaytasks()[5]);
-    msg5.setTime(domain->getValues()[22]);
+    msg5.setTime(randval);
     msg5.setType(sspMessage::Type::Load);
     msg_recv->setReceiver(domain->getTimelines()[4]);
     msglist->add(std::move(msg_recv));
@@ -959,7 +974,7 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
     msg_recv.reset(new sspMessageWithReceiver);
     sspMessage& msg6 = msg_recv->getMessage();
     msg6.setTask(domain->getPlaytasks()[6]);
-    msg6.setTime(domain->getValues()[22]);
+    msg6.setTime(randval);
     msg6.setType(sspMessage::Type::Load);
     msg_recv->setReceiver(domain->getTimelines()[5]);
     msglist->add(std::move(msg_recv));

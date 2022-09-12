@@ -20,7 +20,7 @@ std::string sspConcatString::getString() const
 {
 	std::string cat;
 	for (auto&& str : strings_) {
-		if (auto ptr = str.lock()) ptr->getString();
+		if (auto ptr = str.lock()) cat += ptr->getString();
 	}
 	return cat;
 }

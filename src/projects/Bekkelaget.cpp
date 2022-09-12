@@ -341,17 +341,17 @@ void Bekkelaget::buildHallDraape(sspDomainData* domain)
     domain->getStrings().push_back(addr);
 
     auto parent_str = std::make_shared<sspSimpleString>();
-    parent_str->setString("c:/Bekkelaget/Lyder/Bassdråpe/");
+    parent_str->setString("c:/Bekkelaget/Lyder/Draape/");
     parent_str->setName(parent_str->getString());
     domain->getStrings().push_back(parent_str);
 
     auto norm_str = std::make_shared<sspSimpleString>();
-    norm_str->setString("Normal dråpe");
+    norm_str->setString("Normal");
     norm_str->setName(norm_str->getString());
     domain->getStrings().push_back(norm_str);
 
     auto mod_str = std::make_shared<sspSimpleString>();
-    mod_str->setString("Modulert dråpe");
+    mod_str->setString("Modulert");
     mod_str->setName(mod_str->getString());
     domain->getStrings().push_back(mod_str);
 
@@ -756,6 +756,10 @@ void Bekkelaget::buildHallKonkret(sspDomainData* domain)
     hallene->setPath(file);
     domain->getPlayers().push_back(hallene);
 
+    sspWeakVector<sspValue> zeros;
+    zeros.push_back(domain->getValues()[0]);
+    zeros.push_back(domain->getValues()[0]);
+
     sspWeakVector<sspPlayer> players;
     players.push_back(hall4);
     players.push_back(hallene);
@@ -763,6 +767,7 @@ void Bekkelaget::buildHallKonkret(sspDomainData* domain)
     auto random_player = std::make_shared<sspRandomPlayer>();
     random_player->setName("Hall konkret");
     random_player->setConstantWeights({1,2});
+    random_player->setWeights(zeros);
     random_player->setPlayers(players);
     domain->getPlayers().push_back(random_player);
 

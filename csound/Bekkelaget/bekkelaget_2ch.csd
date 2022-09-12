@@ -34,6 +34,7 @@ alwayson "Listener"
 alwayson "Outputfilters"
 
 instr Listener
+  kBusID init 0
   kID init 0
   kArg1 init 0
   kArg2 init 0
@@ -45,7 +46,7 @@ next:
   kosc_count OSCcount
   if (kosc_count == 0) kgoto end
 
-  kk OSClisten gi_osc_handle, "/play/tunnel_kaskade", "isf", kID, Sfile, kArg1
+  kk OSClisten gi_osc_handle, "/play/tunnel_kaskade", "iisf", kBusID, kID, Sfile, kArg1
   if (kk == 1 && kID < giIDs) then
 				String sprintfk "i \"Tunnel_kaskade\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
      printks("%s\n", 1, String)
@@ -53,7 +54,7 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/tunnel_konkret", "is", kID, Sfile
+  kk OSClisten gi_osc_handle, "/play/tunnel_konkret", "iis", kBusID, kID, Sfile
   if (kk == 1 && kID < giIDs) then
 				String sprintfk "i \"Tunnel_konkret\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
@@ -61,7 +62,7 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/hall_kaskade", "isf", kID, Sfile, kArg1
+  kk OSClisten gi_osc_handle, "/play/hall_kaskade", "iisf", kBusID, kID, Sfile, kArg1
   if (kk == 1 && kID < giIDs) then
 				String sprintfk "i \"Hall_kaskade\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
      printks("%s\n", 1, String)
@@ -69,7 +70,7 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/hall4_konkret", "is", kID, Sfile
+  kk OSClisten gi_osc_handle, "/play/hall4_konkret", "iis", kBusID, kID, Sfile
   if (kk == 1 && kID < giIDs) then
 				String sprintfk "i \"Hall4_konkret\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
@@ -77,7 +78,7 @@ next:
     kgoto next
   endif
   
-  kk OSClisten gi_osc_handle, "/play/hallene_konkret", "is", kID, Sfile
+  kk OSClisten gi_osc_handle, "/play/hallene_konkret", "iis", kBusID, kID, Sfile
   if (kk == 1 && kID < giIDs) then
 				String sprintfk "i \"Hallene_konkret\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
@@ -85,7 +86,7 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/play/draape", "is", kID, Sfile
+  kk OSClisten gi_osc_handle, "/play/draape", "iis", kBusID, kID, Sfile
   if (kk == 1 && kID < giIDs) then
 				String sprintfk "i \"Draape\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
@@ -93,7 +94,7 @@ next:
     kgoto next
   endif
   
-  kk OSClisten gi_osc_handle, "/play/kepler", "is", kID, Sfile
+  kk OSClisten gi_osc_handle, "/play/kepler", "iis", kBusID, kID, Sfile
   if (kk == 1 && kID < giIDs) then
 				String sprintfk "i \"Kepler\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
@@ -101,56 +102,56 @@ next:
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/buffer/fadein", "if", kID, kArg1
+  kk OSClisten gi_osc_handle, "/channel/fadein", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
     event "i", 20, 0, kArg1, kID, 1.0
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/buffer/fadeout", "if", kID, kArg1
+  kk OSClisten gi_osc_handle, "/channel/fadeout", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
     event "i", 20, 0, kArg1, kID, 0.0
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/buffer/vol/abs", "iff", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/channel/vol/abs", "iiff", kBusID, kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 30, 0, kArg2, kID, kArg1
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/buffer/vol/rel", "iff", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/channel/vol/rel", "iiff", kBusID, kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 35, 0, kArg2, kID, kArg1
     kgoto next
   endif
 
 
-  kk OSClisten gi_osc_handle, "/master/fadein", "if", kID, kArg1
+  kk OSClisten gi_osc_handle, "/bus/fadein", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
     event "i", 40, 0, kArg1, kID, 1.0
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/master/fadeout", "if", kID, kArg1
+  kk OSClisten gi_osc_handle, "/bus/fadeout", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
     event "i", 40, 0, kArg1, kID, 0.0
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/master/vol/abs", "iff", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/bus/vol/abs", "iiff", kBusID, kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 50, 0, kArg2, kID, kArg1
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/master/vol/rel", "iff", kID, kArg1, kArg2
+  kk OSClisten gi_osc_handle, "/bus/vol/rel", "iiff", kBusID, kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
     event "i", 55, 0, kArg2, kID, kArg1
     kgoto next
   endif
 
-  kk OSClisten gi_osc_handle, "/stop", "i", kID
+  kk OSClisten gi_osc_handle, "/stop", "ii", kBusID, kID
   if (kk == 1 && kID < giIDs) then
     gkStop[kID] = 1
     kgoto next

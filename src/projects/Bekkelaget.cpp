@@ -964,7 +964,7 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
     msg_recv.reset(new sspMessageWithReceiver);
     sspMessage& msg3 = msg_recv->getMessage();
     msg3.setTask(domain->getPlaytasks()[2]);
-    msg3.setTime(domain->getValues()[1]);
+    msg3.setTime(domain->getValues()[24]);
     msg3.setType(sspMessage::Type::Load);
     msg_recv->setReceiver(domain->getTimelines()[1]);
     msglist->add(std::move(msg_recv));

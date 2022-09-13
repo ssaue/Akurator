@@ -26,7 +26,8 @@
 #include "domain/core/sspPlayTask.h"
 #include "domain/elements/messages/sspConditionalMsgList.h"
 
-//#define SUPPORT_INPUTS 1
+// If in an environment without support for input from external loggers, then comment this #define
+#define SUPPORT_INPUTS 1
 
 void Bekkelaget::buildContent(sspDomainData* domain, sspPlayManager* manager)
 {

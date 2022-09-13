@@ -18,7 +18,7 @@ continue:
 			 ktrig = 0
 
 cont:
-		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID]
+		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] * 0.67
 		aSnd soundin p5
 		denorm aSnd
 		

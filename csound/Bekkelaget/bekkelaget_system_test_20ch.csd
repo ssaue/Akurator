@@ -16,8 +16,7 @@ alwayson "Outputfilters"
 instr 10
 		Sfile = "C:/Develop/Akurator/csound/Give_me_the_night.wav"
 		iFilLen filelen Sfile
-		ichn filenchnls Sfile	;check number of channels
-		iamp = 0.2
+		iamp = 0.25
 		
 		iStartChannel = 9
 		iEndChannel = 13
@@ -29,11 +28,6 @@ instr 10
           timout    0, iFilLen, play
           reinit    loop
 		play:
-
-;		Mono
-;		a1 soundin Sfile
-;		denorm a1
-;		aSnd = iamp * a1
 
 ;		Stereo
 		a1,a2 soundin Sfile

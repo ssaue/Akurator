@@ -19,7 +19,7 @@ continue:
 			 ktrig = 0
 
 cont:
-		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID]
+		kamp = gkVol[iID] * gkFade[iID] * gkMVol[iID] * gkMFade[iID] * 0.5
 		String sprintfk "hall_%d", iChannel
 
 		if (ichn == 1) then

@@ -22,7 +22,7 @@ cont:
 		aSnd soundin p5
 		denorm aSnd
 		
-		String sprintfk "tunnel_%d", iChannel
+		String sprintfk "drop_%d", iChannel
 
 		chnmix		aSnd, String
 

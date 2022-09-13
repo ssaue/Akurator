@@ -1,26 +1,29 @@
 <CsoundSynthesizer>
 <CsOptions>
--odac1
+-odac6
 </CsOptions>
 <CsInstruments>
 
 sr 	= 	44100
 ksmps 	= 	32
-nchnls 	= 	20
+nchnls 	= 	24
 0dbfs = 1
 
-vbaplsinit 2.01, 19, 0, 10, 20, 30, 40, 50, 60, 70 ,80, 90, 100, 110, 120, 130, 140, 150, 160, 170 ,180
+vbaplsinit 2.01, 19, 10, 20, 30, 40, 50, 60, 70 ,80, 90, 100, 110, 120, 130, 140, 150, 160, 170 ,180, 190
 
 alwayson "Outputfilters"
 
 instr 10
-		Sfile = "C:/Bekkelaget/Lyder/Syntetisk/Normal lang syntetisk/LS1_glasstroll.wav"
+		Sfile = "C:/Develop/Akurator/csound/Give_me_the_night.wav"
 		iFilLen filelen Sfile
 		ichn filenchnls Sfile	;check number of channels
 		iamp = 0.2
 		
 		iStartChannel = 9
 		iEndChannel = 13
+		
+		iBegin = iStartChannel * 10 - 5
+		iEnd = iEndChannel * 10 + 5		
 		
 		loop:
           timout    0, iFilLen, play
@@ -37,7 +40,7 @@ instr 10
 		denorm a1,a2
 		aSnd = iamp * a1 + iamp * a2
 
-		kAzim      line       iStartChannel*10, iFilLen, iEndChannel*10
+		kAzim      line       iBegin, iFilLen, iEnd
 		a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19  vbap aSnd, kAzim, 0, 0, 1
 
 		chnmix		a1, "chn_1"

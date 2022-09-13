@@ -6,7 +6,7 @@
 
 sr 	= 	44100
 ksmps 	= 	32
-nchnls 	= 	24
+nchnls 	= 	20
 0dbfs = 1
 
 ; The number of buffers - this number must be large enough for the project!

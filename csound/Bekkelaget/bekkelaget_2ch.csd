@@ -48,7 +48,7 @@ next:
 
   kk OSClisten gi_osc_handle, "/play/tunnel_kaskade", "iisf", kBusID, kID, Sfile, kArg1
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i \"Tunnel_kaskade\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+				String sprintfk "i \"Tunnel_kaskade\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
@@ -64,7 +64,7 @@ next:
 
   kk OSClisten gi_osc_handle, "/play/hall_kaskade", "iisf", kBusID, kID, Sfile, kArg1
   if (kk == 1 && kID < giIDs) then
-				String sprintfk "i \"Hall_kaskade\" 0 1 %d \"%s\" %f", kID, Sfile, kArg1
+				String sprintfk "i \"Hall_kaskade\" 0 1 %d \"%s\" ", kID, Sfile
      printks("%s\n", 1, String)
 				scoreline String, 1
     kgoto next
@@ -104,44 +104,58 @@ next:
 
   kk OSClisten gi_osc_handle, "/channel/fadein", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
-    event "i", 20, 0, kArg1, kID, 1.0
+    String sprintfk "i 20 0 %f %d 1.0", kArg1, kID
+    printks("%s\n", 1, String)
+	  scoreline String, 1
     kgoto next
   endif
 
   kk OSClisten gi_osc_handle, "/channel/fadeout", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
-    event "i", 20, 0, kArg1, kID, 0.0
+    String sprintfk "i 20 0 %f %d 0.0", kArg1, kID
+    printks("%s\n", 1, String)
+	  scoreline String, 1
     kgoto next
   endif
 
   kk OSClisten gi_osc_handle, "/channel/vol/abs", "iiff", kBusID, kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
-    event "i", 30, 0, kArg2, kID, kArg1
+    String sprintfk "i 30 0 %f %d %f", kArg2, kID, kArg1
+    printks("%s\n", 1, String)
+	  scoreline String, 1
     kgoto next
   endif
 
   kk OSClisten gi_osc_handle, "/channel/vol/rel", "iiff", kBusID, kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
-    event "i", 35, 0, kArg2, kID, kArg1
+    String sprintfk "i 35 0 %f %d %f", kArg2, kID, kArg1
+    printks("%s\n", 1, String)
+	  scoreline String, 1
     kgoto next
   endif
 
 
   kk OSClisten gi_osc_handle, "/bus/fadein", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
-    event "i", 40, 0, kArg1, kID, 1.0
+    String sprintfk "i 40 0 %f %d 1.0", kArg1, kID
+    printks("%s\n", 1, String)
+	  scoreline String, 1
     kgoto next
   endif
 
   kk OSClisten gi_osc_handle, "/bus/fadeout", "iif", kBusID, kID, kArg1
   if (kk == 1 && kID < giIDs) then
-    event "i", 40, 0, kArg1, kID, 0.0
+    String sprintfk "i 40 0 %f %d 0.0", kArg1, kID
+    printks("%s\n", 1, String)
+	  scoreline String, 1
     kgoto next
   endif
 
   kk OSClisten gi_osc_handle, "/bus/vol/abs", "iiff", kBusID, kID, kArg1, kArg2
   if (kk == 1 && kID < giIDs) then
-    event "i", 50, 0, kArg2, kID, kArg1
+    String sprintfk "i 50 0 %f %d %f", kArg2, kID, kArg1
+    printks("%s\n", 1, String)
+	  scoreline String, 1
     kgoto next
   endif
 

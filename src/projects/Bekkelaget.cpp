@@ -27,7 +27,11 @@
 #include "domain/elements/messages/sspConditionalMsgList.h"
 
 // If in an environment without support for input from external loggers, then comment this #define
-#define SUPPORT_INPUTS 1
+//#define SUPPORT_INPUTS 1
+
+namespace {
+    std::string file_root = "C:/Bekkelaget/Lyder/";
+}
 
 void Bekkelaget::buildContent(sspDomainData* domain, sspPlayManager* manager)
 {
@@ -385,7 +389,7 @@ void Bekkelaget::buildHallDraape(sspDomainData* domain)
     domain->getStrings().push_back(addr);
 
     auto parent_str = std::make_shared<sspSimpleString>();
-    parent_str->setString("c:/Bekkelaget/Lyder/Draape/");
+    parent_str->setString(file_root + "Draape/");
     parent_str->setName(parent_str->getString());
     domain->getStrings().push_back(parent_str);
 
@@ -455,7 +459,7 @@ void Bekkelaget::buildHallKepler(sspDomainData* domain)
     domain->getStrings().push_back(addr);
 
     auto path = std::make_shared<sspSimpleString>();
-    path->setString("c:/Bekkelaget/Lyder/Kepler 1.wav");
+    path->setString(file_root + "Kepler 1.wav");
     path->setName(path->getString());
     domain->getStrings().push_back(path);
 
@@ -510,7 +514,7 @@ void Bekkelaget::buildHallKepler(sspDomainData* domain)
 
     // Kepler 2
     path.reset(new sspSimpleString());
-    path->setString("c:/Bekkelaget/Lyder/Kepler 2.wav");
+    path->setString(file_root + "Kepler 2.wav");
     path->setName(path->getString());
     domain->getStrings().push_back(path);
 
@@ -560,17 +564,17 @@ void Bekkelaget::buildHallKaskade(sspDomainData* domain)
     domain->getStrings().push_back(addr);
 
     auto parent_str = std::make_shared<sspSimpleString>();
-    parent_str->setString("C:/Bekkelaget/Lyder/Syntetisk/");
+    parent_str->setString(file_root + "Syntetisk/");
     parent_str->setName(parent_str->getString());
     domain->getStrings().push_back(parent_str);
 
     auto norm_str = std::make_shared<sspSimpleString>();
-    norm_str->setString("Normal lang syntetisk");
+    norm_str->setString("Lang normal");
     norm_str->setName(norm_str->getString());
     domain->getStrings().push_back(norm_str);
 
     auto mod_str = std::make_shared<sspSimpleString>();
-    mod_str->setString("Modulert lang syntetisk");
+    mod_str->setString("Lang modulert");
     mod_str->setName(mod_str->getString());
     domain->getStrings().push_back(mod_str);
 
@@ -727,17 +731,17 @@ void Bekkelaget::buildHallKonkret(sspDomainData* domain)
     domain->getStrings().push_back(addr);
 
     auto parent_str = std::make_shared<sspSimpleString>();
-    parent_str->setString("C:/Bekkelaget/Lyder/");
+    parent_str->setString(file_root);
     parent_str->setName(parent_str->getString());
     domain->getStrings().push_back(parent_str);
 
     auto norm_str = std::make_shared<sspSimpleString>();
-    norm_str->setString("Konkret/Kort konkret/");
+    norm_str->setString("Konkret/Kort/");
     norm_str->setName(norm_str->getString());
     domain->getStrings().push_back(norm_str);
 
     auto mod_str = std::make_shared<sspSimpleString>();
-    mod_str->setString("Syntetisk/Kort syntetisk");
+    mod_str->setString("Syntetisk/Kort");
     mod_str->setName(mod_str->getString());
     domain->getStrings().push_back(mod_str);
 
@@ -783,7 +787,7 @@ void Bekkelaget::buildHallKonkret(sspDomainData* domain)
     domain->getStrings().push_back(addr);
 
     auto path_str = std::make_shared<sspSimpleString>();
-    path_str->setString("C:/Bekkelaget/Lyder/Konkret/Lang konkret");
+    path_str->setString(file_root + "Konkret/Lang");
     path_str->setName(path_str->getString());
     domain->getStrings().push_back(path_str);
 

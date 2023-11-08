@@ -12,10 +12,9 @@
 #include "access/sspLogging.h"
 #include "domain/elements/conditionals/sspBoolean.h"
 
-#include <PacSDK.h>
-#pragma comment(lib,"pacsdk.lib")
-
-
+namespace icp {
+	const size_t read_bytes = 5;
+}
 
 sspICPdigitalInput::sspICPdigitalInput()
 	: sspICPinput(), conditional_()
@@ -25,6 +24,16 @@ sspICPdigitalInput::sspICPdigitalInput()
 sspICPdigitalInput::~sspICPdigitalInput()
 {
 	terminate();
+}
+
+bool sspICPdigitalInput::initialize()
+{
+	auto address = getAddress();
+
+	auto cmd = (address > 9 ? "@" : "@0") + std::to_string(address) + "\r";
+	setCommand(cmd, [&](const std::string& str) { this->received(str); });
+
+	return sspICPinput::initialize();
 }
 
 bool sspICPdigitalInput::verify(int& nErrors, int& nWarnings) const
@@ -41,29 +50,20 @@ bool sspICPdigitalInput::verify(int& nErrors, int& nWarnings) const
 	return bReturn;
 }
 
-bool sspICPdigitalInput::update()
-{
-	if (!sspICPinput::update())
-		return false;
-
-	auto ptr = set_conditional_.lock();
-	if (!ptr) return false;
-
-	DWORD read_digitals;
-	if (pac_ReadDI(port_handle_, PAC_REMOTE_IO(address_), 8, &read_digitals)) {
-
-		bool bVal = (read_digitals & (1 << channel_)) != 0;
-		bool bRtn = bVal ^ ptr->isTrue();
-		ptr->setValue(bVal);
-		return bRtn;
-	}
-	else {
-		return false;
-	}
-}
-
 void sspICPdigitalInput::setConditional(std::weak_ptr<sspConditional> cond)
 { 
 	conditional_ = cond; 
 	set_conditional_ = std::dynamic_pointer_cast<sspBoolean>(conditional_.lock());
+}
+
+void sspICPdigitalInput::received(const std::string& response)
+{
+	// This must be tested with a digital module!
+	if (response.size() != icp::read_bytes) return;
+
+	if (auto ptr = set_conditional_.lock()) {
+		auto recv_value = std::stoul(response.substr(1), nullptr, 16);
+		bool bOn = (recv_value & (1 << getChannel())) != 0;
+		ptr->setValue(bOn);
+	}
 }

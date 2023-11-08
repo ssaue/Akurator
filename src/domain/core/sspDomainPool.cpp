@@ -21,8 +21,7 @@
 #include <typeinfo>
 
 template<typename T>
-sspDomainPool<T>::sspDomainPool() 
-	: sspSharedVector<T>()
+sspDomainPool<T>::sspDomainPool() : sspSharedVector<T>()
 {
 }
 
@@ -30,7 +29,7 @@ template <typename T>
 bool sspDomainPool<T>::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
-	if (empty()) {
+	if (this->empty()) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << "Pool of " << typeid(T).name() << " is empty";
 	}
 	for (auto&& element : *this) {

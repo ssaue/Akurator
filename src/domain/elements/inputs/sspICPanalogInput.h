@@ -34,7 +34,7 @@ public:
 	sspICPanalogInput& operator= (const sspICPanalogInput& inp) = delete;
 	virtual ~sspICPanalogInput();
 
-	virtual bool update() override;
+	virtual bool initialize() override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	void setValue(std::weak_ptr<sspValue> value);
@@ -42,5 +42,6 @@ public:
 
 private:
 	std::weak_ptr<sspBasicValue> set_value_;
+	void received(const std::string& response);
 };
 

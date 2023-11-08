@@ -10,29 +10,26 @@
 
 #include "sspICPinput.h"
 #include "access/sspLogging.h"
+#include "CallbackAsyncSerial.h"
 
 #include <string>
 #include <sstream>
-
-#include <PacSDK.h>
-#pragma comment(lib,"pacsdk.lib")
 
 //////////////////////////////////////////////////////////////////////
 // sspICPinput
 //////////////////////////////////////////////////////////////////////
 
-namespace {
-	// Privately scoped enumeration
-	enum { DEFAULT_PORT = 5 };
-	enum { BAUDRATE = 9600L, DATABITS = 8, STOPBIT = 0, PARITY = 0, ESC_KEY = 27, TIMEOUT_DELAY = 100 };
-	enum IpcCommandSlots { IPC_COMPORT, IPC_ADDRESS, IPC_ID, IPC_CHECKSUM, IPC_TIMEOUT, IPC_CHANNEL, IPC_DEBUGINFO };
-}
+using namespace boost;
 
-sspICPinput::HANDLE sspICPinput::port_handle_ = nullptr;
+namespace icp {
+	const int baud_rate = 9600L;
+	const uint8_t data_bits = 8;
+	const uint8_t default_port = 8;
+}
 
 sspICPinput::sspICPinput()
 	: sspInput()
-	, port_(DEFAULT_PORT)
+	, port_(icp::default_port)
 	, address_(1)
 	, channel_(0)
 {
@@ -42,24 +39,40 @@ sspICPinput::~sspICPinput()
 {
 }
 
-bool sspICPinput::initCom()
+void sspICPinput::received(const char* data, size_t len)
 {
-	std::stringstream stream;
-	stream << "COM" << port_ << ",9600,N,8,1";
+	static std::stringstream char_stream;
 
-	if (!port_handle_ || port_handle_ == INVALID_HANDLE_VALUE) {
-		port_handle_ = uart_Open(stream.str().c_str());
+	for (size_t i = 0; i < len; i++, data++) {
+		if (*data == '\r') {
+			if (callback_) callback_(char_stream.str());
+			char_stream.clear();//clear any bits set
+			char_stream.str(std::string());
+		}
+		else {
+			char_stream << *data;
+		}
 	}
+}
 
-	if (port_handle_ == INVALID_HANDLE_VALUE) {
-		//pac_GetErrorMessage(pac_GetLastError(), strErr);
-		//	printf("Open Error: %s. The error code is %x\n", strErr, pac_GetLastError());
-		port_handle_ = nullptr;
+bool sspICPinput::initSerialCommunication()
+{
+	auto devname = std::string("COM") + std::to_string(port_);
+
+	serial_ = std::make_unique<CallbackAsyncSerial>(devname, icp::baud_rate,
+		asio::serial_port_base::parity(asio::serial_port_base::parity::none),
+		asio::serial_port_base::character_size(icp::data_bits),
+		asio::serial_port_base::flow_control(asio::serial_port_base::flow_control::none),
+		asio::serial_port_base::stop_bits(asio::serial_port_base::stop_bits::one));
+
+	if (!serial_->isOpen()) {
+		terminate();
 		return false;
 	}
-	else {
-		return true;
-	}
+
+	serial_->setCallback([&](const char* data, size_t len) { this->received(data, len); });
+
+	return true;
 }
 
 bool sspICPinput::verify(int& nErrors, int& nWarnings) const
@@ -69,30 +82,38 @@ bool sspICPinput::verify(int& nErrors, int& nWarnings) const
 	if (!sspInput::verify(nErrors, nWarnings))
 		bReturn = false;
 
-	if (port_ != DEFAULT_PORT) {
+	if (port_ != icp::default_port) {
 		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": Port is non-standard";
 	}
 	if (channel_ > 15) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ":Channel numer it larger than 15";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ":Channel number it larger than 15";
 	}
 
 	return bReturn;
 }
 
+void sspICPinput::setCommand(const std::string& cmd, const std::function<void(const std::string&)>& callback)
+{
+	cmd_string_ = cmd;
+	callback_ = callback;
+}
+
 bool sspICPinput::initialize()
 {
-	return initCom() ? sspInput::initialize() : false;
+	return initSerialCommunication() ? sspInput::initialize() : false;
 }
 
 bool sspICPinput::update()
 {
-	return sspInput::update() && port_handle_;
+	if (sspInput::update() && serial_ != nullptr) {
+		serial_->writeString(cmd_string_);
+		return true;
+	}
+	return false;
 }
 
 void sspICPinput::terminate()
 {
-	if (port_handle_) {
-		uart_Close(port_handle_);
-		port_handle_ = nullptr;
-	}
+	if (serial_ != nullptr) serial_->close();
+	serial_.reset();
 }

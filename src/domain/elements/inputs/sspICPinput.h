@@ -12,15 +12,14 @@
 
 #include "domain\core\sspInput.h"
 
-/*
-** sspICPinput is currently guaranteed to work on Windows only - it needs to be verified on other platforms!
-*/
+#include <functional>
+#include <memory>
+
+class CallbackAsyncSerial;
 
 class sspICPinput : public sspInput
 {
 	unsigned short	port_;
-
-protected:
 	unsigned char	channel_;
 	unsigned char	address_;
 
@@ -46,6 +45,8 @@ public:
 
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
+	void setCommand(const std::string& cmd, const std::function<void(const std::string&)>& callback);
+
 	void setPort(unsigned short nPort) { port_ = nPort; }
 	void setChannel(unsigned char nChannel) { channel_ = nChannel; }
 	void setAddress(unsigned char nAddress) { address_ = nAddress; }
@@ -54,12 +55,13 @@ public:
 	unsigned char	getChannel() const { return channel_; }
 	unsigned char	getAddress() const { return address_; }
 
-protected:
-	typedef void* HANDLE;
-	static HANDLE port_handle_;
-
 private:
-	bool initCom();
+	std::string cmd_string_{ "" };
+	std::unique_ptr<CallbackAsyncSerial> serial_;
+	std::function<void(const std::string&)> callback_;
+	void received(const char* data, size_t len);
+
+	bool initSerialCommunication();
 };
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT(sspICPinput)

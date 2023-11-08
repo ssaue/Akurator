@@ -1,2 +1,2 @@
 add_subdirectory(juce)
-add_subdirectory(pacsdk)
+add_subdirectory(serial-port)

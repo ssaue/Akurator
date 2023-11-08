@@ -8,10 +8,17 @@ project(akurator VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(Boost_NO_WARN_NEW_VERSIONS 1)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+if (WIN32)
+    # Consider updating to a more recent Windows version, if boost build issue is resolved
+    add_compile_definitions(_WIN32_WINNT=0x0601)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
+endif()
 
 #add_subdirectory(vendor EXCLUDE_FROM_ALL)
 add_subdirectory(vendor)

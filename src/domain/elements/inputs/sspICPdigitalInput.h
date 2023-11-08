@@ -34,7 +34,7 @@ public:
 	sspICPdigitalInput& operator= (const sspICPdigitalInput& inp) = delete;
 	virtual ~sspICPdigitalInput();
 
-	virtual bool update() override;
+	virtual bool initialize() override;
 	virtual bool verify(int& nErrors, int& nWarnings) const override;
 
 	void setConditional(std::weak_ptr<sspConditional> value);
@@ -42,5 +42,6 @@ public:
 
 private:
 	std::weak_ptr<sspBoolean> set_conditional_;
+	void received(const std::string& response);
 };
 

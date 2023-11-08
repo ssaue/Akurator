@@ -209,7 +209,7 @@ PRIVATE
 
 # Boost logging
 find_package(Boost REQUIRED COMPONENTS log serialization)
-target_link_libraries(Akurator PRIVATE Boost::log Boost::serialization pacsdk)
+target_link_libraries(Akurator PRIVATE Boost::log Boost::serialization serial-port-lib)
 
 target_compile_definitions(Akurator PRIVATE JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 target_include_directories(Akurator PRIVATE "${JUCE_SOURCE_DIR}/modules")

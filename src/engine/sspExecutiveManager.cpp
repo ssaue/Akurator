@@ -127,7 +127,13 @@ void sspExecutiveManager::timerCallback()
 	}
 #endif
 
-	isPlayInterval() ? play_manager_->start() : play_manager_->stop();
+	if (isPlayInterval()) {
+		play_manager_->start();
+	}
+	else {
+		play_manager_->stop();
+	}
+
 	if (!play_manager_->update() && shutdown_proc_s != Shutdown::KeepRunning) {
 		stop();
 	}

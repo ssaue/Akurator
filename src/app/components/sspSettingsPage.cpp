@@ -943,7 +943,7 @@ void sspSettingsPage::saveProperties()
 
 	props->setValue("reset_hour", sspResetManager::reset_time_s.hours());
 	props->setValue("reset_minute", sspResetManager::reset_time_s.minutes());
-	props->setValue("reset_interval", sspResetManager::reset_interval_s.days());
+	props->setValue("reset_interval", static_cast<int>(sspResetManager::reset_interval_s.days()));
 
 	props->setValue("watchdog_type", static_cast<int>(sspResetManager::watchdog_type_s));
 	props->setValue("watchdog_timeout", sspResetManager::watchdog_timeout_s);

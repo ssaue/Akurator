@@ -59,11 +59,16 @@ bool sspICPinput::initSerialCommunication()
 {
 	auto devname = std::string("COM") + std::to_string(port_);
 
-	serial_ = std::make_unique<CallbackAsyncSerial>(devname, icp::baud_rate,
-		asio::serial_port_base::parity(asio::serial_port_base::parity::none),
-		asio::serial_port_base::character_size(icp::data_bits),
-		asio::serial_port_base::flow_control(asio::serial_port_base::flow_control::none),
-		asio::serial_port_base::stop_bits(asio::serial_port_base::stop_bits::one));
+	try {
+		serial_ = std::make_unique<CallbackAsyncSerial>(devname, icp::baud_rate,
+			asio::serial_port_base::parity(asio::serial_port_base::parity::none),
+			asio::serial_port_base::character_size(icp::data_bits),
+			asio::serial_port_base::flow_control(asio::serial_port_base::flow_control::none),
+			asio::serial_port_base::stop_bits(asio::serial_port_base::stop_bits::one));
+	}
+	catch (boost::system::system_error&) {
+		return false;
+	}
 
 	if (!serial_->isOpen()) {
 		terminate();

@@ -6,5 +6,5 @@ add_library(serial-port-lib
 )
 
 find_package(Boost REQUIRED)
-target_include_directories(serial-port-lib PUBLIC .)
 target_link_libraries(serial-port-lib PUBLIC Boost::boost)
+target_include_directories(serial-port-lib PUBLIC .)

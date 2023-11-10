@@ -28,10 +28,10 @@ bool sspNot::verify(int & nErrors, int & /*nWarnings*/) const
 
 	auto ptr = operand_.lock();
 	if (!ptr) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid operands";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid operands", getName());
 	}
 	else if (ptr.get() == this) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Self reference in operands", getName());
 	}
 
 	return bReturn;

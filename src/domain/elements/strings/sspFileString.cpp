@@ -115,23 +115,23 @@ bool sspFileString::verify(int & nErrors, int & /*nWarnings*/) const
 	auto path_ptr = path_.lock();
 
 	if (!path_ptr) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid folder string";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid folder string", getName());
 	}
 	else {
 		if (path_ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: String self reference", getName());
 		}
 		else {
 			auto path = fs::path(path_ptr->getString());
 			auto err = std::error_code();
 			if (!fs::exists(path, err) || !(fs::is_directory(path) || fs::is_regular_file(path))) {
-				SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " points to an invalid path";
+				SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Points to invalid path", getName());
 			}
 			if (fs::is_directory(path)) {
 				auto num_files = recursive_ ? countFiles< fs::recursive_directory_iterator>(path, audio_only_) 
 					: countFiles< fs::directory_iterator>(path, audio_only_);
 				if (num_files == 0) {
-					SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " contains no valid files in the folder";
+					SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No valid files in the folder", getName());
 				}
 			}
 		}

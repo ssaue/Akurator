@@ -1,9 +1,10 @@
 {
   "name": "akurator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "dependencies": [
+    "boost-asio",
     "boost-serialization",
-    "boost-log"
+    "spdlog"
   ],
-  "builtin-baseline": "9edb1b8e590cc086563301d735cae4b6e732d2d2"
+  "builtin-baseline": "8eb57355a4ffb410a2e94c07b4dca2dffbee8e50"
 }

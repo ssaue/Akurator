@@ -60,24 +60,24 @@ bool sspPlayTask::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (player_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid player";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid player", getName());
 	}
 	if (condition_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid conditional", getName());
 	}
 	if (volume_factor_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid volume factor";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid volume factor");
 	}
 	for (auto&& list : messages_) {
 		if (!list->verify(nErrors, nWarnings)) {
-			BOOST_LOG_TRIVIAL(info) << "Error found in message lists";
+			SSP_LOG(info, "{}: Error found in message lists");
 		}
 	}
 	if (messages_[Messages::Start]->size() != messages_[Messages::End]->size()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": Start and end messages do not match";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Start and end messages do not match", getName());
 	}
 	if (messages_[Messages::Enter]->empty() && messages_[Messages::Exit]->empty()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no enter or exit messages";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: No enter or exit message", getName());
 	}
 
 	return bReturn;

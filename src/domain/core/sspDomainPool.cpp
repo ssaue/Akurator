@@ -30,7 +30,7 @@ bool sspDomainPool<T>::verify(int& nErrors, int& nWarnings) const
 {
 	bool bReturn = true;
 	if (this->empty()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << "Pool of " << typeid(T).name() << " is empty";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "Pool of {} is empty", typeid(T).name());
 	}
 	for (auto&& element : *this) {
 		if (!element->verify(nErrors, nWarnings)) {

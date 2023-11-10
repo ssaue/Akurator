@@ -44,10 +44,10 @@ bool sspExecutiveManager::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (use_play_interval_s && start_time_s.is_not_a_date_time()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "sspExecutiveManager: Invalid start time of interval";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "Invalid start time of interval");
 	}
 	if (use_play_interval_s && end_time_s.is_not_a_date_time()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "sspExecutiveManager: Invalid end time of interval";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "Invalid end time of interval");
 	}
 
 	if (!input_manager_->verify(nErrors, nWarnings))

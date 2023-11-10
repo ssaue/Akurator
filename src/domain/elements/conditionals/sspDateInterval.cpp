@@ -30,10 +30,10 @@ bool sspDateInterval::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (date_min_(0) > date_max_(0)) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": date range is inverted";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Date range is inverted", getName());
 	}
 	if (date_min_(0) == date_max_(0)) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": date range has zero days";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Date range has zero days", getName());
 	}
 
 	return bReturn;

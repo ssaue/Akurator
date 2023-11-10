@@ -66,13 +66,13 @@ bool sspDateMap::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (date_min_(0) > date_max_(0)) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": date range is inverted";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Date range is inverted", getName());
 	}
 	if (date_min_(0) == date_max_(0)) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": date range has zero days";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Date range has zero days", getName());
 	}
 	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<double>::epsilon()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": output has zero range";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Output has zero range", getName());
 	}
 
 	return bReturn;

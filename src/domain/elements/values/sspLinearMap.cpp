@@ -56,19 +56,19 @@ bool sspLinearMap::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (!val_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid value";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid value", getName());
 	}
 	else if (val_.get() == this) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Value self reference", getName());
 	}
 	if (inp_min_ > inp_max_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": input range is inverted";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Input range is inverted", getName());
 	}
 	else if ((inp_max_ - inp_min_) < std::numeric_limits<double>::epsilon()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": input has zero range";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Input has zero range", getName());
 	}
 	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<double>::epsilon()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": output has zero range";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Output has zero range", getName());
 	}
 
 	return bReturn;

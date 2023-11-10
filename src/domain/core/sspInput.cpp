@@ -33,7 +33,7 @@ bool sspInput::verify(int & nErrors, int & /*nWarnings*/) const
 	bool bReturn = true;
 
 	if (update_interval_ <= 0.0) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": Update interval is too small";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Update interval is too small", getName());
 	}
 
 	return bReturn;

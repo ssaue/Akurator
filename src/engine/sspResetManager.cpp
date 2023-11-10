@@ -24,7 +24,7 @@ bool sspResetManager::verify(int & nErrors, int & /*nWarnings*/) const
 	bool bReturn = true;
 
 	if ((watchdog_type_s != sspWatchdog::Type::None) && watchdog_timeout_s <= 1.0) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "sspResetManager: Watchdog timeout is too small";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "Watchdog timeout is too small");
 	}
 
 	return bReturn;

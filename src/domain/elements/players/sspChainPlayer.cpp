@@ -71,28 +71,28 @@ bool sspChainPlayer::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (players_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no players";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No players", getName());
 	}
 	else if (players_.size() == 1) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Only one player", getName());
 	}
 	for (auto&& player : players_) {
 		auto ptr = player.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid players", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Self reference in players", getName());
 		}
 	}
 	if (chain_length_ <= 1) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": the chain has too few elements";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Chain has too few elements", getName());
 	}
 	if (chain_hop_ > players_.size()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": the chain hop is too long";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Chain hop is too long", getName());
 	}
 	if ((chain_hop_ * chain_length_) > players_.size()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": the chain may have repeated elements";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Chain may have repeated elements", getName());
 	}
 
 	return bReturn;

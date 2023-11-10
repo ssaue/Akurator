@@ -22,7 +22,7 @@ bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
 
 	for (auto&& msg : messages_) {
 		if (msg.first.expired()) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Message list has an invalid conditional";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "Message list has an invalid conditional");
 		}
 		if (!msg.second->verify(nErrors, nWarnings)) {
 			bReturn = false;
@@ -30,7 +30,7 @@ bool sspConditionalMsgList::verify(int & nErrors, int & nWarnings) const
 	}
 
 	if (!bReturn) {
-		BOOST_LOG_TRIVIAL(info) << "Error found in conditional message list";
+		SSP_LOG(info, "Error found in conditional message list");
 	}
 
 	return bReturn;

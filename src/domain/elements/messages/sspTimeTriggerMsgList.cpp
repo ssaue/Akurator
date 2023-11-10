@@ -27,7 +27,7 @@ sspTimeTriggerMsgList::sspTimeTriggerMsgList()
 	}
 
 	if (!bReturn) {
-		BOOST_LOG_TRIVIAL(info) << "Error found in time trigger message list";
+		SSP_LOG(info, "Error found in time trigger message list");
 	}
 
 	return bReturn;

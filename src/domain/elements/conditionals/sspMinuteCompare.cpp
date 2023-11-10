@@ -35,7 +35,7 @@ bool sspMinuteCompare::verify(int & nErrors, int & /*nWarnings*/) const
 	bool bReturn = true;
 
 	if (minutes_ < 0 || minutes_ > 60) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": minutes are not valid";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Minutes are not valid", getName());
 	}
 
 	return bReturn;

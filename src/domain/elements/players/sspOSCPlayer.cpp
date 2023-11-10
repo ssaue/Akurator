@@ -72,13 +72,13 @@ bool sspOSCPlayer::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (address_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no address";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No address", getName());
 	}
 	if (path_.expired()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no file path";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: No file path", getName());
 	}
 	if (arguments_.empty()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no arguments";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: No arguments", getName());
 	}
 
 	return bReturn;

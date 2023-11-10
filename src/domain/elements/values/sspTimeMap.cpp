@@ -60,13 +60,13 @@ bool sspTimeMap::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (clock_min_ > clock_max_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": time range is inverted";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Time range is inverted", getName());
 	}
 	if (clock_min_ == clock_max_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": time range has zero seconds";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Time range has zero seconds", getName());
 	}
 	if (std::abs(outp_max_ - outp_min_) < std::numeric_limits<double>::epsilon()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": output has zero range";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Output has zero range", getName());
 	}
 
 	return bReturn;

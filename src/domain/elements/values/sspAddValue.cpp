@@ -29,18 +29,18 @@ bool sspAddValue::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (addends_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no addends";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No addends", getName());
 	}
 	else if (addends_.size() == 1) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one addend";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Only one addend", getName());
 	}
 	for (auto&& add : addends_) {
 		auto ptr = add.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid addends";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid addends", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Addend self reference", getName());
 		}
 	}
 

@@ -23,7 +23,7 @@ bool sspTriggerMsgList::verify(int & nErrors, int & nWarnings) const
 
 	for (auto&& msg : messages_) {
 		if (msg.first.expired()) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Message list has an invalid trigger";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "Message list has an invalid trigger");
 		}
 		if (!msg.second->verify(nErrors, nWarnings)) {
 			bReturn = false;
@@ -31,7 +31,7 @@ bool sspTriggerMsgList::verify(int & nErrors, int & nWarnings) const
 	}
 
 	if (!bReturn) {
-		BOOST_LOG_TRIVIAL(info) << "Error found in trigger message list";
+		SSP_LOG(info, "Error found in trigger message list");
 	}
 	
 	return bReturn;

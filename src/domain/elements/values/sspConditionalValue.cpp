@@ -35,35 +35,35 @@ bool sspConditionalValue::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (values_.size() != conditionals_.size()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": the number of values/conditionals don't match";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: The number of values/conditionals don't match", getName());
 	}
 
 	if (values_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no values";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No values", getName());
 	}
 	else if (values_.size() == 1) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one value";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Only one value", getName());
 	}
 	for (auto&& cond : conditionals_) {
 		if (cond.expired()) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditionals";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid conditionals", getName());
 		}
 	}
 	for (auto&& val : values_) {
 		auto ptr = val.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid values";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid values", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Self reference in value list", getName());
 		}
 	}
 	auto ptr = default_value_.lock();
 	if (!ptr) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid default value";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid default value", getName());
 	}
 	else if (ptr.get() == this) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Default value is self reference", getName());
 	}
 
 	return bReturn;

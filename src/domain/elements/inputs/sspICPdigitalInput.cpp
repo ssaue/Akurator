@@ -44,7 +44,7 @@ bool sspICPdigitalInput::verify(int& nErrors, int& nWarnings) const
 		bReturn = false;
 
 	if (conditional_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid conditional", getName());
 	}
 
 	return bReturn;

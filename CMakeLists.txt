@@ -15,8 +15,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 if (WIN32)
-    # Consider updating to a more recent Windows version, if boost build issue is resolved
-    add_compile_definitions(_WIN32_WINNT=0x0601)
+    add_compile_definitions(_WIN32_WINNT=0X0A00)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
 endif()
 

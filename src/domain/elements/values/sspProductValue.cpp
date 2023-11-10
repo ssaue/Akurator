@@ -29,18 +29,18 @@ bool sspProductValue::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (factors_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no factors";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No factors", getName());
 	}
 	else if (factors_.size() == 1) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one factor";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Only one factor", getName());
 	}
 	for (auto&& fac : factors_) {
 		auto ptr = fac.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid factors";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid factors", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Factor self reference", getName());
 		}
 	}
 

@@ -54,10 +54,10 @@ bool sspSilencePlayer::verify(int & nErrors, int & /*nWarnings*/) const
 	bool bReturn = true;
 
 	if (duration_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid duration";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid duration", getName());
 	}
 	if (!silence_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid silence object";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid silence object", getName());
 	}
 
 	return bReturn;

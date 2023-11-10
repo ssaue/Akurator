@@ -30,11 +30,11 @@ bool sspIsPlaying::verify(int & nErrors, int & /*nWarnings*/) const
 	bool bReturn = true;
 
 	if (players_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no play objects";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "No play objects");
 	}
 	for (auto&& play : players_) {
 		if (play.expired()) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid play objects";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "Invalid play objects");
 		}
 	}
 

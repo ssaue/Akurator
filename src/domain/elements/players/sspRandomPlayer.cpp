@@ -80,22 +80,22 @@ bool sspRandomPlayer::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (players_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no players";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No players", getName());
 	}
 	else if (players_.size() == 1) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Only one player", getName());
 	}
 	for (auto&& player : players_) {
 		auto ptr = player.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid players", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Player self reference", getName());
 		}
 	}
 	if (players_.size() != weights_.size() || players_.size() != const_weights_.size()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": Mismatch in number of players and weights";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Mismatch in number of players and weights", getName());
 	}
 
 	return bReturn;

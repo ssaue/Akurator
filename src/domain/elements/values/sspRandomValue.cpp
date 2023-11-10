@@ -43,23 +43,23 @@ bool sspRandomValue::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (!low_ || !high_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid value";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid value", getName());
 	}
 	else {
 		if (low_.get() == this || high_.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Value self reference", getName());
 		}
 		if (low_.get() == high_.get()) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": low and high are equal values";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Low and high are the same values", getName());
 		}
 
 		auto low = low_->getValue();
 		auto high = high_->getValue();
 		if (low > high) {
-			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": low is larger than high";
+			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Low is larger than high", getName());
 		}
 		else if ((high - low) < std::numeric_limits<double>::epsilon()) {
-			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": high and low are equal";
+			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: High and low are equal", getName());
 		}
 	}
 	return bReturn;

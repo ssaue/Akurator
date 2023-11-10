@@ -32,6 +32,7 @@ PRIVATE
 
     access/sspWatchDog.h 
     access/sspLogging.h 
+    access/sspLogging.cpp 
 
     access/osc/sspOscConsole.cpp 
     access/osc/sspOscConsole.h 
@@ -208,8 +209,11 @@ PRIVATE
 )
 
 # Boost logging
-find_package(Boost REQUIRED COMPONENTS log serialization)
-target_link_libraries(Akurator PRIVATE Boost::log Boost::serialization serial-port-lib)
+find_package(Boost REQUIRED COMPONENTS serialization)
+target_link_libraries(Akurator PRIVATE Boost::serialization)
+
+find_package(spdlog CONFIG REQUIRED)
+target_link_libraries(Akurator PRIVATE serial-port-lib spdlog::spdlog)
 
 target_compile_definitions(Akurator PRIVATE JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 target_include_directories(Akurator PRIVATE "${JUCE_SOURCE_DIR}/modules")

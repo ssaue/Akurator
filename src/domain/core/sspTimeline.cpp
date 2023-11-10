@@ -88,14 +88,14 @@ bool sspTimeline::verify(int & nErrors, int & nWarnings) const
 	for (auto&& child : children_) {
 		auto ptr = child.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid child";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid child", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Self reference in children", getName());
 		}
 	}
 	if (time_factor_.expired()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has no time factor";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: No time factor", getName());
 	}
 
 	return bReturn;

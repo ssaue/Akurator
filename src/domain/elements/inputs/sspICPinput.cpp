@@ -83,10 +83,10 @@ bool sspICPinput::verify(int& nErrors, int& nWarnings) const
 		bReturn = false;
 
 	if (port_ != icp::default_port) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": Port is non-standard";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Port is non-standard", getName());
 	}
 	if (channel_ > 15) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ":Channel number it larger than 15";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Channel number it larger than 15", getName());
 	}
 
 	return bReturn;

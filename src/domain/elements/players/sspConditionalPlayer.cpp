@@ -63,34 +63,34 @@ bool sspConditionalPlayer::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (players_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no players";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No players", getName());
 	}
 	else if (players_.size() == 1 && default_player_.expired()) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one player";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Only one player", getName());
 	}
 	for (auto&& player : players_) {
 		auto ptr = player.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid players";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid player", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Players have self reference", getName());
 		}
 	}
 	if (conditionals_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no conditionals";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No conditionals", getName());
 	}
 	for (auto&& cond : conditionals_) {
 		if (cond.expired()) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid conditional", getName());
 		}		
 	}
 	if (players_.size() != conditionals_.size()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": The number of players and conditionals do not match";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: The number of players and conditionals do not match", getName());
 	}
 	auto ptr = default_player_.lock();
 	if (ptr && ptr.get() == this) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Default player is a self reference", getName());
 	}
 
 	return bReturn;

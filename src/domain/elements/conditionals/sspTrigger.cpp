@@ -44,10 +44,10 @@ bool sspTrigger::verify(int & nErrors, int & /*nWarnings*/) const
 
 	auto ptr = conditional_.lock();
 	if (!ptr) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid conditional";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid conditional", getName());
 	}
 	else if (ptr.get() == this) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Conditional is self reference", getName());
 	}
 
 	return bReturn;

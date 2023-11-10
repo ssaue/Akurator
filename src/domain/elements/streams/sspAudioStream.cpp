@@ -75,7 +75,7 @@ bool sspAudioStream::verify(int& nErrors, int& /*nWarnings*/) const
     bool bReturn = true;
 
     if (volume_factor_.expired()) {
-        SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid volume fader";
+        SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid volume fader", getName());
     }
 
     return bReturn;

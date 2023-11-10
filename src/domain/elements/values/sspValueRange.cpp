@@ -24,14 +24,14 @@ bool sspValueRange::verify(int& nErrors, int& nWarnings) const
 	bool bReturn = true;
 
 	if (min_ > max_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": min is larger than max";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Min is larger than max", getName());
 	}
 	else {
 		if ((max_ - min_) < std::numeric_limits<double>::epsilon() ) {
-			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << ": min and max are equal";
+			SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Min and max are equal", getName());
 		}
 		if (val_ < min_ || val_ > max_) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": val is outside range";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Value is outside range", getName());
 		}
 	}
 

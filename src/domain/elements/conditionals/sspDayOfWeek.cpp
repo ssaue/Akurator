@@ -32,7 +32,7 @@ bool sspDayOfWeek::verify(int & nErrors, int & /*nWarnings*/) const
 	bool bReturn = true;
 
 	if (days_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << ": no days are selected";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No days are selected", getName());
 	}
 
 	return bReturn;

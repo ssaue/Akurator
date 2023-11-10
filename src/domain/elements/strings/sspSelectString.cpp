@@ -31,22 +31,22 @@ bool sspSelectString::verify(int & nErrors, int & nWarnings) const
 	bool bReturn = true;
 
 	if (strings_.empty()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has no strings";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: No strings", getName());
 	}
 	else if (strings_.size() == 1) {
-		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn) << getName() << " has only one string";
+		SSP_LOG_WRAPPER_WARNING(nWarnings, bReturn, "{}: Only one string", getName());
 	}
 	for (auto&& str : strings_) {
 		auto ptr = str.lock();
 		if (!ptr) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid strings";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid strings", getName());
 		}
 		else if (ptr.get() == this) {
-			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+			SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: String self reference", getName());
 		}
 	}
 	if (value_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid select value";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid select value", getName());
 	}
 
 	return bReturn;

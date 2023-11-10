@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
+	This file was auto-generated!
 
   ==============================================================================
 */
@@ -30,12 +30,8 @@
 #include <boost/archive/xml_oarchive.hpp> 
 #include <boost/archive/xml_iarchive.hpp> 
 
-#include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-#include <boost/log/utility/setup/file.hpp>
+#include "access/sspLogging.h"
 
-//==============================================================================
 
 MainComponent::MainComponent(String file_path)
 	: toolbar_factory_(this)
@@ -62,7 +58,7 @@ MainComponent::MainComponent(String file_path)
 	getFilenameComponent().setCurrentFile(current_path_);
 	getFilenameComponent().setRecentFiles(sspAkuratorApplication::getRecentlyOpenedFiles().getAllFilenames());
 
-    setSize (820, 620);
+	setSize(820, 620);
 
 	if (current_path_.existsAsFile()) {
 		MessageManager::callAsync([this] { onStartWithFile(); });
@@ -75,10 +71,10 @@ MainComponent::~MainComponent()
 }
 
 //==============================================================================
-void MainComponent::paint (Graphics& g)
+void MainComponent::paint(Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+	// (Our component is opaque, so we must completely fill the background with a solid colour)
+	g.fillAll(getLookAndFeel().findColour(ResizableWindow::backgroundColourId));
 }
 
 void MainComponent::resized()
@@ -96,11 +92,11 @@ ApplicationCommandTarget* MainComponent::getNextCommandTarget()
 
 void MainComponent::getAllCommands(Array<CommandID>& c)
 {
-	Array<CommandID> commands{ 
+	Array<CommandID> commands{
 		sspCommandIDs::DocNew,
 		sspCommandIDs::DocOpen,
 		sspCommandIDs::DocSave,
-		sspCommandIDs::DocSaveAs, 
+		sspCommandIDs::DocSaveAs,
 		sspCommandIDs::RunVerify,
 		sspCommandIDs::RunInit,
 		sspCommandIDs::RunStart,
@@ -177,7 +173,7 @@ bool MainComponent::perform(const InvocationInfo& info)
 	case sspCommandIDs::DocSaveAs:
 		onSaveAs();
 		break;
-	case sspCommandIDs::RunVerify: 
+	case sspCommandIDs::RunVerify:
 		onVerify();
 		break;
 	case sspCommandIDs::RunInit:
@@ -273,26 +269,21 @@ void MainComponent::onVerify()
 {
 	auto directory = current_path_.getParentDirectory();
 	auto logfile = directory.getChildFile(current_path_.getFileNameWithoutExtension() + ".log");
-	
-	// Create a log file. If it already exists, then delete if first
-	Result result = logfile.deleteFile() ? Result::ok() : Result::fail("Unable to delete previous logfile");
-	if (result.wasOk()) {
-		result = logfile.create();
-	}
-	if (result.failed()) {
-		AlertWindow::showMessageBoxAsync(AlertWindow::WarningIcon,
-			"Project verification", "Logfile creation failed: " + result.getErrorMessage());
-		return;
-	}
 
-	// Using boost log for verification
-	using namespace boost::log;
-	auto sink = add_file_log(logfile.getFullPathName().toStdString());
-	core::get()->set_filter(trivial::severity >= trivial::info);
+	// Using spdlog for verification
+	std::vector<logging::Config> configs;
+	configs.emplace_back(logging::Config{ logging::Type::file,
+		logfile.getFullPathName().toStdString(),
+		logging::Format::verify,
+		spdlog::level::info });
+
+	logging::createLogger(configs, true, logging::FlushPolicy::automatic);
 
 	int errors = 0, warnings = 0;
 	bool ok = domain_->verify(errors, warnings) && manager_->verify(errors, warnings);
-	core::get()->remove_sink(sink);
+
+	logging::flush();
+	logging::close();
 
 	sspExecutionState::Instance().verified(ok);
 	if (ok) {
@@ -302,7 +293,7 @@ void MainComponent::onVerify()
 	}
 	else {
 		AlertWindow::showMessageBoxAsync(AlertWindow::WarningIcon,
-			"Project verification failed", 
+			"Project verification failed",
 			"There are " + String(errors) + " errors in the project file. Check log file: " + logfile.getFullPathName());
 	}
 }
@@ -354,7 +345,7 @@ void MainComponent::onStartWithFile()
 	}
 }
 
-sspToolbarFilenameComponent & MainComponent::getFilenameComponent()
+sspToolbarFilenameComponent& MainComponent::getFilenameComponent()
 {
 	sspToolbarFilenameComponent* comp = nullptr;
 	for (int i = 0; i < toolbar_.getNumItems(); ++i) {

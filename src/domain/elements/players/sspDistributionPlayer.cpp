@@ -119,22 +119,22 @@ bool sspDistributionPlayer::verify(int & nErrors, int & /*nWarnings*/) const
 
 	auto ptr = player_.lock();
 	if (!ptr) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid player";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid player", getName());
 	}
 	else if (ptr.get() == this) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has a self reference";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Player is a self reference", getName());
 	}
 	if (start_time_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid start time";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid start time", getName());
 	}
 	if ((loop_mode_ != LoopMode::Condition) && duration_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid duration";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid duration", getName());
 	}
 	if (condition_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid conditional";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid conditional", getName());
 	}
 	if (!silence_) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has an invalid silence object";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid silence object", getName());
 	}
 
 	return bReturn;

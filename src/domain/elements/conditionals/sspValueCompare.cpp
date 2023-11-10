@@ -55,10 +55,10 @@ bool sspValueCompare::verify(int & nErrors, int & /*nWarnings*/) const
 	bool bReturn = true;
 
 	if (test_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid test value";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid test value", getName());
 	}
 	if (threshold_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid threshold value";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid threshold value", getName());
 	}
 
 	return bReturn;

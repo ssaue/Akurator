@@ -34,7 +34,7 @@ bool sspICPanalogInput::verify(int& nErrors, int& nWarnings) const
 		bReturn = false;
 
 	if (value_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << getName() << " has invalid value";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "{}: Invalid value", getName());
 	}
 
 	return bReturn;

@@ -21,7 +21,7 @@ sspMessageWithReceiver::sspMessageWithReceiver()
 	bool bReturn = true;
 
 	if (receiver_.expired()) {
-		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn) << "Channel message has an invalid receiver";
+		SSP_LOG_WRAPPER_ERROR(nErrors, bReturn, "Channel message has an invalid receiver");
 	}
 	if (!message_.verify(nErrors, nWarnings)) {
 		bReturn = false;

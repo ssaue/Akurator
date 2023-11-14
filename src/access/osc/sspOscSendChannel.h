@@ -23,4 +23,6 @@ public:
 	virtual ~sspOscSendChannel() {}
 
 	virtual void sendMessage(std::string address, std::vector<ArgumentType> arguments = std::vector<ArgumentType>()) final;
+	virtual bool play(const std::string&, double) final { return false; }	// No support for file play currently
+	virtual void stop() final;
 };

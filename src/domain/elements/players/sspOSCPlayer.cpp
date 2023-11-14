@@ -34,11 +34,11 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 			arguments.push_back(static_cast<float>(ptr->getValue()));
 	}
 
-	if (auto ptr = channel.lock()) {
+	if (auto chan_ptr = channel.lock()) {
 		setSendChannel(channel);
 		setResponder(responder);
-		ptr->setResponder(weak_from_this());
-		ptr->sendMessage(addr, arguments);
+		chan_ptr->setResponder(weak_from_this());
+		chan_ptr->sendMessage(addr, arguments);
 	}
 
 	return isPlaying();
@@ -46,18 +46,17 @@ bool sspOSCPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<ss
 
 void sspOSCPlayer::stop()
 {
-	if (auto ptr = getSendChannel().lock()) {
-		ptr->clearResponder();
-		std::string address = "/stop";
-		ptr->sendMessage(address, std::vector<sspSendChannel::ArgumentType>());
+	if (auto channel = getSendChannel().lock()) {
+		channel->clearResponder();
+		channel->stop();
 	}
 	clearSendChannel();
 }
 
 bool sspOSCPlayer::update()
 {
-	if (auto ptr = getSendChannel().lock()) {
-		ptr->clearResponder();
+	if (auto channel = getSendChannel().lock()) {
+		channel->clearResponder();
 	}
 	return false;
 }

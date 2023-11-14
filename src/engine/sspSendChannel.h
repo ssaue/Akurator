@@ -27,6 +27,9 @@ public:
 	virtual ~sspSendChannel() {}
 
 	virtual void sendMessage(std::string address, std::vector<ArgumentType> arguments = std::vector<ArgumentType>()) = 0;
+	virtual bool play(const std::string& file_path, double tempo_fac) = 0;
+	virtual void stop() = 0;
+
 	void setResponder(std::weak_ptr<sspFinishedResponder> responder) { responder_ = responder; }
 	void clearResponder() { responder_.reset(); }
 	void setFinished() { if (auto ptr = responder_.lock()) { ptr->onFinished(); } }

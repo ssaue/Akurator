@@ -117,6 +117,8 @@ PRIVATE
     domain/elements/players/sspDistributionPlayer.h
     domain/elements/players/sspIndexPlayer.cpp 
     domain/elements/players/sspIndexPlayer.h
+    domain/elements/players/sspMidiPlayer.cpp 
+    domain/elements/players/sspMidiPlayer.h 
     domain/elements/players/sspOSCPlayer.cpp 
     domain/elements/players/sspOSCPlayer.h 
     domain/elements/players/sspPlayers.cpp 

@@ -34,3 +34,8 @@ void sspOscSendChannel::sendMessage(std::string address, std::vector<ArgumentTyp
 
 	sspOscSender::send(message);
 }
+
+void sspOscSendChannel::stop()
+{
+	sendMessage("/stop");
+}

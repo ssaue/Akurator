@@ -34,9 +34,6 @@
 //==============================================================================
 sspSettingsPage::sspSettingsPage ()
 {
-    //[Constructor_pre] You can add your own custom stuff here..
-    //[/Constructor_pre]
-
     label_osc_.reset (new Label ("OSC heading",
                                  TRANS("OSC\n")));
     addAndMakeVisible (label_osc_.get());
@@ -117,7 +114,9 @@ sspSettingsPage::sspSettingsPage ()
 
     osc_receive_port_->setBounds (576, 120, 50, 24);
 
-    label_osc_2.reset (new Label ("OSC heading",
+    /*****************************************************************************/
+
+    label_osc_2.reset (new Label ("exec_heading",
                                   TRANS("Exec\n")));
     addAndMakeVisible (label_osc_2.get());
     label_osc_2->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -128,7 +127,7 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_2->setBounds (32, 30, 80, 24);
 
-    label_osc_sendaddr_2.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_2.reset (new Label ("exec_startup",
                                            TRANS("Startup proceedure:")));
     addAndMakeVisible (label_osc_sendaddr_2.get());
     label_osc_sendaddr_2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -139,7 +138,7 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_sendaddr_2->setBounds (32, 60, 152, 24);
 
-    label_osc_sendaddr_3.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_3.reset (new Label ("exec_shutdown",
                                            TRANS("Shutdown proceedure:")));
     addAndMakeVisible (label_osc_sendaddr_3.get());
     label_osc_sendaddr_3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -150,7 +149,7 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_sendaddr_3->setBounds (32, 90, 152, 24);
 
-    label_osc_sendaddr_4.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_4.reset (new Label ("exec_play_interval",
                                            TRANS("Play interval:")));
     addAndMakeVisible (label_osc_sendaddr_4.get());
     label_osc_sendaddr_4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -161,7 +160,7 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_sendaddr_4->setBounds (32, 120, 152, 24);
 
-    label_osc_sendaddr_5.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_5.reset (new Label ("exec_update_interval",
                                            TRANS("Update interval:")));
     addAndMakeVisible (label_osc_sendaddr_5.get());
     label_osc_sendaddr_5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -172,7 +171,7 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_sendaddr_5->setBounds (32, 150, 152, 24);
 
-    exec_startup_cb_.reset (new ComboBox ("startup_proc"));
+    exec_startup_cb_.reset (new ComboBox ("exec_startup_proc"));
     addAndMakeVisible (exec_startup_cb_.get());
     exec_startup_cb_->setEditableText (false);
     exec_startup_cb_->setJustificationType (Justification::centredLeft);
@@ -185,7 +184,7 @@ sspSettingsPage::sspSettingsPage ()
 
     exec_startup_cb_->setBounds (195, 60, 150, 24);
 
-    exec_shutdown_cb_.reset (new ComboBox ("shutdown_proc"));
+    exec_shutdown_cb_.reset (new ComboBox ("exec_shutdown_proc"));
     addAndMakeVisible (exec_shutdown_cb_.get());
     exec_shutdown_cb_->setEditableText (false);
     exec_shutdown_cb_->setJustificationType (Justification::centredLeft);
@@ -198,7 +197,7 @@ sspSettingsPage::sspSettingsPage ()
 
     exec_shutdown_cb_->setBounds (195, 90, 150, 24);
 
-    exec_start_hour_.reset (new TextEditor ("starttime_hour"));
+    exec_start_hour_.reset (new TextEditor ("exec_starttime_hour"));
     addAndMakeVisible (exec_start_hour_.get());
     exec_start_hour_->setMultiLine (false);
     exec_start_hour_->setReturnKeyStartsNewLine (false);
@@ -210,7 +209,7 @@ sspSettingsPage::sspSettingsPage ()
 
     exec_start_hour_->setBounds (195, 120, 25, 24);
 
-    exec_start_min_.reset (new TextEditor ("starttime_minute"));
+    exec_start_min_.reset (new TextEditor ("exec_starttime_minute"));
     addAndMakeVisible (exec_start_min_.get());
     exec_start_min_->setMultiLine (false);
     exec_start_min_->setReturnKeyStartsNewLine (false);
@@ -222,7 +221,7 @@ sspSettingsPage::sspSettingsPage ()
 
     exec_start_min_->setBounds (230, 120, 25, 24);
 
-    label_osc_sendaddr_6.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_6.reset (new Label ("colon_label1",
                                            TRANS(":")));
     addAndMakeVisible (label_osc_sendaddr_6.get());
     label_osc_sendaddr_6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -233,7 +232,7 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_sendaddr_6->setBounds (216, 120, 16, 24);
 
-    exec_update_inteval_.reset (new TextEditor ("update_interval"));
+    exec_update_inteval_.reset (new TextEditor ("exec_update_interval"));
     addAndMakeVisible (exec_update_inteval_.get());
     exec_update_inteval_->setMultiLine (false);
     exec_update_inteval_->setReturnKeyStartsNewLine (false);
@@ -245,7 +244,7 @@ sspSettingsPage::sspSettingsPage ()
 
     exec_update_inteval_->setBounds (195, 150, 37, 24);
 
-    label_osc_sendaddr_7.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_7.reset (new Label ("dash_label",
                                            TRANS("-")));
     addAndMakeVisible (label_osc_sendaddr_7.get());
     label_osc_sendaddr_7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -256,7 +255,7 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_sendaddr_7->setBounds (261, 120, 16, 24);
 
-    exec_end_hour_.reset (new TextEditor ("endtime_hour"));
+    exec_end_hour_.reset (new TextEditor ("exec_endtime_hour"));
     addAndMakeVisible (exec_end_hour_.get());
     exec_end_hour_->setMultiLine (false);
     exec_end_hour_->setReturnKeyStartsNewLine (false);
@@ -268,7 +267,7 @@ sspSettingsPage::sspSettingsPage ()
 
     exec_end_hour_->setBounds (283, 120, 25, 24);
 
-    exec_end_min_.reset (new TextEditor ("endtime_minute"));
+    exec_end_min_.reset (new TextEditor ("exec_endtime_minute"));
     addAndMakeVisible (exec_end_min_.get());
     exec_end_min_->setMultiLine (false);
     exec_end_min_->setReturnKeyStartsNewLine (false);
@@ -280,7 +279,7 @@ sspSettingsPage::sspSettingsPage ()
 
     exec_end_min_->setBounds (318, 120, 25, 24);
 
-    label_osc_sendaddr_8.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_8.reset (new Label ("colon_label2",
                                            TRANS(":")));
     addAndMakeVisible (label_osc_sendaddr_8.get());
     label_osc_sendaddr_8->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -291,13 +290,86 @@ sspSettingsPage::sspSettingsPage ()
 
     label_osc_sendaddr_8->setBounds (304, 120, 16, 24);
 
-    exec_use_interval_.reset (new ToggleButton ("new toggle button"));
+    exec_use_interval_.reset (new ToggleButton ("exec_use_interval"));
     addAndMakeVisible (exec_use_interval_.get());
     exec_use_interval_->setButtonText (TRANS("Use"));
 
     exec_use_interval_->setBounds (354, 120, 75, 24);
 
-    label_osc_3.reset (new Label ("OSC heading",
+    label_osc_sendaddr_13.reset(new Label("exec_play_interval",
+        TRANS("Play interval:")));
+    addAndMakeVisible(label_osc_sendaddr_13.get());
+    label_osc_sendaddr_13->setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_osc_sendaddr_13->setJustificationType(Justification::centredLeft);
+    label_osc_sendaddr_13->setEditable(false, false, false);
+    label_osc_sendaddr_13->setColour(TextEditor::textColourId, Colours::black);
+    label_osc_sendaddr_13->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    label_osc_sendaddr_13->setBounds(32, 120, 152, 24);
+
+    label.reset(new Label("new label",
+        TRANS("seconds")));
+    addAndMakeVisible(label.get());
+    label->setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label->setJustificationType(Justification::centredLeft);
+    label->setEditable(false, false, false);
+    label->setColour(TextEditor::textColourId, Colours::black);
+    label->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    label->setBounds(239, 150, 71, 24);
+
+    /***************************************************************************/
+
+    addAndMakeVisible(label_midi_);
+    label_midi_.setFont(Font(25.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_midi_.setJustificationType(Justification::centredLeft);
+    label_midi_.setEditable(false, false, false);
+    label_midi_.setColour(TextEditor::textColourId, Colours::black);
+    label_midi_.setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    label_midi_.setBounds(32, 227, 80, 24);
+
+    addAndMakeVisible(label_midi_input_);
+    label_midi_input_.setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_midi_input_.setJustificationType(Justification::centredLeft);
+    label_midi_input_.setEditable(false, false, false);
+    label_midi_input_.setColour(TextEditor::textColourId, Colours::black);
+    label_midi_input_.setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    label_midi_input_.setBounds(32, 257, 152, 24);
+
+    addAndMakeVisible(label_midi_output_);
+    label_midi_output_.setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_midi_output_.setJustificationType(Justification::centredLeft);
+    label_midi_output_.setEditable(false, false, false);
+    label_midi_output_.setColour(TextEditor::textColourId, Colours::black);
+    label_midi_output_.setColour(TextEditor::backgroundColourId, Colour(0x00000000));
+
+    label_midi_output_.setBounds(32, 287, 152, 24);
+
+    cb_midi_input_.reset(new ComboBox("midi_input"));
+    addAndMakeVisible(cb_midi_input_.get());
+    cb_midi_input_->setEditableText(false);
+    cb_midi_input_->setJustificationType(Justification::centredLeft);
+    cb_midi_input_->setTextWhenNothingSelected(TRANS("Select input"));
+    cb_midi_input_->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_input_->addListener(this);
+
+    cb_midi_input_->setBounds(195, 257, 150, 24);
+
+    cb_midi_output_.reset(new ComboBox("midi_output"));
+    addAndMakeVisible(cb_midi_output_.get());
+    cb_midi_output_->setEditableText(false);
+    cb_midi_output_->setJustificationType(Justification::centredLeft);
+    cb_midi_output_->setTextWhenNothingSelected(TRANS("Select output"));
+    cb_midi_output_->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
+    cb_midi_output_->addListener(this);
+
+    cb_midi_output_->setBounds(195, 287, 150, 24);
+
+    /******************************************************************************/
+
+    label_osc_3.reset (new Label ("reset_heading",
                                   TRANS("Reset\n")));
     addAndMakeVisible (label_osc_3.get());
     label_osc_3->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -306,31 +378,9 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_3->setColour (TextEditor::textColourId, Colours::black);
     label_osc_3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_3->setBounds (465, 358, 80, 24);
+    label_osc_3->setBounds (465, 360, 80, 24);
 
-    label_osc_sendaddr_13.reset (new Label ("osc_send_adress",
-                                            TRANS("Play interval:")));
-    addAndMakeVisible (label_osc_sendaddr_13.get());
-    label_osc_sendaddr_13->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label_osc_sendaddr_13->setJustificationType (Justification::centredLeft);
-    label_osc_sendaddr_13->setEditable (false, false, false);
-    label_osc_sendaddr_13->setColour (TextEditor::textColourId, Colours::black);
-    label_osc_sendaddr_13->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    label_osc_sendaddr_13->setBounds (32, 120, 152, 24);
-
-    label_osc_sendaddr_14.reset (new Label ("osc_send_adress",
-                                            TRANS(":")));
-    addAndMakeVisible (label_osc_sendaddr_14.get());
-    label_osc_sendaddr_14->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label_osc_sendaddr_14->setJustificationType (Justification::centred);
-    label_osc_sendaddr_14->setEditable (false, false, false);
-    label_osc_sendaddr_14->setColour (TextEditor::textColourId, Colours::black);
-    label_osc_sendaddr_14->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    label_osc_sendaddr_14->setBounds (216, 120, 16, 24);
-
-    label_osc_sendaddr_9.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_9.reset (new Label ("reset_time",
                                            TRANS("Time of day:")));
     addAndMakeVisible (label_osc_sendaddr_9.get());
     label_osc_sendaddr_9->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -339,7 +389,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_9->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_9->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_9->setBounds (465, 388, 152, 24);
+    label_osc_sendaddr_9->setBounds (465, 390, 152, 24);
 
     reset_hour_.reset (new TextEditor ("reset_hour"));
     addAndMakeVisible (reset_hour_.get());
@@ -351,7 +401,7 @@ sspSettingsPage::sspSettingsPage ()
     reset_hour_->setPopupMenuEnabled (false);
     reset_hour_->setText (String());
 
-    reset_hour_->setBounds (628, 388, 25, 24);
+    reset_hour_->setBounds (628, 390, 25, 24);
 
     reset_min_.reset (new TextEditor ("reset_minute"));
     addAndMakeVisible (reset_min_.get());
@@ -363,9 +413,9 @@ sspSettingsPage::sspSettingsPage ()
     reset_min_->setPopupMenuEnabled (false);
     reset_min_->setText (String());
 
-    reset_min_->setBounds (663, 388, 25, 24);
+    reset_min_->setBounds (663, 390, 25, 24);
 
-    label_osc_sendaddr_11.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_11.reset (new Label ("colon_label4",
                                             TRANS(":")));
     addAndMakeVisible (label_osc_sendaddr_11.get());
     label_osc_sendaddr_11->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -374,9 +424,9 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_11->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_11->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_11->setBounds (649, 388, 16, 24);
+    label_osc_sendaddr_11->setBounds (649, 390, 16, 24);
 
-    label_osc_sendaddr_10.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_10.reset (new Label ("reset_interval",
                                             TRANS("Reset interval:")));
     addAndMakeVisible (label_osc_sendaddr_10.get());
     label_osc_sendaddr_10->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -385,43 +435,34 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_10->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_10->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_10->setBounds (465, 418, 152, 24);
+    label_osc_sendaddr_10->setBounds (465, 420, 152, 24);
 
-    label.reset (new Label ("new label",
-                            TRANS("seconds")));
-    addAndMakeVisible (label.get());
-    label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label->setJustificationType (Justification::centredLeft);
-    label->setEditable (false, false, false);
-    label->setColour (TextEditor::textColourId, Colours::black);
-    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    label2.reset(new Label("new label",
+        TRANS("days")));
+    addAndMakeVisible(label2.get());
+    label2->setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label2->setJustificationType(Justification::centredLeft);
+    label2->setEditable(false, false, false);
+    label2->setColour(TextEditor::textColourId, Colours::black);
+    label2->setColour(TextEditor::backgroundColourId, Colour(0x00000000));
 
-    label->setBounds (239, 150, 71, 24);
+    label2->setBounds(672, 420, 46, 24);
 
-    label2.reset (new Label ("new label",
-                             TRANS("days")));
-    addAndMakeVisible (label2.get());
-    label2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label2->setJustificationType (Justification::centredLeft);
-    label2->setEditable (false, false, false);
-    label2->setColour (TextEditor::textColourId, Colours::black);
-    label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    reset_interval_.reset(new TextEditor("reset_interval_"));
+    addAndMakeVisible(reset_interval_.get());
+    reset_interval_->setMultiLine(false);
+    reset_interval_->setReturnKeyStartsNewLine(false);
+    reset_interval_->setReadOnly(false);
+    reset_interval_->setScrollbarsShown(false);
+    reset_interval_->setCaretVisible(true);
+    reset_interval_->setPopupMenuEnabled(false);
+    reset_interval_->setText(String());
 
-    label2->setBounds (672, 418, 46, 24);
+    reset_interval_->setBounds(628, 420, 37, 24);
 
-    reset_interval_.reset (new TextEditor ("reset_interval_"));
-    addAndMakeVisible (reset_interval_.get());
-    reset_interval_->setMultiLine (false);
-    reset_interval_->setReturnKeyStartsNewLine (false);
-    reset_interval_->setReadOnly (false);
-    reset_interval_->setScrollbarsShown (false);
-    reset_interval_->setCaretVisible (true);
-    reset_interval_->setPopupMenuEnabled (false);
-    reset_interval_->setText (String());
+    /************************************************************************************/
 
-    reset_interval_->setBounds (628, 418, 37, 24);
-
-    label_osc_4.reset (new Label ("OSC heading",
+    label_osc_4.reset (new Label ("watchdog_heading",
                                   TRANS("Watchdog\n")));
     addAndMakeVisible (label_osc_4.get());
     label_osc_4->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -430,9 +471,9 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_4->setColour (TextEditor::textColourId, Colours::black);
     label_osc_4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_4->setBounds (32, 299, 144, 24);
+    label_osc_4->setBounds (32, 360, 144, 24);
 
-    label_osc_sendaddr_12.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_12.reset (new Label ("watchdog_timeout",
                                             TRANS("Timeout:")));
     addAndMakeVisible (label_osc_sendaddr_12.get());
     label_osc_sendaddr_12->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -441,7 +482,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_12->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_12->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_12->setBounds (32, 359, 152, 24);
+    label_osc_sendaddr_12->setBounds (32, 420, 152, 24);
 
     watchdog_timeout_.reset (new TextEditor ("watchdog_timeout"));
     addAndMakeVisible (watchdog_timeout_.get());
@@ -453,9 +494,9 @@ sspSettingsPage::sspSettingsPage ()
     watchdog_timeout_->setPopupMenuEnabled (false);
     watchdog_timeout_->setText (String());
 
-    watchdog_timeout_->setBounds (195, 359, 37, 24);
+    watchdog_timeout_->setBounds (195, 420, 37, 24);
 
-    label3.reset (new Label ("new label",
+    label3.reset (new Label ("watchdog_seconds",
                              TRANS("seconds")));
     addAndMakeVisible (label3.get());
     label3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -464,9 +505,9 @@ sspSettingsPage::sspSettingsPage ()
     label3->setColour (TextEditor::textColourId, Colours::black);
     label3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label3->setBounds (239, 359, 71, 24);
+    label3->setBounds (239, 420, 71, 24);
 
-    label_osc_sendaddr_15.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_15.reset (new Label ("watchdog_procedure",
                                             TRANS("Watchdog proceedure:")));
     addAndMakeVisible (label_osc_sendaddr_15.get());
     label_osc_sendaddr_15->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -475,7 +516,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_15->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_15->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_15->setBounds (32, 329, 152, 24);
+    label_osc_sendaddr_15->setBounds (32, 390, 152, 24);
 
     watchdog_proc_cb_.reset (new ComboBox ("watchdog_proc"));
     addAndMakeVisible (watchdog_proc_cb_.get());
@@ -486,9 +527,9 @@ sspSettingsPage::sspSettingsPage ()
     watchdog_proc_cb_->addItem (TRANS("None"), 1);
     watchdog_proc_cb_->addListener (this);
 
-    watchdog_proc_cb_->setBounds (195, 329, 150, 24);
+    watchdog_proc_cb_->setBounds (195, 390, 150, 24);
 
-    label_osc_sendaddr_16.reset (new Label ("osc_send_adress",
+    label_osc_sendaddr_16.reset (new Label ("watchdog_reboot",
                                             TRANS("Reboot test:")));
     addAndMakeVisible (label_osc_sendaddr_16.get());
     label_osc_sendaddr_16->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
@@ -497,21 +538,23 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_16->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_16->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_16->setBounds (32, 389, 152, 24);
+    label_osc_sendaddr_16->setBounds (32, 450, 152, 24);
 
     watchdog_soft_btn_.reset (new TextButton ("soft_reboot"));
     addAndMakeVisible (watchdog_soft_btn_.get());
     watchdog_soft_btn_->setButtonText (TRANS("Soft reboot"));
     watchdog_soft_btn_->setColour (TextButton::buttonColourId, Colours::brown);
 
-    watchdog_soft_btn_->setBounds (195, 389, 150, 24);
+    watchdog_soft_btn_->setBounds (195, 450, 150, 24);
 
     watchdog_hard_btn_.reset (new TextButton ("hard_reboot"));
     addAndMakeVisible (watchdog_hard_btn_.get());
     watchdog_hard_btn_->setButtonText (TRANS("Hard reboot"));
     watchdog_hard_btn_->setColour (TextButton::buttonColourId, Colours::brown);
 
-    watchdog_hard_btn_->setBounds (195, 419, 150, 24);
+    watchdog_hard_btn_->setBounds (195, 480, 150, 24);
+
+    /***************************************************************/
 
     label_osc_5.reset (new Label ("OSC heading",
                                   TRANS("Mixer\n")));
@@ -522,7 +565,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_5->setColour (TextEditor::textColourId, Colours::black);
     label_osc_5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_5->setBounds (465, 190, 80, 24);
+    label_osc_5->setBounds (465, 192, 80, 24);
 
     label_osc_sendaddr_17.reset (new Label ("osc_send_adress",
                                             TRANS("Fade-in time:")));
@@ -533,7 +576,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_17->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_17->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_17->setBounds (465, 220, 110, 24);
+    label_osc_sendaddr_17->setBounds (465, 222, 110, 24);
 
     mix_fadein_.reset (new TextEditor ("fadein_time"));
     addAndMakeVisible (mix_fadein_.get());
@@ -545,7 +588,7 @@ sspSettingsPage::sspSettingsPage ()
     mix_fadein_->setPopupMenuEnabled (false);
     mix_fadein_->setText (String());
 
-    mix_fadein_->setBounds (574, 220, 37, 24);
+    mix_fadein_->setBounds (574, 222, 37, 24);
 
     label4.reset (new Label ("new label",
                              TRANS("seconds")));
@@ -556,7 +599,7 @@ sspSettingsPage::sspSettingsPage ()
     label4->setColour (TextEditor::textColourId, Colours::black);
     label4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label4->setBounds (615, 220, 71, 24);
+    label4->setBounds (615, 222, 71, 24);
 
     label_osc_sendaddr_18.reset (new Label ("osc_send_adress",
                                             TRANS("Fade-out time:")));
@@ -567,7 +610,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_18->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_18->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_18->setBounds (465, 250, 110, 24);
+    label_osc_sendaddr_18->setBounds (465, 252, 110, 24);
 
     mix_fadeout_.reset (new TextEditor ("fadeout_time"));
     addAndMakeVisible (mix_fadeout_.get());
@@ -579,7 +622,7 @@ sspSettingsPage::sspSettingsPage ()
     mix_fadeout_->setPopupMenuEnabled (false);
     mix_fadeout_->setText (String());
 
-    mix_fadeout_->setBounds (574, 250, 37, 24);
+    mix_fadeout_->setBounds (574, 252, 37, 24);
 
     label5.reset (new Label ("new label",
                              TRANS("seconds")));
@@ -590,7 +633,7 @@ sspSettingsPage::sspSettingsPage ()
     label5->setColour (TextEditor::textColourId, Colours::black);
     label5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label5->setBounds (615, 250, 71, 24);
+    label5->setBounds (615, 252, 71, 24);
 
     label_osc_sendaddr_19.reset (new Label ("osc_send_adress",
                                             TRANS("Volume change:")));
@@ -601,7 +644,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_19->setColour (TextEditor::textColourId, Colours::black);
     label_osc_sendaddr_19->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label_osc_sendaddr_19->setBounds (465, 280, 110, 24);
+    label_osc_sendaddr_19->setBounds (465, 282, 110, 24);
 
     mix_volume_change_.reset (new TextEditor ("volume_change_time"));
     addAndMakeVisible (mix_volume_change_.get());
@@ -613,7 +656,7 @@ sspSettingsPage::sspSettingsPage ()
     mix_volume_change_->setPopupMenuEnabled (false);
     mix_volume_change_->setText (String());
 
-    mix_volume_change_->setBounds (574, 280, 37, 24);
+    mix_volume_change_->setBounds (574, 282, 37, 24);
 
     label6.reset (new Label ("new label",
                              TRANS("seconds")));
@@ -624,7 +667,7 @@ sspSettingsPage::sspSettingsPage ()
     label6->setColour (TextEditor::textColourId, Colours::black);
     label6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    label6->setBounds (615, 280, 71, 24);
+    label6->setBounds (615, 282, 71, 24);
 
 
     //[UserPreSize]
@@ -735,7 +778,6 @@ sspSettingsPage::~sspSettingsPage()
     exec_use_interval_ = nullptr;
     label_osc_3 = nullptr;
     label_osc_sendaddr_13 = nullptr;
-    label_osc_sendaddr_14 = nullptr;
     label_osc_sendaddr_9 = nullptr;
     reset_hour_ = nullptr;
     reset_min_ = nullptr;
@@ -778,6 +820,33 @@ void sspSettingsPage::paint (Graphics& g)
     g.fillAll (Colour (0xff323e44));
 
     {
+        float x = 20.0f, y = 15.0f, width = 412.0f, height = 177.0f;
+        Colour fillColour = Colour(0xfb372a3b);
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour(fillColour);
+        g.fillRoundedRectangle(x, y, width, height, 10.000f);
+    }
+
+    {
+        float x = 20.0f, y = 212.0f, width = 412.0f, height = 113.0f;
+        Colour fillColour = Colour(0xfb372a3b);
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour(fillColour);
+        g.fillRoundedRectangle(x, y, width, height, 10.000f);
+    }
+
+    {
+        float x = 20.0f, y = 345.0f, width = 412.0f, height = 170.0f;
+        Colour fillColour = Colour(0xfb372a3b);
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour(fillColour);
+        g.fillRoundedRectangle(x, y, width, height, 10.000f);
+    }
+
+    {
         float x = 455.0f, y = 15.0f, width = 260.0f, height = 145.0f;
         Colour fillColour = Colour (0xfb372a3b);
         //[UserPaintCustomArguments] Customize the painting arguments here..
@@ -787,34 +856,16 @@ void sspSettingsPage::paint (Graphics& g)
     }
 
     {
-        float x = 20.0f, y = 15.0f, width = 412.0f, height = 177.0f;
-        Colour fillColour = Colour (0xfb372a3b);
+        float x = 455.0f, y = 182.0f, width = 260.0f, height = 140.0f;
+        Colour fillColour = Colour(0xfb372a3b);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
-        g.setColour (fillColour);
-        g.fillRoundedRectangle (x, y, width, height, 10.000f);
+        g.setColour(fillColour);
+        g.fillRoundedRectangle(x, y, width, height, 10.000f);
     }
 
     {
-        float x = 455.0f, y = 340.0f, width = 260.0f, height = 113.0f;
-        Colour fillColour = Colour (0xfb372a3b);
-        //[UserPaintCustomArguments] Customize the painting arguments here..
-        //[/UserPaintCustomArguments]
-        g.setColour (fillColour);
-        g.fillRoundedRectangle (x, y, width, height, 10.000f);
-    }
-
-    {
-        float x = 20.0f, y = 283.0f, width = 412.0f, height = 170.0f;
-        Colour fillColour = Colour (0xfb372a3b);
-        //[UserPaintCustomArguments] Customize the painting arguments here..
-        //[/UserPaintCustomArguments]
-        g.setColour (fillColour);
-        g.fillRoundedRectangle (x, y, width, height, 10.000f);
-    }
-
-    {
-        float x = 455.0f, y = 180.0f, width = 260.0f, height = 140.0f;
+        float x = 455.0f, y = 345.0f, width = 260.0f, height = 113.0f;
         Colour fillColour = Colour (0xfb372a3b);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]

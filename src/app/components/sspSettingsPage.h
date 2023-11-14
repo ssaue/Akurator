@@ -77,6 +77,13 @@ private:
     std::unique_ptr<Label> label_osc_sendaddr_3;
     std::unique_ptr<Label> label_osc_sendaddr_4;
     std::unique_ptr<Label> label_osc_sendaddr_5;
+
+    Label label_midi_{ "Midi Label",  "MIDI" };
+    Label label_midi_input_{ "Midi Input Label",  "Input device:" };
+    Label label_midi_output_{ "Midi Output Label", "Output device:" };
+    std::unique_ptr<ComboBox> cb_midi_input_;
+    std::unique_ptr<ComboBox> cb_midi_output_;
+
     std::unique_ptr<ComboBox> exec_startup_cb_;
     std::unique_ptr<ComboBox> exec_shutdown_cb_;
     std::unique_ptr<TextEditor> exec_start_hour_;
@@ -90,7 +97,6 @@ private:
     std::unique_ptr<ToggleButton> exec_use_interval_;
     std::unique_ptr<Label> label_osc_3;
     std::unique_ptr<Label> label_osc_sendaddr_13;
-    std::unique_ptr<Label> label_osc_sendaddr_14;
     std::unique_ptr<Label> label_osc_sendaddr_9;
     std::unique_ptr<TextEditor> reset_hour_;
     std::unique_ptr<TextEditor> reset_min_;

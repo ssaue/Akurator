@@ -9,7 +9,9 @@ add_library(players-lib
     sspDistributionPlayer.cpp 
     sspDistributionPlayer.h
     sspIndexPlayer.cpp 
-    sspIndexPlayer.h
+    sspIndexPlayer.h	
+    sspMidiPlayer.cpp 
+    sspMidiPlayer.h 
     sspOSCPlayer.cpp 
     sspOSCPlayer.h 
     sspPlayers.cpp 

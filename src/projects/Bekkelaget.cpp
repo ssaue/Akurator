@@ -11,7 +11,6 @@
 #include "Bekkelaget.h"
 
 #include "domain/sspDomainData.h"
-#include "engine/sspPlayManager.h"
 #include "domain/core/sspTimeline.h"
 #include "domain/core/sspSharedVector.h"
 
@@ -33,12 +32,11 @@ namespace {
     std::string file_root = "C:/Bekkelaget/Lyder/";
 }
 
-void Bekkelaget::buildContent(sspDomainData* domain, sspPlayManager* manager)
+void Bekkelaget::buildContent(sspDomainData* domain)
 {
-    if (!domain || !manager) return;
+    if (!domain) return;
 
     domain->clearContents();
-    manager->clearContents();
 
     buildBasicContent(domain);
     buildInputContent(domain);
@@ -53,7 +51,7 @@ void Bekkelaget::buildContent(sspDomainData* domain, sspPlayManager* manager)
     buildTunnelKaskade(domain);
     buildTunnelKonkret(domain);
 
-    buildStartList(domain, manager);
+    buildStartList(domain);
     buildUserOutput(domain);
 }
 
@@ -932,7 +930,7 @@ void Bekkelaget::buildTunnelKonkret(sspDomainData* domain)
     task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
 }
 
-void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
+void Bekkelaget::buildStartList(sspDomainData* domain)
 {
     auto msglist = std::make_shared<sspMessageList>();
 
@@ -1018,8 +1016,8 @@ void Bekkelaget::buildStartList(sspDomainData* domain, sspPlayManager* manager)
     msg_recv->setReceiver(domain->getTimelines()[5]);
     msglist->add(std::move(msg_recv));
 
-    auto& startlist = manager->getStartList();
-    startlist.add(domain->getConditionals()[0], msglist);
+    auto startlist = domain->getStartList();
+    startlist->add(domain->getConditionals()[0], msglist);
 }
 
 void Bekkelaget::buildUserOutput(sspDomainData* domain)

@@ -11,16 +11,14 @@
 #include "BlankProject.h"
 
 #include "domain/sspDomainData.h"
-#include "engine/sspPlayManager.h"
 #include "domain/core/sspTimeline.h"
 
 
-void BlankProject::buildContent(sspDomainData* domain, sspPlayManager* manager)
+void BlankProject::buildContent(sspDomainData* domain)
 {
-	if (!domain || !manager) return;
+	if (!domain) return;
 
 	domain->clearContents();
-	manager->clearContents();
 
 	// As a minimum there has to be a root timeline
 	auto root = std::make_shared<sspTimeline>();

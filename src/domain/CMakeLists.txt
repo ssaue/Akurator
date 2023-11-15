@@ -79,6 +79,8 @@ add_library(domain-lib
     elements/players/sspDistributionPlayer.h
     elements/players/sspIndexPlayer.cpp 
     elements/players/sspIndexPlayer.h
+    elements/players/sspMidiPlayer.cpp 
+    elements/players/sspMidiPlayer.h 
     elements/players/sspOSCPlayer.cpp 
     elements/players/sspOSCPlayer.h 
     elements/players/sspPlayers.cpp 
@@ -148,5 +150,8 @@ add_library(domain-lib
 
 # Boost serialization
 find_package(Boost REQUIRED COMPONENTS serialization)
-target_link_libraries(domain-lib PUBLIC Boost::serialization pacsdk)
+target_link_libraries(domain-lib PRIVATE Boost::serialization serial-port-lib)
+
+target_compile_definitions(domain-lib PRIVATE JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
+target_include_directories(domain-lib PRIVATE "${JUCE_SOURCE_DIR}/modules")
 

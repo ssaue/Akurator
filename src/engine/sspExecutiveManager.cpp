@@ -11,7 +11,7 @@
 #include "sspExecutiveManager.h"
 #include "sspPlayManager.h"
 #include "sspResetManager.h"
-#include "engine/sspExecutionState.h"
+#include "sspExecutionState.h"
 #include "access/sspLogging.h"
 
 // Define the static constants
@@ -74,7 +74,7 @@ bool sspExecutiveManager::initialize(sspDomainData & domain_data)
 		last_error_ = Error::Reset;
 		return false;
 	}
-	if (!play_manager_->initialize(domain_data.getTimelines())) {
+	if (!play_manager_->initialize(domain_data)) {
 		last_error_ = Error::Play;
 		return false;
 	}
@@ -86,11 +86,6 @@ void sspExecutiveManager::terminate()
 	reset_manager_->terminate();
 	input_manager_->terminate();
 	play_manager_->terminate();
-}
-
-void sspExecutiveManager::clearContents()
-{
-	play_manager_->clearContents();
 }
 
 void sspExecutiveManager::start()

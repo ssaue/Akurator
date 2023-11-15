@@ -70,4 +70,4 @@ namespace logging {
 	//@throws spdlog::spdlog_ex if "logs/debug.log" is not writable
 	void defaultConfiguration();
 
-}  // namespace audio_server::logging
+}  // namespace logging

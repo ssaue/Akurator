@@ -11,8 +11,7 @@
 #pragma once
 
 class sspDomainData;
-class sspPlayManager;
 
 struct BlankProject {
-	static void buildContent(sspDomainData* domain, sspPlayManager* manager);
+	static void buildContent(sspDomainData* domain);
 };

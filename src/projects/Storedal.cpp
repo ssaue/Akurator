@@ -11,7 +11,6 @@
 #include "Storedal.h"
 
 #include "domain/sspDomainData.h"
-#include "engine/sspPlayManager.h"
 #include "domain/core/sspTimeline.h"
 #include "domain/core/sspSharedVector.h"
 
@@ -27,12 +26,11 @@
 #include "domain/elements/messages/sspConditionalMsgList.h"
 
 
-void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
+void Storedal::buildContent(sspDomainData* domain)
 {
-	if (!domain || !manager) return;
+	if (!domain) return;
 
 	domain->clearContents();
-	manager->clearContents();
 
 	buildBasicContent(domain);
 	buildInputContent(domain);
@@ -47,8 +45,8 @@ void Storedal::buildContent(sspDomainData* domain, sspPlayManager* manager)
 	buildRens(domain);
 	buildDunder(domain);
 
-	buildStartList(domain, manager);
-	buildTriggerList(domain, manager);
+	buildStartList(domain);
+	buildTriggerList(domain);
 	buildUserOutput(domain);
 }
 
@@ -1466,7 +1464,7 @@ void Storedal::buildDunder(sspDomainData * domain)
 	task->setMessageList(sspPlayTask::Messages::Exit, cond_msg);
 }
 
-void Storedal::buildStartList(sspDomainData * domain, sspPlayManager * manager)
+void Storedal::buildStartList(sspDomainData * domain)
 {
 	auto msglist = std::make_shared<sspMessageList>();
 
@@ -1540,11 +1538,11 @@ void Storedal::buildStartList(sspDomainData * domain, sspPlayManager * manager)
 	msg_recv->setReceiver(domain->getTimelines()[2]);
 	msglist->add(std::move(msg_recv));
 
-	auto& startlist = manager->getStartList();
-	startlist.add(domain->getConditionals()[0], msglist);
+	auto startlist = domain->getStartList();
+	startlist->add(domain->getConditionals()[0], msglist);
 }
 
-void Storedal::buildTriggerList(sspDomainData * domain, sspPlayManager * manager)
+void Storedal::buildTriggerList(sspDomainData * domain)
 {
 	auto msglist = std::make_shared<sspMessageList>();
 
@@ -1588,8 +1586,8 @@ void Storedal::buildTriggerList(sspDomainData * domain, sspPlayManager * manager
 	trigger->setChange(sspTrigger::Trigger::True);
 	domain->getConditionals().push_back(trigger);
 
-	auto& trigger_list = manager->getTriggerList();
-	trigger_list.add(trigger, cond_msglist);
+	auto trigger_list = domain->getTriggerList();
+	trigger_list->add(trigger, cond_msglist);
 }
 
 void Storedal::buildUserOutput(sspDomainData * domain)

@@ -11,12 +11,11 @@
 #pragma once
 
 class sspDomainData;
-class sspPlayManager;
 
 // Utility class for building all Bekkelaget content
 
 struct Bekkelaget {
-	static void buildContent(sspDomainData* domain, sspPlayManager* manager);
+	static void buildContent(sspDomainData* domain);
 
 private:
 	static void buildBasicContent(sspDomainData* domain);
@@ -31,6 +30,6 @@ private:
 	static void buildTunnelKaskade(sspDomainData* domain);
 	static void buildTunnelKonkret(sspDomainData* domain);
 
-	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
+	static void buildStartList(sspDomainData* domain);
 	static void buildUserOutput(sspDomainData* domain);
 };

@@ -1,8 +1,8 @@
 # add source files in sub-directories
 #add_subdirectory(app)
-#add_subdirectory(access)
+add_subdirectory(access)
 #add_subdirectory(domain)
-#add_subdirectory(engine)
+add_subdirectory(engine)
 #add_subdirectory(projects)
 
 target_sources(Akurator
@@ -30,24 +30,11 @@ PRIVATE
     app/sspCommandIDs.h 
     app/sspDefines.h 
 
-    access/sspWatchDog.h 
-    access/sspLogging.h 
-    access/sspLogging.cpp 
-
-    access/osc/sspOscConsole.cpp 
-    access/osc/sspOscConsole.h 
-    access/osc/sspOscConsoleImpl.cpp 
-    access/osc/sspOscConsoleImpl.h 
-    access/osc/sspOscSendChannel.cpp 
-    access/osc/sspOscSendChannel.h
-    access/osc/sspOscSender.cpp
-    access/osc/sspOscSender.h
-
     domain/core/sspDomainElement.h
     domain/core/sspDomainPool.h
     domain/core/sspDomainPool.cpp
     domain/core/sspDomainPrimitives.h
-    domain/core/sspDomainPrimitives.cpp
+    domain/core/sspDomainPrimitives.cpp 
     domain/core/sspInput.h
     domain/core/sspInput.cpp
     domain/core/sspPlayer.h
@@ -93,7 +80,7 @@ PRIVATE
     domain/elements/inputs/sspICPinput.cpp 
     domain/elements/inputs/sspICPinput.h
     domain/elements/inputs/sspInputs.cpp 
-    domain/elements/inputs/sspInputs.h 
+    domain/elements/inputs/sspInputs.h
 
     domain/elements/messages/sspConditionalMsgList.cpp
     domain/elements/messages/sspConditionalMsgList.h
@@ -107,7 +94,7 @@ PRIVATE
     domain/elements/messages/sspTimeTriggerMsgList.cpp 
     domain/elements/messages/sspTimeTriggerMsgList.h
     domain/elements/messages/sspTriggerMsgList.cpp 
-    domain/elements/messages/sspTriggerMsgList.h
+    domain/elements/messages/sspTriggerMsgList.h#
 
     domain/elements/players/sspChainPlayer.cpp
     domain/elements/players/sspChainPlayer.h
@@ -170,37 +157,9 @@ PRIVATE
     domain/elements/values/sspValueRange.h
     domain/elements/values/sspValues.cpp 
     domain/elements/values/sspValues.h
-
+ 
     domain/sspDomainData.cpp 
     domain/sspDomainData.h 
-
-    engine/sspExecutionState.cpp 
-    engine/sspExecutionState.h 
-    engine/sspExecutiveManager.cpp 
-    engine/sspExecutiveManager.h 
-    engine/sspFinishedResponder.h 
-    engine/sspInputManager.cpp 
-    engine/sspInputManager.h 
-    engine/sspPlayManager.cpp 
-    engine/sspPlayManager.h 
-    engine/sspResetManager.cpp 
-    engine/sspResetManager.h 
-    engine/sspSendChannel.h 
-    engine/sspStreamBus.cpp 
-    engine/sspStreamBus.h 
-    engine/sspTimeUpdater.h 
-
-    engine/scheduling/sspSchedulePlayTask.cpp 
-    engine/scheduling/sspSchedulePlayTask.h 
-    engine/scheduling/sspSchedulePlayTaskList.cpp 
-    engine/scheduling/sspSchedulePlayTaskList.h 
-    engine/scheduling/sspScheduler.cpp 
-    engine/scheduling/sspScheduler.h 
-    engine/scheduling/sspScheduleTask.h 
-    engine/scheduling/sspSilenceTask.cpp 
-    engine/scheduling/sspSilenceTask.h 
-    engine/scheduling/sspTaskQueue.cpp 
-    engine/scheduling/sspTaskQueue.h 
 
     projects/Bekkelaget.cpp 
     projects/Bekkelaget.h 
@@ -210,12 +169,9 @@ PRIVATE
     projects/Storedal.h 
 )
 
-# Boost logging
+# Boost serialization
 find_package(Boost REQUIRED COMPONENTS serialization)
-target_link_libraries(Akurator PRIVATE Boost::serialization)
-
-find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(Akurator PRIVATE serial-port-lib spdlog::spdlog)
+target_link_libraries(Akurator PRIVATE Boost::serialization serial-port-lib access-lib engine-lib)
 
 target_compile_definitions(Akurator PRIVATE JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 target_include_directories(Akurator PRIVATE "${JUCE_SOURCE_DIR}/modules")

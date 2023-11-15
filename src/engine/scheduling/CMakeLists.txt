@@ -15,5 +15,7 @@ add_library(scheduling-lib
     sspTaskQueue.h 
 )
 
-target_link_libraries(scheduling-lib PUBLIC domain-core-lib)
+# Boost serialization
+find_package(Boost REQUIRED COMPONENTS serialization)
+target_link_libraries(scheduling-lib PUBLIC Boost::serialization)
 

@@ -16,7 +16,7 @@ class sspPlayManager;
 // Utility class for building all Storedal content
 
 struct Storedal {
-	static void buildContent(sspDomainData* domain, sspPlayManager* manager);
+	static void buildContent(sspDomainData* domain);
 
 private:
 	static void buildBasicContent(sspDomainData* domain);
@@ -31,7 +31,7 @@ private:
 	static void buildRens(sspDomainData* domain);
 	static void buildDunder(sspDomainData* domain);
 
-	static void buildStartList(sspDomainData* domain, sspPlayManager* manager);
-	static void buildTriggerList(sspDomainData* domain, sspPlayManager* manager);
+	static void buildStartList(sspDomainData* domain);
+	static void buildTriggerList(sspDomainData* domain);
 	static void buildUserOutput(sspDomainData* domain);
 };

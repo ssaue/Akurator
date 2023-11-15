@@ -16,7 +16,6 @@
 
 #include <juce_events/juce_events.h>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/serialization/unique_ptr.hpp>
 
 class sspResetManager;
 
@@ -25,12 +24,6 @@ class sspExecutiveManager : public juce::Timer
 {
 	std::unique_ptr<sspPlayManager> play_manager_;
 	std::unique_ptr<sspInputManager> input_manager_;
-
-	friend class boost::serialization::access;
-	template <typename Archive>
-	void serialize(Archive & ar, const unsigned int /*version*/) {
-		ar & BOOST_SERIALIZATION_NVP(play_manager_);
-	}
 
 public:
 	enum class Startup : int { DoNothing, Initialize, Play };
@@ -56,7 +49,6 @@ public:
 
 	bool initialize(sspDomainData& domain_data);
 	void terminate();
-	void clearContents();
 
 	void start();
 	void stop();

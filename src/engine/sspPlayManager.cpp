@@ -13,32 +13,33 @@
 #include "sspStreamBus.h"
 #include "sspExecutionState.h"
 #include "scheduling/sspScheduler.h"
-#include "sspResetManager.h"
+#include "engine/sspResetManager.h"
+
+#include "domain/elements/messages/sspConditionalMsgList.h"
+#include "domain/elements/messages/sspTriggerMsgList.h"
+#include "domain/elements/messages/sspTimeTriggerMsgList.h"
 
 using namespace std::chrono;
 
 sspPlayManager::~sspPlayManager()
 {
-	clearContents();
 }
 
-bool sspPlayManager::verify(int & nErrors, int & nWarnings) const
+bool sspPlayManager::verify(int & , int & ) const
 {
 	bool bReturn = true;
-	if (!start_messages_.verify(nErrors, nWarnings))
-		bReturn = false;
-	if (!trigger_messages_.verify(nErrors, nWarnings))
-		bReturn = false;
-	if (!clock_messages_.verify(nErrors, nWarnings))
-		bReturn = false;
 	return bReturn;
 }
 
-bool sspPlayManager::initialize(sspDomainPool<sspTimeline>& timelines)
+bool sspPlayManager::initialize(sspDomainData& data)
 {
-	// Initialize the root timeline and add OSC-channels to the audio streams
+	auto timelines = data.getTimelines();
 	if (timelines.empty())
 		return false;
+
+	start_messages_ = data.getStartList();
+	trigger_messages_ = data.getTriggerList();
+	clock_messages_ = data.getClockList();
 
 	updater_.setInterval(sspResetManager::watchdog_timeout_s);
 
@@ -67,9 +68,9 @@ bool sspPlayManager::start()
 		osc_console_.initializeChannels();
 		previous_time_ = steady_clock::now();
 		if (auto ptr = root_stream_.lock()) ptr->start();
-		trigger_messages_.reset();
-		clock_messages_.reset();
-		start_messages_.send();
+		trigger_messages_->reset();
+		clock_messages_->reset();
+		start_messages_->send();
 		updater_.initialize();
 	}
 	return sspExecutionState::Instance().isPlaying();
@@ -78,8 +79,8 @@ bool sspPlayManager::start()
 bool sspPlayManager::update()
 {
 	if (sspExecutionState::Instance().isPlaying()) {
-		clock_messages_.testAndSend();
-		trigger_messages_.testAndSend();
+		clock_messages_->testAndSend();
+		trigger_messages_->testAndSend();
 
 		auto now = steady_clock::now();
 		std::chrono::duration<double> diff = steady_clock::now() - previous_time_;
@@ -105,16 +106,9 @@ void sspPlayManager::stop()
 void sspPlayManager::terminate()
 {
 	stop();
+
 	if (auto ptr = root_stream_.lock()) ptr->terminate();
 	osc_console_.disconnectAll();
-}
-
-void sspPlayManager::clearContents()
-{
-	terminate();
-	start_messages_.removeAll();
-	trigger_messages_.removeAll();
-	clock_messages_.removeAll();
 }
 
 bool sspPlayManager::verifyPlaying()

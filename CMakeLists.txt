@@ -62,7 +62,6 @@ target_link_libraries(Akurator
     PRIVATE
         AkuratorData
         juce::juce_gui_extra
-	  juce::juce_osc
     PUBLIC
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags

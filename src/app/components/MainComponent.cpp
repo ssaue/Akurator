@@ -26,10 +26,6 @@
 #include "projects/BlankProject.h"
 #endif
 
-#include <fstream>
-#include <boost/archive/xml_oarchive.hpp> 
-#include <boost/archive/xml_iarchive.hpp> 
-
 #include "access/sspLogging.h"
 
 
@@ -213,11 +209,11 @@ void MainComponent::onNew()
 	*/
 
 #ifdef BUILD_STOREDAL
-	Storedal::buildContent(domain_.get(), manager_->getPlayManager());
+	Storedal::buildContent(domain_.get());
 #elif BUILD_BEKKELAGET
-	Bekkelaget::buildContent(domain_.get(), manager_->getPlayManager());
+	Bekkelaget::buildContent(domain_.get());
 #else
-	BlankProject::buildContent(domain_.get(), manager_->getPlayManager());
+	BlankProject::buildContent(domain_.get());
 #endif
 
 	domain_->loadValuePropertiesToInputs();
@@ -227,21 +223,14 @@ void MainComponent::onLoad()
 {
 	sspAkuratorApplication::getRecentlyOpenedFiles().addFile(current_path_);
 	String full_path = current_path_.getFullPathName();
-	std::ifstream is(full_path.toStdString());
-	boost::archive::xml_iarchive ia(is);
-	domain_->clearContents();
-	manager_->clearContents();
-	ia >> boost::serialization::make_nvp("sspDomainData", *domain_.get()) >> boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
-	domain_->loadValuePropertiesToInputs();
+	sspDomainData::loadAll(full_path.toStdString(), domain_.get());
 }
 
 void MainComponent::onSave()
 {
 	if (current_path_.hasFileExtension(".sspx")) {
 		String full_path = current_path_.getFullPathName();
-		std::ofstream os(full_path.toStdString());
-		boost::archive::xml_oarchive oa(os);
-		oa << boost::serialization::make_nvp("sspDomainData", *domain_.get()) << boost::serialization::make_nvp("sspExecutiveManager", *manager_.get());
+		sspDomainData::saveAll(full_path.toStdString(), domain_.get());
 	}
 	else {
 		onSaveAs();

@@ -11,6 +11,8 @@
 #pragma once
 
 #include "access/osc/sspOscConsole.h"
+#include "access/midi/sspMidiConsole.h"
+
 #include "domain/sspDomainData.h"
 #include "sspTimeUpdater.h"
 
@@ -41,6 +43,8 @@ public:
 
 private:
 	sspOscConsole osc_console_;
+	sspMidiConsole midi_console_;
+
 	std::weak_ptr<sspTimeline> root_stream_;
 	std::chrono::steady_clock::time_point previous_time_;
 	sspTimeUpdater updater_;

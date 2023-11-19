@@ -11,7 +11,6 @@
 #pragma once
 
 #include "engine/sspSendChannel.h"
-#include "domain/core/sspSharedVector.h"
 
 #include <map>
 #include <memory>
@@ -21,8 +20,8 @@ class sspOscConsole
 {
 public:
     static std::string	send_address_s;
-    static int		send_port_s;
-    static int		receive_port_s;
+    static int		    send_port_s;
+    static int		    receive_port_s;
 
     sspOscConsole();
     sspOscConsole(const sspOscConsole& obj) = delete;

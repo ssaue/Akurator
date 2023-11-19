@@ -12,7 +12,7 @@
 #include "engine/scheduling/sspScheduler.h"
 
 sspStream::sspStream()
-	: sspTimeline(), task_list_()
+	: sspTimeline(), task_list_(), send_channel_()
 {
 }
 
@@ -81,9 +81,8 @@ void sspStream::onFinished()
 
 void sspStream::play(std::weak_ptr<sspPlayTask> task)
 {
-	// sspStream have no tasks that need a send channel (e.g. OSC)
 	if (auto ptr = task.lock()) {
-		ptr->start(std::weak_ptr<sspSendChannel>(), weak_from_this());
+		ptr->start(send_channel_, weak_from_this());
 		sspScheduler::Instance().add(ptr);
 	}
 }

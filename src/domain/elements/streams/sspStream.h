@@ -34,9 +34,11 @@ public:
 	virtual void handleMessage(const sspMessage& msg) override;
 	virtual void onFinished() override;
 
-protected:
-	virtual void play(std::weak_ptr<sspPlayTask> task);
+	void setSendChannel(std::shared_ptr<sspSendChannel> channel_ptr) { send_channel_ = channel_ptr; }
 
 private:
+	virtual void play(std::weak_ptr<sspPlayTask> task);
+
 	sspSchedulePlayTaskList task_list_;
+	std::shared_ptr<sspSendChannel> send_channel_;
 };

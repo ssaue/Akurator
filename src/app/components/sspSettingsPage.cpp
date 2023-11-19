@@ -20,6 +20,8 @@
 //[Headers] You can add your own extra header files here...
 #include "engine/sspStreamBus.h"
 #include "access/osc/sspOscConsole.h"
+#include "access/midi/sspMidiDevices.h"
+#include "access/midi/sspMidiConsole.h"
 #include "engine/sspExecutiveManager.h"
 #include "engine/sspResetManager.h"
 #include "app/sspAkuratorApplication.h"
@@ -355,6 +357,10 @@ sspSettingsPage::sspSettingsPage ()
     cb_midi_input_->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_input_->addListener(this);
 
+    for (int i = 0; i < sspMidiDevices::Instance().getNumMidiInputs(); ++i) {
+        cb_midi_input_->addItem(TRANS(sspMidiDevices::Instance().getInputDeviceName(i)), i + 1);
+    }
+
     cb_midi_input_->setBounds(195, 257, 150, 24);
 
     cb_midi_output_.reset(new ComboBox("midi_output"));
@@ -364,6 +370,10 @@ sspSettingsPage::sspSettingsPage ()
     cb_midi_output_->setTextWhenNothingSelected(TRANS("Select output"));
     cb_midi_output_->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
     cb_midi_output_->addListener(this);
+
+    for (int i = 0; i < sspMidiDevices::Instance().getNumMidiOutputs(); ++i) {
+        cb_midi_output_->addItem(TRANS(sspMidiDevices::Instance().getOutputDeviceName(i)), i + 1);
+    }
 
     cb_midi_output_->setBounds(195, 287, 150, 24);
 
@@ -723,6 +733,12 @@ sspSettingsPage::sspSettingsPage ()
 	osc_send_port_->setText(String(sspOscConsole::send_port_s), false);
 	osc_receive_port_->setText(String(sspOscConsole::receive_port_s), false);
 
+    auto in_index = sspMidiDevices::Instance().getInputDeviceIndex(sspMidiConsole::in_device_s);
+    if (in_index >= 0) cb_midi_input_->setSelectedItemIndex(in_index);
+    
+    auto out_index = sspMidiDevices::Instance().getOutputDeviceIndex(sspMidiConsole::out_device_s);
+    if (out_index >= 0) cb_midi_output_->setSelectedItemIndex(out_index);
+
 	exec_startup_cb_->setSelectedItemIndex(static_cast<int>(sspExecutiveManager::startup_proc_s), NotificationType::dontSendNotification);
 	exec_shutdown_cb_->setSelectedItemIndex(static_cast<int>(sspExecutiveManager::shutdown_proc_s), NotificationType::dontSendNotification);
 
@@ -879,44 +895,28 @@ void sspSettingsPage::paint (Graphics& g)
 
 void sspSettingsPage::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
 }
 
 void sspSettingsPage::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 {
-    //[UsercomboBoxChanged_Pre]
-    //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == exec_startup_cb_.get())
-    {
-        //[UserComboBoxCode_exec_startup_cb_] -- add your combo box handling code here..
+    if (comboBoxThatHasChanged == exec_startup_cb_.get()) {
 		sspExecutiveManager::startup_proc_s = sspExecutiveManager::Startup{ exec_startup_cb_->getSelectedItemIndex() };
-        //[/UserComboBoxCode_exec_startup_cb_]
     }
-    else if (comboBoxThatHasChanged == exec_shutdown_cb_.get())
-    {
-        //[UserComboBoxCode_exec_shutdown_cb_] -- add your combo box handling code here..
+    else if (comboBoxThatHasChanged == exec_shutdown_cb_.get()) {
 		sspExecutiveManager::shutdown_proc_s = sspExecutiveManager::Shutdown{ exec_shutdown_cb_->getSelectedItemIndex() };
-        //[/UserComboBoxCode_exec_shutdown_cb_]
     }
-    else if (comboBoxThatHasChanged == watchdog_proc_cb_.get())
-    {
-        //[UserComboBoxCode_watchdog_proc_cb_] -- add your combo box handling code here..
+    else if (comboBoxThatHasChanged == watchdog_proc_cb_.get()) {
 		sspResetManager::watchdog_type_s = sspWatchdog::Type { watchdog_proc_cb_->getSelectedItemIndex() };
-        //[/UserComboBoxCode_watchdog_proc_cb_]
     }
-
-    //[UsercomboBoxChanged_Post]
-    //[/UsercomboBoxChanged_Post]
+    else if (comboBoxThatHasChanged == cb_midi_input_.get()) {
+        sspMidiConsole::in_device_s = sspMidiDevices::Instance().getInputDeviceIdentifier(cb_midi_input_->getSelectedItemIndex());
+    }
+    else if (comboBoxThatHasChanged == cb_midi_output_.get()) {
+        sspMidiConsole::out_device_s = sspMidiDevices::Instance().getOutputDeviceIdentifier(cb_midi_output_->getSelectedItemIndex());
+    }
 }
 
-
-
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void sspSettingsPage::loadProperties()
 {
 	PropertiesFile* props = app_properties_.getUserSettings();
@@ -927,6 +927,9 @@ void sspSettingsPage::loadProperties()
 	sspOscConsole::send_address_s = props->getValue("send_address", "127.0.0.1").toStdString();
 	sspOscConsole::send_port_s = props->getIntValue("send_port", 8001);
 	sspOscConsole::receive_port_s = props->getIntValue("receive_port", 9001);
+
+    sspMidiConsole::in_device_s = props->getValue("midi_input_device", "");
+    sspMidiConsole::out_device_s = props->getValue("midi_output_device", "");
 
 	sspStreamBus::fadein_time_s = props->getDoubleValue("fadein_time", 2.0);
 	sspStreamBus::fadeout_time_s = props->getDoubleValue("fadeout_time", 5.0);
@@ -977,6 +980,9 @@ void sspSettingsPage::saveProperties()
 	props->setValue("send_address", String(sspOscConsole::send_address_s));
 	props->setValue("send_port", sspOscConsole::send_port_s);
 	props->setValue("receive_port", sspOscConsole::receive_port_s);
+
+    props->setValue("midi_input_device", sspMidiConsole::in_device_s);
+    props->setValue("midi_output_device", sspMidiConsole::out_device_s);
 
 	props->setValue("fadein_time", sspStreamBus::fadein_time_s);
 	props->setValue("fadeout_time", sspStreamBus::fadeout_time_s);

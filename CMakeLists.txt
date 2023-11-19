@@ -19,7 +19,6 @@ if (WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /permissive-")
 endif()
 
-#add_subdirectory(vendor EXCLUDE_FROM_ALL)
 add_subdirectory(vendor)
 
 juce_add_gui_app(Akurator
@@ -41,7 +40,7 @@ target_compile_definitions(Akurator
         # JUCE_WEB_BROWSER and JUCE_USE_CURL would be on by default, but you might not need them.
         JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_gui_app` call
         JUCE_USE_CURL=0     # If you remove this, add `NEEDS_CURL TRUE` to the `juce_add_gui_app` call
-	  JUCE_MODAL_LOOPS_PERMITTED=1
+	    JUCE_MODAL_LOOPS_PERMITTED=1
         JUCE_APPLICATION_NAME_STRING="$<TARGET_PROPERTY:Akurator,JUCE_PRODUCT_NAME>"
         JUCE_APPLICATION_VERSION_STRING="$<TARGET_PROPERTY:Akurator,JUCE_VERSION>")
 
@@ -57,7 +56,6 @@ juce_add_binary_data(AkuratorData
 	assets/run-verify.svg
 )
 
-
 target_link_libraries(Akurator
     PRIVATE
         AkuratorData
@@ -67,6 +65,4 @@ target_link_libraries(Akurator
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags)
 
-
 add_subdirectory(src)
-

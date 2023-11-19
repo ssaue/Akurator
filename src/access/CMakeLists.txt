@@ -7,7 +7,8 @@ add_library(access-lib
     sspLogging.h 
 )
 
+add_subdirectory(midi)
 add_subdirectory(osc)
 
 find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(access-lib PRIVATE spdlog::spdlog_header_only osc-access-lib)
+target_link_libraries(access-lib PRIVATE spdlog::spdlog_header_only osc-access-lib midi-access-lib)

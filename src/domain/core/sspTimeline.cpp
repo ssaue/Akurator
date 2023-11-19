@@ -79,8 +79,6 @@ void sspTimeline::handleMessage(const sspMessage& msg)
 	}
 }
 
-
-
 bool sspTimeline::verify(int & nErrors, int & nWarnings) const
 {
 	bool bReturn = true;

@@ -13,7 +13,7 @@
 #include "sspStreamBus.h"
 #include "sspExecutionState.h"
 #include "scheduling/sspScheduler.h"
-#include "engine/sspResetManager.h"
+#include "sspResetManager.h"
 
 #include "domain/elements/messages/sspConditionalMsgList.h"
 #include "domain/elements/messages/sspTriggerMsgList.h"
@@ -47,12 +47,14 @@ bool sspPlayManager::initialize(sspDomainData& data)
 	osc_console_.clearChannels();
 
 	root_stream_ = timelines[0];
-	for (auto& stream : timelines) {
-		auto audio = std::dynamic_pointer_cast<sspAudioStream>(stream);
-		if (audio) {
+	for (auto& timeline : timelines) {
+		if (auto audio = std::dynamic_pointer_cast<sspAudioStream>(timeline)) {
 			unsigned int num_channels = audio->getMaxActive() + 1;	// Add an extra channel for transitions
 			auto bus = std::make_unique<sspStreamBus>(std::move(osc_console_.getBusChannels(num_channels)));
 			audio->setBus(std::move(bus));
+		}
+		else if (auto stream = std::dynamic_pointer_cast<sspStream>(timeline)) {
+			stream->setSendChannel(midi_console_.getSendChannel());
 		}
 	}
 

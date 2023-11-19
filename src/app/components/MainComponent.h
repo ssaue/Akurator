@@ -8,8 +8,6 @@
 
 #pragma once
 
-//#include "../JuceLibraryCode/JuceHeader.h"
-
 #include "sspToolbarFactory.h"
 #include "sspTabbedComponent.h"
 

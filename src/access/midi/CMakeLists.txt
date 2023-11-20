@@ -8,12 +8,14 @@ add_library(midi-access-lib
     sspMidiConsoleImpl.h 
     sspMidiDevices.cpp 
     sspMidiDevices.h 
-    sspStreamChannel.cpp 
-    sspStreamChannel.h 
+    sspMidiSendChannel.cpp 
+    sspMidiSendChannel.h 
 )
+
+# Boost serialization
+find_package(Boost REQUIRED COMPONENTS serialization)
+target_link_libraries(midi-access-lib PRIVATE Boost::serialization juce::juce_audio_devices)
 
 # Juce includes
 target_compile_definitions(midi-access-lib PRIVATE JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
 target_include_directories(midi-access-lib PRIVATE "${JUCE_SOURCE_DIR}/modules")
-
-target_link_libraries(midi-access-lib PRIVATE juce::juce_audio_devices)

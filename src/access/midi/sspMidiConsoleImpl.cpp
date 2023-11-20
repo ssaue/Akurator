@@ -10,7 +10,7 @@
 
 #include "sspMidiConsole.h"
 #include "sspMidiConsoleImpl.h"
-#include "sspStreamChannel.h"
+#include "sspMidiSendChannel.h"
 
 using namespace juce;
 
@@ -63,7 +63,7 @@ void sspMidiConsoleImpl::closeOutputDevice()
 
 std::shared_ptr<sspSendChannel> sspMidiConsoleImpl::getSendChannel()
 {
-	return std::shared_ptr<sspStreamChannel>();
+	return std::make_shared<sspMidiSendChannel>(out_device_.get());
 }
 
 void sspMidiConsoleImpl::handleIncomingMidiMessage(juce::MidiInput* , const juce::MidiMessage& )

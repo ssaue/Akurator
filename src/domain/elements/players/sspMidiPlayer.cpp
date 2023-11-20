@@ -22,14 +22,11 @@ bool sspMidiPlayer::start(std::weak_ptr<sspSendChannel> channel, std::weak_ptr<s
 	if (isPlaying() || channel.expired() || not path_ptr)
 		return false;
 
-	auto value_ptr = tempo_factor_.lock();
-	auto tempo_fac = value_ptr ? value_ptr->getValue() : 1.0;
-
 	if (auto chan_ptr = channel.lock()) {
 		setSendChannel(channel);
 		setResponder(responder);
 		chan_ptr->setResponder(weak_from_this());
-		if (not chan_ptr->play(path_ptr->getString(), tempo_fac)) {
+		if (not chan_ptr->play(path_ptr->getString(), tempo_factor_)) {
 			return false;
 		}
 	}

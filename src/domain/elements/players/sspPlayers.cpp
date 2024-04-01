@@ -18,6 +18,7 @@ BOOST_CLASS_EXPORT(sspChainPlayer);
 BOOST_CLASS_EXPORT(sspConditionalPlayer);
 BOOST_CLASS_EXPORT(sspDistributionPlayer);
 BOOST_CLASS_EXPORT(sspIndexPlayer);
+BOOST_CLASS_EXPORT(sspMidiPlayer);
 BOOST_CLASS_EXPORT(sspOSCPlayer);
 BOOST_CLASS_EXPORT(sspRandomPlayer);
 BOOST_CLASS_EXPORT(sspSequentialPlayer);

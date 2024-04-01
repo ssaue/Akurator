@@ -165,6 +165,8 @@ PRIVATE
     projects/Bekkelaget.h 
     projects/BlankProject.cpp 
     projects/BlankProject.h 
+    projects/HMM.cpp 
+    projects/HMM.h 
     projects/Storedal.cpp 
     projects/Storedal.h 
 )

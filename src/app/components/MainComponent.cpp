@@ -16,12 +16,15 @@
 
 // TODO: Find a more elegant way to solve building different projects
 //#define BUILD_STOREDAL 1
-#define BUILD_BEKKELAGET 1
+//#define BUILD_BEKKELAGET 1
+#define BUILD_HMM 1
 
 #ifdef BUILD_STOREDAL
 #include "projects/Storedal.h"
 #elif BUILD_BEKKELAGET
 #include "projects/Bekkelaget.h"
+#elif BUILD_HMM
+#include "projects/HMM.h"
 #else
 #include "projects/BlankProject.h"
 #endif
@@ -212,6 +215,8 @@ void MainComponent::onNew()
 	Storedal::buildContent(domain_.get());
 #elif BUILD_BEKKELAGET
 	Bekkelaget::buildContent(domain_.get());
+#elif BUILD_HMM
+	HMM::buildContent(domain_.get());
 #else
 	BlankProject::buildContent(domain_.get());
 #endif

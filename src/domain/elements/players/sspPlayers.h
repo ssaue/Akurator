@@ -14,6 +14,7 @@
 #include "sspConditionalPlayer.h"
 #include "sspDistributionPlayer.h"
 #include "sspIndexPlayer.h"
+#include "sspMidiPlayer.h"
 #include "sspOSCPlayer.h"
 #include "sspRandomPlayer.h"
 #include "sspSequentialPlayer.h"

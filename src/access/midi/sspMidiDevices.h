@@ -7,9 +7,6 @@
 
 #include <juce_audio_devices/juce_audio_devices.h>
 #include <vector>
-#include <string_view>
-
-inline constexpr std::string_view midi_device_error = "Invalid device";
 
 class sspMidiDevices
 {
@@ -29,7 +26,7 @@ public:
 	int getInputDeviceIndex(const juce::String& identifier) const;
 	int getOutputDeviceIndex(const juce::String& identifier) const;
 
-	const juce::String error_device_;
+	static const juce::String error_device_;
 
 private:
 	sspMidiDevices();

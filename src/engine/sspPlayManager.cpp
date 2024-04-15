@@ -46,6 +46,9 @@ bool sspPlayManager::initialize(sspDomainData& data)
 	osc_console_.connectAll();
 	osc_console_.clearChannels();
 
+	if (not midi_console_.openDevices())
+		return false;
+
 	root_stream_ = timelines[0];
 	for (auto& timeline : timelines) {
 		if (auto audio = std::dynamic_pointer_cast<sspAudioStream>(timeline)) {
@@ -108,6 +111,7 @@ void sspPlayManager::stop()
 void sspPlayManager::terminate()
 {
 	stop();
+	midi_console_.closeDevices();
 
 	if (auto ptr = root_stream_.lock()) ptr->terminate();
 	osc_console_.disconnectAll();

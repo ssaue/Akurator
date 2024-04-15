@@ -7,10 +7,12 @@
 
 using namespace juce;
 
+const String sspMidiDevices::error_device_ = "Invalid device";
+
 sspMidiDevices* sspMidiDevices::s_instance_ = nullptr;
 bool sspMidiDevices::s_destroyed_ = false;
 
-sspMidiDevices::sspMidiDevices() : error_device_(midi_device_error.data())
+sspMidiDevices::sspMidiDevices()
 {
 	initializeDeviceList();
 }

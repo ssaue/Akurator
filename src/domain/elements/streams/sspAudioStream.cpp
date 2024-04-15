@@ -14,14 +14,13 @@
 #include "access/sspLogging.h"
 
 sspAudioStream::sspAudioStream()
-    : sspStream(), volume_factor_(), task_queue_(), bus_(), updater_(sspStreamBus::volume_time_s)
+    : sspStream(), volume_factor_(), bus_(), updater_(sspStreamBus::volume_time_s)
 {
     updater_.initialize(false);
 }
 
 sspAudioStream::~sspAudioStream()
 {
-    task_queue_.clear();
 }
 
 void sspAudioStream::start()
@@ -31,8 +30,6 @@ void sspAudioStream::start()
         master_volume_ = ptr->getValue();
         bus_->busVolume(master_volume_, sspStreamBus::volume_time_s);
     }
-    task_queue_.clear();
-    task_queue_.setMaxTasks(max_active_, max_waiting_);
     sspStream::start();
 }
 
@@ -50,24 +47,10 @@ void sspAudioStream::update(double seconds)
     sspStream::update(seconds);
 }
 
-void sspAudioStream::stop()
-{
-    task_queue_.clear();
-    sspStream::stop();
-}
-
 void sspAudioStream::terminate()
 {
     bus_.reset();
     sspStream::terminate();
-}
-
-bool sspAudioStream::empty() const
-{
-    if (!task_queue_.empty()) {
-        return false;
-    }
-    return sspStream::empty();
 }
 
 bool sspAudioStream::verify(int& nErrors, int& /*nWarnings*/) const
@@ -133,44 +116,17 @@ void sspAudioStream::handleMessage(const sspMessage& msg)
     }
 }
 
-void sspAudioStream::onFinished()
-{
-    sspStream::onFinished();
-    task_queue_.removeInactive();
-
-    if (running_) {
-        auto task = task_queue_.getWaitingTask();
-        while (auto ptr = task.lock()) {
-            if (bus_->play(task, std::weak_ptr<sspPlayTask>())) {
-                sspScheduler::Instance().add(task);
-            }
-            task = task_queue_.getWaitingTask();
-        }
-    }
-}
-
-void sspAudioStream::setMaxTasks(unsigned int active, unsigned int waiting)
-{
-    max_active_ = active;
-    max_waiting_ = waiting;
-    task_queue_.setMaxTasks(active, waiting);
-}
-
 void sspAudioStream::setBus(std::unique_ptr<sspStreamBus> mixer)
 {
     bus_ = std::move(mixer);
     bus_->setResponder(weak_from_this());
 }
 
-void sspAudioStream::play(std::weak_ptr<sspPlayTask> task)
+bool sspAudioStream::replace(std::weak_ptr<sspPlayTask> task, std::weak_ptr<sspPlayTask> old_task)
 {
-    auto [is_play_ready, is_exit_ready, old_task] = task_queue_.loadTask(task);
-    if (is_play_ready && bus_->play(task, old_task)) {
+    if (bus_->play(task, old_task)) {
         sspScheduler::Instance().add(task);
+        return true;
     }
-    else if (is_exit_ready) {
-        if (auto ptr = task.lock()) {
-            ptr->execute(false);
-        }
-    }
+    return false;
 }

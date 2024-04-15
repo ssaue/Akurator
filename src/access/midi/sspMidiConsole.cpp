@@ -13,8 +13,8 @@
 
 #include "sspMidiDevices.h"
 
-juce::String sspMidiConsole::out_device_s = midi_device_error.data();
-juce::String sspMidiConsole::in_device_s = midi_device_error.data();
+juce::String sspMidiConsole::out_device_s = sspMidiDevices::error_device_;
+juce::String sspMidiConsole::in_device_s = sspMidiDevices::error_device_;
 
 sspMidiConsole::sspMidiConsole() : impl_(std::make_unique<sspMidiConsoleImpl>())
 {
@@ -26,11 +26,11 @@ sspMidiConsole::~sspMidiConsole()
 
 bool sspMidiConsole::openDevices()
 {
-	if (in_device_s != midi_device_error.data()) {
+	if (in_device_s != sspMidiDevices::error_device_) {
 		if (not impl_->openInputDevice(in_device_s)) return false;
 	}
 
-	if (out_device_s != midi_device_error.data()) {
+	if (out_device_s != sspMidiDevices::error_device_) {
 		if (not impl_->openOutputDevice(out_device_s)) return false;
 	}
 

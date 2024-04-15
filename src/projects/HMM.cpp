@@ -68,6 +68,7 @@ void HMM::buildTimelineHierarchy(sspDomainData* domain)
 	auto stream = std::make_shared<sspStream>();
 	stream->setName("MIDI stream");
 	stream->setTimeFactor(domain->getValues()[1]);
+	stream->setMaxTasks(1, 1);
 	domain->getTimelines().push_back(stream);
 
 	sspWeakVector<sspTimeline> root_children;
@@ -129,6 +130,34 @@ void HMM::buildPlayer(sspDomainData* domain)
 	task->setPlayer(midi_player);
 	task->setPriority(sspPlayTask::Priority::Cancel);
 	domain->getPlaytasks().push_back(task);
+
+	/**************** Debug task *********************************/
+
+	auto debug_filestr = std::make_shared<sspSimpleString>();
+	debug_filestr->setString(file_root + "twostream.mid");
+	debug_filestr->setName(debug_filestr->getString());
+	domain->getStrings().push_back(debug_filestr);
+
+	file.reset(new sspFileString());
+	file->setName("Debug path");
+	file->setPath(debug_filestr);
+	file->setAudioOnly(false);
+	file->setRecursiveSearch(false);
+	domain->getStrings().push_back(file);
+
+	auto debug_player = std::make_shared<sspMidiPlayer>();
+	debug_player->setName("Debug player");
+	debug_player->setFilepath(file);
+	debug_player->setTempoFactor(domain->getValues()[1]);
+	domain->getPlayers().push_back(debug_player);
+
+	auto debug_task = std::make_shared<sspPlayTask>();
+	debug_task->setName("Debug task");
+	debug_task->setCondition(domain->getConditionals()[0]);
+	debug_task->setVolumeFactor(domain->getValues()[1]);
+	debug_task->setPlayer(debug_player);
+	debug_task->setPriority(sspPlayTask::Priority::Cancel);
+	domain->getPlaytasks().push_back(debug_task);
 }
 
 void HMM::buildStartList(sspDomainData* domain)
@@ -136,7 +165,7 @@ void HMM::buildStartList(sspDomainData* domain)
 	// Is this a weekday or a weekend?
 	auto weekdays = std::make_shared<sspDayOfWeek>();
 	weekdays->setName("Weekdays");
-	std::vector<boost::date_time::weekdays> days{ boost::date_time::Monday, 
+	std::vector<boost::date_time::weekdays> days{ boost::date_time::Monday,
 		boost::date_time::Tuesday ,boost::date_time::Wednesday ,boost::date_time::Thursday ,boost::date_time::Friday };
 	weekdays->setDays(days);
 	domain->getConditionals().push_back(weekdays);
@@ -218,4 +247,19 @@ void HMM::buildStartList(sspDomainData* domain)
 	// Triggered message list
 	auto triggerlist = domain->getTriggerList();
 	triggerlist->add(trigger, condlist);
+
+	/**************** Debug startlist *****************************/
+
+	auto debug_msglist = std::make_shared<sspMessageList>();
+
+	msg_recv.reset(new sspMessageWithReceiver);
+	sspMessage& msg2 = msg_recv->getMessage();
+	msg2.setTask(domain->getPlaytasks()[1]);
+	msg2.setTime(domain->getValues()[1]);
+	msg2.setType(sspMessage::Type::Load);
+	msg_recv->setReceiver(domain->getTimelines()[1]);
+	debug_msglist->add(std::move(msg_recv));
+
+	auto startlist = domain->getStartList();
+	startlist->add(domain->getConditionals()[0], debug_msglist);
 }

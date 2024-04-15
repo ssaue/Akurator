@@ -31,6 +31,7 @@ bool sspMidiSendChannel::play(const std::string& file_path, std::weak_ptr<sspVal
 
 	tempo_fac_ = tempo_fac.lock();
 	play_thread_ = std::thread(&sspMidiSendChannel::play_thread, this);
+	play_thread_.detach();
 
 	return true;
 }
@@ -45,16 +46,20 @@ void sspMidiSendChannel::play_thread()
 		if (track->getNumEvents() > 0) sequence.addSequence(*track, 0.0);
 	}
 
-	// Not necessary to run sequence_.updateMatchedPairs() since the information is not used here
+	play_is_running_ = true;
+	double previous_stamp = 0.0;
 
 	for (auto event : sequence) {
 		std::unique_lock<std::mutex> lck{ play_lock_ };
 
 		auto timestamp = event->message.getTimeStamp();
-		if (tempo_fac_) timestamp *= tempo_fac_->getValue();
+		auto relative_stamp = timestamp - previous_stamp;
+		previous_stamp = timestamp;
+
+		if (tempo_fac_) relative_stamp *= tempo_fac_->getValue();
 
 		using namespace std::chrono;
-		auto wait_time = duration_cast<steady_clock::duration>(duration<double>(timestamp));
+		auto wait_time = duration_cast<steady_clock::duration>(duration<double>(relative_stamp));
 
 		play_cv_.wait_for(lck, wait_time, [&]{ return not play_is_running_; });
 		if (not play_is_running_) break;
@@ -62,9 +67,23 @@ void sspMidiSendChannel::play_thread()
 		if (out_device_ != nullptr) out_device_->sendMessageNow(event->message);
 	}
 
-	if (play_is_running_) setFinished();
+	if (play_is_running_) {
+		play_is_running_ = false;
+		setFinished();
+	}
+	else {
+		allNotesOff();
+	}
 }
 
+void sspMidiSendChannel::allNotesOff() const
+{
+	if (out_device_ != nullptr) {
+		for (int i = 1; i <= 16; ++i) {
+			out_device_->sendMessageNow(juce::MidiMessage::allNotesOff(i));
+		}
+	}
+}
 
 void sspMidiSendChannel::stop()
 {
@@ -73,5 +92,4 @@ void sspMidiSendChannel::stop()
 		play_is_running_ = false;
 		play_cv_.notify_one();
 	}
-	play_thread_.join();
 }

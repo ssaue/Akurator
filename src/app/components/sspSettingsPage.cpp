@@ -734,10 +734,16 @@ sspSettingsPage::sspSettingsPage ()
 	osc_receive_port_->setText(String(sspOscConsole::receive_port_s), false);
 
     auto in_index = sspMidiDevices::Instance().getInputDeviceIndex(sspMidiConsole::in_device_s);
-    if (in_index >= 0) cb_midi_input_->setSelectedItemIndex(in_index);
+    if (in_index >= 0)
+        cb_midi_input_->setSelectedItemIndex(in_index);
+    else
+        sspMidiConsole::in_device_s = sspMidiDevices::error_device_;
     
     auto out_index = sspMidiDevices::Instance().getOutputDeviceIndex(sspMidiConsole::out_device_s);
-    if (out_index >= 0) cb_midi_output_->setSelectedItemIndex(out_index);
+    if (out_index >= 0) 
+        cb_midi_output_->setSelectedItemIndex(out_index);
+    else
+        sspMidiConsole::out_device_s = sspMidiDevices::error_device_;
 
 	exec_startup_cb_->setSelectedItemIndex(static_cast<int>(sspExecutiveManager::startup_proc_s), NotificationType::dontSendNotification);
 	exec_shutdown_cb_->setSelectedItemIndex(static_cast<int>(sspExecutiveManager::shutdown_proc_s), NotificationType::dontSendNotification);
@@ -928,8 +934,8 @@ void sspSettingsPage::loadProperties()
 	sspOscConsole::send_port_s = props->getIntValue("send_port", 8001);
 	sspOscConsole::receive_port_s = props->getIntValue("receive_port", 9001);
 
-    sspMidiConsole::in_device_s = props->getValue("midi_input_device", "");
-    sspMidiConsole::out_device_s = props->getValue("midi_output_device", "");
+    sspMidiConsole::in_device_s = props->getValue("midi_input_device", sspMidiDevices::error_device_);
+    sspMidiConsole::out_device_s = props->getValue("midi_output_device", sspMidiDevices::error_device_);
 
 	sspStreamBus::fadein_time_s = props->getDoubleValue("fadein_time", 2.0);
 	sspStreamBus::fadeout_time_s = props->getDoubleValue("fadeout_time", 5.0);

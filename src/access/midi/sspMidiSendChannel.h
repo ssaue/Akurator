@@ -27,6 +27,7 @@ public:
 
 private:
 	void play_thread();
+	void allNotesOff() const;
 
 	std::thread play_thread_;
 	std::mutex  play_lock_;

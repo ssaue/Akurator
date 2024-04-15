@@ -12,17 +12,20 @@
 #include "engine/scheduling/sspScheduler.h"
 
 sspStream::sspStream()
-	: sspTimeline(), task_list_(), send_channel_()
+	: sspTimeline(), task_list_(), task_queue_(), send_channel_()
 {
 }
 
 sspStream::~sspStream()
 {
+	task_queue_.clear();
 	task_list_.reset();
 }
 
 void sspStream::start()
 {
+	task_queue_.clear();
+	task_queue_.setMaxTasks(max_active_, max_waiting_);
 	task_list_.reset();
 	sspTimeline::start();
 }
@@ -40,8 +43,16 @@ void sspStream::update(double seconds)
 	sspTimeline::update(seconds);
 }
 
+void sspStream::stop()
+{
+	task_queue_.clear();
+}
+
 bool sspStream::empty() const
 {
+	if (!task_queue_.empty()) {
+		return false;
+	}
 	if (!task_list_.empty()) {
 		return false;
 	}
@@ -76,13 +87,43 @@ void sspStream::handleMessage(const sspMessage& msg)
 
 void sspStream::onFinished()
 {
-	// No action necessary
+	task_queue_.removeInactive();
+
+	if (running_) {
+		auto task = task_queue_.getWaitingTask();
+		while (auto ptr = task.lock()) {
+			replace(task, std::weak_ptr<sspPlayTask>());
+			task = task_queue_.getWaitingTask();
+		}
+	}
+}
+
+void sspStream::setMaxTasks(unsigned int active, unsigned int waiting)
+{
+	max_active_ = active;
+	max_waiting_ = waiting;
+	task_queue_.setMaxTasks(active, waiting);
 }
 
 void sspStream::play(std::weak_ptr<sspPlayTask> task)
 {
+	auto [is_play_ready, is_exit_ready, old_task] = task_queue_.loadTask(task);
+	if (is_play_ready) {
+		is_play_ready = replace(task, old_task);
+	}
+	if (!is_play_ready && is_exit_ready) {
+		if (auto ptr = task.lock()) {
+			ptr->execute(false);
+		}
+	}
+}
+
+bool sspStream::replace(std::weak_ptr<sspPlayTask> task, std::weak_ptr<sspPlayTask>)
+{
 	if (auto ptr = task.lock()) {
 		ptr->start(send_channel_, weak_from_this());
 		sspScheduler::Instance().add(ptr);
+		return true;
 	}
+	return false;
 }

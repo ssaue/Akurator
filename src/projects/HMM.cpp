@@ -133,31 +133,31 @@ void HMM::buildPlayer(sspDomainData* domain)
 
 	/**************** Debug task *********************************/
 
-	auto debug_filestr = std::make_shared<sspSimpleString>();
-	debug_filestr->setString(file_root + "twostream.mid");
-	debug_filestr->setName(debug_filestr->getString());
-	domain->getStrings().push_back(debug_filestr);
+	//auto debug_filestr = std::make_shared<sspSimpleString>();
+	//debug_filestr->setString(file_root + "twostream.mid");
+	//debug_filestr->setName(debug_filestr->getString());
+	//domain->getStrings().push_back(debug_filestr);
 
-	file.reset(new sspFileString());
-	file->setName("Debug path");
-	file->setPath(debug_filestr);
-	file->setAudioOnly(false);
-	file->setRecursiveSearch(false);
-	domain->getStrings().push_back(file);
+	//file.reset(new sspFileString());
+	//file->setName("Debug path");
+	//file->setPath(debug_filestr);
+	//file->setAudioOnly(false);
+	//file->setRecursiveSearch(false);
+	//domain->getStrings().push_back(file);
 
-	auto debug_player = std::make_shared<sspMidiPlayer>();
-	debug_player->setName("Debug player");
-	debug_player->setFilepath(file);
-	debug_player->setTempoFactor(domain->getValues()[1]);
-	domain->getPlayers().push_back(debug_player);
+	//auto debug_player = std::make_shared<sspMidiPlayer>();
+	//debug_player->setName("Debug player");
+	//debug_player->setFilepath(file);
+	//debug_player->setTempoFactor(domain->getValues()[1]);
+	//domain->getPlayers().push_back(debug_player);
 
-	auto debug_task = std::make_shared<sspPlayTask>();
-	debug_task->setName("Debug task");
-	debug_task->setCondition(domain->getConditionals()[0]);
-	debug_task->setVolumeFactor(domain->getValues()[1]);
-	debug_task->setPlayer(debug_player);
-	debug_task->setPriority(sspPlayTask::Priority::Cancel);
-	domain->getPlaytasks().push_back(debug_task);
+	//auto debug_task = std::make_shared<sspPlayTask>();
+	//debug_task->setName("Debug task");
+	//debug_task->setCondition(domain->getConditionals()[0]);
+	//debug_task->setVolumeFactor(domain->getValues()[1]);
+	//debug_task->setPlayer(debug_player);
+	//debug_task->setPriority(sspPlayTask::Priority::Cancel);
+	//domain->getPlaytasks().push_back(debug_task);
 }
 
 void HMM::buildStartList(sspDomainData* domain)
@@ -250,16 +250,16 @@ void HMM::buildStartList(sspDomainData* domain)
 
 	/**************** Debug startlist *****************************/
 
-	auto debug_msglist = std::make_shared<sspMessageList>();
+	//auto debug_msglist = std::make_shared<sspMessageList>();
 
-	msg_recv.reset(new sspMessageWithReceiver);
-	sspMessage& msg2 = msg_recv->getMessage();
-	msg2.setTask(domain->getPlaytasks()[1]);
-	msg2.setTime(domain->getValues()[1]);
-	msg2.setType(sspMessage::Type::Load);
-	msg_recv->setReceiver(domain->getTimelines()[1]);
-	debug_msglist->add(std::move(msg_recv));
+	//msg_recv.reset(new sspMessageWithReceiver);
+	//sspMessage& msg2 = msg_recv->getMessage();
+	//msg2.setTask(domain->getPlaytasks()[1]);
+	//msg2.setTime(domain->getValues()[1]);
+	//msg2.setType(sspMessage::Type::Load);
+	//msg_recv->setReceiver(domain->getTimelines()[1]);
+	//debug_msglist->add(std::move(msg_recv));
 
-	auto startlist = domain->getStartList();
-	startlist->add(domain->getConditionals()[0], debug_msglist);
+	//auto startlist = domain->getStartList();
+	//startlist->add(domain->getConditionals()[0], debug_msglist);
 }

@@ -46,13 +46,15 @@ void sspMidiSendChannel::play_thread()
 		if (track->getNumEvents() > 0) sequence.addSequence(*track, 0.0);
 	}
 
+	used_channels_.clear();
 	play_is_running_ = true;
 	double previous_stamp = 0.0;
 
 	for (auto event : sequence) {
 		std::unique_lock<std::mutex> lck{ play_lock_ };
 
-		auto timestamp = event->message.getTimeStamp();
+		const auto& message = event->message;
+		auto timestamp = message.getTimeStamp();
 		auto relative_stamp = timestamp - previous_stamp;
 		previous_stamp = timestamp;
 
@@ -64,7 +66,9 @@ void sspMidiSendChannel::play_thread()
 		play_cv_.wait_for(lck, wait_time, [&]{ return not play_is_running_; });
 		if (not play_is_running_) break;
 
-		if (out_device_ != nullptr) out_device_->sendMessageNow(event->message);
+		if (auto channel = message.getChannel()) used_channels_.insert(channel);
+
+		if (out_device_ != nullptr) out_device_->sendMessageNow(message);
 	}
 
 	if (play_is_running_) {
@@ -79,8 +83,8 @@ void sspMidiSendChannel::play_thread()
 void sspMidiSendChannel::allNotesOff() const
 {
 	if (out_device_ != nullptr) {
-		for (int i = 1; i <= 16; ++i) {
-			out_device_->sendMessageNow(juce::MidiMessage::allNotesOff(i));
+		for(auto channel : used_channels_) {
+			out_device_->sendMessageNow(juce::MidiMessage::allNotesOff(channel));
 		}
 	}
 }

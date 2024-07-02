@@ -13,6 +13,8 @@
 #include "engine/sspSendChannel.h"
 #include <juce_audio_devices/juce_audio_devices.h>
 
+#include <set>
+
 class sspMidiSendChannel : public sspSendChannel
 {
 public:
@@ -37,6 +39,7 @@ private:
 
 	juce::MidiFile midi_file_;
 	std::shared_ptr<sspValue> tempo_fac_;
+	std::set<int> used_channels_;
 
 	juce::MidiOutput* out_device_;
 };

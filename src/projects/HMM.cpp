@@ -131,135 +131,52 @@ void HMM::buildPlayer(sspDomainData* domain)
 	task->setPriority(sspPlayTask::Priority::Cancel);
 	domain->getPlaytasks().push_back(task);
 
-	/**************** Debug task *********************************/
+	// Play on average every second hour
+	auto val_hour = std::make_shared<sspBasicValue>();
+	val_hour->setName("1 hour");
+	val_hour->setValue(3600);
+	domain->getValues().push_back(val_hour);
 
-	//auto debug_filestr = std::make_shared<sspSimpleString>();
-	//debug_filestr->setString(file_root + "twostream.mid");
-	//debug_filestr->setName(debug_filestr->getString());
-	//domain->getStrings().push_back(debug_filestr);
+	auto val_3hour = std::make_shared<sspBasicValue>();
+	val_3hour->setName("3 hours");
+	val_3hour->setValue(10800);
+	domain->getValues().push_back(val_3hour);
 
-	//file.reset(new sspFileString());
-	//file->setName("Debug path");
-	//file->setPath(debug_filestr);
-	//file->setAudioOnly(false);
-	//file->setRecursiveSearch(false);
-	//domain->getStrings().push_back(file);
+	auto random = std::make_shared<sspRandomValue>();
+	random->setName("1 to 3 hours");
+	random->setLow(val_hour);
+	random->setHigh(val_3hour);
+	domain->getValues().push_back(random);
 
-	//auto debug_player = std::make_shared<sspMidiPlayer>();
-	//debug_player->setName("Debug player");
-	//debug_player->setFilepath(file);
-	//debug_player->setTempoFactor(domain->getValues()[1]);
-	//domain->getPlayers().push_back(debug_player);
+	// Add recurring load event 
+	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
+	sspMessage& msg = msg_recv->getMessage();
+	msg.setTask(task);
+	msg.setTime(random);
+	msg.setType(sspMessage::Type::Load);
+	msg_recv->setReceiver(domain->getTimelines()[1]);
 
-	//auto debug_task = std::make_shared<sspPlayTask>();
-	//debug_task->setName("Debug task");
-	//debug_task->setCondition(domain->getConditionals()[0]);
-	//debug_task->setVolumeFactor(domain->getValues()[1]);
-	//debug_task->setPlayer(debug_player);
-	//debug_task->setPriority(sspPlayTask::Priority::Cancel);
-	//domain->getPlaytasks().push_back(debug_task);
+	auto msglist = std::make_shared<sspMessageList>();
+	msglist->add(std::move(msg_recv));
+
+	auto cond_msg = std::make_shared<sspConditionalMsgList>();
+	cond_msg->add(domain->getConditionals()[0], msglist);
+
+	task->setMessageList(sspPlayTask::Messages::Enter, cond_msg);
 }
 
 void HMM::buildStartList(sspDomainData* domain)
 {
-	// Is this a weekday or a weekend?
-	auto weekdays = std::make_shared<sspDayOfWeek>();
-	weekdays->setName("Weekdays");
-	std::vector<boost::date_time::weekdays> days{ boost::date_time::Monday,
-		boost::date_time::Tuesday ,boost::date_time::Wednesday ,boost::date_time::Thursday ,boost::date_time::Friday };
-	weekdays->setDays(days);
-	domain->getConditionals().push_back(weekdays);
-
-	auto weekend = std::make_shared<sspNot>();
-	weekend->setName("Weekend");
-	weekend->setOperand(weekdays);
-	domain->getConditionals().push_back(weekend);
-
-	//Define allowed weekday time interval
-	auto weekday_interval = std::make_shared<sspTimeInterval>();
-	weekday_interval->setName("Weekday interval");
-	weekday_interval->setInputRange(boost::posix_time::time_duration(6, 30, 0), boost::posix_time::time_duration(21, 30, 0));
-	domain->getConditionals().push_back(weekday_interval);
-
-	sspWeakVector<sspConditional> conds;
-	conds.push_back(weekdays);
-	conds.push_back(weekday_interval);
-
-	auto allow_weekdays = std::make_shared<sspAnd>();
-	allow_weekdays->setName("Allowed to play weekdays");
-	allow_weekdays->setOperands(conds);
-	domain->getConditionals().push_back(allow_weekdays);
-
-	//Define allowed weekend time interval
-	auto weekend_interval = std::make_shared<sspTimeInterval>();
-	weekend_interval->setName("Weekend interval");
-	weekend_interval->setInputRange(boost::posix_time::time_duration(9, 30, 0), boost::posix_time::time_duration(21, 30, 0));
-	domain->getConditionals().push_back(weekend_interval);
-
-	conds.clear();
-	conds.push_back(weekend);
-	conds.push_back(weekend_interval);
-
-	auto allow_weekend = std::make_shared<sspAnd>();
-	allow_weekend->setName("Allowed to play weekend");
-	allow_weekend->setOperands(conds);
-	domain->getConditionals().push_back(allow_weekend);
-
-	// Start playing in a random 4 minute interval around the full hour
-	auto val_min4 = std::make_shared<sspBasicValue>();
-	val_min4->setName("4 minutes");
-	val_min4->setValue(240);
-	domain->getValues().push_back(val_min4);
-
-	auto random = std::make_shared<sspRandomValue>();
-	random->setName("0 to 4 minutes");
-	random->setLow(domain->getValues()[0]);
-	random->setHigh(val_min4);
-	domain->getValues().push_back(random);
-
-	auto minute_cond = std::make_shared<sspMinuteCompare>();
-	minute_cond->setName(":58");
-	minute_cond->setMinutes(58);
-	minute_cond->setRelationship(sspMinuteCompare::Relation::Equal);
-	domain->getConditionals().push_back(minute_cond);
-
-	// Define trigger that triggers an event at :58 each hour
-	auto trigger = std::make_shared<sspTrigger>();
-	trigger->setName("Trigger around the hour");
-	trigger->setConditional(minute_cond);
-	trigger->setChange(sspTrigger::Trigger::True);
-	domain->getConditionals().push_back(trigger);
-
-	// Conditional message list
 	auto msglist = std::make_shared<sspMessageList>();
+
 	auto msg_recv = std::make_unique<sspMessageWithReceiver>();
-	sspMessage& msg1 = msg_recv->getMessage();
-	msg1.setTask(domain->getPlaytasks()[0]);
-	msg1.setTime(random);
-	msg1.setType(sspMessage::Type::Load);
+	sspMessage& msg = msg_recv->getMessage();
+	msg.setTask(domain->getPlaytasks()[0]);
+	msg.setTime(domain->getValues()[1]);
+	msg.setType(sspMessage::Type::Load);
 	msg_recv->setReceiver(domain->getTimelines()[1]);
 	msglist->add(std::move(msg_recv));
 
-	auto condlist = std::make_shared<sspConditionalMsgList>();
-	condlist->add(allow_weekdays, msglist);
-	condlist->add(allow_weekend, msglist);
-
-	// Triggered message list
-	auto triggerlist = domain->getTriggerList();
-	triggerlist->add(trigger, condlist);
-
-	/**************** Debug startlist *****************************/
-
-	//auto debug_msglist = std::make_shared<sspMessageList>();
-
-	//msg_recv.reset(new sspMessageWithReceiver);
-	//sspMessage& msg2 = msg_recv->getMessage();
-	//msg2.setTask(domain->getPlaytasks()[1]);
-	//msg2.setTime(domain->getValues()[1]);
-	//msg2.setType(sspMessage::Type::Load);
-	//msg_recv->setReceiver(domain->getTimelines()[1]);
-	//debug_msglist->add(std::move(msg_recv));
-
-	//auto startlist = domain->getStartList();
-	//startlist->add(domain->getConditionals()[0], debug_msglist);
+	auto startlist = domain->getStartList();
+	startlist->add(domain->getConditionals()[0], msglist);
 }

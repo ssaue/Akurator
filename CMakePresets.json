@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "cmakeMinimumRequired": {
     "major": 3,
     "minor": 21,
@@ -11,7 +11,7 @@
       "displayName": "Ninja Multi-Config",
       "description": "Configure with vcpkg toolchain and generate Ninja project files for all configurations",
       "binaryDir": "${sourceDir}/target/win-x64/",
-      "generator": "Visual Studio 17 2022",
+      "generator": "Visual Studio 18 2026",
       "cacheVariables": {
         "VCPKG_TARGET_TRIPLET": "x64-windows",
         "VCPKG_HOST_TRIPLET": "x64-windows",

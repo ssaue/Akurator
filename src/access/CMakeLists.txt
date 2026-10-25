@@ -11,4 +11,5 @@ add_subdirectory(midi)
 add_subdirectory(osc)
 
 find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(access-lib PRIVATE spdlog::spdlog_header_only osc-access-lib midi-access-lib)
+target_link_libraries(access-lib PUBLIC spdlog::spdlog)
+target_link_libraries(access-lib PRIVATE osc-access-lib midi-access-lib)

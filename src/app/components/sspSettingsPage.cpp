@@ -36,10 +36,13 @@
 //==============================================================================
 sspSettingsPage::sspSettingsPage ()
 {
+    Font header_font = Font(FontOptions(25.00f, Font::plain)).withTypefaceStyle("Regular");    
+    Font standard_font = Font(FontOptions(15.00f, Font::plain)).withTypefaceStyle("Regular");
+
     label_osc_.reset (new Label ("OSC heading",
                                  TRANS("OSC\n")));
     addAndMakeVisible (label_osc_.get());
-    label_osc_->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_->setFont (header_font);
     label_osc_->setJustificationType (Justification::centredLeft);
     label_osc_->setEditable (false, false, false);
     label_osc_->setColour (TextEditor::textColourId, Colours::black);
@@ -62,7 +65,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendport_2.reset (new Label ("Osc receive port",
                                            TRANS("Receive port:")));
     addAndMakeVisible (label_osc_sendport_2.get());
-    label_osc_sendport_2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendport_2->setFont (standard_font);
     label_osc_sendport_2->setJustificationType (Justification::centredLeft);
     label_osc_sendport_2->setEditable (false, false, false);
     label_osc_sendport_2->setColour (TextEditor::textColourId, Colours::black);
@@ -73,7 +76,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendport_.reset (new Label ("Osc send port",
                                           TRANS("Send port:")));
     addAndMakeVisible (label_osc_sendport_.get());
-    label_osc_sendport_->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendport_->setFont (standard_font);
     label_osc_sendport_->setJustificationType (Justification::centredLeft);
     label_osc_sendport_->setEditable (false, false, false);
     label_osc_sendport_->setColour (TextEditor::textColourId, Colours::black);
@@ -84,7 +87,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_.reset (new Label ("osc_send_adress",
                                           TRANS("Send address:")));
     addAndMakeVisible (label_osc_sendaddr_.get());
-    label_osc_sendaddr_->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_->setFont (standard_font);
     label_osc_sendaddr_->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_->setEditable (false, false, false);
     label_osc_sendaddr_->setColour (TextEditor::textColourId, Colours::black);
@@ -121,7 +124,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_2.reset (new Label ("exec_heading",
                                   TRANS("Exec\n")));
     addAndMakeVisible (label_osc_2.get());
-    label_osc_2->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_2->setFont (header_font);
     label_osc_2->setJustificationType (Justification::centredLeft);
     label_osc_2->setEditable (false, false, false);
     label_osc_2->setColour (TextEditor::textColourId, Colours::black);
@@ -132,7 +135,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_2.reset (new Label ("exec_startup",
                                            TRANS("Startup proceedure:")));
     addAndMakeVisible (label_osc_sendaddr_2.get());
-    label_osc_sendaddr_2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_2->setFont (standard_font);
     label_osc_sendaddr_2->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_2->setEditable (false, false, false);
     label_osc_sendaddr_2->setColour (TextEditor::textColourId, Colours::black);
@@ -143,7 +146,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_3.reset (new Label ("exec_shutdown",
                                            TRANS("Shutdown proceedure:")));
     addAndMakeVisible (label_osc_sendaddr_3.get());
-    label_osc_sendaddr_3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_3->setFont (standard_font);
     label_osc_sendaddr_3->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_3->setEditable (false, false, false);
     label_osc_sendaddr_3->setColour (TextEditor::textColourId, Colours::black);
@@ -154,7 +157,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_4.reset (new Label ("exec_play_interval",
                                            TRANS("Play interval:")));
     addAndMakeVisible (label_osc_sendaddr_4.get());
-    label_osc_sendaddr_4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_4->setFont (standard_font);
     label_osc_sendaddr_4->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_4->setEditable (false, false, false);
     label_osc_sendaddr_4->setColour (TextEditor::textColourId, Colours::black);
@@ -165,7 +168,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_5.reset (new Label ("exec_update_interval",
                                            TRANS("Update interval:")));
     addAndMakeVisible (label_osc_sendaddr_5.get());
-    label_osc_sendaddr_5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_5->setFont (standard_font);
     label_osc_sendaddr_5->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_5->setEditable (false, false, false);
     label_osc_sendaddr_5->setColour (TextEditor::textColourId, Colours::black);
@@ -226,7 +229,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_6.reset (new Label ("colon_label1",
                                            TRANS(":")));
     addAndMakeVisible (label_osc_sendaddr_6.get());
-    label_osc_sendaddr_6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_6->setFont (standard_font);
     label_osc_sendaddr_6->setJustificationType (Justification::centred);
     label_osc_sendaddr_6->setEditable (false, false, false);
     label_osc_sendaddr_6->setColour (TextEditor::textColourId, Colours::black);
@@ -249,7 +252,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_7.reset (new Label ("dash_label",
                                            TRANS("-")));
     addAndMakeVisible (label_osc_sendaddr_7.get());
-    label_osc_sendaddr_7->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_7->setFont (standard_font);
     label_osc_sendaddr_7->setJustificationType (Justification::centred);
     label_osc_sendaddr_7->setEditable (false, false, false);
     label_osc_sendaddr_7->setColour (TextEditor::textColourId, Colours::black);
@@ -284,7 +287,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_8.reset (new Label ("colon_label2",
                                            TRANS(":")));
     addAndMakeVisible (label_osc_sendaddr_8.get());
-    label_osc_sendaddr_8->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_8->setFont (standard_font);
     label_osc_sendaddr_8->setJustificationType (Justification::centred);
     label_osc_sendaddr_8->setEditable (false, false, false);
     label_osc_sendaddr_8->setColour (TextEditor::textColourId, Colours::black);
@@ -301,7 +304,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_13.reset(new Label("exec_play_interval",
         TRANS("Play interval:")));
     addAndMakeVisible(label_osc_sendaddr_13.get());
-    label_osc_sendaddr_13->setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_osc_sendaddr_13->setFont(standard_font);
     label_osc_sendaddr_13->setJustificationType(Justification::centredLeft);
     label_osc_sendaddr_13->setEditable(false, false, false);
     label_osc_sendaddr_13->setColour(TextEditor::textColourId, Colours::black);
@@ -312,7 +315,7 @@ sspSettingsPage::sspSettingsPage ()
     label.reset(new Label("new label",
         TRANS("seconds")));
     addAndMakeVisible(label.get());
-    label->setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label->setFont(standard_font);
     label->setJustificationType(Justification::centredLeft);
     label->setEditable(false, false, false);
     label->setColour(TextEditor::textColourId, Colours::black);
@@ -323,7 +326,7 @@ sspSettingsPage::sspSettingsPage ()
     /***************************************************************************/
 
     addAndMakeVisible(label_midi_);
-    label_midi_.setFont(Font(25.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_midi_.setFont(header_font);
     label_midi_.setJustificationType(Justification::centredLeft);
     label_midi_.setEditable(false, false, false);
     label_midi_.setColour(TextEditor::textColourId, Colours::black);
@@ -332,7 +335,7 @@ sspSettingsPage::sspSettingsPage ()
     label_midi_.setBounds(32, 227, 80, 24);
 
     addAndMakeVisible(label_midi_input_);
-    label_midi_input_.setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_midi_input_.setFont(standard_font);
     label_midi_input_.setJustificationType(Justification::centredLeft);
     label_midi_input_.setEditable(false, false, false);
     label_midi_input_.setColour(TextEditor::textColourId, Colours::black);
@@ -341,7 +344,7 @@ sspSettingsPage::sspSettingsPage ()
     label_midi_input_.setBounds(32, 257, 152, 24);
 
     addAndMakeVisible(label_midi_output_);
-    label_midi_output_.setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label_midi_output_.setFont(standard_font);
     label_midi_output_.setJustificationType(Justification::centredLeft);
     label_midi_output_.setEditable(false, false, false);
     label_midi_output_.setColour(TextEditor::textColourId, Colours::black);
@@ -382,7 +385,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_3.reset (new Label ("reset_heading",
                                   TRANS("Reset\n")));
     addAndMakeVisible (label_osc_3.get());
-    label_osc_3->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_3->setFont (header_font);
     label_osc_3->setJustificationType (Justification::centredLeft);
     label_osc_3->setEditable (false, false, false);
     label_osc_3->setColour (TextEditor::textColourId, Colours::black);
@@ -393,7 +396,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_9.reset (new Label ("reset_time",
                                            TRANS("Time of day:")));
     addAndMakeVisible (label_osc_sendaddr_9.get());
-    label_osc_sendaddr_9->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_9->setFont (standard_font);
     label_osc_sendaddr_9->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_9->setEditable (false, false, false);
     label_osc_sendaddr_9->setColour (TextEditor::textColourId, Colours::black);
@@ -428,7 +431,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_11.reset (new Label ("colon_label4",
                                             TRANS(":")));
     addAndMakeVisible (label_osc_sendaddr_11.get());
-    label_osc_sendaddr_11->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_11->setFont (standard_font);
     label_osc_sendaddr_11->setJustificationType (Justification::centred);
     label_osc_sendaddr_11->setEditable (false, false, false);
     label_osc_sendaddr_11->setColour (TextEditor::textColourId, Colours::black);
@@ -439,7 +442,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_10.reset (new Label ("reset_interval",
                                             TRANS("Reset interval:")));
     addAndMakeVisible (label_osc_sendaddr_10.get());
-    label_osc_sendaddr_10->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_10->setFont (standard_font);
     label_osc_sendaddr_10->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_10->setEditable (false, false, false);
     label_osc_sendaddr_10->setColour (TextEditor::textColourId, Colours::black);
@@ -450,7 +453,7 @@ sspSettingsPage::sspSettingsPage ()
     label2.reset(new Label("new label",
         TRANS("days")));
     addAndMakeVisible(label2.get());
-    label2->setFont(Font(15.00f, Font::plain).withTypefaceStyle("Regular"));
+    label2->setFont(standard_font);
     label2->setJustificationType(Justification::centredLeft);
     label2->setEditable(false, false, false);
     label2->setColour(TextEditor::textColourId, Colours::black);
@@ -475,7 +478,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_4.reset (new Label ("watchdog_heading",
                                   TRANS("Watchdog\n")));
     addAndMakeVisible (label_osc_4.get());
-    label_osc_4->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_4->setFont (header_font);
     label_osc_4->setJustificationType (Justification::centredLeft);
     label_osc_4->setEditable (false, false, false);
     label_osc_4->setColour (TextEditor::textColourId, Colours::black);
@@ -486,7 +489,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_12.reset (new Label ("watchdog_timeout",
                                             TRANS("Timeout:")));
     addAndMakeVisible (label_osc_sendaddr_12.get());
-    label_osc_sendaddr_12->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_12->setFont (standard_font);
     label_osc_sendaddr_12->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_12->setEditable (false, false, false);
     label_osc_sendaddr_12->setColour (TextEditor::textColourId, Colours::black);
@@ -509,7 +512,7 @@ sspSettingsPage::sspSettingsPage ()
     label3.reset (new Label ("watchdog_seconds",
                              TRANS("seconds")));
     addAndMakeVisible (label3.get());
-    label3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label3->setFont (standard_font);
     label3->setJustificationType (Justification::centredLeft);
     label3->setEditable (false, false, false);
     label3->setColour (TextEditor::textColourId, Colours::black);
@@ -520,7 +523,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_15.reset (new Label ("watchdog_procedure",
                                             TRANS("Watchdog proceedure:")));
     addAndMakeVisible (label_osc_sendaddr_15.get());
-    label_osc_sendaddr_15->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_15->setFont (standard_font);
     label_osc_sendaddr_15->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_15->setEditable (false, false, false);
     label_osc_sendaddr_15->setColour (TextEditor::textColourId, Colours::black);
@@ -542,7 +545,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_16.reset (new Label ("watchdog_reboot",
                                             TRANS("Reboot test:")));
     addAndMakeVisible (label_osc_sendaddr_16.get());
-    label_osc_sendaddr_16->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_16->setFont (standard_font);
     label_osc_sendaddr_16->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_16->setEditable (false, false, false);
     label_osc_sendaddr_16->setColour (TextEditor::textColourId, Colours::black);
@@ -569,7 +572,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_5.reset (new Label ("OSC heading",
                                   TRANS("Mixer\n")));
     addAndMakeVisible (label_osc_5.get());
-    label_osc_5->setFont (Font (25.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_5->setFont (header_font);
     label_osc_5->setJustificationType (Justification::centredLeft);
     label_osc_5->setEditable (false, false, false);
     label_osc_5->setColour (TextEditor::textColourId, Colours::black);
@@ -580,7 +583,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_17.reset (new Label ("osc_send_adress",
                                             TRANS("Fade-in time:")));
     addAndMakeVisible (label_osc_sendaddr_17.get());
-    label_osc_sendaddr_17->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_17->setFont (standard_font);
     label_osc_sendaddr_17->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_17->setEditable (false, false, false);
     label_osc_sendaddr_17->setColour (TextEditor::textColourId, Colours::black);
@@ -603,7 +606,7 @@ sspSettingsPage::sspSettingsPage ()
     label4.reset (new Label ("new label",
                              TRANS("seconds")));
     addAndMakeVisible (label4.get());
-    label4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label4->setFont (standard_font);
     label4->setJustificationType (Justification::centredLeft);
     label4->setEditable (false, false, false);
     label4->setColour (TextEditor::textColourId, Colours::black);
@@ -614,7 +617,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_18.reset (new Label ("osc_send_adress",
                                             TRANS("Fade-out time:")));
     addAndMakeVisible (label_osc_sendaddr_18.get());
-    label_osc_sendaddr_18->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_18->setFont (standard_font);
     label_osc_sendaddr_18->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_18->setEditable (false, false, false);
     label_osc_sendaddr_18->setColour (TextEditor::textColourId, Colours::black);
@@ -637,7 +640,7 @@ sspSettingsPage::sspSettingsPage ()
     label5.reset (new Label ("new label",
                              TRANS("seconds")));
     addAndMakeVisible (label5.get());
-    label5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label5->setFont (standard_font);
     label5->setJustificationType (Justification::centredLeft);
     label5->setEditable (false, false, false);
     label5->setColour (TextEditor::textColourId, Colours::black);
@@ -648,7 +651,7 @@ sspSettingsPage::sspSettingsPage ()
     label_osc_sendaddr_19.reset (new Label ("osc_send_adress",
                                             TRANS("Volume change:")));
     addAndMakeVisible (label_osc_sendaddr_19.get());
-    label_osc_sendaddr_19->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label_osc_sendaddr_19->setFont (standard_font);
     label_osc_sendaddr_19->setJustificationType (Justification::centredLeft);
     label_osc_sendaddr_19->setEditable (false, false, false);
     label_osc_sendaddr_19->setColour (TextEditor::textColourId, Colours::black);
@@ -671,7 +674,7 @@ sspSettingsPage::sspSettingsPage ()
     label6.reset (new Label ("new label",
                              TRANS("seconds")));
     addAndMakeVisible (label6.get());
-    label6->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label6->setFont (standard_font);
     label6->setJustificationType (Justification::centredLeft);
     label6->setEditable (false, false, false);
     label6->setColour (TextEditor::textColourId, Colours::black);

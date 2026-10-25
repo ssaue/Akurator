@@ -21,7 +21,7 @@ add_library(engine-lib
     sspTimeUpdater.h 
 )
 
-target_link_libraries(engine-lib PRIVATE scheduling-lib)
+target_link_libraries(engine-lib PRIVATE access-lib scheduling-lib)
 
 # Juce includes
 target_compile_definitions(engine-lib PRIVATE JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
